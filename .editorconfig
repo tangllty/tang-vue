@@ -1,0 +1,16 @@
+# http://editorconfig.org
+
+root = true
+
+# 匹配所有文件
+[*]
+# 字符集
+charset = utf-8
+# 缩进风格
+indent_style = space
+# 缩进的空格数
+indent_size = 2
+# 结尾换行符
+end_of_line = lf
+# 在文件结尾插入新行
+insert_final_newline = true
