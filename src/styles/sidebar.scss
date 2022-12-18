@@ -1,0 +1,14 @@
+@import './variables.scss';
+
+#app {
+  .app-wrapper {
+
+    .sidebar-container {
+      overflow-x: hidden;
+
+      .scrollbar-wrapper {
+        overflow-x: hidden !important;
+      }
+    }
+  }
+}
