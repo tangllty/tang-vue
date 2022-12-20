@@ -16,13 +16,14 @@ export default ({ mode }:ConfigEnv) => {
       }
     },
     server: {
+      host: '0.0.0.0',
       port: Number(env.VITE_APP_PORT),
       open: false,
       proxy: {
         [env.VITE_APP_BASE_API]: {
           target: 'http://127.0.0.1:8080',
           changeOrigin: true,
-          rewrite: (path) => path.replace('^' + env.VITE_APP_BASE_API, '')
+          rewrite: path => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
         }
       }
     }
