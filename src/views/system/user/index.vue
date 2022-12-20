@@ -108,6 +108,17 @@
             align="center"
           />
           </el-table>
+
+          <el-pagination
+            background
+            layout="total, sizes, prev, pager, next, jumper"
+            :page-sizes="[10, 20, 30, 50]"
+            :total="state.total"
+            v-model:current-page="state.queryParams.pageNum"
+            v-model:page-size="state.queryParams.pageSize"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
         </el-card>
       </el-col>
     </el-row>
@@ -156,7 +167,12 @@ const state = reactive({
   loading: true,
   userIds: [] as number[],
   selectSingle: true,
+  total: 0,
   userList: [] as SysUser[],
+  queryParams: {
+    pageNum: 1,
+    pageSize: 10
+  },
   userDialog: {
     title: '',
     visible: false
@@ -179,10 +195,20 @@ const userRules = reactive<FormRules>({
 
 function list() {
   state.loading = true
-  getUserList().then((data:any) => {
-    state.userList = data.data
+  getUserList(state.queryParams).then((res:any) => {
+    state.userList = res.rows
+    state.total = res.total
     state.loading = false
   });
+}
+
+const handleSizeChange = (pageSize: number) => {
+  state.queryParams.pageSize = pageSize
+  list()
+}
+const handleCurrentChange = (pageNum: number) => {
+  state.queryParams.pageNum = pageNum
+  list()
 }
 
 function add() {

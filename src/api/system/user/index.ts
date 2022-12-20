@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 import { SysUserForm } from './types'
 
-export const list = () => {
+export const list = (queryParams: any) => {
   return request({
     url: '/system/user/list',
-    method: 'get'
+    method: 'get',
+    params: queryParams
   })
 }
 
