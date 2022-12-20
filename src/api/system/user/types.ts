@@ -17,3 +17,15 @@ export interface SysUser {
   updateTime: Date
   remark: string
 }
+
+// 用户表单对象
+export interface SysUserForm {
+  deptId: number
+  username: string
+  nickname: string
+  email: string
+  phone: string
+  gender: string
+  avatar: string
+  remark: string
+}

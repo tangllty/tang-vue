@@ -22,12 +22,7 @@ service.interceptors.request.use(function (config) {
 service.interceptors.response.use((response: AxiosResponse) => {
   const { code, msg } = response.data
   if (code === 200) {
-    ElMessage({
-      message: msg,
-      type: 'success'
-    })
   }
-
 
   return response.data;
 }, (error: any) => {
