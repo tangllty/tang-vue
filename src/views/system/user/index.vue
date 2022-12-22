@@ -25,13 +25,13 @@
               <el-button
                 type="success"
                 :icon="Edit"
-                :disabled="state.selectSingle"
+                :disabled="selectSingle"
                 @click="edit()"
               >修改</el-button>
               <el-button
                 type="danger"
                 :icon="Delete"
-                :disabled="state.selectSingle"
+                :disabled="selectSingle"
                 @click="deleteUser()"
               >删除</el-button>
               <el-button
@@ -46,8 +46,8 @@
           </template>
           <!-- 用户表格 -->
           <el-table
-            v-loading="state.loading"
-            :data="state.userList"
+            v-loading="loading"
+            :data="userList"
             @selection-change="handleSelectionChange"
             style="width: 100%"
             align="center"
@@ -113,9 +113,9 @@
             background
             layout="total, sizes, prev, pager, next, jumper"
             :page-sizes="[10, 20, 30, 50]"
-            :total="state.total"
-            v-model:current-page="state.queryParams.pageNum"
-            v-model:page-size="state.queryParams.pageSize"
+            :total="total"
+            v-model:current-page="queryParams.pageNum"
+            v-model:page-size="queryParams.pageSize"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
           />
@@ -124,13 +124,13 @@
     </el-row>
 
     <el-dialog
-      :title="state.userDialog.title"
-      v-model="state.userDialog.visible"
+      :title="userDialog.title"
+      v-model="userDialog.visible"
       @close="closeUserDialog"
     >
       <el-form
       ref="userRuleFormRef"
-      :model="state.userForm"
+      :model="userForm"
       :rules="userRules"
       label-width="120px"
       class="demo-ruleForm"
@@ -138,12 +138,12 @@
       >
         <el-form-item label="账号" prop="username">
           <el-input
-            v-model="state.userForm.username"
+            v-model="userForm.username"
             placeholder="请输入账号"
           />
         </el-form-item>
         <el-form-item label="昵称" prop="nickname">
-          <el-input v-model="state.userForm.nickname" placeholder="请输入昵称" />
+          <el-input v-model="userForm.nickname" placeholder="请输入昵称" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -157,14 +157,15 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, ElTable, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload } from '@element-plus/icons-vue'
 import { list as getUserList, add as addUser, getUser, edit as editUser, deleteUser as deleteUserByUserId } from '@/api/system/user'
-import { SysUser, SysUserForm } from '@/api/system/user/types'
+import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
 const state = reactive({
   loading: true,
+  userId: 0 as number,
   userIds: [] as number[],
   selectSingle: true,
   total: 0,
@@ -172,14 +173,26 @@ const state = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 10
-  },
+  } as SysUserQuery,
   userDialog: {
     title: '',
+    type: '',
     visible: false
-  },
+  } as Dialog,
   userForm: {
   } as SysUserForm
 })
+
+const {
+  loading,
+  userIds,
+  selectSingle,
+  total,
+  userList,
+  queryParams,
+  userDialog,
+  userForm
+} = toRefs(state)
 
 const userRuleFormRef = ref<FormInstance>()
 const userRules = reactive<FormRules>({
@@ -199,7 +212,7 @@ function list() {
     state.userList = res.rows
     state.total = res.total
     state.loading = false
-  });
+  })
 }
 
 const handleSizeChange = (pageSize: number) => {
@@ -214,28 +227,26 @@ const handleCurrentChange = (pageNum: number) => {
 function add() {
   state.userDialog = {
     title: '新增用户信息',
+    type: 'add',
     visible: true
   }
 }
 
 function edit() {
-  const userId = state.userIds[0]
-
-  getUser(userId).then((res) => {
+  getUser(state.userId).then((res) => {
     state.userForm = res.data
   })
 
   state.userDialog = {
     title: '修改用户信息',
+    type: 'edit',
     visible: true
   }
 }
 
 
 function deleteUser() {
-  const userId = state.userIds[0]
-
-  deleteUserByUserId(userId).then(() => {
+  deleteUserByUserId(state.userId).then(() => {
     ElMessage.success("删除用户信息成功")
     list()
   })
@@ -249,21 +260,24 @@ function closeUserDialog() {
 
 function handleSelectionChange(selection: any) {
   state.userIds = selection.map((item: any) => item.userId)
-  state.selectSingle = selection.length != 1;
+  state.selectSingle = selection.length != 1
+  if (selection.length == 1) {
+    state.userId = userIds.value[0]
+  }
 }
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      const userId = state.userIds[0]
-      if (!userId) {
+      if (userDialog.value.type == 'add') {
         addUser(state.userForm).then(() => {
           ElMessage.success("添加用户信息成功")
           closeUserDialog()
           list()
         })
-      } else {
+      }
+      if (userDialog.value.type == 'edit') {
         editUser(state.userForm).then(() => {
           ElMessage.success("修改用户信息成功")
           closeUserDialog()
