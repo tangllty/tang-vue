@@ -9,9 +9,47 @@
       </el-col>
       <el-col :span="20">
         <el-card style="margin-bottom: 10px;">
-          <el-input></el-input>
-          <el-button type="success">搜索</el-button>
-          <el-button type="success">搜索</el-button>
+          <el-form ref="userQueryFormRef" :model="queryParams" :inline="true">
+            <el-form-item label="用户名" prop="username">
+              <el-input
+                v-model="queryParams.username"
+                placeholder="用户名"
+                style="width: 200px"
+                @keyup.enter="list"
+              />
+            </el-form-item>
+            <el-form-item label="昵称" prop="nickname">
+              <el-input
+                v-model="queryParams.nickname"
+                placeholder="昵称"
+                style="width: 200px"
+                @keyup.enter="list"
+              />
+            </el-form-item>
+            <el-form-item label="性别" prop="gender">
+              <el-input
+                v-model="queryParams.gender"
+                placeholder="性别"
+                style="width: 200px"
+                @keyup.enter="list"
+              />
+            </el-form-item>
+            <el-form-item label="状态" prop="status">
+              <el-input
+                v-model="queryParams.status"
+                placeholder="状态"
+                style="width: 200px"
+                @keyup.enter="list"
+              />
+            </el-form-item>
+
+            <el-form-item>
+              <el-button type="primary" :icon="Search" @click="list"
+                >搜索</el-button
+              >
+              <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
+            </el-form-item>
+          </el-form>
         </el-card>
         <!-- 用户操作 -->
         <el-card>
@@ -64,7 +102,7 @@
             align="center"
           />
           <el-table-column
-            label="用户账号"
+            label="用户名"
             prop="username"
             align="center"
           />
@@ -104,7 +142,7 @@
           <el-table-column
             label="创建时间"
             prop="createTime"
-            width="120"
+            width="160"
             align="center"
           />
           </el-table>
@@ -136,10 +174,10 @@
       class="demo-ruleForm"
       status-icon
       >
-        <el-form-item label="账号" prop="username">
+        <el-form-item label="用户名" prop="username">
           <el-input
             v-model="userForm.username"
-            placeholder="请输入账号"
+            placeholder="请输入用户名"
           />
         </el-form-item>
         <el-form-item label="昵称" prop="nickname">
@@ -159,7 +197,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, ElTable, FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Download, Upload } from '@element-plus/icons-vue'
+import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
 import { list as getUserList, add as addUser, getUser, edit as editUser, deleteUser as deleteUserByUserId } from '@/api/system/user'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
@@ -195,6 +233,7 @@ const {
 } = toRefs(state)
 
 const userRuleFormRef = ref<FormInstance>()
+const userQueryFormRef = ref<FormInstance>()
 const userRules = reactive<FormRules>({
   username: [
     { required: true, message: '用户名不能为空', trigger: 'blur' },
@@ -250,6 +289,11 @@ function deleteUser() {
     ElMessage.success("删除用户信息成功")
     list()
   })
+}
+
+ function resetQuery() {
+  userQueryFormRef.value?.resetFields()
+  list()
 }
 
 function closeUserDialog() {

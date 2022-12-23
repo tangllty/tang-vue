@@ -29,3 +29,11 @@ export interface SysUserForm {
   avatar: string
   remark: string
 }
+
+// 用户查询参数
+export interface SysUserQuery extends PageQuery {
+  username: string
+  nickname: string
+  gender: string
+  status: string
+}
