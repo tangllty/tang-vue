@@ -44,10 +44,15 @@
             </el-form-item>
 
             <el-form-item>
-              <el-button type="primary" :icon="Search" @click="list"
-                >搜索</el-button
-              >
-              <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
+              <el-button
+                type="primary"
+                :icon="Search"
+                @click="list"
+              >搜索</el-button>
+              <el-button
+                :icon="Refresh"
+                @click="resetQuery"
+              >重置</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -171,7 +176,6 @@
       :model="userForm"
       :rules="userRules"
       label-width="120px"
-      class="demo-ruleForm"
       status-icon
       >
         <el-form-item label="用户名" prop="username">
@@ -186,8 +190,13 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button type="primary" @click="submitForm(userRuleFormRef)">确 定</el-button>
-          <el-button @click="closeUserDialog">取 消</el-button>
+          <el-button
+            type="primary"
+            @click="submitForm(userRuleFormRef)"
+          >确 定</el-button>
+          <el-button
+            @click="closeUserDialog"
+          >取 消</el-button>
         </div>
       </template>
     </el-dialog>
@@ -272,7 +281,7 @@ function add() {
 }
 
 function edit() {
-  getUser(state.userId).then((res) => {
+  getUser(state.userId).then((res:any) => {
     state.userForm = res.data
   })
 
@@ -304,8 +313,8 @@ function closeUserDialog() {
 
 function handleSelectionChange(selection: any) {
   state.userIds = selection.map((item: any) => item.userId)
-  state.selectSingle = selection.length != 1
-  if (selection.length == 1) {
+  state.selectSingle = selection.length !== 1
+  if (selection.length === 1) {
     state.userId = userIds.value[0]
   }
 }
