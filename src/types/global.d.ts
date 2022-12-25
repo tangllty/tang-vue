@@ -15,4 +15,11 @@ declare global {
     visible: boolean
   }
 
+  // 树结构参数
+  type TreeSelect = {
+    value: number
+    label: string
+    children: TreeSelect[]
+  }
+
 }
