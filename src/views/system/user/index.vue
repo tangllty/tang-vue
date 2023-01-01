@@ -1,13 +1,33 @@
 <template>
   <div>
     <el-row :gutter="20">
+
+      <!-- 部门树 -->
       <el-col :span="4">
         <el-card>
-          <el-input></el-input>
-          部门
+          <el-input
+            v-model="deptName"
+            placeholder="部门名称"
+            clearable
+            :prefix-icon="Search"
+            style="margin-bottom: 20px"
+          />
+          <el-tree
+            ref="deptTreeRef"
+            :data="deptTree"
+            :props="{ children: 'children', label: 'label' }"
+            :expand-on-click-node="false"
+            default-expand-all
+            :filter-node-method="filterNode"
+            @node-click="handleDeptNodeClick"
+          />
         </el-card>
       </el-col>
+
+      <!-- 用户数据 -->
       <el-col :span="20">
+
+        <!-- 信息检索 -->
         <el-card style="margin-bottom: 10px;">
           <el-form ref="userQueryFormRef" :model="queryParams" :inline="true">
             <el-form-item label="用户名" prop="username">
@@ -56,6 +76,7 @@
             </el-form-item>
           </el-form>
         </el-card>
+
         <!-- 用户操作 -->
         <el-card>
           <template #header>
@@ -87,6 +108,7 @@
               >导出</el-button>
             </el-row>
           </template>
+
           <!-- 用户表格 -->
           <el-table
             v-loading="loading"
@@ -95,63 +117,64 @@
             style="width: 100%"
             align="center"
           >
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column
-            label="用户编号"
-            prop="userId"
-            align="center"
-          />
-          <el-table-column
-            label="部门编号"
-            prop="deptId"
-            align="center"
-          />
-          <el-table-column
-            label="用户名"
-            prop="username"
-            align="center"
-          />
-          <el-table-column
-            label="昵称"
-            prop="nickname"
-            align="center"
-          />
-          <el-table-column
-            label="邮箱"
-            prop="email"
-            width="180"
-            align="center"
-          />
-          <el-table-column
-            label="手机号码"
-            prop="phone"
-            align="center"
-          />
-          <el-table-column
-            label="性别"
-            prop="gender"
-            align="center"
-          />
-          <el-table-column
-            label="最后登录IP"
-            prop="loginIp"
-            width="120"
-            align="center"
-          />
-          <el-table-column
-            label="最后登录时间"
-            prop="loginDate"
-            width="120"
-            align="center"
-          />
-          <el-table-column
-            label="创建时间"
-            prop="createTime"
-            width="160"
-            align="center"
-          />
+            <el-table-column type="selection" width="50" align="center" />
+            <el-table-column
+              label="用户编号"
+              prop="userId"
+              align="center"
+            />
+            <el-table-column
+              label="部门名称"
+              prop="dept.deptName"
+              align="center"
+            />
+            <el-table-column
+              label="用户名"
+              prop="username"
+              align="center"
+            />
+            <el-table-column
+              label="昵称"
+              prop="nickname"
+              align="center"
+            />
+            <el-table-column
+              label="邮箱"
+              prop="email"
+              width="180"
+              align="center"
+            />
+            <el-table-column
+              label="手机号码"
+              prop="phone"
+              align="center"
+            />
+            <el-table-column
+              label="性别"
+              prop="gender"
+              align="center"
+            />
+            <el-table-column
+              label="最后登录IP"
+              prop="loginIp"
+              width="120"
+              align="center"
+            />
+            <el-table-column
+              label="最后登录时间"
+              prop="loginDate"
+              width="120"
+              align="center"
+            />
+            <el-table-column
+              label="创建时间"
+              prop="createTime"
+              width="160"
+              align="center"
+            />
           </el-table>
 
+          <!-- 分页 -->
           <el-pagination
             background
             layout="total, sizes, prev, pager, next, jumper"
@@ -166,18 +189,28 @@
       </el-col>
     </el-row>
 
+    <!-- 添加或修改用户信息对话框 -->
     <el-dialog
       :title="userDialog.title"
       v-model="userDialog.visible"
       @close="closeUserDialog"
     >
       <el-form
-      ref="userRuleFormRef"
-      :model="userForm"
-      :rules="userRules"
-      label-width="120px"
-      status-icon
+        ref="userRuleFormRef"
+        :model="userForm"
+        :rules="userRules"
+        label-width="120px"
+        status-icon
       >
+        <el-form-item label="部门" prop="deptId">
+          <el-tree-select
+            v-model="userForm.deptId"
+            :data="deptTree"
+            check-strictly
+            filterable
+            placeholder="请输入部门"
+          />
+        </el-form-item>
         <el-form-item label="用户名" prop="username">
           <el-input
             v-model="userForm.username"
@@ -185,7 +218,41 @@
           />
         </el-form-item>
         <el-form-item label="昵称" prop="nickname">
-          <el-input v-model="userForm.nickname" placeholder="请输入昵称" />
+          <el-input
+            v-model="userForm.nickname"
+            placeholder="请输入昵称"
+          />
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input
+            v-model="userForm.email"
+            placeholder="请输入邮箱"
+          />
+        </el-form-item>
+        <el-form-item label="手机号码" prop="phone">
+          <el-input
+            v-model="userForm.phone"
+            placeholder="请输入手机号码"
+          />
+        </el-form-item>
+        <el-form-item v-if="userDialog.type == 'add'" label="密码" prop="password">
+          <el-input
+            v-model="userForm.password"
+            placeholder="请输入密码"
+          />
+        </el-form-item>
+        <el-form-item label="性别" prop="gender">
+          <el-radio-group v-model="userForm.gender">
+            <el-radio label="0">保密</el-radio>
+            <el-radio label="1">男</el-radio>
+            <el-radio label="2">女</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input
+            v-model="userForm.remark"
+            placeholder="请输入备注"
+          />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -204,29 +271,44 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, ElTable, FormInstance, FormRules } from 'element-plus'
+import { onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
 import { list as getUserList, add as addUser, getUser, edit as editUser, deleteUser as deleteUserByUserId } from '@/api/system/user'
+import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
 const state = reactive({
+  // 遮罩层
   loading: true,
+  // 选中数据
   userId: 0 as number,
+  // 选中数据数组
   userIds: [] as number[],
+  // 非单个禁用
   selectSingle: true,
+  // 部门名称
+  deptName: undefined,
+  // 总条数
   total: 0,
+  // 用户表格数据
   userList: [] as SysUser[],
+  // 部门树数据
+  deptTree: [] as TreeSelect[],
+  // 查询参数
   queryParams: {
     pageNum: 1,
     pageSize: 10
   } as SysUserQuery,
+  // 对话框
   userDialog: {
     title: '',
     type: '',
     visible: false
   } as Dialog,
+  // 表单
   userForm: {
+    gender: '0'
   } as SysUserForm
 })
 
@@ -234,26 +316,44 @@ const {
   loading,
   userIds,
   selectSingle,
+  deptName,
   total,
   userList,
+  deptTree,
   queryParams,
   userDialog,
   userForm
 } = toRefs(state)
 
+const deptTreeRef = ref<InstanceType<typeof ElTree>>()
 const userRuleFormRef = ref<FormInstance>()
 const userQueryFormRef = ref<FormInstance>()
 const userRules = reactive<FormRules>({
   username: [
     { required: true, message: '用户名不能为空', trigger: 'blur' },
-    { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' },
+    { min: 4, max: 32, message: '用户名长度应在 4 到 32 之间', trigger: 'blur' },
   ],
   nickname: [
     { required: true, message: '昵称不能为空', trigger: 'blur' },
-    { min: 3, max: 32, message: 'Length should be 3 to 32', trigger: 'blur' },
+    { min: 2, max: 32, message: '昵称长度应在 4 到 32 之间', trigger: 'blur' },
+  ],
+  password: [
+    { required: true, message: '昵称不能为空', trigger: 'blur' },
+    { min: 4, max: 32, message: '密码长度应在 4 到 32 之间', trigger: 'blur' },
   ],
 })
 
+// 筛选部门树信息
+watch(deptName, (val) => {
+  deptTreeRef.value!.filter(val)
+})
+
+const filterNode = (value: string, data: TreeSelect) => {
+  if (!value) return true
+  return data.label.includes(value)
+}
+
+// 查询用户列表
 function list() {
   state.loading = true
   getUserList(state.queryParams).then((res:any) => {
@@ -263,15 +363,7 @@ function list() {
   })
 }
 
-const handleSizeChange = (pageSize: number) => {
-  state.queryParams.pageSize = pageSize
-  list()
-}
-const handleCurrentChange = (pageNum: number) => {
-  state.queryParams.pageNum = pageNum
-  list()
-}
-
+// 添加用户信息
 function add() {
   state.userDialog = {
     title: '新增用户信息',
@@ -280,6 +372,7 @@ function add() {
   }
 }
 
+// 修改用户信息
 function edit() {
   getUser(state.userId).then((res:any) => {
     state.userForm = res.data
@@ -292,7 +385,7 @@ function edit() {
   }
 }
 
-
+// 删除用户信息
 function deleteUser() {
   deleteUserByUserId(state.userId).then(() => {
     ElMessage.success("删除用户信息成功")
@@ -300,17 +393,20 @@ function deleteUser() {
   })
 }
 
- function resetQuery() {
+// 重置表单
+function resetQuery() {
   userQueryFormRef.value?.resetFields()
   list()
 }
 
+// 关闭对话框
 function closeUserDialog() {
   state.userDialog.visible = false
   userRuleFormRef.value?.resetFields()
   userRuleFormRef.value?.clearValidate()
 }
 
+// 多选框
 function handleSelectionChange(selection: any) {
   state.userIds = selection.map((item: any) => item.userId)
   state.selectSingle = selection.length !== 1
@@ -319,6 +415,30 @@ function handleSelectionChange(selection: any) {
   }
 }
 
+// 查询部门树
+function getDeptTree() {
+  selectDeptTree().then (res => {
+    state.deptTree = res.data
+  })
+}
+
+// 部门树节点
+function handleDeptNodeClick(data: any ) {
+  state.queryParams.deptId = data.value
+  list()
+}
+
+// 分页
+const handleSizeChange = (pageSize: number) => {
+  state.queryParams.pageSize = pageSize
+  list()
+}
+const handleCurrentChange = (pageNum: number) => {
+  state.queryParams.pageNum = pageNum
+  list()
+}
+
+// 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
@@ -344,6 +464,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 }
 
 onMounted(() => {
+  getDeptTree()
   list()
 })
 </script>

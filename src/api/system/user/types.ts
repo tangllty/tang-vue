@@ -25,13 +25,14 @@ export interface SysUserForm {
   nickname: string
   email: string
   phone: string
+  password: string
   gender: string
-  avatar: string
   remark: string
 }
 
 // 用户查询参数
 export interface SysUserQuery extends PageQuery {
+  deptId: number
   username: string
   nickname: string
   gender: string
