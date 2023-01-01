@@ -2,6 +2,14 @@
   <div>
     <el-card style="margin-bottom: 10px;">
       <el-form ref="deptQueryFormRef" :model="queryParams" :inline="true">
+        <el-form-item label="部门名称" prop="deptName">
+          <el-input
+            v-model="queryParams.deptName"
+            placeholder="部门名称"
+            style="width: 200px"
+            @keyup.enter="list"
+          />
+        </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-input
             v-model="queryParams.status"
