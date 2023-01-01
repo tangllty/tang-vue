@@ -9,11 +9,10 @@ export const list = (queryParams: SysDeptQuery) => {
   })
 }
 
-export const deptTree = (queryParams: SysDeptQuery) => {
+export const deptTree = () => {
   return request({
     url: '/system/dept/deptTree',
-    method: 'get',
-    params: queryParams
+    method: 'get'
   })
 }
 
