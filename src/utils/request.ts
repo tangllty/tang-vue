@@ -22,15 +22,20 @@ service.interceptors.request.use(function (config) {
 service.interceptors.response.use((response: AxiosResponse) => {
   const { code, msg } = response.data
   if (code === 200) {
+    return response.data
   }
-
-  return response.data;
+  if (code === 500) {
+    ElMessage({
+      message: msg,
+      type: 'error'
+    })
+    return Promise.reject(new Error(msg))
+  }
 }, (error: any) => {
   ElMessage({
     message: error,
     type: 'error'
   })
-
   return Promise.reject(error);
 });
 
