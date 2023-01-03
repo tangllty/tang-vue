@@ -198,6 +198,7 @@ const state = reactive({
   } as Dialog,
   // 表单
   deptForm: {
+    orderNum: 1
   } as SysDeptForm
 })
 
