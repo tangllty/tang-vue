@@ -134,6 +134,7 @@
             v-model="deptForm.parentId"
             :data="deptTree"
             :render-after-expand="false"
+            check-strictly
           />
         </el-form-item>
         <el-form-item label="部门名称" prop="deptName">
@@ -249,8 +250,7 @@ function add(row: any) {
 // 修改部门信息
 function edit(row: any) {
   getDeptTree()
-  state.deptForm.parentId = row.parentId
-  state.deptForm.deptId = row.deptId
+  state.deptForm = row
   state.deptDialog = {
     title: '修改部门信息',
     type: 'edit',
