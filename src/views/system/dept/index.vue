@@ -8,7 +8,7 @@
             v-model="queryParams.deptName"
             placeholder="部门名称"
             style="width: 200px"
-            @keyup.enter="list"
+            @keyup.enter="handleList"
           />
         </el-form-item>
         <el-form-item label="状态" prop="status">
@@ -16,7 +16,7 @@
             v-model="queryParams.status"
             placeholder="状态"
             style="width: 200px"
-            @keyup.enter="list"
+            @keyup.enter="handleList"
           />
         </el-form-item>
 
@@ -24,7 +24,7 @@
           <el-button
             type="primary"
             :icon="Search"
-            @click="list"
+            @click="handleList"
           >搜索</el-button>
           <el-button
             :icon="Refresh"
@@ -43,7 +43,7 @@
           <el-button
             type="primary"
             :icon="Plus"
-            @click="add"
+            @click="handleAdd"
           >新增</el-button>
 
         </el-row>
@@ -95,21 +95,21 @@
               link
               :icon="Plus"
               size="small"
-              @click="add(scope.row)"
+              @click="handleAdd(scope.row)"
             >新增</el-button>
             <el-button
               type="primary"
               link
               :icon="Edit"
               size="small"
-              @click="edit(scope.row)"
+              @click="handleEdit(scope.row)"
             >修改</el-button>
             <el-button
               type="primary"
               link
               :icon="Delete"
               size="small"
-              @click="deleteDept(scope.row)"
+              @click="handleDelete(scope.row)"
             >删除</el-button>
           </template>
         </el-table-column>
@@ -171,8 +171,8 @@
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { list as getDeptList, deptTree as selectDeptTree, getDept, add as addDept, edit as editDept, deleteDept as deleteDeptByDeptId } from '@/api/system/dept'
-import { SysDept as Dept, SysDeptForm, SysDeptQuery as DeptQuery } from '@/api/system/dept/types'
+import { listDept, deptTree as selectDeptTree, getDept, addDept, editDept, deleteDept } from '@/api/system/dept'
+import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
 
 const state = reactive({
   // 遮罩层
@@ -182,14 +182,14 @@ const state = reactive({
   // 选中数据数组
   deptIds: [] as number[],
   // 部门数据
-  deptList: [] as Dept[],
+  deptList: [] as SysDept[],
   // 部门树数据
   deptTree: [] as TreeSelect[],
   // 查询参数
   queryParams: {
     pageNum: 1,
     pageSize: 10
-  } as DeptQuery,
+  } as SysDeptQuery,
   // 对话框
   deptDialog: {
     title: '',
@@ -222,9 +222,9 @@ const deptRules = reactive<FormRules>({
 })
 
 // 查询部门列表
-function list() {
+function handleList() {
   state.loading = true
-  getDeptList(state.queryParams).then((res:any) => {
+  listDept(state.queryParams).then((res:any) => {
     state.deptList = res.data
     state.loading = false
   })
@@ -238,7 +238,7 @@ function getDeptTree() {
 }
 
 // 添加部门信息
-function add(row: any) {
+function handleAdd(row: any) {
   getDeptTree()
   state.deptForm.parentId = row.deptId
   state.deptDialog = {
@@ -249,7 +249,7 @@ function add(row: any) {
 }
 
 // 修改部门信息
-function edit(row: any) {
+function handleEdit(row: any) {
   getDeptTree()
   state.deptForm = row
   state.deptDialog = {
@@ -260,17 +260,17 @@ function edit(row: any) {
 }
 
 // 删除部门信息
-function deleteDept(row: any) {
-  deleteDeptByDeptId(row.deptId).then(() => {
+function handleDelete(row: any) {
+  deleteDept(row.deptId).then(() => {
     ElMessage.success("删除部门信息成功")
-    list()
+    handleList()
   })
 }
 
-// 充值表单
+// 重置表单
 function resetQuery() {
   deptQueryFormRef.value?.resetFields()
-  list()
+  handleList()
 }
 
 // 关闭对话框
@@ -297,14 +297,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         addDept(state.deptForm).then(() => {
           ElMessage.success("添加部门信息成功")
           closeUserDialog()
-          list()
+          handleList()
         })
       }
       if (deptDialog.value.type == 'edit') {
         editDept(state.deptForm).then(() => {
           ElMessage.success("修改部门信息成功")
           closeUserDialog()
-          list()
+          handleList()
         })
       }
     } else {
@@ -314,7 +314,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 }
 
 onMounted(() => {
-  list()
+  handleList()
 })
 </script>
 

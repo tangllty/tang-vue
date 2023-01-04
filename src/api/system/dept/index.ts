@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import { SysDeptQuery, SysDeptForm } from './types'
 
-export const list = (queryParams: SysDeptQuery) => {
+export const listDept = (queryParams: SysDeptQuery) => {
   return request({
     url: '/system/dept/list',
     method: 'get',
@@ -23,7 +23,7 @@ export const getDept = (deptId: number) => {
   })
 }
 
-export const add = (data: SysDeptForm) => {
+export const addDept = (data: SysDeptForm) => {
   return request({
     url: '/system/dept',
     method: 'post',
@@ -31,7 +31,7 @@ export const add = (data: SysDeptForm) => {
   })
 }
 
-export const edit = (data: SysDeptForm) => {
+export const editDept = (data: SysDeptForm) => {
   return request({
     url: '/system/dept',
     method: 'put',

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import { SysUserQuery, SysUserForm } from './types'
 
-export const list = (queryParams: SysUserQuery) => {
+export const listUser = (queryParams: SysUserQuery) => {
   return request({
     url: '/system/user/list',
     method: 'get',
@@ -16,7 +16,7 @@ export const getUser = (userId: number) => {
   })
 }
 
-export const add = (data: SysUserForm) => {
+export const addUser = (data: SysUserForm) => {
   return request({
     url: '/system/user',
     method: 'post',
@@ -24,7 +24,7 @@ export const add = (data: SysUserForm) => {
   })
 }
 
-export const edit = (data: SysUserForm) => {
+export const editUser = (data: SysUserForm) => {
   return request({
     url: '/system/user',
     method: 'put',

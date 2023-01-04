@@ -35,7 +35,7 @@
                 v-model="queryParams.username"
                 placeholder="用户名"
                 style="width: 200px"
-                @keyup.enter="list"
+                @keyup.enter="handleList"
               />
             </el-form-item>
             <el-form-item label="昵称" prop="nickname">
@@ -43,7 +43,7 @@
                 v-model="queryParams.nickname"
                 placeholder="昵称"
                 style="width: 200px"
-                @keyup.enter="list"
+                @keyup.enter="handleList"
               />
             </el-form-item>
             <el-form-item label="性别" prop="gender">
@@ -51,7 +51,7 @@
                 v-model="queryParams.gender"
                 placeholder="性别"
                 style="width: 200px"
-                @keyup.enter="list"
+                @keyup.enter="handleList"
               />
             </el-form-item>
             <el-form-item label="状态" prop="status">
@@ -59,7 +59,7 @@
                 v-model="queryParams.status"
                 placeholder="状态"
                 style="width: 200px"
-                @keyup.enter="list"
+                @keyup.enter="handleList"
               />
             </el-form-item>
 
@@ -67,7 +67,7 @@
               <el-button
                 type="primary"
                 :icon="Search"
-                @click="list"
+                @click="handleList"
               >搜索</el-button>
               <el-button
                 :icon="Refresh"
@@ -84,19 +84,19 @@
               <el-button
                 type="primary"
                 :icon="Plus"
-                @click="add()"
+                @click="handleAdd"
               >新增</el-button>
               <el-button
                 type="success"
                 :icon="Edit"
                 :disabled="selectSingle"
-                @click="edit()"
+                @click="handleEdit"
               >修改</el-button>
               <el-button
                 type="danger"
                 :icon="Delete"
                 :disabled="selectSingle"
-                @click="deleteUser()"
+                @click="handleDelete"
               >删除</el-button>
               <el-button
                 type="info"
@@ -274,7 +274,7 @@
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
-import { list as getUserList, add as addUser, getUser, edit as editUser, deleteUser as deleteUserByUserId } from '@/api/system/user'
+import { listUser, addUser, getUser, editUser, deleteUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
@@ -354,9 +354,9 @@ const filterNode = (value: string, data: TreeSelect) => {
 }
 
 // 查询用户列表
-function list() {
+function handleList() {
   state.loading = true
-  getUserList(state.queryParams).then((res:any) => {
+  listUser(state.queryParams).then((res:any) => {
     state.userList = res.rows
     state.total = res.total
     state.loading = false
@@ -364,7 +364,7 @@ function list() {
 }
 
 // 添加用户信息
-function add() {
+function handleAdd() {
   state.userDialog = {
     title: '新增用户信息',
     type: 'add',
@@ -373,7 +373,7 @@ function add() {
 }
 
 // 修改用户信息
-function edit() {
+function handleEdit() {
   getUser(state.userId).then((res:any) => {
     state.userForm = res.data
   })
@@ -386,17 +386,17 @@ function edit() {
 }
 
 // 删除用户信息
-function deleteUser() {
-  deleteUserByUserId(state.userId).then(() => {
+function handleDelete() {
+  deleteUser(state.userId).then(() => {
     ElMessage.success("删除用户信息成功")
-    list()
+    handleList()
   })
 }
 
 // 重置表单
 function resetQuery() {
   userQueryFormRef.value?.resetFields()
-  list()
+  handleList()
 }
 
 // 关闭对话框
@@ -425,17 +425,17 @@ function getDeptTree() {
 // 部门树节点
 function handleDeptNodeClick(data: any ) {
   state.queryParams.deptId = data.value
-  list()
+  handleList()
 }
 
 // 分页
 const handleSizeChange = (pageSize: number) => {
   state.queryParams.pageSize = pageSize
-  list()
+  handleList()
 }
 const handleCurrentChange = (pageNum: number) => {
   state.queryParams.pageNum = pageNum
-  list()
+  handleList()
 }
 
 // 提交表单
@@ -447,14 +447,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         addUser(state.userForm).then(() => {
           ElMessage.success("添加用户信息成功")
           closeUserDialog()
-          list()
+          handleList()
         })
       }
       if (userDialog.value.type == 'edit') {
         editUser(state.userForm).then(() => {
           ElMessage.success("修改用户信息成功")
           closeUserDialog()
-          list()
+          handleList()
         })
       }
     } else {
@@ -465,7 +465,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
 onMounted(() => {
   getDeptTree()
-  list()
+  handleList()
 })
 </script>
 
