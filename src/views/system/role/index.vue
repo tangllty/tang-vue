@@ -99,6 +99,28 @@
           label="更新时间"
           align="center"
         />
+        <el-table-column
+          label="操作"
+          width="190"
+          align="center"
+        >
+          <template #default="scope">
+            <el-button
+              type="primary"
+              link
+              :icon="Edit"
+              size="small"
+              @click="handleEdit(scope.row)"
+            >修改</el-button>
+            <el-button
+              type="primary"
+              link
+              :icon="Delete"
+              size="small"
+              @click="handleDelete(scope.row)"
+            >删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
 
