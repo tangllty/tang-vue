@@ -21,6 +21,15 @@
             :filter-node-method="filterNode"
             @node-click="handleDeptNodeClick"
           />
+          <!--
+            TODO 不明错误提示
+            :filter-node-method="filterNode" 会提示以下错误
+
+            Type '(value: string, data: TreeSelect) => boolean' is not assignable to type 'FilterNodeMethodFunction'.
+            Types of parameters 'data' and 'data' are incompatible.
+
+            经测试该错误只会在VSCode提示且不影响正常使用
+           -->
         </el-card>
       </el-col>
 
