@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 import { SysMenuQuery, SysMenuForm } from './types'
 
+// 查询菜单列表
 export const listMenu = (queryParams: SysMenuQuery) => {
   return request({
     url: '/system/menu/list',
@@ -9,13 +10,14 @@ export const listMenu = (queryParams: SysMenuQuery) => {
   })
 }
 
+// 查询菜单树
 export const menuTree = () => {
   return request({
     url: '/system/menu/menuTree',
     method: 'get'
   })
 }
-
+// 查询菜单信息
 export const getMenu = (menuId: number) => {
   return request({
     url: '/system/menu/' + menuId,
@@ -23,6 +25,7 @@ export const getMenu = (menuId: number) => {
   })
 }
 
+// 添加菜单信息
 export const addMenu = (data: SysMenuForm) => {
   return request({
     url: '/system/menu',
@@ -31,6 +34,7 @@ export const addMenu = (data: SysMenuForm) => {
   })
 }
 
+// 修改菜单信息
 export const editMenu = (data: SysMenuForm) => {
   return request({
     url: '/system/menu',
@@ -39,6 +43,7 @@ export const editMenu = (data: SysMenuForm) => {
   })
 }
 
+// 删除菜单信息
 export const deleteMenu = (menuId: number) => {
   return request({
     url: '/system/menu/' + menuId,

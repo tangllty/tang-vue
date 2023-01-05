@@ -10,7 +10,7 @@ export interface SysDept {
   children: SysDept[]
 }
 
-// 用户表单对象
+// 部门表单对象
 export interface SysDeptForm {
   deptId: number
   parentId: number
@@ -19,7 +19,7 @@ export interface SysDeptForm {
   status: string
 }
 
-// 用户查询参数
+// 部门查询参数
 export interface SysDeptQuery extends PageQuery {
   deptId: number
   deptName: string

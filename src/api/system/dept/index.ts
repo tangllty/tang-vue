@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 import { SysDeptQuery, SysDeptForm } from './types'
 
+// 查询部门列表
 export const listDept = (queryParams: SysDeptQuery) => {
   return request({
     url: '/system/dept/list',
@@ -9,6 +10,7 @@ export const listDept = (queryParams: SysDeptQuery) => {
   })
 }
 
+// 查询部门树
 export const deptTree = () => {
   return request({
     url: '/system/dept/deptTree',
@@ -16,6 +18,7 @@ export const deptTree = () => {
   })
 }
 
+// 查询部门信息
 export const getDept = (deptId: number) => {
   return request({
     url: '/system/dept/' + deptId,
@@ -23,6 +26,7 @@ export const getDept = (deptId: number) => {
   })
 }
 
+// 添加部门信息
 export const addDept = (data: SysDeptForm) => {
   return request({
     url: '/system/dept',
@@ -31,6 +35,7 @@ export const addDept = (data: SysDeptForm) => {
   })
 }
 
+// 修改部门信息
 export const editDept = (data: SysDeptForm) => {
   return request({
     url: '/system/dept',
@@ -39,6 +44,7 @@ export const editDept = (data: SysDeptForm) => {
   })
 }
 
+// 删除部门信息
 export const deleteDept = (deptId: number) => {
   return request({
     url: '/system/dept/' + deptId,

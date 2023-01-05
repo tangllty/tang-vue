@@ -1,6 +1,8 @@
 import request from '@/utils/request'
 import { SysUserQuery, SysUserForm } from './types'
 
+
+// 查询用户列表
 export const listUser = (queryParams: SysUserQuery) => {
   return request({
     url: '/system/user/list',
@@ -8,7 +10,7 @@ export const listUser = (queryParams: SysUserQuery) => {
     params: queryParams
   })
 }
-
+// 查询用户列表
 export const getUser = (userId: number) => {
   return request({
     url: '/system/user/' + userId,
@@ -16,6 +18,8 @@ export const getUser = (userId: number) => {
   })
 }
 
+
+// 添加用户信息
 export const addUser = (data: SysUserForm) => {
   return request({
     url: '/system/user',
@@ -24,6 +28,7 @@ export const addUser = (data: SysUserForm) => {
   })
 }
 
+// 修改用户信息
 export const editUser = (data: SysUserForm) => {
   return request({
     url: '/system/user',
@@ -32,6 +37,7 @@ export const editUser = (data: SysUserForm) => {
   })
 }
 
+// 删除用户信息
 export const deleteUser = (userId: number) => {
   return request({
     url: '/system/user/' + userId,

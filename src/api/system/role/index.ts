@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 import { SysRoleForm, SysRoleQuery } from './types'
 
+// 查询角色列表
 export const listRole = (queryParams: SysRoleQuery) => {
   return request({
     url: '/system/role/list',
@@ -9,6 +10,7 @@ export const listRole = (queryParams: SysRoleQuery) => {
   })
 }
 
+// 查询角色信息
 export const getRole = (roleId: number) => {
   return request({
     url: '/system/role/' + roleId,
@@ -16,6 +18,7 @@ export const getRole = (roleId: number) => {
   })
 }
 
+// 添加角色信息
 export const addRole = (data: SysRoleForm) => {
   return request({
     url: '/system/role',
@@ -24,6 +27,7 @@ export const addRole = (data: SysRoleForm) => {
   })
 }
 
+// 修改角色信息
 export const editRole = (data: SysRoleForm) => {
   return request({
     url: '/system/role',
@@ -32,6 +36,7 @@ export const editRole = (data: SysRoleForm) => {
   })
 }
 
+// 删除角色信息
 export const deleteRole = (roleId: number) => {
   return request({
     url: '/system/role/' + roleId,
