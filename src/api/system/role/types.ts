@@ -3,8 +3,8 @@ export interface SysRole {
   roleId: number
   roleName: string
   roleKey: string
-  roleSort: number
   dataScope: string
+  sort: number
   status: string
   createTime: Date
   updateTime: Date
@@ -15,7 +15,7 @@ export interface SysRoleForm {
   roleId: number
   roleName: string
   roleKey: string
-  roleSort: number
+  sort: number
   status: string
 }
 

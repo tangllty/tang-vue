@@ -3,7 +3,7 @@ export interface SysDept {
   deptId: number
   parentId: number
   deptName: string
-  orderNum: number
+  sort: number
   status: string
   createTime: Date
   updateTime: Date
@@ -15,7 +15,7 @@ export interface SysDeptForm {
   deptId: number
   parentId: number
   deptName: string
-  orderNum: number
+  sort: number
   status: string
 }
 

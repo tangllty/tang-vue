@@ -3,7 +3,6 @@ export interface SysMenu {
   menuId: number
   parentId: number
   menuName: string
-  orderNum: number
   path: string
   component: string
   query: string
@@ -13,6 +12,7 @@ export interface SysMenu {
   isFrame: string
   isCache: string
   visible: string
+  sort: number
   status: string
   createTime: Date
   updateTime: Date
@@ -24,7 +24,6 @@ export interface SysMenuForm {
   menuId: number
   parentId: number
   menuName: string
-  orderNum: number
   path: string
   component: string
   query: string
@@ -34,6 +33,7 @@ export interface SysMenuForm {
   isFrame: string
   isCache: string
   visible: string
+  sort: number
   status: string
 }
 

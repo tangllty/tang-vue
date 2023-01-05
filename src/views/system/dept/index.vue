@@ -65,7 +65,7 @@
           align="center"
         />
         <el-table-column
-          prop="orderNum"
+          prop="sort"
           label="显示顺序"
           align="center"
         />
@@ -143,9 +143,9 @@
             placeholder="请输入部门名称"
           />
         </el-form-item>
-        <el-form-item label="显示顺序" prop="orderNum">
+        <el-form-item label="显示顺序" prop="sort">
           <el-input-number
-            v-model="deptForm.orderNum"
+            v-model="deptForm.sort"
             :min="1"
             :max="9999"
             controls-position="right"
@@ -198,7 +198,7 @@ const state = reactive({
   } as Dialog,
   // 表单
   deptForm: {
-    orderNum: 1
+    sort: 1
   } as SysDeptForm
 })
 

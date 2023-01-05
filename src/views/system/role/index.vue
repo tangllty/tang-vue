@@ -75,7 +75,7 @@
           align="center"
         />
         <el-table-column
-          prop="orderNum"
+          prop="sort"
           label="显示顺序"
           align="center"
         />
@@ -149,7 +149,7 @@
             placeholder="请输入权限字符"
           />
         </el-form-item>
-        <el-form-item label="显示顺序" prop="orderNum">
+        <el-form-item label="显示顺序" prop="sort">
           <el-input-number
             v-model="roleForm.roleSort"
             :min="1"
