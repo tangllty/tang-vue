@@ -24,6 +24,10 @@ service.interceptors.response.use((response: AxiosResponse) => {
   if (code === 200) {
     return response.data
   }
+  if (code === 401) {
+    location.href = '/'
+    return Promise.reject(msg)
+  }
   if (code === 500) {
     ElMessage({
       message: msg,
