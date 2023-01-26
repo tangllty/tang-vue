@@ -1,16 +1,19 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-import router from "./router"
+import App from '@/App.vue'
+import router from "@/router"
+import { setupStore } from '@/store'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import zhLocale from 'element-plus/lib/locale/lang/zh-cn'
+import '@/permission'
 
 // 自定义样式
-import './styles/index.scss'
+import '@/styles/index.scss'
 
 const app = createApp(App)
 
+setupStore(app)
 app
   .use(router)
   .use(ElementPlus, {

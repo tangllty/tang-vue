@@ -39,11 +39,16 @@
 import { reactive, ref, toRefs } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { LoginForm } from '@/api/auth/types'
+import { useUserStore } from "@/store/modules/user"
+import router from '@/router';
+
+const userStore = useUserStore()
 
 const state = reactive({
     loginForm: {
       username: 'admin',
-      password: '123456'
+      password: '123456',
+      loginType: 'username'
     } as LoginForm
 })
 
@@ -67,9 +72,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-      console.log(formEl);
-      
-      console.log('submit!')
+      userStore.login(state.loginForm).then(() => {
+        router.push({ path: '/' })
+      })
     } else {
       console.log('error submit!')
       return false
