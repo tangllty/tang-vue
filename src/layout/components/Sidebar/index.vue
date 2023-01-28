@@ -4,6 +4,7 @@
       :default-active="activeMenu"
       router
       unique-opened
+      :collapse="isCollapse"
     >
       <el-menu-item index="/index">
         <el-icon><House /></el-icon>
@@ -30,10 +31,14 @@
 
 <script lang="ts" setup>
 import { House, Setting, Histogram } from '@element-plus/icons-vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAppStore } from '@/store/modules/app'
 
+const appStore = useAppStore()
 const route = useRoute()
+
+const isCollapse = computed(() => appStore.sidebar)
 
 const activeMenu = computed(() => {
   const { meta, path } = route
