@@ -1,7 +1,7 @@
 <template>
   <el-container :class="appWrapper" class="app-wrapper">
-    <el-aside width="200px" class="sidebar-container">
-      <el-header style="background-color: aliceblue;">
+    <el-aside class="sidebar-container">
+      <el-header class="logo" style="background-color: aliceblue;">
         Aside-header
       </el-header>
       <Sidebar class="sidebar" />

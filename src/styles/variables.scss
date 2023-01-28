@@ -1,6 +1,13 @@
 // sidebar
 $sidebarBackgroundColor: #304156;
 
+$headerHeight: 50px;
+$sidebarExpandWidth: 200px;
+$sidebarFoldWidth: 64px;
+
 :export {
   sidebarBackgroundColor: $sidebarBackgroundColor;
+  headerHeight: $headerHeight;
+  sidebarExpandWidth: $sidebarExpandWidth;
+  sidebarFoldWidth: $sidebarFoldWidth;
 }

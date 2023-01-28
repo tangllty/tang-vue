@@ -13,5 +13,38 @@ body {
 
   .app-wrapper {
     height: 100%;
+
+    .sidebar-container {
+      .logo {
+        height: $headerHeight;
+      }
+    }
+
+    .app-container {
+      .header-container {
+        height: $headerHeight;
+      }
+    }
+
+  }
+}
+
+.expandSidebar {
+  .sidebar-container {
+    width: $sidebarExpandWidth;
+
+    .logo {
+      width: $sidebarExpandWidth;
+    }
+  }
+}
+
+.foldSidebar {
+  .sidebar-container {
+    width: $sidebarFoldWidth;
+
+    .logo {
+      width: $sidebarFoldWidth;
+    }
   }
 }
