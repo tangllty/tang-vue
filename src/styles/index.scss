@@ -15,14 +15,25 @@ body {
     height: 100%;
 
     .sidebar-container {
+      box-shadow: 2px 0 6px 2px rgba(0, 0, 0, .18);
+      z-index: 1001;
+
       .logo {
         height: $headerHeight;
+        box-sizing: content-box;
+      }
+
+      .sidebar {
+        .el-menu {
+          border-right: none;
+        }
       }
     }
 
     .app-container {
       .header-container {
         height: $headerHeight;
+        box-shadow: 0 2px 6px 2px rgba(0, 0, 0, .08);
       }
     }
 
@@ -36,6 +47,9 @@ body {
 
     .logo {
       width: $sidebarExpandWidth;
+      transition: width 280ms;
+    }
+    .sidebar {
       transition: width 280ms;
     }
   }
