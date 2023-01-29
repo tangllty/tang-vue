@@ -3,6 +3,8 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStoreHook } from '@/store/modules/user';
 import { getToken, removeToken } from '@/utils/auth';
 
+let reloginFlag:boolean = true
+
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 20000,
@@ -35,13 +37,17 @@ service.interceptors.response.use((response: AxiosResponse) => {
     return response.data
   }
   if (code === 401) {
-    ElMessageBox.confirm('登陆已失效，请重新登录', '提示', {
-      type: 'warning'
-    }).then(() => {
-      removeToken()
-      location.href = '/'
-    }).catch(() => {
-    })
+    if (reloginFlag) {
+      reloginFlag = false
+      ElMessageBox.confirm('登陆已失效，请重新登录', '提示', {
+        type: 'warning'
+      }).then(() => {
+        removeToken()
+        location.href = '/'
+      }).catch(() => {
+        reloginFlag = true
+      })
+    }
     return Promise.reject(msg)
   }
   if (code === 500) {
