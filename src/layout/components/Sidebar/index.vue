@@ -5,6 +5,7 @@
       router
       unique-opened
       :collapse="isCollapse"
+      :collapse-transition="false"
     >
       <el-menu-item index="/index">
         <el-icon><House /></el-icon>

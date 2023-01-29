@@ -32,9 +32,11 @@ body {
 .expandSidebar {
   .sidebar-container {
     width: $sidebarExpandWidth;
+    transition: width 280ms;
 
     .logo {
       width: $sidebarExpandWidth;
+      transition: width 280ms;
     }
   }
 }
@@ -42,9 +44,11 @@ body {
 .foldSidebar {
   .sidebar-container {
     width: $sidebarFoldWidth;
+    transition: width 280ms;
 
     .logo {
       width: $sidebarFoldWidth;
+      transition: width 280ms;
     }
   }
 }
