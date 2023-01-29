@@ -13,7 +13,7 @@
       <Sidebar class="sidebar" />
     </el-aside>
     <el-container class="app-container">
-      <el-header class="header-container" style="background-color: azure;">
+      <el-header class="header-container">
         <Navbar />
       </el-header>
       <el-main class="main-container">
