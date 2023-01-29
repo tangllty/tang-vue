@@ -1,8 +1,14 @@
 <template>
   <el-container :class="appWrapper" class="app-wrapper">
     <el-aside class="sidebar-container">
-      <el-header class="logo" style="background-color: aliceblue;">
-        Aside-header
+      <el-header class="logo">
+        <router-link
+          class="logo-link"
+          to="/index"
+        >
+          <el-image :src="logo" class="logo-image" />
+          <span v-show="!title" class="logo-title">后台管理系统</span>
+        </router-link>
       </el-header>
       <Sidebar class="sidebar" />
     </el-aside>
@@ -22,14 +28,41 @@ import { computed } from 'vue'
 import Sidebar from '@/layout/components/Sidebar/index.vue'
 import Navbar from '@/layout/components/Navbar/index.vue'
 import { useAppStore } from '@/store/modules/app';
+import logo from '@/assets/logo.png'
 
 const appStore = useAppStore()
+
+const title = computed(() => appStore.sidebar)
 
 const appWrapper = computed(() => ({
   expandSidebar: !appStore.sidebar,
   foldSidebar: appStore.sidebar
 }))
+
 </script>
 
 <style lang="scss" scoped>
+.logo {
+  padding-left: 0;
+
+  .logo-link {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+  }
+
+  .logo-image {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgb(194, 194, 194);
+  }
+
+  .logo-title {
+    margin-left: .75rem;
+  }
+}
 </style>
