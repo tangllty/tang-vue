@@ -40,7 +40,6 @@ service.interceptors.response.use((response: AxiosResponse) => {
     }).then(() => {
       removeToken()
       location.href = '/'
-      console.log('confirm');
     }).catch(() => {
     })
     return Promise.reject(msg)
