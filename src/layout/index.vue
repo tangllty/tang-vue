@@ -2,13 +2,23 @@
   <el-container :class="appWrapper" class="app-wrapper">
     <el-aside class="sidebar-container">
       <el-header class="logo">
-        <router-link
-          class="logo-link"
-          to="/index"
-        >
-          <el-image :src="logo" class="logo-image" />
-          <span v-show="!title" class="logo-title">后台管理系统</span>
-        </router-link>
+        <transition>
+          <router-link
+            class="logo-link"
+            to="/index"
+            v-if="title"
+          >
+            <el-image :src="logo" class="logo-image" />
+          </router-link>
+          <router-link
+            class="logo-link"
+            to="/index"
+            v-else
+          >
+            <el-image :src="logo" class="logo-image" />
+            <span v-show="!title" class="logo-title">后台管理系统</span>
+          </router-link>
+        </transition>
       </el-header>
       <Sidebar class="sidebar" />
     </el-aside>
@@ -64,5 +74,14 @@ const appWrapper = computed(() => ({
   .logo-title {
     margin-left: .75rem;
   }
+}
+
+.v-enter-active {
+  transition: opacity 1200ms ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
