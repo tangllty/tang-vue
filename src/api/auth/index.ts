@@ -9,3 +9,11 @@ export function login(data: LoginForm) {
     data
   })
 }
+
+// 登出
+export function logout() {
+  return request({
+    url: '/logout',
+    method: 'delete'
+  })
+}
