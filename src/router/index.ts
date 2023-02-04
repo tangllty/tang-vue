@@ -1,34 +1,22 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { usePermissionStoreHook } from '@/store/modules/permission'
 
-const routes:Array<RouteRecordRaw> = [
+export const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
-    component: () => import('@/views/login.vue')
+    component: () => import('@/views/login.vue'),
+    meta: { hidden: true }
   },
   {
     path: '/',
     component: () => import('@/layout/index.vue'),
     redirect: 'index',
+    meta: { hidden: true },
     children: [
       {
         path: '/index',
-        component: () => import('@/views/index.vue')
-      },
-      {
-        path: '/system/user',
-        component: () => import('@/views/system/user/index.vue')
-      },
-      {
-        path: '/system/dept',
-        component: () => import('@/views/system/dept/index.vue')
-      },
-      {
-        path: '/system/menu',
-        component: () => import('@/views/system/menu/index.vue')
-      },
-      {
-        path: '/system/role',
-        component: () => import('@/views/system/role/index.vue')
+        component: () => import('@/views/index.vue'),
+        meta: { title: '首页', icon: 'House' }
       }
     ]
   }
@@ -38,5 +26,16 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+// 重置路由
+export function resetRouter() {
+  const permissionStore = usePermissionStoreHook();
+  permissionStore.routes.forEach(route => {
+    const name = route.name
+    if (name && router.hasRoute(name)) {
+      router.removeRoute(name)
+    }
+  })
+}
 
 export default router

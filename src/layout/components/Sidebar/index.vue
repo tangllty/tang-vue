@@ -11,33 +11,27 @@
         <el-icon><House /></el-icon>
         <span>首页</span>
       </el-menu-item>
-      <el-sub-menu index="/system">
-        <template #title>
-          <el-icon><Setting /></el-icon>
-          <span>系统管理</span>
-        </template>
-        <el-menu-item index="/system/user">用户管理</el-menu-item>
-        <el-menu-item index="/system/dept">部门管理</el-menu-item>
-        <el-menu-item index="/system/role">角色管理</el-menu-item>
-        <el-menu-item index="/system/menu">菜单管理</el-menu-item>
-        <el-sub-menu index="/system/log">
-          <template #title>日志管理</template>
-          <el-menu-item index="/system/log/login">登陆日志</el-menu-item>
-          <el-menu-item index="/system/log/oper">操作日志</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
+
+      <SidebarItem
+        v-for="route in permissionStore.routes"
+        :item="route"
+        :key="route.path"
+        :base-path="route.path"
+      />
     </el-menu>
   </el-scroller>
 </template>
 
 <script lang="ts" setup>
-import { House, Setting, Histogram } from '@element-plus/icons-vue'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAppStore } from '@/store/modules/app'
+import { usePermissionStore } from '@/store/modules/permission'
+import SidebarItem from '@/layout/components/Sidebar/SidebarItem.vue'
 
-const appStore = useAppStore()
 const route = useRoute()
+const appStore = useAppStore()
+const permissionStore = usePermissionStore()
 
 const isCollapse = computed(() => appStore.sidebar)
 

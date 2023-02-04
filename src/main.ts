@@ -11,7 +11,13 @@ import '@/permission'
 // 自定义样式
 import '@/styles/index.scss'
 
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 const app = createApp(App)
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 
 setupStore(app)
 app

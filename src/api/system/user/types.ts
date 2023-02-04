@@ -18,6 +18,12 @@ export interface SysUser {
   remark: string
 }
 
+// 用户信息
+export interface UserInfo {
+  user: SysUser
+  roles: string[]
+}
+
 // 用户表单对象
 export interface SysUserForm {
   deptId: number
