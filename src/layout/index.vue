@@ -60,7 +60,6 @@ const appWrapper = computed(() => ({
     height: 50px;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
     color: black;
     font-weight: 600;
   }
