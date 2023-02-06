@@ -9,7 +9,7 @@
       <el-icon v-show="appStore.sidebar"><Fold /></el-icon>
     </el-radio-group>
 
-    <div style="float: right;">
+    <div>
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
           <el-image :src="userAvatar" class="user-avatar" />
@@ -65,6 +65,8 @@ function logout() {
 .navbar {
   height: 50px;
   margin-bottom: 20px;
+  display:flex;
+  justify-content:space-between;
   align-items: center;
 
 
@@ -79,8 +81,10 @@ function logout() {
   }
 
   div {
-    height: 50px;
     width: auto;
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
 
     .user-avatar {
       width: 40px;
@@ -88,12 +92,7 @@ function logout() {
       display: inline-block;
       border-radius: .5rem;
       border: 1px solid #ccc;
-      margin: 5px;
-    }
-
-    .el-dropdown {
-      width: 40px;
-      line-height: 50px;
+      margin-left: 0px;
     }
   }
 }
