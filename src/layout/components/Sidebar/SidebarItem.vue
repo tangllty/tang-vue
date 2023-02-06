@@ -2,11 +2,13 @@
   <div v-if="!item.meta || !item.meta.hidden">
     <el-sub-menu v-if="item.children" :index="resolvePath(item.path)">
       <template #title>
-        <component
-          v-if="item.meta && item.meta.icon"
-          class="icon"
-          :is="item.meta.icon"
-        />
+        <el-icon>
+          <component
+            v-if="item.meta && item.meta.icon"
+            class="icon"
+            :is="item.meta.icon"
+          />
+        </el-icon>
         <span class="title-span">
           {{ item.meta.title }}
         </span>
@@ -22,11 +24,13 @@
 
     <el-menu-item v-else :index="resolvePath('')">
       <template #title>
-        <component
-          v-if="item.meta && item.meta.icon"
-          class="icon"
-          :is="item.meta.icon"
-        />
+        <el-icon>
+          <component
+            v-if="item.meta && item.meta.icon"
+            class="icon"
+            :is="item.meta.icon"
+          />
+        </el-icon>
         <span>
           {{ item.meta.title }}
         </span>
