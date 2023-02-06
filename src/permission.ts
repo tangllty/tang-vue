@@ -16,7 +16,11 @@ router.beforeEach(async (to, from, next) => {
     } else {
       const gotUserInfo = userStore.roles.length > 0
       if (gotUserInfo) {
-        next()
+        if (to.matched.length === 0) {
+          from.path ? next({ path: from.path as string }) : next('/401')
+        } else {
+          next()
+        }
       } else {
         await userStore.getInfo()
         const accessRoutes: RouteRecordRaw[] = await permissionStore.getRoutes()

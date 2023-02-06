@@ -9,43 +9,43 @@ const modules = import.meta.glob('../../views/**/**.vue')
 export const Layout = () => import('@/layout/index.vue')
 
 export const usePermissionStore = defineStore('permission', () => {
-    const routes = ref<RouteRecordRaw[]>([])
+  const routes = ref<RouteRecordRaw[]>([])
 
-    const filterAsyncRoutes = (routes: RouteRecordRaw[]) => {
-        const res: RouteRecordRaw[] = []
-        routes.forEach(route  => {
-            const temp = { ...route } as any;
-            if (temp.component == 'Layout') {
-                temp.component = Layout
-            } else {
-                temp.component = modules[`../../views/${route.component}.vue`] as any;
-            }
-            res.push(temp)
+  const filterAsyncRoutes = (routes: RouteRecordRaw[]) => {
+    const res: RouteRecordRaw[] = []
+    routes.forEach(route  => {
+      const temp = { ...route } as any;
+      if (temp.component == 'Layout') {
+        temp.component = Layout
+      } else {
+        temp.component = modules[`../../views/${route.component}.vue`] as any;
+      }
+      res.push(temp)
 
-            if (temp.children) {
-                temp.children = filterAsyncRoutes(temp.children)
-            }
-        })
-        return res
-    }
+      if (temp.children) {
+        temp.children = filterAsyncRoutes(temp.children)
+      }
+    })
+    return res
+  }
 
-    function getRoutes() {
-        return new Promise<RouteRecordRaw[]>((resolve, reject) => {
-            getRoutesApi().then((response) => {
-                const asyncRoutes = response.data
-                const accessedRoutes = filterAsyncRoutes(asyncRoutes)
-                routes.value = constantRoutes.concat(accessedRoutes)
-                resolve(accessedRoutes)
-            }).catch((error) => {
-                reject(error)
-            })
-        })
-    }
+  function getRoutes() {
+    return new Promise<RouteRecordRaw[]>((resolve, reject) => {
+      getRoutesApi().then((response) => {
+        const asyncRoutes = response.data
+        const accessedRoutes = filterAsyncRoutes(asyncRoutes)
+        routes.value = constantRoutes.concat(accessedRoutes)
+        resolve(accessedRoutes)
+      }).catch((error) => {
+        reject(error)
+      })
+    })
+  }
 
-    return {
-        routes,
-        getRoutes
-    }
+  return {
+    routes,
+    getRoutes
+  }
 })
 
 // 非setup
