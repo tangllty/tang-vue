@@ -75,10 +75,10 @@
 
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
+import router from '@/router'
 import { ElButton, ElForm, ElFormItem, ElInput, ElTabPane, ElTabs, FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { LoginForm } from '@/api/auth/types'
 import { useUserStore } from "@/store/modules/user"
-import router from '@/router'
 
 const userStore = useUserStore()
 

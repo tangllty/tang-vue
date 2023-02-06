@@ -170,7 +170,6 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listMenu, menuTree as selectMenuTree, getMenu, addMenu, editMenu, deleteMenu } from '@/api/system/menu'
 import { SysMenu, SysMenuForm, SysMenuQuery } from '@/api/system/menu/types'
 

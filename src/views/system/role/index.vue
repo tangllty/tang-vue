@@ -176,11 +176,8 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listRole, getRole, addRole, editRole, deleteRole } from '@/api/system/role'
 import { SysRole as Role, SysRoleForm, SysRoleQuery as RoleQuery } from '@/api/system/role/types'
-
-
 
 const state = reactive({
   // 遮罩层

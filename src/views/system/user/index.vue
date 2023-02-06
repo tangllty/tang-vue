@@ -282,7 +282,6 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
 import { listUser, addUser, getUser, editUser, deleteUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'

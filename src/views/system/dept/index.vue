@@ -170,8 +170,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listDept, deptTree as selectDeptTree, getDept, addDept, editDept, deleteDept } from '@/api/system/dept'
+import { listDept, deptTree as selectDeptTree, addDept, editDept, deleteDept } from '@/api/system/dept'
 import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
 
 const state = reactive({
