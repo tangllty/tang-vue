@@ -50,13 +50,11 @@ service.interceptors.response.use((response: AxiosResponse) => {
     }
     return Promise.reject(msg)
   }
-  if (code === 500) {
-    ElMessage({
-      message: msg,
-      type: 'error'
-    })
-    return Promise.reject(new Error(msg))
-  }
+  ElMessage({
+    message: msg,
+    type: 'error'
+  })
+  return Promise.reject(new Error(msg))
 }, (error: any) => {
   ElMessage({
     message: error,
