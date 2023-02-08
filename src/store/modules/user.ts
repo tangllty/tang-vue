@@ -32,7 +32,7 @@ export const useUserStore = defineStore('user', () => {
   function logout() {
     return new Promise<void>((resolve, reject) => {
       logoutApi().then(() => {
-        resetToken()
+        resetAuth()
         resetRouter()
         resolve()
       }).catch((error) => {
@@ -55,9 +55,11 @@ export const useUserStore = defineStore('user', () => {
   }
 
   // 重置
-  function resetToken() {
+  function resetAuth() {
     removeToken()
     token.value = ''
+    roles.value = []
+    permissions.value = []
   }
 
   return {
