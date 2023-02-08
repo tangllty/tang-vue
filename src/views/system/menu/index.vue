@@ -43,9 +43,9 @@
           <el-button
             type="primary"
             :icon="Plus"
+            v-hasPermission="['system:menu:add']"
             @click="handleAdd"
           >新增</el-button>
-
         </el-row>
       </template>
 
@@ -95,6 +95,7 @@
               link
               :icon="Plus"
               size="small"
+              v-hasPermission="['system:menu:add']"
               @click="handleAdd(scope.row)"
             >新增</el-button>
             <el-button
@@ -102,6 +103,7 @@
               link
               :icon="Edit"
               size="small"
+              v-hasPermission="['system:menu:edit']"
               @click="handleEdit(scope.row)"
             >修改</el-button>
             <el-button
@@ -109,6 +111,7 @@
               link
               :icon="Delete"
               size="small"
+              v-hasPermission="['system:menu:delete']"
               @click="handleDelete(scope.row)"
             >删除</el-button>
           </template>
@@ -170,6 +173,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listMenu, menuTree as selectMenuTree, getMenu, addMenu, editMenu, deleteMenu } from '@/api/system/menu'
 import { SysMenu, SysMenuForm, SysMenuQuery } from '@/api/system/menu/types'
 

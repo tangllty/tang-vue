@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from '@/App.vue'
 import router from "@/router"
 import { setupStore } from '@/store'
+import { setupDirective } from '@/directives'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -20,6 +21,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 setupStore(app)
+setupDirective(app)
 app
   .use(router)
   .use(ElementPlus, {

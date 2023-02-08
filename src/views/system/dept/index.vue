@@ -43,9 +43,9 @@
           <el-button
             type="primary"
             :icon="Plus"
+            v-hasPermission="['system:dept:add']"
             @click="handleAdd"
           >新增</el-button>
-
         </el-row>
       </template>
 
@@ -95,6 +95,7 @@
               link
               :icon="Plus"
               size="small"
+              v-hasPermission="['system:dept:add']"
               @click="handleAdd(scope.row)"
             >新增</el-button>
             <el-button
@@ -102,6 +103,7 @@
               link
               :icon="Edit"
               size="small"
+              v-hasPermission="['system:dept:edit']"
               @click="handleEdit(scope.row)"
             >修改</el-button>
             <el-button
@@ -109,6 +111,7 @@
               link
               :icon="Delete"
               size="small"
+              v-hasPermission="['system:dept:delete']"
               @click="handleDelete(scope.row)"
             >删除</el-button>
           </template>
@@ -170,6 +173,7 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listDept, deptTree as selectDeptTree, addDept, editDept, deleteDept } from '@/api/system/dept'
 import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
 

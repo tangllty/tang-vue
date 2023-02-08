@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', () => {
   const token = ref<String>(getToken() ||'')
   // 角色集合
   const roles = ref<Array<string>>([])
+  const permissions = ref<Array<string>>([])
 
   // 登录
   function login(loginForm: LoginForm) {
@@ -45,6 +46,7 @@ export const useUserStore = defineStore('user', () => {
     return new Promise<UserInfo>((resolve, reject) => {
       getInfoApi().then(({ data }) => {
         roles.value = data.roles
+        permissions.value = data.permissions
         resolve(data)
       }).catch((error) => {
         reject(error)
@@ -61,6 +63,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     token,
     roles,
+    permissions,
     login,
     logout,
     getInfo
