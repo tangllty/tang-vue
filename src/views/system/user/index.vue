@@ -167,6 +167,20 @@
               align="center"
             />
             <el-table-column
+              label="状态"
+              align="center"
+              prop="status"
+            >
+              <template #default="scope">
+                <el-switch
+                  v-model="scope.row.status"
+                  active-value="0"
+                  inactive-value="1"
+                  @change="handleChangeStatus(scope.row)"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column
               label="最后登录IP"
               prop="loginIp"
               width="120"
@@ -284,9 +298,9 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
+import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElMessageBox, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
-import { listUser, addUser, getUser, editUser, deleteUser } from '@/api/system/user'
+import { listUser, addUser, getUser, changeStatus, editUser, deleteUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
@@ -416,6 +430,21 @@ function closeUserDialog() {
   state.userDialog.visible = false
   userRuleFormRef.value?.resetFields()
   userRuleFormRef.value?.clearValidate()
+}
+
+// 修改用户状态
+function handleChangeStatus(row: { [key: string]: any }) {
+  const text = row.status === 1 ? '启用' : '停用';
+  ElMessageBox.confirm('确认要' + text + '"' + row.username + '"用户吗?', '警告', {
+      type: 'warning'
+    }
+  ).then(() => {
+    return changeStatus(row.userId, row.status)
+  }).then(() => {
+    ElMessage.success(text + '成功')
+  }).catch(() => {
+    row.status = row.status === 1 ? 0 : 1
+  })
 }
 
 // 多选框
