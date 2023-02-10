@@ -44,6 +44,20 @@ export const editUser = (data: SysUserForm) => {
   })
 }
 
+// 修改用户状态
+export const changeStatus = (userId: number, status: string) => {
+  const data = {
+    userId,
+    status
+  }
+
+  return request({
+    url: '/system/user/changeStatus',
+    method: 'put',
+    data
+  })
+}
+
 // 删除用户信息
 export const deleteUser = (userId: number) => {
   return request({
