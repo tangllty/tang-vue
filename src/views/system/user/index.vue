@@ -260,6 +260,16 @@
             <el-radio label="2">女</el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="角色" prop="roleIds">
+          <el-select v-model="userForm.roleIds" multiple placeholder="请选择角色">
+            <el-option
+              v-for="role in roleSelect"
+              :key="role.value"
+              :label="role.label"
+              :value="role.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input
             v-model="userForm.remark"
@@ -286,7 +296,7 @@
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
-import { listUser, addUser, getUser, editUser, deleteUser } from '@/api/system/user'
+import { listUser, addUser, getUser, getRoleSelect, editUser, deleteUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
@@ -307,6 +317,8 @@ const state = reactive({
   userList: [] as SysUser[],
   // 部门树数据
   deptTree: [] as TreeSelect[],
+  // 角色下拉框数据
+  roleSelect: [] as TreeSelect[],
   // 查询参数
   queryParams: {
     pageNum: 1,
@@ -332,6 +344,7 @@ const {
   total,
   userList,
   deptTree,
+  roleSelect,
   queryParams,
   userDialog,
   userForm
@@ -353,6 +366,8 @@ const userRules = reactive<FormRules>({
     { required: true, message: '昵称不能为空', trigger: 'blur' },
     { min: 4, max: 32, message: '密码长度应在 4 到 32 之间', trigger: 'blur' },
   ],
+  deptId: [{ required: true, message: '部门不能为空', trigger: 'blur' }],
+  roleIds: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
 })
 
 // 筛选部门树信息
@@ -377,6 +392,10 @@ function handleList() {
 
 // 添加用户信息
 function handleAdd() {
+  getRoleSelect().then((res: any) => {
+    state.roleSelect = res.data
+  })
+
   state.userDialog = {
     title: '新增用户信息',
     type: 'add',
@@ -386,7 +405,7 @@ function handleAdd() {
 
 // 修改用户信息
 function handleEdit() {
-  getUser(state.userId).then((res:any) => {
+  getUser(state.userId).then((res: any) => {
     state.userForm = res.data
   })
 

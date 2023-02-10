@@ -19,6 +19,7 @@ declare global {
   type TreeSelect = {
     value: number
     label: string
+    checked: boolean
     children: TreeSelect[]
   }
 

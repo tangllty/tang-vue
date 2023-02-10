@@ -18,6 +18,13 @@ export const getUser = (userId: number) => {
   })
 }
 
+// 获取角色下拉框数据
+export const getRoleSelect = () => {
+  return request({
+    url: '/system/user/getRoleSelect',
+    method: 'get'
+  })
+}
 
 // 添加用户信息
 export const addUser = (data: SysUserForm) => {

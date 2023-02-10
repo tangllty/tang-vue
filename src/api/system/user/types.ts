@@ -33,6 +33,7 @@ export interface SysUserForm {
   phone: string
   password: string
   gender: string
+  roleIds: number[]
   remark: string
 }
 
