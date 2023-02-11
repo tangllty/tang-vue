@@ -93,21 +93,21 @@
               <el-button
                 type="primary"
                 :icon="Plus"
-                v-hasPermission="['system:user:add']"
+                v-hasPermission="'system:user:add'"
                 @click="handleAdd"
               >新增</el-button>
               <el-button
                 type="success"
                 :icon="Edit"
                 :disabled="selectSingle"
-                v-hasPermission="['system:user:edit']"
+                v-hasPermission="'system:user:edit'"
                 @click="handleEdit"
               >修改</el-button>
               <el-button
                 type="danger"
                 :icon="Delete"
                 :disabled="selectSingle"
-                v-hasPermission="['system:user:delete']"
+                v-hasPermission="'system:user:delete'"
                 @click="handleDelete"
               >删除</el-button>
               <el-button

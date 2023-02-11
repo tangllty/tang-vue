@@ -43,7 +43,7 @@
           <el-button
             type="primary"
             :icon="Plus"
-            v-hasPermission="['system:menu:add']"
+            v-hasPermission="'system:menu:add'"
             @click="handleAdd"
           >新增</el-button>
         </el-row>
@@ -95,7 +95,7 @@
               link
               :icon="Plus"
               size="small"
-              v-hasPermission="['system:menu:add']"
+              v-hasPermission="'system:menu:add'"
               @click="handleAdd(scope.row)"
             >新增</el-button>
             <el-button
@@ -103,7 +103,7 @@
               link
               :icon="Edit"
               size="small"
-              v-hasPermission="['system:menu:edit']"
+              v-hasPermission="'system:menu:edit'"
               @click="handleEdit(scope.row)"
             >修改</el-button>
             <el-button
@@ -111,7 +111,7 @@
               link
               :icon="Delete"
               size="small"
-              v-hasPermission="['system:menu:delete']"
+              v-hasPermission="'system:menu:delete'"
               @click="handleDelete(scope.row)"
             >删除</el-button>
           </template>

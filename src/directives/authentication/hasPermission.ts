@@ -9,8 +9,21 @@ export default {
 
     const { value } = binding
 
-    if (!permissions.includes(value) && !permissions.includes(allPermissions)) {
-      el.parentNode.removeChild(el)
+    if (typeof value === 'string') {
+      if (!hasPermission(value)) {
+        el.parentNode.removeChild(el)
+      }
+    }
+    if (value instanceof Array) {
+      value.forEach(permission => {
+        if (!hasPermission(permission)) {
+          el.parentNode.removeChild(el)
+        }
+      })
+    }
+
+    function hasPermission(permission: string) {
+      return permissions.includes(permission) || permissions.includes(allPermissions)
     }
   }
 }

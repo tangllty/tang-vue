@@ -9,8 +9,21 @@ export default {
 
     const { value } = binding
 
-    if (!roles.includes(value) && !roles.includes(adminRole)) {
-      el.parentNode.removeChild(el)
+    if (typeof value === 'string') {
+      if (!hasRole(value)) {
+        el.parentNode.removeChild(el)
+      }
+    }
+    if (value instanceof Array) {
+      value.forEach(role => {
+        if (!hasRole(role)) {
+          el.parentNode.removeChild(el)
+        }
+      })
+    }
+
+    function hasRole(role: string) {
+      return roles.includes(role) || roles.includes(adminRole)
     }
   }
 }
