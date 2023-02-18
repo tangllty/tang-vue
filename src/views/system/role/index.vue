@@ -82,23 +82,29 @@
           align="center"
         />
         <el-table-column
-          prop="dataScope"
-          label="数据范围"
-          align="center"
-        />
-        <el-table-column
-          prop="status"
           label="状态"
           align="center"
-        />
+          prop="status"
+        >
+          <template #default="scope">
+            <el-switch
+              v-model="scope.row.status"
+              active-value="0"
+              inactive-value="1"
+              @change="handleChangeStatus(scope.row)"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
+          width="160"
           align="center"
         />
         <el-table-column
           prop="updateTime"
           label="更新时间"
+          width="160"
           align="center"
         />
         <el-table-column
@@ -161,6 +167,23 @@
             controls-position="right"
           />
         </el-form-item>
+        <el-form-item label="菜单权限" prop="menuIds">
+          <el-tree
+            ref="menuTreeRef"
+            :data="menuTree"
+            node-key="value"
+            :props="{ children: 'children', label: 'label' }"
+            show-checkbox
+          />
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input
+            v-model="roleForm.remark"
+            placeholder="请输入备注"
+            type="textarea"
+            maxlength="500"
+          />
+        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -179,10 +202,12 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { ElMessage, ElMessageBox, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listRole, getRole, addRole, editRole, deleteRole } from '@/api/system/role'
-import { SysRole as Role, SysRoleForm, SysRoleQuery as RoleQuery } from '@/api/system/role/types'
+import { listRole, getRole, addRole, editRole, changeStatus, deleteRole } from '@/api/system/role'
+import { menuTree as selectMenuTree } from '@/api/system/menu'
+import { SysRole as Role, SysRoleForm, SysRoleQuery as RoleQuery, SysRole } from '@/api/system/role/types'
+import Node from 'element-plus/es/components/tree/src/model/node'
 
 const state = reactive({
   // 遮罩层
@@ -193,6 +218,8 @@ const state = reactive({
   roleIds: [] as number[],
   // 角色数据
   roleList: [] as Role[],
+  // 菜单树数据
+  menuTree: [] as TreeSelect[],
   // 查询参数
   queryParams: {
     pageNum: 1,
@@ -206,6 +233,7 @@ const state = reactive({
   } as Dialog,
   // 表单
   roleForm: {
+    sort: 1
   } as SysRoleForm
 })
 
@@ -213,11 +241,13 @@ const {
   loading,
   roleIds,
   roleList,
+  menuTree,
   queryParams,
   roleDialog,
   roleForm
 } = toRefs(state)
 
+const menuTreeRef = ref<InstanceType<typeof ElTree>>()
 const roleRuleFormRef = ref<FormInstance>()
 const roleQueryFormRef = ref<FormInstance>()
 const roleRules = reactive<FormRules>({
@@ -241,7 +271,9 @@ function handleList() {
 }
 
 // 添加角色信息
-function handleAdd(row: any) {
+function handleAdd() {
+  getMenuTree()
+
   state.roleDialog = {
     title: '新增角色信息',
     type: 'add',
@@ -249,14 +281,42 @@ function handleAdd(row: any) {
   }
 }
 
+// 查询菜单树
+function getMenuTree() {
+  selectMenuTree().then((res:any) => {
+    state.menuTree = res.data
+  })
+}
+
 // 修改角色信息
 function handleEdit(row: any) {
-  state.roleForm = row
+  getMenuTree()
+  getRole(row.roleId).then((res: any) => {
+    state.roleForm = res.data
+    const menuIds = res.data.menuIds
+    menuIds.forEach((menuId: number) => menuTreeRef.value?.setChecked(menuId, true, false))
+  })
+
   state.roleDialog = {
     title: '修改角色信息',
     type: 'edit',
     visible: true
   }
+}
+
+// 修改角色状态
+function handleChangeStatus(row: SysRole) {
+  const text = row.status === '0' ? '启用' : '停用';
+  ElMessageBox.confirm('确认要' + text + '"' + row.roleName + '"角色吗?', '警告', {
+      type: 'warning'
+    }
+  ).then(() => {
+    return changeStatus(row.roleId, row.status)
+  }).then(() => {
+    ElMessage.success(text + '成功')
+  }).catch(() => {
+    row.status = row.status === '1' ? '0' : '1'
+  })
 }
 
 // 删除角色信息
@@ -293,6 +353,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
+      const halfCheckedNodes = menuTreeRef.value?.getHalfCheckedNodes()
+      const checkedNodes = menuTreeRef.value?.getCheckedNodes()
+      const menuIds: number[] = []
+      halfCheckedNodes?.forEach(halfCheckedNode => menuIds.push(halfCheckedNode.value))
+      checkedNodes?.forEach(checkedNode => menuIds.push(checkedNode.value))
+      state.roleForm.menuIds = menuIds
+
       if (roleDialog.value.type == 'add') {
         addRole(state.roleForm).then(() => {
           ElMessage.success("添加角色信息成功")

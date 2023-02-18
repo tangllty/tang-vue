@@ -44,6 +44,20 @@ export const editDept = (data: SysDeptForm) => {
   })
 }
 
+// 修改部门状态
+export const changeStatus = (deptId: number, status: string) => {
+  const data = {
+    deptId,
+    status
+  }
+
+  return request({
+    url: '/system/dept/changeStatus',
+    method: 'put',
+    data
+  })
+}
+
 // 删除部门信息
 export const deleteDept = (deptId: number) => {
   return request({

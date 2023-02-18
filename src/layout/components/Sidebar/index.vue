@@ -8,7 +8,7 @@
       :collapse-transition="false"
     >
       <el-menu-item index="/index">
-        <el-icon><House /></el-icon>
+        <el-icon><svg-icon name="首页" /></el-icon>
         <span>首页</span>
       </el-menu-item>
 

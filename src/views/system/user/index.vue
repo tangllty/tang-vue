@@ -44,6 +44,7 @@
                 v-model="queryParams.username"
                 placeholder="用户名"
                 style="width: 200px"
+                clearable
                 @keyup.enter="handleList"
               />
             </el-form-item>
@@ -52,24 +53,33 @@
                 v-model="queryParams.nickname"
                 placeholder="昵称"
                 style="width: 200px"
+                clearable
                 @keyup.enter="handleList"
               />
             </el-form-item>
             <el-form-item label="性别" prop="gender">
-              <el-input
+              <el-select
                 v-model="queryParams.gender"
                 placeholder="性别"
                 style="width: 200px"
+                clearable
                 @keyup.enter="handleList"
-              />
+              >
+                <el-option label="保密" value="保密" />
+                <el-option label="男" value="男" />
+                <el-option label="女" value="女" />
+              </el-select>
             </el-form-item>
             <el-form-item label="状态" prop="status">
-              <el-input
+              <el-select
                 v-model="queryParams.status"
                 placeholder="状态"
                 style="width: 200px"
-                @keyup.enter="handleList"
-              />
+                clearable
+              >
+                <el-option label="正常" value="0" />
+                <el-option label="停用" value="1" />
+              </el-select>
             </el-form-item>
 
             <el-form-item>
@@ -159,6 +169,7 @@
             <el-table-column
               label="手机号码"
               prop="phone"
+              width="90"
               align="center"
             />
             <el-table-column
@@ -241,37 +252,43 @@
           <el-input
             v-model="userForm.username"
             placeholder="请输入用户名"
+            maxlength="32"
           />
         </el-form-item>
         <el-form-item label="昵称" prop="nickname">
           <el-input
             v-model="userForm.nickname"
             placeholder="请输入昵称"
+            maxlength="32"
           />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input
             v-model="userForm.email"
             placeholder="请输入邮箱"
+            maxlength="64"
           />
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
           <el-input
             v-model="userForm.phone"
             placeholder="请输入手机号码"
+            maxlength="11"
           />
         </el-form-item>
         <el-form-item v-if="userDialog.type == 'add'" label="密码" prop="password">
           <el-input
             v-model="userForm.password"
             placeholder="请输入密码"
+            maxlength="32"
+            show-password
           />
         </el-form-item>
         <el-form-item label="性别" prop="gender">
           <el-radio-group v-model="userForm.gender">
-            <el-radio label="0">保密</el-radio>
-            <el-radio label="1">男</el-radio>
-            <el-radio label="2">女</el-radio>
+            <el-radio label="保密">保密</el-radio>
+            <el-radio label="男">男</el-radio>
+            <el-radio label="女">女</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="角色" prop="roleIds">
@@ -288,6 +305,8 @@
           <el-input
             v-model="userForm.remark"
             placeholder="请输入备注"
+            type="textarea"
+            maxlength="500"
           />
         </el-form-item>
       </el-form>
@@ -310,7 +329,7 @@
 import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElMessageBox, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
-import { listUser, addUser, getUser, getRoleSelect, changeStatus, editUser, deleteUser } from '@/api/system/user'
+import { listUser, addUser, getUser, getRoleSelect, editUser, changeStatus, deleteUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
@@ -346,7 +365,8 @@ const state = reactive({
   } as Dialog,
   // 表单
   userForm: {
-    gender: '0'
+    password: '123456',
+    gender: '保密'
   } as SysUserForm
 })
 
@@ -376,8 +396,14 @@ const userRules = reactive<FormRules>({
     { required: true, message: '昵称不能为空', trigger: 'blur' },
     { min: 2, max: 32, message: '昵称长度应在 4 到 32 之间', trigger: 'blur' },
   ],
+  email: [
+    { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] },
+  ],
+  phone: [
+    { pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: '请输入正确的手机号码', trigger: ['blur', 'change'] },
+  ],
   password: [
-    { required: true, message: '昵称不能为空', trigger: 'blur' },
+    { required: true, message: '密码不能为空', trigger: 'blur' },
     { min: 4, max: 32, message: '密码长度应在 4 到 32 之间', trigger: 'blur' },
   ],
   deptId: [{ required: true, message: '部门不能为空', trigger: 'blur' }],
@@ -422,6 +448,9 @@ function handleEdit() {
   getUser(state.userId).then((res: any) => {
     state.userForm = res.data
   })
+  getRoleSelect().then((res: any) => {
+    state.roleSelect = res.data
+  })
 
   state.userDialog = {
     title: '修改用户信息',
@@ -432,9 +461,14 @@ function handleEdit() {
 
 // 删除用户信息
 function handleDelete() {
-  deleteUser(state.userId).then(() => {
-    ElMessage.success("删除用户信息成功")
-    handleList()
+  ElMessageBox.confirm('确认要删除"' + state.userId + '"用户吗?', '警告', {
+      type: 'warning'
+    }
+  ).then(() => {
+    deleteUser(state.userId).then(() => {
+      ElMessage.success("删除用户信息成功")
+      handleList()
+    })
   })
 }
 
@@ -452,8 +486,8 @@ function closeUserDialog() {
 }
 
 // 修改用户状态
-function handleChangeStatus(row: { [key: string]: any }) {
-  const text = row.status === 1 ? '启用' : '停用';
+function handleChangeStatus(row: SysUser) {
+  const text = row.status === '0' ? '启用' : '停用';
   ElMessageBox.confirm('确认要' + text + '"' + row.username + '"用户吗?', '警告', {
       type: 'warning'
     }
@@ -462,7 +496,7 @@ function handleChangeStatus(row: { [key: string]: any }) {
   }).then(() => {
     ElMessage.success(text + '成功')
   }).catch(() => {
-    row.status = row.status === 1 ? 0 : 1
+    row.status = row.status === '1' ? '0' : '1'
   })
 }
 

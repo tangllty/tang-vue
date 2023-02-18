@@ -36,6 +36,20 @@ export const editRole = (data: SysRoleForm) => {
   })
 }
 
+// 修改角色状态
+export const changeStatus = (roleId: number, status: string) => {
+  const data = {
+    roleId,
+    status
+  }
+
+  return request({
+    url: '/system/role/changeStatus',
+    method: 'put',
+    data
+  })
+}
+
 // 删除角色信息
 export const deleteRole = (roleId: number) => {
   return request({

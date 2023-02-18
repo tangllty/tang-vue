@@ -17,6 +17,7 @@ export interface SysDeptForm {
   deptName: string
   sort: number
   status: string
+  remark: string
 }
 
 // 部门查询参数

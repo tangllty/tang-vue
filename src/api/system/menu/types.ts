@@ -5,12 +5,9 @@ export interface SysMenu {
   menuName: string
   path: string
   component: string
-  query: string
   perms: string
   icon: string
   menuType: string
-  isFrame: string
-  isCache: string
   visible: string
   sort: number
   status: string
@@ -26,12 +23,9 @@ export interface SysMenuForm {
   menuName: string
   path: string
   component: string
-  query: string
-  perms: string
+  permission: string
   icon: string
   menuType: string
-  isFrame: string
-  isCache: string
   visible: string
   sort: number
   status: string

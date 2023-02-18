@@ -43,6 +43,20 @@ export const editMenu = (data: SysMenuForm) => {
   })
 }
 
+// 修改菜单状态
+export const changeStatus = (menuId: number, status: string) => {
+  const data = {
+    menuId,
+    status
+  }
+
+  return request({
+    url: '/system/menu/changeStatus',
+    method: 'put',
+    data
+  })
+}
+
 // 删除菜单信息
 export const deleteMenu = (menuId: number) => {
   return request({

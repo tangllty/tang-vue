@@ -17,6 +17,8 @@ export interface SysRoleForm {
   roleKey: string
   sort: number
   status: string
+  menuIds: number[]
+  remark: string
 }
 
 // 角色查询参数

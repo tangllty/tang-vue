@@ -8,16 +8,20 @@
             v-model="queryParams.deptName"
             placeholder="部门名称"
             style="width: 200px"
+            clearable
             @keyup.enter="handleList"
           />
         </el-form-item>
         <el-form-item label="状态" prop="status">
-          <el-input
+          <el-select
             v-model="queryParams.status"
             placeholder="状态"
             style="width: 200px"
-            @keyup.enter="handleList"
-          />
+            clearable
+          >
+            <el-option label="正常" value="0" />
+            <el-option label="停用" value="1" />
+          </el-select>
         </el-form-item>
 
         <el-form-item>
@@ -70,18 +74,29 @@
           align="center"
         />
         <el-table-column
-          prop="status"
           label="状态"
           align="center"
-        />
+          prop="status"
+        >
+          <template #default="scope">
+            <el-switch
+              v-model="scope.row.status"
+              active-value="0"
+              inactive-value="1"
+              @change="handleChangeStatus(scope.row)"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
+          width="160"
           align="center"
         />
         <el-table-column
           prop="updateTime"
           label="更新时间"
+          width="160"
           align="center"
         />
         <el-table-column
@@ -154,6 +169,14 @@
             controls-position="right"
           />
         </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input
+            v-model="deptForm.remark"
+            placeholder="请输入备注"
+            type="textarea"
+            maxlength="500"
+          />
+        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -172,9 +195,9 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { ElMessage, ElMessageBox, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listDept, deptTree as selectDeptTree, addDept, editDept, deleteDept } from '@/api/system/dept'
+import { listDept, deptTree as selectDeptTree, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
 import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
 
 const state = reactive({
@@ -264,9 +287,14 @@ function handleEdit(row: any) {
 
 // 删除部门信息
 function handleDelete(row: any) {
-  deleteDept(row.deptId).then(() => {
-    ElMessage.success("删除部门信息成功")
-    handleList()
+  ElMessageBox.confirm('确认要删除"' + row.deptName + '"部门吗?', '警告', {
+      type: 'warning'
+    }
+  ).then(() => {
+    deleteDept(row.deptId).then(() => {
+      ElMessage.success("删除部门信息成功")
+      handleList()
+    })
   })
 }
 
@@ -281,6 +309,21 @@ function closeUserDialog() {
   state.deptDialog.visible = false
   deptRuleFormRef.value?.clearValidate()
   deptRuleFormRef.value?.resetFields()
+}
+
+// 修改部门状态
+function handleChangeStatus(row: SysDept) {
+  const text = row.status === '0' ? '启用' : '停用';
+  ElMessageBox.confirm('确认要' + text + '"' + row.deptName + '"部门吗?', '警告', {
+      type: 'warning'
+    }
+  ).then(() => {
+    return changeStatus(row.deptId, row.status)
+  }).then(() => {
+    ElMessage.success(text + '成功')
+  }).catch(() => {
+    row.status = row.status === '1' ? '0' : '1'
+  })
 }
 
 // 多选框

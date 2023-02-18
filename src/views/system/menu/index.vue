@@ -62,26 +62,48 @@
         <el-table-column
           prop="menuName"
           label="菜单名称"
-          align="center"
         />
+        <el-table-column
+          prop="icon"
+          label="图标"
+          align="center"
+        >
+          <template #default="scope">
+            <svg-icon :name="scope.row.icon" />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="sort"
           label="显示顺序"
           align="center"
         />
         <el-table-column
-          prop="status"
-          label="状态"
+          prop="permission"
+          label="权限标识"
           align="center"
         />
+        <el-table-column
+          prop="component"
+          label="组件地址"
+          align="center"
+        />
+        <el-table-column
+          label="状态"
+          align="center"
+          prop="status"
+        >
+          <template #default="scope">
+            <el-switch
+              v-model="scope.row.status"
+              active-value="0"
+              inactive-value="1"
+              @change="handleChangeStatus(scope.row)"
+            />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
-          align="center"
-        />
-        <el-table-column
-          prop="updateTime"
-          label="更新时间"
           align="center"
         />
         <el-table-column
@@ -140,10 +162,69 @@
             check-strictly
           />
         </el-form-item>
+        <el-form-item label="菜单类型" prop="menuType">
+          <el-radio-group v-model="menuForm.menuType">
+            <el-radio label="D">目录</el-radio>
+            <el-radio label="M">菜单</el-radio>
+            <el-radio label="B">按钮</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="菜单名称" prop="menuName">
           <el-input
             v-model="menuForm.menuName"
             placeholder="请输入菜单名称"
+          />
+        </el-form-item>
+        <el-form-item label="路由地址" prop="path">
+          <el-input
+            v-model="menuForm.path"
+            placeholder="请输入路由地址, 例: 'menu'"
+          />
+        </el-form-item>
+        <el-form-item
+          label="组件路径"
+          prop="component"
+          v-if="menuForm.menuType === 'M'"
+        >
+          <el-input
+            v-model="menuForm.component"
+            placeholder="请输入组件路径, 例: 'system/menu/index'"
+          />
+        </el-form-item>
+        <el-form-item
+          label="菜单图标"
+          prop="icon"
+          v-if="menuForm.menuType !== 'B'"
+        >
+          <el-popover
+            ref="popoverRef"
+            placement="bottom-start"
+            :width="570"
+            trigger="click"
+          >
+            <template #reference>
+              <el-input
+                v-model="menuForm.icon"
+                placeholder="请选择图标"
+                readonly
+                @click="iconSelectVisible = true"
+              >
+                <template #prepend>
+                  <svg-icon :name="menuForm.icon" />
+                </template>
+              </el-input>
+            </template>
+            <icon-select @selected="selected" />
+          </el-popover>
+        </el-form-item>
+        <el-form-item
+          label="权限标识"
+          prop="permission"
+          v-if="menuForm.menuType === 'B'"
+        >
+          <el-input
+            v-model="menuForm.permission"
+            placeholder="请输入权限标识, 例: 'system:menu:list'"
           />
         </el-form-item>
         <el-form-item label="显示顺序" prop="sort">
@@ -172,10 +253,11 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { ElMessage, ElMessageBox, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listMenu, menuTree as selectMenuTree, getMenu, addMenu, editMenu, deleteMenu } from '@/api/system/menu'
+import { listMenu, menuTree as selectMenuTree, addMenu, editMenu, changeStatus, deleteMenu } from '@/api/system/menu'
 import { SysMenu, SysMenuForm, SysMenuQuery } from '@/api/system/menu/types'
+import IconSelect from '@/components/IconSelect/index.vue'
 
 const state = reactive({
   // 遮罩层
@@ -188,6 +270,8 @@ const state = reactive({
   menuList: [] as SysMenu[],
   // 菜单树数据
   menuTree: [] as TreeSelect[],
+  // Icon选择器显示状态
+  iconSelectVisible: false,
   // 查询参数
   queryParams: {
     pageNum: 1,
@@ -201,6 +285,8 @@ const state = reactive({
   } as Dialog,
   // 表单
   menuForm: {
+    parentId: 0,
+    menuType: 'D',
     sort: 1
   } as SysMenuForm
 })
@@ -210,6 +296,7 @@ const {
   menuIds,
   menuList,
   menuTree,
+  iconSelectVisible,
   queryParams,
   menuDialog,
   menuForm
@@ -218,9 +305,21 @@ const {
 const menuRuleFormRef = ref<FormInstance>()
 const menuQueryFormRef = ref<FormInstance>()
 const menuRules = reactive<FormRules>({
+  parentId: [
+    { required: true, message: '上级菜单不能为空', trigger: 'blur' },
+  ],
+  menuType: [
+    { required: true, message: '菜单类型不能为空', trigger: 'blur' },
+  ],
   menuName: [
     { required: true, message: '菜单名称不能为空', trigger: 'blur' },
     { min: 2, max: 32, message: '菜单名称长度应在 2 到 32 之间', trigger: 'blur' },
+  ],
+  path: [
+    { required: true, message: '路由地址不能为空', trigger: 'blur' },
+  ],
+  component: [
+    { required: true, message: '组件路径不能为空', trigger: 'blur' },
   ],
 })
 
@@ -235,8 +334,11 @@ function handleList() {
 
 // 查询菜单树
 function getMenuTree() {
+  const menuTrees: any[] = []
   selectMenuTree().then((res:any) => {
-    state.menuTree = res.data
+    const menuTree = { value: 0, label: '顶级菜单', children: res.data }
+    menuTrees.push(menuTree)
+    state.menuTree = menuTrees
   })
 }
 
@@ -262,6 +364,21 @@ function handleEdit(row: any) {
   }
 }
 
+// 修改菜单状态
+function handleChangeStatus(row: SysMenu) {
+  const text = row.status === '0' ? '启用' : '停用';
+  ElMessageBox.confirm('确认要' + text + '"' + row.menuName + '"菜单吗?', '警告', {
+      type: 'warning'
+    }
+  ).then(() => {
+    return changeStatus(row.menuId, row.status)
+  }).then(() => {
+    ElMessage.success(text + '成功')
+  }).catch(() => {
+    row.status = row.status === '1' ? '0' : '1'
+  })
+}
+
 // 删除菜单信息
 function handleDelete(row: any) {
   deleteMenu(row.menuId).then(() => {
@@ -282,6 +399,13 @@ function closeUserDialog() {
   menuRuleFormRef.value?.clearValidate()
   menuRuleFormRef.value?.resetFields()
 }
+
+// 选择图标后事件
+ function selected(name: string) {
+  state.menuForm.icon = name
+  state.iconSelectVisible = false
+}
+
 
 // 多选框
 function handleSelectionChange(selection: any) {
