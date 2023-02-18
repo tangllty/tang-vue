@@ -12,6 +12,10 @@ import '@/permission'
 // 自定义样式
 import '@/styles/index.scss'
 
+// 注册 svg
+import 'virtual:svg-icons-register'
+import SvgIcon from '@/components/SvgIcon/index.vue'
+
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
@@ -38,4 +42,5 @@ app
       }
     }
   })
+  .component('SvgIcon', SvgIcon)
   .mount('#app')
