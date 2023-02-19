@@ -144,6 +144,7 @@
               label="用户编号"
               prop="userId"
               align="center"
+              width="60"
             />
             <el-table-column
               label="部门名称"
@@ -176,11 +177,16 @@
               label="性别"
               prop="gender"
               align="center"
-            />
+            >
+              <template #default="scope">
+                <el-tag>{{ scope.row.gender }}</el-tag>
+              </template>
+            </el-table-column>
             <el-table-column
               label="状态"
-              align="center"
               prop="status"
+              align="center"
+              width="80"
             >
               <template #default="scope">
                 <el-switch

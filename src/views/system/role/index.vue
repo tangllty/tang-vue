@@ -79,10 +79,12 @@
         <el-table-column
           prop="sort"
           label="显示顺序"
+          width="80"
           align="center"
         />
         <el-table-column
           label="状态"
+          width="80"
           align="center"
           prop="status"
         >
@@ -207,7 +209,6 @@ import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listRole, getRole, addRole, editRole, changeStatus, deleteRole } from '@/api/system/role'
 import { menuTree as selectMenuTree } from '@/api/system/menu'
 import { SysRole as Role, SysRoleForm, SysRoleQuery as RoleQuery, SysRole } from '@/api/system/role/types'
-import Node from 'element-plus/es/components/tree/src/model/node'
 
 const state = reactive({
   // 遮罩层

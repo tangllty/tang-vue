@@ -66,6 +66,7 @@
         <el-table-column
           prop="icon"
           label="图标"
+          width="60"
           align="center"
         >
           <template #default="scope">
@@ -75,6 +76,7 @@
         <el-table-column
           prop="sort"
           label="显示顺序"
+          width="80"
           align="center"
         />
         <el-table-column
@@ -89,6 +91,7 @@
         />
         <el-table-column
           label="状态"
+          width="80"
           align="center"
           prop="status"
         >

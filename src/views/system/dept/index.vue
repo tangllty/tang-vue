@@ -66,16 +66,17 @@
         <el-table-column
           prop="deptName"
           label="部门名称"
-          align="center"
         />
         <el-table-column
           prop="sort"
           label="显示顺序"
+          width="80"
           align="center"
         />
         <el-table-column
           label="状态"
           align="center"
+          width="80"
           prop="status"
         >
           <template #default="scope">
