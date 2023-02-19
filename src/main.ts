@@ -16,31 +16,16 @@ import '@/styles/index.scss'
 import 'virtual:svg-icons-register'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+// 分页
+import Pagination from '@/components/Pagination/index.vue'
 
 const app = createApp(App)
-
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component)
-}
 
 setupStore(app)
 setupDirective(app)
 app
   .use(router)
-  .use(ElementPlus, {
-    locale: {
-      el: {
-        // 整体覆盖
-        ...zhLocale.el,
-        pagination: {
-          pagesize: '条/页',
-          total: `共 {total} 条`,
-          goto: '前往第',
-          pageClassifier: '页'
-        },
-      }
-    }
-  })
+  .use(ElementPlus, { locale: zhLocale })
   .component('SvgIcon', SvgIcon)
+  .component('Pagination', Pagination)
   .mount('#app')

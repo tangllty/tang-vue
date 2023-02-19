@@ -134,6 +134,15 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 分页 -->
+      <pagination
+        v-if="total > 0"
+        :total="total"
+        v-model:pageNum="queryParams.pageNum"
+        v-model:pageSize="queryParams.pageSize"
+        @pagination="handleList"
+      />
     </el-card>
 
     <!-- 添加或修改角色信息对话框 -->
@@ -217,6 +226,8 @@ const state = reactive({
   roleId: 0 as number,
   // 选中数据数组
   roleIds: [] as number[],
+  // 总条数
+  total: 0,
   // 角色数据
   roleList: [] as Role[],
   // 菜单树数据
@@ -241,6 +252,7 @@ const state = reactive({
 const {
   loading,
   roleIds,
+  total,
   roleList,
   menuTree,
   queryParams,
@@ -266,7 +278,8 @@ const roleRules = reactive<FormRules>({
 function handleList() {
   state.loading = true
   listRole(state.queryParams).then((res:any) => {
-    state.roleList = res.data
+    state.roleList = res.rows
+    state.total = res.total
     state.loading = false
   })
 }

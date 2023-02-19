@@ -218,15 +218,12 @@
           </el-table>
 
           <!-- 分页 -->
-          <el-pagination
-            background
-            layout="total, sizes, prev, pager, next, jumper"
-            :page-sizes="[10, 20, 30, 50]"
+          <pagination
+            v-if="total > 0"
             :total="total"
-            v-model:current-page="queryParams.pageNum"
-            v-model:page-size="queryParams.pageSize"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
+            v-model:pageNum="queryParams.pageNum"
+            v-model:pageSize="queryParams.pageSize"
+            @pagination="handleList"
           />
         </el-card>
       </el-col>
@@ -359,10 +356,7 @@ const state = reactive({
   // 角色下拉框数据
   roleSelect: [] as TreeSelect[],
   // 查询参数
-  queryParams: {
-    pageNum: 1,
-    pageSize: 10
-  } as SysUserQuery,
+  queryParams: {} as SysUserQuery,
   // 对话框
   userDialog: {
     title: '',
@@ -525,16 +519,6 @@ function getDeptTree() {
 // 部门树节点
 function handleDeptNodeClick(data: any ) {
   state.queryParams.deptId = data.value
-  handleList()
-}
-
-// 分页
-const handleSizeChange = (pageSize: number) => {
-  state.queryParams.pageSize = pageSize
-  handleList()
-}
-const handleCurrentChange = (pageNum: number) => {
-  state.queryParams.pageNum = pageNum
   handleList()
 }
 
