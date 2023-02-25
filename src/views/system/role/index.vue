@@ -149,7 +149,7 @@
     <el-dialog
       :title="roleDialog.title"
       v-model="roleDialog.visible"
-      @close="closeUserDialog"
+      @close="closeRoleDialog"
     >
       <el-form
         ref="roleRuleFormRef"
@@ -203,7 +203,7 @@
             @click="submitForm(roleRuleFormRef)"
           >确 定</el-button>
           <el-button
-            @click="closeUserDialog"
+            @click="closeRoleDialog"
           >取 消</el-button>
         </div>
       </template>
@@ -348,7 +348,7 @@ function resetQuery() {
 }
 
 // 关闭对话框
-function closeUserDialog() {
+function closeRoleDialog() {
   state.roleDialog.visible = false
   roleRuleFormRef.value?.clearValidate()
   roleRuleFormRef.value?.resetFields()
@@ -377,14 +377,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       if (roleDialog.value.type == 'add') {
         addRole(state.roleForm).then(() => {
           ElMessage.success("添加角色信息成功")
-          closeUserDialog()
+          closeRoleDialog()
           handleList()
         })
       }
       if (roleDialog.value.type == 'edit') {
         editRole(state.roleForm).then(() => {
           ElMessage.success("修改角色信息成功")
-          closeUserDialog()
+          closeRoleDialog()
           handleList()
         })
       }

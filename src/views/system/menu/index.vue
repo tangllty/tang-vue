@@ -148,7 +148,7 @@
     <el-dialog
       :title="menuDialog.title"
       v-model="menuDialog.visible"
-      @close="closeUserDialog"
+      @close="closeMenuDialog"
     >
       <el-form
       ref="menuRuleFormRef"
@@ -246,7 +246,7 @@
             @click="submitForm(menuRuleFormRef)"
           >确 定</el-button>
           <el-button
-            @click="closeUserDialog"
+            @click="closeMenuDialog"
           >取 消</el-button>
         </div>
       </template>
@@ -397,7 +397,7 @@ function resetQuery() {
 }
 
 // 关闭对话框
-function closeUserDialog() {
+function closeMenuDialog() {
   state.menuDialog.visible = false
   menuRuleFormRef.value?.clearValidate()
   menuRuleFormRef.value?.resetFields()
@@ -426,14 +426,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       if (menuDialog.value.type == 'add') {
         addMenu(state.menuForm).then(() => {
           ElMessage.success("添加菜单信息成功")
-          closeUserDialog()
+          closeMenuDialog()
           handleList()
         })
       }
       if (menuDialog.value.type == 'edit') {
         editMenu(state.menuForm).then(() => {
           ElMessage.success("修改菜单信息成功")
-          closeUserDialog()
+          closeMenuDialog()
           handleList()
         })
       }

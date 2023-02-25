@@ -139,7 +139,7 @@
     <el-dialog
       :title="deptDialog.title"
       v-model="deptDialog.visible"
-      @close="closeUserDialog"
+      @close="closeDeptDialog"
     >
       <el-form
       ref="deptRuleFormRef"
@@ -186,7 +186,7 @@
             @click="submitForm(deptRuleFormRef)"
           >确 定</el-button>
           <el-button
-            @click="closeUserDialog"
+            @click="closeDeptDialog"
           >取 消</el-button>
         </div>
       </template>
@@ -306,7 +306,7 @@ function resetQuery() {
 }
 
 // 关闭对话框
-function closeUserDialog() {
+function closeDeptDialog() {
   state.deptDialog.visible = false
   deptRuleFormRef.value?.clearValidate()
   deptRuleFormRef.value?.resetFields()
@@ -343,14 +343,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       if (deptDialog.value.type == 'add') {
         addDept(state.deptForm).then(() => {
           ElMessage.success("添加部门信息成功")
-          closeUserDialog()
+          closeDeptDialog()
           handleList()
         })
       }
       if (deptDialog.value.type == 'edit') {
         editDept(state.deptForm).then(() => {
           ElMessage.success("修改部门信息成功")
-          closeUserDialog()
+          closeDeptDialog()
           handleList()
         })
       }
