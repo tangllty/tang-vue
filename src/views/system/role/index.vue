@@ -270,7 +270,7 @@ const roleRules = reactive<FormRules>({
   ],
   roleKey: [
     { required: true, message: '权限字符不能为空', trigger: 'blur' },
-    { min: 2, max: 32, message: '权限字符长度应在 2 到 64 之间', trigger: 'blur' },
+    { min: 2, max: 64, message: '权限字符长度应在 2 到 64 之间', trigger: 'blur' },
   ],
 })
 
