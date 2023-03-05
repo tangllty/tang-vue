@@ -19,7 +19,15 @@ import SvgIcon from '@/components/SvgIcon/index.vue'
 // 分页
 import Pagination from '@/components/Pagination/index.vue'
 
+// 字典
+import DictSpan from '@/components/Dict/Span/index.vue'
+import DictTag from '@/components/Dict/Tag/index.vue'
+
 const app = createApp(App)
+
+import { getDicts } from '@/utils/dict'
+
+app.config.globalProperties.$dict = getDicts
 
 setupStore(app)
 setupDirective(app)
@@ -28,4 +36,6 @@ app
   .use(ElementPlus, { locale: zhLocale })
   .component('SvgIcon', SvgIcon)
   .component('Pagination', Pagination)
+  .component('DictSpan', DictSpan)
+  .component('DictTag', DictTag)
   .mount('#app')

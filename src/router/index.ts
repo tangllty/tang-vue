@@ -22,6 +22,23 @@ export const routes: Array<RouteRecordRaw> = [
   }
 ]
 
+// 动态路由
+export const dynamicRoutes: Array<RouteRecordRaw> = [
+  {
+    path: '/system/dict',
+    component: () => import('@/layout/index.vue'),
+    meta: { permission: 'system:dict:list' },
+    children: [
+      {
+        path: 'data/:typeId(\\d+)',
+        component: () => import('@/views/system/dict/data/index.vue'),
+        meta: { title: '字典数据', activeMenu: '/system/dict' },
+        props: true
+      }
+    ]
+  }
+]
+
 const router = createRouter({
   history: createWebHistory(),
   routes

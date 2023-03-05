@@ -289,9 +289,11 @@
         </el-form-item>
         <el-form-item label="性别" prop="gender">
           <el-radio-group v-model="userForm.gender">
-            <el-radio label="保密">保密</el-radio>
-            <el-radio label="男">男</el-radio>
-            <el-radio label="女">女</el-radio>
+            <el-radio
+              v-for="item in sys_user_sex"
+              :key="item.dataId"
+              :label="item.dataLabel"
+            >{{ item.dataValue }}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="角色" prop="roleIds">
@@ -329,12 +331,15 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { getCurrentInstance, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElMessageBox, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
 import { listUser, addUser, getUser, getRoleSelect, editUser, changeStatus, deleteUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
+
+const { proxy }: any = getCurrentInstance()
+const { sys_user_sex } = proxy.$dict('sys_user_sex')
 
 const state = reactive({
   // 遮罩层
