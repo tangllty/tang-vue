@@ -27,7 +27,7 @@
         <Navbar />
       </el-header>
       <el-main class="main-container">
-        <RouterView />
+        <AppMain />
       </el-main>
     </el-container>
   </el-container>
@@ -37,7 +37,8 @@
 import { computed } from 'vue'
 import Sidebar from '@/layout/components/Sidebar/index.vue'
 import Navbar from '@/layout/components/Navbar/index.vue'
-import { useAppStore } from '@/store/modules/app';
+import AppMain from '@/layout/components/AppMain/index.vue'
+import { useAppStore } from '@/store/modules/app'
 import logo from '@/assets/logo.png'
 
 const appStore = useAppStore()
