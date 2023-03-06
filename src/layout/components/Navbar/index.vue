@@ -14,7 +14,7 @@
         <span class="el-dropdown-link">
           <el-image :src="userAvatar" class="user-avatar" />
           <el-icon class="el-icon--right">
-            <arrow-down />
+            <ArrowDown />
           </el-icon>
         </span>
         <template #dropdown>
@@ -36,10 +36,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMessageBox } from 'element-plus'
-import { useAppStore } from "@/store/modules/app"
-import { useUserStore } from "@/store/modules/user"
 import router from '@/router'
+import { ElMessageBox } from 'element-plus'
+import { Expand, Fold, ArrowDown } from '@element-plus/icons-vue'
+import { useAppStore } from '@/store/modules/app'
+import { useUserStore } from '@/store/modules/user'
 
 import userAvatar from '@/assets/logo.png'
 
@@ -68,7 +69,6 @@ function logout() {
   display:flex;
   justify-content:space-between;
   align-items: center;
-
 
   .hamburger-container {
     cursor: pointer;
