@@ -3,7 +3,17 @@ import { RouteRecordRaw } from 'vue-router'
 import { useUserStoreHook } from '@/store/modules/user'
 import { usePermissionStoreHook } from '@/store/modules/permission'
 
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
+// 全局进度条的配置
+NProgress.configure({
+  showSpinner: false,
+  minimum: 0.25,
+})
+
 router.beforeEach(async (to, from, next) => {
+  NProgress.start()
   const userStore = useUserStoreHook()
   const permissionStore = usePermissionStoreHook()
 
@@ -36,4 +46,8 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/login'})
     }
   }
+})
+
+router.afterEach(() => {
+  NProgress.done()
 })

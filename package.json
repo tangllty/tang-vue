@@ -20,6 +20,7 @@
     "axios": "^1.2.1",
     "element-plus": "^2.2.27",
     "js-cookie": "^3.0.1",
+    "nprogress": "^0.2.0",
     "path-browserify": "^1.0.1",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.16",
+    "@types/nprogress": "^0.2.0",
     "@types/path-browserify": "^1.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "fast-glob": "^3.2.12",
