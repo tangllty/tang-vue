@@ -77,7 +77,7 @@
         <el-table-column
           prop="dataLabel"
           label="字典标签"
-          v-dict="'sys_user_sex'"
+          v-dict="'sys_user_gender'"
           align="center"
         />
         <el-table-column

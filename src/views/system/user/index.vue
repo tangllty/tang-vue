@@ -290,7 +290,7 @@
         <el-form-item label="性别" prop="gender">
           <el-radio-group v-model="userForm.gender">
             <el-radio
-              v-for="item in sys_user_sex"
+              v-for="item in sys_user_gender"
               :key="item.dataId"
               :label="item.dataLabel"
             >{{ item.dataValue }}</el-radio>
@@ -339,7 +339,7 @@ import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
 const { proxy }: any = getCurrentInstance()
-const { sys_user_sex } = proxy.$dict('sys_user_sex')
+const { sys_user_gender } = proxy.$dict('sys_user_gender')
 
 const state = reactive({
   // 遮罩层
