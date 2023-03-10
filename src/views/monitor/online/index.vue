@@ -88,6 +88,7 @@
           prop="os"
           label="系统"
           align="center"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="loginTime"
