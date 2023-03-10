@@ -20,12 +20,18 @@
           />
         </el-form-item>
         <el-form-item label="状态" prop="status">
-          <el-input
+          <el-select
             v-model="queryParams.status"
             placeholder="状态"
             style="width: 200px"
-            @keyup.enter="handleList"
-          />
+            clearable
+          >
+            <el-option
+              v-for="item in sys_status"
+              :label="item.dataLabel"
+              :value="item.dataValue"
+            />
+          </el-select>
         </el-form-item>
 
         <el-form-item>
@@ -211,8 +217,8 @@
             <el-radio
               v-for="item in sys_status"
               :key="item.dataId"
-              :label="item.dataLabel"
-            >{{ item.dataValue }}</el-radio>
+              :label="item.dataValue"
+            >{{ item.dataLabel }}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
@@ -281,7 +287,8 @@ const state = reactive({
   } as Dialog,
   // 表单
   dictDataForm: {
-    typeClass: ''
+    typeClass: '',
+    status: '0'
   } as SysDictDataForm
 })
 

@@ -1,12 +1,12 @@
 <template>
   <template v-for="item in data">
     <el-tag
-      v-if="item.dataLabel === value"
+      v-if="item.dataValue === value"
       :key="item.dataId"
       :class="item.cssClass"
       :type="item.typeClass"
     >
-      {{ item.dataValue }}
+      {{ item.dataLabel }}
     </el-tag>
   </template>
 </template>

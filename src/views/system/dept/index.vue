@@ -19,8 +19,11 @@
             style="width: 200px"
             clearable
           >
-            <el-option label="正常" value="0" />
-            <el-option label="停用" value="1" />
+            <el-option
+              v-for="item in sys_status"
+              :label="item.dataLabel"
+              :value="item.dataValue"
+            />
           </el-select>
         </el-form-item>
 
@@ -195,11 +198,14 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
+import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, ElMessageBox, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listDept, deptTree as selectDeptTree, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
 import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
+
+const { proxy }: any = getCurrentInstance()
+const { sys_status } = proxy.$dict('sys_status')
 
 const state = reactive({
   // 遮罩层

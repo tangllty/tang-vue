@@ -65,9 +65,11 @@
                 clearable
                 @keyup.enter="handleList"
               >
-                <el-option label="保密" value="保密" />
-                <el-option label="男" value="男" />
-                <el-option label="女" value="女" />
+                <el-option
+                  v-for="item in sys_user_gender"
+                  :label="item.dataLabel"
+                  :value="item.dataValue"
+                />
               </el-select>
             </el-form-item>
             <el-form-item label="状态" prop="status">
@@ -77,8 +79,11 @@
                 style="width: 200px"
                 clearable
               >
-                <el-option label="正常" value="0" />
-                <el-option label="停用" value="1" />
+                <el-option
+                  v-for="item in sys_status"
+                  :label="item.dataLabel"
+                  :value="item.dataValue"
+                />
               </el-select>
             </el-form-item>
 
@@ -179,7 +184,7 @@
               align="center"
             >
               <template #default="scope">
-                <el-tag>{{ scope.row.gender }}</el-tag>
+                <dict-tag :data="sys_user_gender" :value="scope.row.gender" />
               </template>
             </el-table-column>
             <el-table-column
@@ -292,8 +297,8 @@
             <el-radio
               v-for="item in sys_user_gender"
               :key="item.dataId"
-              :label="item.dataLabel"
-            >{{ item.dataValue }}</el-radio>
+              :label="item.dataValue"
+            >{{ item.dataLabel }}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="角色" prop="roleIds">
@@ -339,7 +344,7 @@ import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
 const { proxy }: any = getCurrentInstance()
-const { sys_user_gender } = proxy.$dict('sys_user_gender')
+const { sys_user_gender, sys_status } = proxy.$dict('sys_user_gender', 'sys_status')
 
 const state = reactive({
   // 遮罩层
@@ -371,7 +376,7 @@ const state = reactive({
   // 表单
   userForm: {
     password: '123456',
-    gender: '保密'
+    gender: '0'
   } as SysUserForm
 })
 

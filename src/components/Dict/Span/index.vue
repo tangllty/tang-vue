@@ -1,11 +1,11 @@
 <template>
   <template v-for="item in data">
     <span
-      v-if="item.dataLabel === value"
+      v-if="item.dataValue === value"
       :key="item.dataId"
       :class="item.cssClass"
     >
-      {{ item.dataValue }}
+      {{ item.dataLabel }}
     </span>
   </template>
 </template>

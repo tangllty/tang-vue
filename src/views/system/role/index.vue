@@ -12,12 +12,18 @@
           />
         </el-form-item>
         <el-form-item label="状态" prop="status">
-          <el-input
+          <el-select
             v-model="queryParams.status"
             placeholder="状态"
             style="width: 200px"
-            @keyup.enter="handleList"
-          />
+            clearable
+          >
+            <el-option
+              v-for="item in sys_status"
+              :label="item.dataLabel"
+              :value="item.dataValue"
+            />
+          </el-select>
         </el-form-item>
 
         <el-form-item>
@@ -212,12 +218,15 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
+import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
 import { ElMessage, ElMessageBox, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listRole, getRole, addRole, editRole, changeStatus, deleteRole } from '@/api/system/role'
 import { menuTree as selectMenuTree } from '@/api/system/menu'
 import { SysRole as Role, SysRoleForm, SysRoleQuery as RoleQuery, SysRole } from '@/api/system/role/types'
+
+const { proxy }: any = getCurrentInstance()
+const { sys_status } = proxy.$dict('sys_status')
 
 const state = reactive({
   // 遮罩层
