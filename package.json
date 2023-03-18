@@ -19,6 +19,7 @@
     "@types/js-cookie": "^3.0.2",
     "axios": "^1.2.1",
     "element-plus": "^2.2.27",
+    "file-saver": "^2.0.5",
     "js-cookie": "^3.0.1",
     "nprogress": "^0.2.0",
     "path-browserify": "^1.0.1",
@@ -27,6 +28,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/node": "^18.11.16",
     "@types/nprogress": "^0.2.0",
     "@types/path-browserify": "^1.0.0",

@@ -32,6 +32,9 @@ service.interceptors.request.use((config: AxiosRequestConfig) => {
 
 // 添加响应拦截器
 service.interceptors.response.use((response: AxiosResponse) => {
+  if (response.headers['content-type'] === 'application/octet-stream') {
+    return response
+  }
   const { code, msg } = response.data
   if (code === 200) {
     return response.data
