@@ -142,7 +142,6 @@
             :data="userList"
             @selection-change="handleSelectionChange"
             style="width: 100%"
-            align="center"
           >
             <el-table-column type="selection" width="50" align="center" />
             <el-table-column
@@ -284,7 +283,7 @@
             maxlength="11"
           />
         </el-form-item>
-        <el-form-item v-if="userDialog.type == 'add'" label="密码" prop="password">
+        <el-form-item v-if="userDialog.type === 'add'" label="密码" prop="password">
           <el-input
             v-model="userForm.password"
             placeholder="请输入密码"

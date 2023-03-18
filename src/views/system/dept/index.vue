@@ -7,7 +7,6 @@
           <el-input
             v-model="queryParams.deptName"
             placeholder="部门名称"
-            style="width: 200px"
             clearable
             @keyup.enter="handleList"
           />
@@ -16,7 +15,6 @@
           <el-select
             v-model="queryParams.status"
             placeholder="状态"
-            style="width: 200px"
             clearable
           >
             <el-option

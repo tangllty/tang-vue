@@ -7,7 +7,6 @@
           <el-input
             v-model="queryParams.username"
             placeholder="用户名称"
-            style="width: 200px"
             @keyup.enter="handleList"
           />
         </el-form-item>
@@ -15,7 +14,6 @@
           <el-input
             v-model="queryParams.nickname"
             placeholder="用户昵称"
-            style="width: 200px"
             @keyup.enter="handleList"
           />
         </el-form-item>

@@ -7,7 +7,6 @@
           <el-input
             v-model="queryParams.roleName"
             placeholder="角色名称"
-            style="width: 200px"
             @keyup.enter="handleList"
           />
         </el-form-item>
@@ -15,7 +14,6 @@
           <el-select
             v-model="queryParams.status"
             placeholder="状态"
-            style="width: 200px"
             clearable
           >
             <el-option
