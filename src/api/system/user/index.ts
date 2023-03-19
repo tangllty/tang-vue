@@ -65,3 +65,12 @@ export const deleteUser = (userId: number) => {
     method: 'delete'
   })
 }
+
+// 批量删除用户
+export const deleteUsers = (userIds: number[]) => {
+  return request({
+    url: '/system/user',
+    method: 'delete',
+    data: userIds
+  })
+}

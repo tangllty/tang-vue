@@ -2,7 +2,7 @@
   <div>
     <!-- 信息检索 -->
     <el-card style="margin-bottom: 10px;">
-      <el-form ref="deptQueryFormRef" :model="queryParams" :inline="true">
+      <el-form ref="deptQueryFormRef" :model="queryParams" inline>
         <el-form-item label="部门名称" prop="deptName">
           <el-input
             v-model="queryParams.deptName"
@@ -62,7 +62,6 @@
         lazy
         default-expand-all
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        @selection-change="handleSelectionChange"
       >
         <el-table-column
           prop="deptName"
@@ -197,7 +196,7 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, ElMessageBox, FormInstance, FormRules } from 'element-plus'
+import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listDept, deptTree as selectDeptTree, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
 import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
@@ -208,10 +207,6 @@ const { sys_status } = proxy.$dict('sys_status')
 const state = reactive({
   // 遮罩层
   loading: false,
-  // 选中数据
-  deptId: 0 as number,
-  // 选中数据数组
-  deptIds: [] as number[],
   // 部门数据
   deptList: [] as SysDept[],
   // 部门树数据
@@ -235,7 +230,6 @@ const state = reactive({
 
 const {
   loading,
-  deptIds,
   deptList,
   deptTree,
   queryParams,
@@ -246,6 +240,9 @@ const {
 const deptRuleFormRef = ref<FormInstance>()
 const deptQueryFormRef = ref<FormInstance>()
 const deptRules = reactive<FormRules>({
+  parentId: [
+    { required: true, message: '上级部门不能为空', trigger: 'blur' }
+  ],
   deptName: [
     { required: true, message: '部门名称不能为空', trigger: 'blur' },
     { min: 2, max: 32, message: '部门名称长度应在 2 到 32 之间', trigger: 'blur' },
@@ -292,12 +289,11 @@ function handleEdit(row: any) {
 
 // 删除部门信息
 function handleDelete(row: any) {
-  ElMessageBox.confirm('确认要删除"' + row.deptName + '"部门吗?', '警告', {
-      type: 'warning'
-    }
-  ).then(() => {
+  proxy.$confirm('确认要删除"' + row.deptName + '"部门信息吗?', '警告', {
+    type: 'warning'
+  }).then(() => {
     deleteDept(row.deptId).then(() => {
-      ElMessage.success("删除部门信息成功")
+      proxy.$message.success("删除部门信息成功")
       handleList()
     })
   })
@@ -318,25 +314,17 @@ function closeDeptDialog() {
 
 // 修改部门状态
 function handleChangeStatus(row: SysDept) {
-  const text = row.status === '0' ? '启用' : '停用';
-  ElMessageBox.confirm('确认要' + text + '"' + row.deptName + '"部门吗?', '警告', {
-      type: 'warning'
-    }
-  ).then(() => {
-    return changeStatus(row.deptId, row.status)
+  const text = row.status === '0' ? '启用' : '停用'
+  proxy.$confirm('确认要' + text + '"' + row.deptName + '"部门吗?', '警告', {
+    type: 'warning'
   }).then(() => {
-    ElMessage.success(text + '成功')
+    changeStatus(row.deptId, row.status).then(() => {
+      proxy.$message.success(text + '成功')
+      handleList()
+    })
   }).catch(() => {
     row.status = row.status === '1' ? '0' : '1'
   })
-}
-
-// 多选框
-function handleSelectionChange(selection: any) {
-  state.deptIds = selection.map((item: any) => item.deptId)
-  if (selection.length === 1) {
-    state.deptId = deptIds.value[0]
-  }
 }
 
 // 提交表单
@@ -346,14 +334,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       if (deptDialog.value.type == 'add') {
         addDept(state.deptForm).then(() => {
-          ElMessage.success("添加部门信息成功")
+          proxy.$message.success("添加部门信息成功")
           closeDeptDialog()
           handleList()
         })
       }
       if (deptDialog.value.type == 'edit') {
         editDept(state.deptForm).then(() => {
-          ElMessage.success("修改部门信息成功")
+          proxy.$message.success("修改部门信息成功")
           closeDeptDialog()
           handleList()
         })

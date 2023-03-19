@@ -43,3 +43,12 @@ export const deleteDictType = (typeId: number) => {
     method: 'delete'
   })
 }
+
+// 批量删除字典类型信息
+export const deleteDictTypes = (typeIds: number[]) => {
+  return request({
+    url: '/system/dict/type',
+    method: 'delete',
+    data: typeIds
+  })
+}

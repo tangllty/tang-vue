@@ -57,3 +57,12 @@ export const deleteRole = (roleId: number) => {
     method: 'delete'
   })
 }
+
+// 批量删除角色信息
+export const deleteRoles = (roleIds: number[]) => {
+  return request({
+    url: '/system/role',
+    method: 'delete',
+    data: roleIds
+  })
+}

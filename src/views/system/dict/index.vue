@@ -7,6 +7,7 @@
           <el-input
             v-model="queryParams.typeName"
             placeholder="字典名称"
+            clearable
             @keyup.enter="handleList"
           />
         </el-form-item>
@@ -14,6 +15,7 @@
           <el-input
             v-model="queryParams.dictType"
             placeholder="字典类型"
+            clearable
             @keyup.enter="handleList"
           />
         </el-form-item>
@@ -58,10 +60,18 @@
             @click="handleAdd"
           >新增</el-button>
           <el-button
+            type="success"
+            :icon="Edit"
+            :disabled="dictTypeIds.length !== 1"
+            v-hasPermission="'system:dict:edit'"
+            @click="handleEdit"
+          >修改</el-button>
+          <el-button
             type="danger"
             :icon="Delete"
+            :disabled="dictTypeIds.length === 0"
             v-hasPermission="'system:dict:delete'"
-            @click="handleDelete"
+            @click="handleDeletes"
           >删除</el-button>
         </el-row>
       </template>
@@ -212,10 +222,10 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listDictType, getDictType, addDictType, editDictType, deleteDictType } from '@/api/system/dict'
-import { SysDictType as DictType, SysDictTypeForm, SysDictTypeQuery as DictTypeQuery } from '@/api/system/dict/types'
+import { listDictType, getDictType, addDictType, editDictType, deleteDictType, deleteDictTypes } from '@/api/system/dict'
+import { SysDictType, SysDictTypeForm, SysDictTypeQuery } from '@/api/system/dict/types'
 
 const { proxy }: any = getCurrentInstance()
 const { sys_status } = proxy.$dict('sys_status')
@@ -230,12 +240,12 @@ const state = reactive({
   // 总条数
   total: 0,
   // 字典类型数据
-  dictTypeList: [] as DictType[],
+  dictTypeList: [] as SysDictType[],
   // 查询参数
   queryParams: {
     pageNum: 1,
     pageSize: 10
-  } as DictTypeQuery,
+  } as SysDictTypeQuery,
   // 对话框
   dictTypeDialog: {
     title: '',
@@ -292,7 +302,11 @@ function handleAdd() {
 
 // 修改字典类型信息
 function handleEdit(row: any) {
-  getDictType(row.dictTypeId).then((res: any) => {
+  let typeId = state.dictTypeId
+  if (row.typeId) {
+    typeId = row.typeId
+  }
+  getDictType(typeId).then((res: any) => {
     state.dictTypeForm = res.data
   })
 
@@ -305,9 +319,25 @@ function handleEdit(row: any) {
 
 // 删除字典类型信息
 function handleDelete(row: any) {
-  deleteDictType(row.dictTypeId).then(() => {
-    ElMessage.success("删除字典类型信息成功")
-    handleList()
+  proxy.$confirm('确认删除"' + row.dictType + '"字典类型信息吗？', '提示', {
+    type: 'warning'
+  }).then(() => {
+    deleteDictType(row.typeId).then(() => {
+      proxy.$message.success("删除字典类型信息成功")
+      handleList()
+    })
+  })
+}
+
+// 批量删除字典类型信息
+function handleDeletes() {
+  proxy.$confirm('确认删除"' + state.dictTypeIds + '"字典类型信息吗？', '提示', {
+    type: 'warning'
+  }).then(() => {
+    deleteDictTypes(state.dictTypeIds).then(() => {
+      proxy.$message.success("删除字典类型信息成功")
+      handleList()
+    })
   })
 }
 
@@ -326,7 +356,7 @@ function closeDictTypeDialog() {
 
 // 多选框
 function handleSelectionChange(selection: any) {
-  state.dictTypeIds = selection.map((item: any) => item.dictTypeId)
+  state.dictTypeIds = selection.map((item: any) => item.typeId)
   if (selection.length === 1) {
     state.dictTypeId = dictTypeIds.value[0]
   }
@@ -339,14 +369,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       if (dictTypeDialog.value.type == 'add') {
         addDictType(state.dictTypeForm).then(() => {
-          ElMessage.success("添加字典类型信息成功")
+          proxy.$message.success("添加字典类型信息成功")
           closeDictTypeDialog()
           handleList()
         })
       }
       if (dictTypeDialog.value.type == 'edit') {
         editDictType(state.dictTypeForm).then(() => {
-          ElMessage.success("修改字典类型信息成功")
+          proxy.$message.success("修改字典类型信息成功")
           closeDictTypeDialog()
           handleList()
         })

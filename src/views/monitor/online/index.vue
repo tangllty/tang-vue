@@ -7,6 +7,7 @@
           <el-input
             v-model="queryParams.username"
             placeholder="用户名称"
+            clearable
             @keyup.enter="handleList"
           />
         </el-form-item>
@@ -14,6 +15,7 @@
           <el-input
             v-model="queryParams.nickname"
             placeholder="用户昵称"
+            clearable
             @keyup.enter="handleList"
           />
         </el-form-item>
@@ -43,7 +45,6 @@
         lazy
         default-expand-all
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        @selection-change="handleSelectionChange"
       >
         <el-table-column
           prop="token"
@@ -190,19 +191,17 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, ElMessageBox, FormInstance } from 'element-plus'
+import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { FormInstance } from 'element-plus'
 import { Delete, Search, Refresh, View } from '@element-plus/icons-vue'
 import { listOnlineUser, getOnlineUser, deleteOnlineUser } from '@/api/monitor/online'
-import { OnlineUser as OnlineUser, OnlineUserQuery as OnlineUserQuery } from '@/api/monitor/online/types'
+import { OnlineUser, OnlineUserQuery } from '@/api/monitor/online/types'
+
+const { proxy }: any = getCurrentInstance()
 
 const state = reactive({
   // 遮罩层
   loading: false,
-  // 选中数据
-  onlineUserId: 0 as number,
-  // 选中数据数组
-  onlineUserIds: [] as number[],
   // 总条数
   total: 0,
   // 在线用户详情
@@ -224,7 +223,6 @@ const state = reactive({
 
 const {
   loading,
-  onlineUserIds,
   total,
   onlineUserInfo,
   onlineUserList,
@@ -256,12 +254,11 @@ function getInfo(row: any) {
 
 // 删除在线用户信息
 function handleDelete(row: any) {
-  ElMessageBox.confirm('确认要强退"' + row.username + '"用户吗?', '警告', {
-      type: 'warning'
-    }
-  ).then(() => {
+  proxy.$confirm('确认要强退"' + row.username + '"用户吗?', '警告', {
+    type: 'warning'
+  }).then(() => {
     deleteOnlineUser(row.token).then(() => {
-      ElMessage.success("强退" + row.username + "成功")
+      proxy.$message.success("强退" + row.username + "成功")
       handleList()
     })
   })
@@ -276,14 +273,6 @@ function resetQuery() {
 // 关闭对话框
 function closeOnlineUserDialog() {
   state.onlineUserDialog.visible = false
-}
-
-// 多选框
-function handleSelectionChange(selection: any) {
-  state.onlineUserIds = selection.map((item: any) => item.onlineUserId)
-  if (selection.length === 1) {
-    state.onlineUserId = onlineUserIds.value[0]
-  }
 }
 
 onMounted(() => {

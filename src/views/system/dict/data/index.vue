@@ -58,10 +58,18 @@
             @click="handleAdd"
           >新增</el-button>
           <el-button
+            type="success"
+            :icon="Edit"
+            :disabled="dictDataIds.length !== 1"
+            v-hasPermission="'system:dict:edit'"
+            @click="handleEdit"
+          >修改</el-button>
+          <el-button
             type="danger"
             :icon="Delete"
+            :disabled="dictDataIds.length === 0"
             v-hasPermission="'system:dict:delete'"
-            @click="handleDelete"
+            @click="handleDeletes"
           >删除</el-button>
         </el-row>
       </template>
@@ -77,6 +85,11 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
+        <el-table-column
+          prop="dataId"
+          label="数据编号"
+          align="center"
+        />
         <el-table-column
           prop="dataLabel"
           label="字典标签"
@@ -94,12 +107,7 @@
           prop="status"
         >
           <template #default="scope">
-            <el-switch
-              v-model="scope.row.status"
-              active-value="0"
-              inactive-value="1"
-              @change="handleChangeStatus(scope.row)"
-            />
+            <dict-tag :data="sys_status" :value="scope.row.status" />
           </template>
         </el-table-column>
         <el-table-column
@@ -243,10 +251,10 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, ElMessageBox, FormInstance, FormRules } from 'element-plus'
+import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listDictData, getDictData, addDictData, editDictData, changeStatus, deleteDictData } from '@/api/system/dict/data'
-import { SysDictData as DictData, SysDictDataForm, SysDictDataQuery as DictDataQuery, SysDictData } from '@/api/system/dict/data/types'
+import { listDictData, getDictData, addDictData, editDictData, deleteDictData, deleteDictDatas } from '@/api/system/dict/data'
+import { SysDictData, SysDictDataForm, SysDictDataQuery } from '@/api/system/dict/data/types'
 import { getDictType } from '@/api/system/dict'
 
 const { proxy }: any = getCurrentInstance()
@@ -269,12 +277,12 @@ const state = reactive({
   // 总条数
   total: 0,
   // 字典数据数据
-  dictDataList: [] as DictData[],
+  dictDataList: [] as SysDictData[],
   // 查询参数
   queryParams: {
     pageNum: 1,
     pageSize: 10
-  } as DictDataQuery,
+  } as SysDictDataQuery,
   // 对话框
   dictDataDialog: {
     title: '',
@@ -336,7 +344,11 @@ function handleAdd() {
 
 // 修改字典数据信息
 function handleEdit(row: any) {
-  getDictData(row.dictDataId).then((res: any) => {
+  let dataId = state.dictDataId
+  if (row.dataId) {
+    dataId = row.dataId
+  }
+  getDictData(dataId).then((res: any) => {
     state.dictDataForm = res.data
   })
 
@@ -347,26 +359,27 @@ function handleEdit(row: any) {
   }
 }
 
-// 修改字典数据状态
-function handleChangeStatus(row: SysDictData) {
-  const text = row.status === '0' ? '启用' : '停用';
-  ElMessageBox.confirm('确认要' + text + '"' + row.dataLabel + '"字典数据吗?', '警告', {
-      type: 'warning'
-    }
-  ).then(() => {
-    return changeStatus(row.dataId, row.status)
+// 删除字典数据信息
+function handleDelete(row: any) {
+  proxy.$confirm('确认要删除"' + row.dataLabel + '"字典数据信息吗?', '警告', {
+    type: 'warning'
   }).then(() => {
-    ElMessage.success(text + '成功')
-  }).catch(() => {
-    row.status = row.status === '1' ? '0' : '1'
+    deleteDictData(row.dataId).then(() => {
+      proxy.$message.success("删除字典数据信息成功")
+      handleList()
+    })
   })
 }
 
-// 删除字典数据信息
-function handleDelete(row: any) {
-  deleteDictData(row.dictDataId).then(() => {
-    ElMessage.success("删除字典数据信息成功")
-    handleList()
+// 批量删除字典数据信息
+function handleDeletes() {
+  proxy.$confirm('确认要删除"' + state.dictDataIds + '"字典数据信息吗?', '警告', {
+    type: 'warning'
+  }).then(() => {
+    deleteDictDatas(state.dictDataIds).then(() => {
+      proxy.$message.success("删除字典数据信息成功")
+      handleList()
+    })
   })
 }
 
@@ -385,7 +398,7 @@ function closeDictDataDialog() {
 
 // 多选框
 function handleSelectionChange(selection: any) {
-  state.dictDataIds = selection.map((item: any) => item.dictDataId)
+  state.dictDataIds = selection.map((item: any) => item.dataId)
   if (selection.length === 1) {
     state.dictDataId = dictDataIds.value[0]
   }
@@ -398,14 +411,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       if (dictDataDialog.value.type == 'add') {
         addDictData(state.dictDataForm).then(() => {
-          ElMessage.success("添加字典数据信息成功")
+          proxy.$message.success("添加字典数据信息成功")
           closeDictDataDialog()
           handleList()
         })
       }
       if (dictDataDialog.value.type == 'edit') {
         editDictData(state.dictDataForm).then(() => {
-          ElMessage.success("修改字典数据信息成功")
+          proxy.$message.success("修改字典数据信息成功")
           closeDictDataDialog()
           handleList()
         })

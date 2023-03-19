@@ -38,12 +38,11 @@
 
         <!-- 信息检索 -->
         <el-card style="margin-bottom: 10px;">
-          <el-form ref="userQueryFormRef" :model="queryParams" :inline="true">
+          <el-form ref="userQueryFormRef" :model="queryParams" inline>
             <el-form-item label="用户名" prop="username">
               <el-input
                 v-model="queryParams.username"
                 placeholder="用户名"
-                style="width: 200px"
                 clearable
                 @keyup.enter="handleList"
               />
@@ -52,7 +51,6 @@
               <el-input
                 v-model="queryParams.nickname"
                 placeholder="昵称"
-                style="width: 200px"
                 clearable
                 @keyup.enter="handleList"
               />
@@ -61,7 +59,6 @@
               <el-select
                 v-model="queryParams.gender"
                 placeholder="性别"
-                style="width: 200px"
                 clearable
                 @keyup.enter="handleList"
               >
@@ -76,7 +73,6 @@
               <el-select
                 v-model="queryParams.status"
                 placeholder="状态"
-                style="width: 200px"
                 clearable
               >
                 <el-option
@@ -114,16 +110,16 @@
               <el-button
                 type="success"
                 :icon="Edit"
-                :disabled="selectSingle"
+                :disabled="userIds.length !== 1"
                 v-hasPermission="'system:user:edit'"
                 @click="handleEdit"
               >修改</el-button>
               <el-button
                 type="danger"
                 :icon="Delete"
-                :disabled="selectSingle"
+                :disabled="userIds.length === 0"
                 v-hasPermission="'system:user:delete'"
-                @click="handleDelete"
+                @click="handleDeletes"
               >删除</el-button>
               <el-button
                 type="info"
@@ -141,14 +137,12 @@
             v-loading="loading"
             :data="userList"
             @selection-change="handleSelectionChange"
-            style="width: 100%"
           >
-            <el-table-column type="selection" width="50" align="center" />
+            <el-table-column type="selection" width="55" />
             <el-table-column
               label="用户编号"
               prop="userId"
               align="center"
-              width="60"
             />
             <el-table-column
               label="部门名称"
@@ -168,14 +162,15 @@
             <el-table-column
               label="邮箱"
               prop="email"
-              width="180"
               align="center"
+              width="160"
+              show-overflow-tooltip
             />
             <el-table-column
               label="手机号码"
               prop="phone"
-              width="90"
               align="center"
+              width="120"
             />
             <el-table-column
               label="性别"
@@ -210,7 +205,7 @@
             <el-table-column
               label="最后登录时间"
               prop="loginDate"
-              width="120"
+              width="160"
               align="center"
             />
             <el-table-column
@@ -219,6 +214,30 @@
               width="160"
               align="center"
             />
+            <el-table-column
+              label="操作"
+              align="center"
+              width="130"
+            >
+              <template #default="scope">
+                <el-button
+                  type="primary"
+                  link
+                  size="small"
+                  :icon="Edit"
+                  v-hasPermission="'system:user:edit'"
+                  @click="handleEdit(scope.row)"
+                >编辑</el-button>
+                <el-button
+                  type="primary"
+                  link
+                  size="small"
+                  :icon="Delete"
+                  v-hasPermission="'system:user:delete'"
+                  @click="handleDelete(scope.row)"
+                >删除</el-button>
+              </template>
+            </el-table-column>
           </el-table>
 
           <!-- 分页 -->
@@ -336,9 +355,9 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElMessage, ElMessageBox, ElPagination, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
+import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
-import { listUser, addUser, getUser, getRoleSelect, editUser, changeStatus, deleteUser } from '@/api/system/user'
+import { listUser, addUser, getUser, getRoleSelect, editUser, changeStatus, deleteUser, deleteUsers } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 
@@ -352,8 +371,6 @@ const state = reactive({
   userId: 0 as number,
   // 选中数据数组
   userIds: [] as number[],
-  // 非单个禁用
-  selectSingle: true,
   // 部门名称
   deptName: undefined,
   // 总条数
@@ -382,7 +399,6 @@ const state = reactive({
 const {
   loading,
   userIds,
-  selectSingle,
   deptName,
   total,
   userList,
@@ -453,8 +469,12 @@ function handleAdd() {
 }
 
 // 修改用户信息
-function handleEdit() {
-  getUser(state.userId).then((res: any) => {
+function handleEdit(row: any) {
+  let userId = state.userId
+  if (row.userId) {
+    userId = row.userId
+  }
+  getUser(userId).then((res: any) => {
     state.userForm = res.data
   })
   getRoleSelect().then((res: any) => {
@@ -469,13 +489,24 @@ function handleEdit() {
 }
 
 // 删除用户信息
-function handleDelete() {
-  ElMessageBox.confirm('确认要删除"' + state.userId + '"用户吗?', '警告', {
-      type: 'warning'
-    }
-  ).then(() => {
+function handleDelete(row: any) {
+  proxy.$confirm('确认要删除"' + row.username + '"用户信息吗?', '警告', {
+    type: 'warning'
+  }).then(() => {
     deleteUser(state.userId).then(() => {
-      ElMessage.success("删除用户信息成功")
+      proxy.$message.success("删除用户信息成功")
+      handleList()
+    })
+  })
+}
+
+// 批量删除用户信息
+function handleDeletes() {
+  proxy.$confirm('确认要删除"' + state.userIds + '"用户信息吗?', '警告', {
+    type: 'warning'
+  }).then(() => {
+    deleteUsers(state.userIds).then(() => {
+      proxy.$message.success("删除用户信息成功")
       handleList()
     })
   })
@@ -489,6 +520,7 @@ function resetQuery() {
 
 // 关闭对话框
 function closeUserDialog() {
+  state.userForm.password = '123456'
   state.userDialog.visible = false
   userRuleFormRef.value?.resetFields()
   userRuleFormRef.value?.clearValidate()
@@ -496,14 +528,14 @@ function closeUserDialog() {
 
 // 修改用户状态
 function handleChangeStatus(row: SysUser) {
-  const text = row.status === '0' ? '启用' : '停用';
-  ElMessageBox.confirm('确认要' + text + '"' + row.username + '"用户吗?', '警告', {
-      type: 'warning'
-    }
-  ).then(() => {
-    return changeStatus(row.userId, row.status)
+  const text = row.status === '0' ? '启用' : '停用'
+  proxy.$confirm('确认要' + text + '"' + row.username + '"用户吗?', '警告', {
+    type: 'warning'
   }).then(() => {
-    ElMessage.success(text + '成功')
+    changeStatus(row.userId, row.status).then(() => {
+      proxy.$message.success(text + '成功')
+      handleList()
+    })
   }).catch(() => {
     row.status = row.status === '1' ? '0' : '1'
   })
@@ -512,7 +544,6 @@ function handleChangeStatus(row: SysUser) {
 // 多选框
 function handleSelectionChange(selection: any) {
   state.userIds = selection.map((item: any) => item.userId)
-  state.selectSingle = selection.length !== 1
   if (selection.length === 1) {
     state.userId = userIds.value[0]
   }
@@ -538,14 +569,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       if (userDialog.value.type == 'add') {
         addUser(state.userForm).then(() => {
-          ElMessage.success("添加用户信息成功")
+          proxy.$message.success("添加用户信息成功")
           closeUserDialog()
           handleList()
         })
       }
       if (userDialog.value.type == 'edit') {
         editUser(state.userForm).then(() => {
-          ElMessage.success("修改用户信息成功")
+          proxy.$message.success("修改用户信息成功")
           closeUserDialog()
           handleList()
         })

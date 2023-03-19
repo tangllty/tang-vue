@@ -2,11 +2,12 @@
   <div>
     <!-- 信息检索 -->
     <el-card style="margin-bottom: 10px;">
-      <el-form ref="menuQueryFormRef" :model="queryParams" :inline="true">
+      <el-form ref="menuQueryFormRef" :model="queryParams" inline>
         <el-form-item label="菜单名称" prop="menuName">
           <el-input
             v-model="queryParams.menuName"
             placeholder="菜单名称"
+            clearable
             @keyup.enter="handleList"
           />
         </el-form-item>
@@ -65,6 +66,7 @@
         <el-table-column
           prop="menuName"
           label="菜单名称"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="icon"
@@ -86,11 +88,13 @@
           prop="permission"
           label="权限标识"
           align="center"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="component"
           label="组件地址"
           align="center"
+          show-overflow-tooltip
         />
         <el-table-column
           label="状态"
@@ -111,6 +115,7 @@
           prop="createTime"
           label="创建时间"
           align="center"
+          width="180"
         />
         <el-table-column
           label="操作"
@@ -259,7 +264,7 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, ElMessageBox, FormInstance, FormRules } from 'element-plus'
+import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { listMenu, menuTree as selectMenuTree, addMenu, editMenu, changeStatus, deleteMenu } from '@/api/system/menu'
 import { SysMenu, SysMenuForm, SysMenuQuery } from '@/api/system/menu/types'
@@ -375,14 +380,14 @@ function handleEdit(row: any) {
 
 // 修改菜单状态
 function handleChangeStatus(row: SysMenu) {
-  const text = row.status === '0' ? '启用' : '停用';
-  ElMessageBox.confirm('确认要' + text + '"' + row.menuName + '"菜单吗?', '警告', {
-      type: 'warning'
-    }
-  ).then(() => {
-    return changeStatus(row.menuId, row.status)
+  const text = row.status === '0' ? '启用' : '停用'
+  proxy.$confirm('确认要' + text + '"' + row.menuName + '"菜单吗?', '警告', {
+    type: 'warning'
   }).then(() => {
-    ElMessage.success(text + '成功')
+    changeStatus(row.menuId, row.status).then(() => {
+      proxy.$message.success(text + '成功')
+      handleList()
+    })
   }).catch(() => {
     row.status = row.status === '1' ? '0' : '1'
   })
@@ -390,9 +395,13 @@ function handleChangeStatus(row: SysMenu) {
 
 // 删除菜单信息
 function handleDelete(row: any) {
-  deleteMenu(row.menuId).then(() => {
-    ElMessage.success("删除菜单信息成功")
-    handleList()
+  proxy.$confirm('确认要删除"' + row.menuName + '"菜单信息吗?', '警告', {
+    type: 'warning'
+  }).then(() => {
+    deleteMenu(row.menuId).then(() => {
+      proxy.$message.success('删除菜单信息成功')
+      handleList()
+    })
   })
 }
 
@@ -431,14 +440,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       if (menuDialog.value.type == 'add') {
         addMenu(state.menuForm).then(() => {
-          ElMessage.success("添加菜单信息成功")
+          proxy.$message.success("添加菜单信息成功")
           closeMenuDialog()
           handleList()
         })
       }
       if (menuDialog.value.type == 'edit') {
         editMenu(state.menuForm).then(() => {
-          ElMessage.success("修改菜单信息成功")
+          proxy.$message.success("修改菜单信息成功")
           closeMenuDialog()
           handleList()
         })

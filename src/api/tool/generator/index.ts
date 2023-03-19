@@ -44,6 +44,15 @@ export const deleteGenTable = (typeId: number) => {
   })
 }
 
+// 批量删除代码生成信息
+export const deleteGenTables = (typeIds: any) => {
+  return request({
+    url: '/tool/generator',
+    method: 'delete',
+    data: typeIds
+  })
+}
+
 // 导入表信息
 export const importTable = (data: any) => {
   return request({

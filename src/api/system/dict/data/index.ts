@@ -44,24 +44,19 @@ export const editDictData = (data: SysDictDataForm) => {
   })
 }
 
-// 修改字典数据状态
-export const changeStatus = (dataId: number, status: string) => {
-  const data = {
-    dataId,
-    status
-  }
-
-  return request({
-    url: '/system/dict/data/changeStatus',
-    method: 'put',
-    data
-  })
-}
-
 // 删除字典数据信息
 export const deleteDictData = (dataId: number) => {
   return request({
     url: '/system/dict/data/' + dataId,
     method: 'delete'
+  })
+}
+
+// 批量删除字典数据信息
+export const deleteDictDatas = (dataIds: number[]) => {
+  return request({
+    url: '/system/dict/data',
+    method: 'delete',
+    data: dataIds
   })
 }

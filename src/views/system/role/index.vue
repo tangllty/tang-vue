@@ -2,11 +2,12 @@
   <div>
     <!-- 信息检索 -->
     <el-card style="margin-bottom: 10px;">
-      <el-form ref="roleQueryFormRef" :model="queryParams" :inline="true">
+      <el-form ref="roleQueryFormRef" :model="queryParams" inline>
         <el-form-item label="角色名称" prop="roleName">
           <el-input
             v-model="queryParams.roleName"
             placeholder="角色名称"
+            clearable
             @keyup.enter="handleList"
           />
         </el-form-item>
@@ -51,10 +52,18 @@
             @click="handleAdd"
           >新增</el-button>
           <el-button
+            type="success"
+            :icon="Edit"
+            :disabled="roleIds.length !== 1"
+            v-hasPermission="'system:role:edit'"
+            @click="handleEdit"
+          >修改</el-button>
+          <el-button
             type="danger"
             :icon="Delete"
+            :disabled="roleIds.length === 0"
             v-hasPermission="'system:role:delete'"
-            @click="handleDelete"
+            @click="handleDeletes"
           >删除</el-button>
         </el-row>
       </template>
@@ -217,11 +226,11 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, ElMessageBox, ElTree, FormInstance, FormRules } from 'element-plus'
+import { ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listRole, getRole, addRole, editRole, changeStatus, deleteRole } from '@/api/system/role'
+import { listRole, getRole, addRole, editRole, changeStatus, deleteRole, deleteRoles } from '@/api/system/role'
 import { menuTree as selectMenuTree } from '@/api/system/menu'
-import { SysRole as Role, SysRoleForm, SysRoleQuery as RoleQuery, SysRole } from '@/api/system/role/types'
+import { SysRole , SysRoleForm, SysRoleQuery } from '@/api/system/role/types'
 
 const { proxy }: any = getCurrentInstance()
 const { sys_status } = proxy.$dict('sys_status')
@@ -236,14 +245,14 @@ const state = reactive({
   // 总条数
   total: 0,
   // 角色数据
-  roleList: [] as Role[],
+  roleList: [] as SysRole[],
   // 菜单树数据
   menuTree: [] as TreeSelect[],
   // 查询参数
   queryParams: {
     pageNum: 1,
     pageSize: 10
-  } as RoleQuery,
+  } as SysRoleQuery,
   // 对话框
   roleDialog: {
     title: '',
@@ -311,8 +320,12 @@ function getMenuTree() {
 
 // 修改角色信息
 function handleEdit(row: any) {
+  let roleId = state.roleId
+  if (row.roleId) {
+    roleId = row.roleId
+  }
   getMenuTree()
-  getRole(row.roleId).then((res: any) => {
+  getRole(roleId).then((res: any) => {
     state.roleForm = res.data
     const menuIds = res.data.menuIds
     menuIds.forEach((menuId: number) => menuTreeRef.value?.setChecked(menuId, true, false))
@@ -327,14 +340,14 @@ function handleEdit(row: any) {
 
 // 修改角色状态
 function handleChangeStatus(row: SysRole) {
-  const text = row.status === '0' ? '启用' : '停用';
-  ElMessageBox.confirm('确认要' + text + '"' + row.roleName + '"角色吗?', '警告', {
-      type: 'warning'
-    }
-  ).then(() => {
-    return changeStatus(row.roleId, row.status)
+  const text = row.status === '0' ? '启用' : '停用'
+  proxy.$confirm('确认要' + text + '"' + row.roleName + '"角色吗?', '警告', {
+    type: 'warning'
   }).then(() => {
-    ElMessage.success(text + '成功')
+    changeStatus(row.roleId, row.status).then(() => {
+      proxy.$message.success(text + '成功')
+      handleList()
+    })
   }).catch(() => {
     row.status = row.status === '1' ? '0' : '1'
   })
@@ -342,9 +355,25 @@ function handleChangeStatus(row: SysRole) {
 
 // 删除角色信息
 function handleDelete(row: any) {
-  deleteRole(row.roleId).then(() => {
-    ElMessage.success("删除角色信息成功")
-    handleList()
+  proxy.$confirm('确认要删除"' + row.roleName + '"角色信息吗?', '警告', {
+    type: 'warning'
+  }).then(() => {
+    deleteRole(row.roleId).then(() => {
+      proxy.$message.success("删除角色信息成功")
+      handleList()
+    })
+  })
+}
+
+// 批量删除角色信息
+function handleDeletes() {
+  proxy.$confirm('确认要删除"' + state.roleIds + '"角色信息吗?', '警告', {
+    type: 'warning'
+  }).then(() => {
+    deleteRoles(state.roleIds).then(() => {
+      proxy.$message.success("删除角色信息成功")
+      handleList()
+    })
   })
 }
 
@@ -383,14 +412,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
       if (roleDialog.value.type == 'add') {
         addRole(state.roleForm).then(() => {
-          ElMessage.success("添加角色信息成功")
+          proxy.$message.success("添加角色信息成功")
           closeRoleDialog()
           handleList()
         })
       }
       if (roleDialog.value.type == 'edit') {
         editRole(state.roleForm).then(() => {
-          ElMessage.success("修改角色信息成功")
+          proxy.$message.success("修改角色信息成功")
           closeRoleDialog()
           handleList()
         })
