@@ -10,6 +10,14 @@
     </el-radio-group>
 
     <div>
+      <el-switch
+        v-model="isDark"
+        @change="toggleDark"
+        inline-prompt
+        :active-icon="Moon"
+        :inactive-icon="Sunny"
+        style="margin-right: 10px;"
+      />
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
           <el-image :src="userAvatar" class="user-avatar" />
@@ -38,14 +46,17 @@
 <script lang="ts" setup>
 import router from '@/router'
 import { ElMessageBox } from 'element-plus'
-import { Expand, Fold, ArrowDown } from '@element-plus/icons-vue'
+import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
+import { useDark, useToggle } from '@vueuse/core'
 
 import userAvatar from '@/assets/logo.png'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
+const isDark = useDark()
+const toggleDark = () => useToggle(isDark)
 
 function toggleSidebar() {
   appStore.sidebar = !appStore.sidebar

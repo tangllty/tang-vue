@@ -6,6 +6,7 @@ import { setupDirective } from '@/directives'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 import zhLocale from 'element-plus/lib/locale/lang/zh-cn'
 import '@/permission'
 
