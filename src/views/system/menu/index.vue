@@ -358,8 +358,10 @@ function getMenuTree() {
 
 // 添加菜单信息
 function handleAdd(row: any) {
+  if (row.menuId) {
+    state.menuForm.parentId = row.menuId
+  }
   getMenuTree()
-  state.menuForm.parentId = row.menuId
   state.menuDialog = {
     title: '新增菜单信息',
     type: 'add',
@@ -370,7 +372,7 @@ function handleAdd(row: any) {
 // 修改菜单信息
 function handleEdit(row: any) {
   getMenuTree()
-  state.menuForm = row
+  Object.assign(menuForm, row)
   state.menuDialog = {
     title: '修改菜单信息',
     type: 'edit',

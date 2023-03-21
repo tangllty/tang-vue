@@ -279,7 +279,7 @@ function handleAdd(row: any) {
 // 修改部门信息
 function handleEdit(row: any) {
   getDeptTree()
-  state.deptForm = row
+  Object.assign(deptForm, row)
   state.deptDialog = {
     title: '修改部门信息',
     type: 'edit',
