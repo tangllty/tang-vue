@@ -493,7 +493,7 @@ function handleDelete(row: any) {
   proxy.$confirm('确认要删除"' + row.username + '"用户信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
-    deleteUser(state.userId).then(() => {
+    deleteUser(row.userId).then(() => {
       proxy.$message.success("删除用户信息成功")
       handleList()
     })
