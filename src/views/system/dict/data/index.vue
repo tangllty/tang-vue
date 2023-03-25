@@ -290,10 +290,7 @@ const state = reactive({
     visible: false
   } as Dialog,
   // 表单
-  dictDataForm: {
-    typeClass: '',
-    status: '0'
-  } as SysDictDataForm
+  dictDataForm: {} as SysDictDataForm
 })
 
 const {
@@ -331,6 +328,12 @@ function handleList() {
 
 // 添加字典数据信息
 function handleAdd() {
+  state.dictDataForm = {
+    typeClass: '',
+    sort: 1,
+    status: '0'
+  } as SysDictDataForm
+
   getDictType(props.typeId).then((res: any) => {
     state.dictDataForm.dictType = res.data.dictType
   })

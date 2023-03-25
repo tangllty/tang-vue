@@ -390,10 +390,7 @@ const state = reactive({
     visible: false
   } as Dialog,
   // 表单
-  userForm: {
-    password: '123456',
-    gender: '0'
-  } as SysUserForm
+  userForm: {} as SysUserForm
 })
 
 const {
@@ -457,6 +454,11 @@ function handleList() {
 
 // 添加用户信息
 function handleAdd() {
+  state.userForm = {
+    password: '123456',
+    gender: '0'
+  } as SysUserForm
+
   getRoleSelect().then((res: any) => {
     state.roleSelect = res.data
   })

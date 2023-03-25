@@ -298,11 +298,7 @@ const state = reactive({
     visible: false
   } as Dialog,
   // 表单
-  menuForm: {
-    parentId: 0,
-    menuType: 'D',
-    sort: 1
-  } as SysMenuForm
+  menuForm: {} as SysMenuForm
 })
 
 const {
@@ -358,6 +354,12 @@ function getMenuTree() {
 
 // 添加菜单信息
 function handleAdd(row: any) {
+  state.menuForm = {
+    parentId: 0,
+    menuType: 'D',
+    sort: 1
+  } as SysMenuForm
+
   if (row.menuId) {
     state.menuForm.parentId = row.menuId
   }

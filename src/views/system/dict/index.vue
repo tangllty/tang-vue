@@ -253,9 +253,7 @@ const state = reactive({
     visible: false
   } as Dialog,
   // 表单
-  dictTypeForm: {
-    status: '0'
-  } as SysDictTypeForm
+  dictTypeForm: {} as SysDictTypeForm
 })
 
 const {
@@ -293,6 +291,10 @@ function handleList() {
 
 // 添加字典类型信息
 function handleAdd() {
+  state.dictTypeForm = {
+    status: '0'
+  } as SysDictTypeForm
+
   state.dictTypeDialog = {
     title: '新增字典类型信息',
     type: 'add',

@@ -223,9 +223,7 @@ const state = reactive({
     visible: false
   } as Dialog,
   // 表单
-  deptForm: {
-    sort: 1
-  } as SysDeptForm
+  deptForm: {} as SysDeptForm
 })
 
 const {
@@ -267,6 +265,10 @@ function getDeptTree() {
 
 // 添加部门信息
 function handleAdd(row: any) {
+  state.deptForm = {
+    sort: 1
+  } as SysDeptForm
+
   getDeptTree()
   state.deptForm.parentId = row.deptId
   state.deptDialog = {

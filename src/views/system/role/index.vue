@@ -260,9 +260,7 @@ const state = reactive({
     visible: false
   } as Dialog,
   // 表单
-  roleForm: {
-    sort: 1
-  } as SysRoleForm
+  roleForm: {} as SysRoleForm
 })
 
 const {
@@ -302,6 +300,10 @@ function handleList() {
 
 // 添加角色信息
 function handleAdd() {
+  state.roleForm = {
+    sort: 1
+  } as SysRoleForm
+
   getMenuTree()
 
   state.roleDialog = {
