@@ -198,7 +198,7 @@
 import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listDept, deptTree as selectDeptTree, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
+import { listDept, deptTree as selectDeptTree, getDept, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
 import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
 
 const { proxy }: any = getCurrentInstance()
@@ -281,7 +281,9 @@ function handleAdd(row: any) {
 // 修改部门信息
 function handleEdit(row: any) {
   getDeptTree()
-  Object.assign(deptForm, row)
+  getDept(row.deptId).then((res:any) => {
+    state.deptForm = res.data
+  })
   state.deptDialog = {
     title: '修改部门信息',
     type: 'edit',

@@ -266,7 +266,7 @@
 import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
-import { listMenu, menuTree as selectMenuTree, addMenu, editMenu, changeStatus, deleteMenu } from '@/api/system/menu'
+import { listMenu, menuTree as selectMenuTree, getMenu, addMenu, editMenu, changeStatus, deleteMenu } from '@/api/system/menu'
 import { SysMenu, SysMenuForm, SysMenuQuery } from '@/api/system/menu/types'
 import IconSelect from '@/components/IconSelect/index.vue'
 
@@ -374,7 +374,9 @@ function handleAdd(row: any) {
 // 修改菜单信息
 function handleEdit(row: any) {
   getMenuTree()
-  Object.assign(menuForm, row)
+  getMenu(row.menuId).then((res:any) => {
+    menuForm.value = res.data
+  })
   state.menuDialog = {
     title: '修改菜单信息',
     type: 'edit',
