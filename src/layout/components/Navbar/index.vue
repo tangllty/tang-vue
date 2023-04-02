@@ -27,13 +27,17 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>个人中心</el-dropdown-item>
-            <a target="_blank" href="https://github.com/tangllty/tang-ui">
-              <el-dropdown-item>GitHub</el-dropdown-item>
-            </a>
-            <a target="_blank" href="https://gitee.com/tangllty/tang-ui">
-              <el-dropdown-item>Gitee</el-dropdown-item>
-            </a>
+            <el-dropdown-item>
+              <el-link :underline="false">
+                <router-link to="/profile">个人中心</router-link>
+              </el-link>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <el-link href="https://github.com/tangllty/tang-ui" target="_blank">GitHub</el-link>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <el-link href="https://gitee.com/tangllty/tang-ui" target="_blank">Gitee</el-link>
+            </el-dropdown-item>
             <el-dropdown-item disabled>文档</el-dropdown-item>
             <el-dropdown-item divided @click="logout">退出登陆</el-dropdown-item>
           </el-dropdown-menu>
@@ -45,13 +49,15 @@
 
 <script lang="ts" setup>
 import router from '@/router'
-import { ElMessageBox } from 'element-plus'
+import { getCurrentInstance } from 'vue'
 import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
 import { useDark, useToggle } from '@vueuse/core'
 
 import userAvatar from '@/assets/logo.png'
+
+const { proxy }: any = getCurrentInstance()
 
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -63,7 +69,7 @@ function toggleSidebar() {
 }
 
 function logout() {
-  ElMessageBox.confirm('确定注销并退出系统吗？', '提示', {
+  proxy.$confirm('确定注销并退出系统吗？', '提示', {
     type: 'warning'
   }).then(() => {
     userStore.logout().then(() => {
@@ -103,7 +109,7 @@ function logout() {
       display: inline-block;
       border-radius: .5rem;
       border: 1px solid #ccc;
-      margin-left: 0px;
+      margin-left: 0;
     }
   }
 }

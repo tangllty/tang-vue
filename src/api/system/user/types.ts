@@ -22,6 +22,7 @@ export interface SysUser {
 export interface UserInfo {
   user: SysUser
   roles: string[]
+  permissions: string[]
 }
 
 // 用户表单对象
@@ -35,6 +36,14 @@ export interface SysUserForm {
   gender: string
   roleIds: number[]
   remark: string
+}
+
+// 用户密码表单对象
+export interface SysUserPasswordForm {
+  userId: number
+  oldPassword: string
+  newPassword: string
+  confirmPassword: string
 }
 
 // 用户查询参数

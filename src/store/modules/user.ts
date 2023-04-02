@@ -1,17 +1,19 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { store } from "@/store"
+import { store } from '@/store'
 import { resetRouter } from '@/router'
-import { LoginForm } from "@/api/auth/types"
-import { login as loginApi, logout as logoutApi, getInfo as getInfoApi } from "@/api/auth"
-import { getToken, removeToken, setToken } from "@/utils/auth"
-import { UserInfo } from '@/api/system/user/types'
+import { LoginForm } from '@/api/auth/types'
+import { login as loginApi, logout as logoutApi, getInfo as getInfoApi } from '@/api/auth'
+import { getToken, removeToken, setToken } from '@/utils/auth'
+import { SysUser, UserInfo } from '@/api/system/user/types'
 
 export const useUserStore = defineStore('user', () => {
 
+  const user = ref<SysUser>({} as SysUser)
   const token = ref<String>(getToken() ||'')
   // 角色集合
   const roles = ref<Array<string>>([])
+  // 权限集合
   const permissions = ref<Array<string>>([])
 
   // 登录
@@ -45,6 +47,7 @@ export const useUserStore = defineStore('user', () => {
   function getInfo() {
     return new Promise<UserInfo>((resolve, reject) => {
       getInfoApi().then(({ data }) => {
+        user.value = data.user
         roles.value = data.roles
         permissions.value = data.permissions
         resolve(data)
@@ -63,6 +66,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return {
+    user,
     token,
     roles,
     permissions,

@@ -19,6 +19,31 @@ export const routes: Array<RouteRecordRaw> = [
         meta: { title: '首页', icon: 'House' }
       }
     ]
+  },
+  {
+    path: '/profile',
+    component: () => import('@/layout/index.vue'),
+    meta: { hidden: true },
+    children: [
+      {
+        path: '/profile',
+        component: () => import('@/views/profile/index.vue'),
+        redirect: '/profile/info',
+        meta: { title: '个人中心', icon: 'House' },
+        children: [
+          {
+            path: '/profile/info',
+            component: () => import('@/views/profile/Info.vue'),
+            meta: { title: '个人中心', icon: 'House' }
+          },
+          {
+            path: '/profile/login-log',
+            component: () => import('@/views/profile/LoginLog.vue'),
+            meta: { title: '个人中心', icon: 'House' }
+          }
+        ]
+      }
+    ]
   }
 ]
 
