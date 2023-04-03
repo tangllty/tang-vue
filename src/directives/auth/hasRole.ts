@@ -1,7 +1,7 @@
-import { useUserStore } from "@/store/modules/user"
+import { useUserStore } from '@/store/modules/user'
 
 export default {
-  mounted(el: any, binding: any) {
+  mounted(el: any, binding: any): void {
     const userStore = useUserStore()
 
     const adminRole: string = 'admin'
@@ -22,7 +22,7 @@ export default {
       })
     }
 
-    function hasRole(role: string) {
+    function hasRole(role: string): boolean {
       return roles.includes(role) || roles.includes(adminRole)
     }
   }

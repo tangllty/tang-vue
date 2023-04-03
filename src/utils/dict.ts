@@ -1,19 +1,19 @@
 import { useDictStore } from '@/store/modules/dict'
 import { selectDictDataListByDictType as getDictData } from '@/api/system/dict/data'
-import { ref, toRefs } from 'vue'
+import { ref, ToRefs, toRefs } from 'vue'
 
-export function getDicts(...dictTypes: string[]) {
+export function getDicts(...dictTypes: string[]): ToRefs<any> {
   const dicts: any = ref({})
   const dictStore = useDictStore()
 
   return (() => {
-    dictTypes.forEach((dictType) => {
+    dictTypes.forEach((dictType: string): void => {
       dicts.value[dictType] = []
-      const hasDict = dictStore.hasDict(dictType)
+      const hasDict: boolean = dictStore.hasDict(dictType)
       if (hasDict) {
         dicts.value[dictType] = dictStore.getDict(dictType)
       } else {
-        getDictData(dictType).then(({ data }) => {
+        getDictData(dictType).then(({ data }): void => {
           dicts.value[dictType] = data
           dictStore.setDict(dictType, data)
         })

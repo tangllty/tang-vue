@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, Router, RouteRecordName, RouteRecordRaw } from 'vue-router'
 import { usePermissionStoreHook } from '@/store/modules/permission'
 
 export const routes: Array<RouteRecordRaw> = [
@@ -64,16 +64,16 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
   }
 ]
 
-const router = createRouter({
+const router: Router = createRouter({
   history: createWebHistory(),
   routes
 })
 
 // 重置路由
-export function resetRouter() {
+export function resetRouter(): void {
   const permissionStore = usePermissionStoreHook();
   permissionStore.routes.forEach(route => {
-    const name = route.name
+    const name: RouteRecordName | undefined = route.name
     if (name && router.hasRoute(name)) {
       router.removeRoute(name)
     }

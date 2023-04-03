@@ -17,8 +17,8 @@ export const useUserStore = defineStore('user', () => {
   const permissions = ref<Array<string>>([])
 
   // 登录
-  function login(loginForm: LoginForm) {
-    return new Promise<void>((resolve, reject) => {
+  function login(loginForm: LoginForm): Promise<void> {
+    return new Promise<void>((resolve, reject): void => {
       loginApi(loginForm).then(response => {
         const getToken = response.data.token
         token.value = getToken
@@ -31,34 +31,34 @@ export const useUserStore = defineStore('user', () => {
   }
 
   // 登出
-  function logout() {
-    return new Promise<void>((resolve, reject) => {
-      logoutApi().then(() => {
+  function logout(): Promise<void> {
+    return new Promise<void>((resolve, reject): void => {
+      logoutApi().then((): void => {
         resetAuth()
         resetRouter()
         resolve()
-      }).catch((error) => {
+      }).catch((error): void => {
         reject(error)
       })
     })
   }
 
   // 获取信息
-  function getInfo() {
-    return new Promise<UserInfo>((resolve, reject) => {
-      getInfoApi().then(({ data }) => {
+  function getInfo(): Promise<UserInfo> {
+    return new Promise<UserInfo>((resolve, reject): void => {
+      getInfoApi().then(({ data }): void => {
         user.value = data.user
         roles.value = data.roles
         permissions.value = data.permissions
         resolve(data)
-      }).catch((error) => {
+      }).catch((error): void => {
         reject(error)
       })
     })
   }
 
   // 重置
-  function resetAuth() {
+  function resetAuth(): void {
     removeToken()
     token.value = ''
     roles.value = []

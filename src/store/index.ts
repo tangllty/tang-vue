@@ -1,10 +1,10 @@
 import type { App } from 'vue'
-import { createPinia } from 'pinia'
+import { createPinia, Pinia } from 'pinia'
 
-const store = createPinia()
+const store: Pinia = createPinia()
 
 // 全局挂载store
-export function setupStore(app: App<Element>) {
+export function setupStore(app: App<Element>): void {
   app.use(store)
 }
 

@@ -58,8 +58,8 @@ export const usePermissionStore = defineStore('permission', () => {
         permission.forEach(p => permissions.push(p))
       }
 
-      const hasRole = userRoles.some(r => adminRole === r || roles.includes(r))
-      const hasPermission = userPermissions.some(p => adminPermission === p || permissions.includes(p))
+      const hasRole: boolean = userRoles.some(r => adminRole === r || roles.includes(r))
+      const hasPermission: boolean = userPermissions.some(p => adminPermission === p || permissions.includes(p))
       if (hasRole || hasPermission) {
         res.push(route)
       }
@@ -67,15 +67,15 @@ export const usePermissionStore = defineStore('permission', () => {
     return res
   }
 
-  function getRoutes() {
-    return new Promise<RouteRecordRaw[]>((resolve, reject) => {
-      getRoutesApi().then((response) => {
+  function getRoutes(): Promise<RouteRecordRaw[]> {
+    return new Promise<RouteRecordRaw[]>((resolve, reject): void => {
+      getRoutesApi().then((response): void => {
         const asyncRoutes = response.data
-        const accessedRoutes = filterAsyncRoutes(asyncRoutes)
-        const dynamicRoutes = filterDynamicRoutes(allDynamicRoutes)
+        const accessedRoutes: RouteRecordRaw[] = filterAsyncRoutes(asyncRoutes)
+        const dynamicRoutes: RouteRecordRaw[] = filterDynamicRoutes(allDynamicRoutes)
         routes.value = constantRoutes.concat(accessedRoutes)
         resolve(accessedRoutes.concat(dynamicRoutes))
-      }).catch((error) => {
+      }).catch((error): void => {
         reject(error)
       })
     })

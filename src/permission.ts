@@ -1,5 +1,5 @@
 import router from '@/router'
-import { RouteRecordRaw } from 'vue-router'
+import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import { useUserStoreHook } from '@/store/modules/user'
 import { usePermissionStoreHook } from '@/store/modules/permission'
 
@@ -12,19 +12,19 @@ NProgress.configure({
   minimum: 0.25,
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): Promise<void> => {
   NProgress.start()
   const userStore = useUserStoreHook()
   const permissionStore = usePermissionStoreHook()
 
   // 白名单路由
-  const whiteList = ['/login'] as Array<String>
+  const whiteList: String[] = ['/login'] as Array<String>
 
   if (userStore.token) {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
-      const gotUserInfo = userStore.roles.length > 0
+      const gotUserInfo: boolean = userStore.roles.length > 0
       if (gotUserInfo) {
         if (to.matched.length === 0) {
           from.path ? next({ path: from.path as string }) : next('/401')
@@ -34,7 +34,7 @@ router.beforeEach(async (to, from, next) => {
       } else {
         await userStore.getInfo()
         const accessRoutes: RouteRecordRaw[] = await permissionStore.getRoutes()
-        accessRoutes.forEach(route => router.addRoute(route))
+        accessRoutes.forEach((route: RouteRecordRaw) => router.addRoute(route))
         next({ ...to, replace: true })
       }
     }

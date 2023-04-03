@@ -1,7 +1,7 @@
-import { useUserStore } from "@/store/modules/user"
+import { useUserStore } from '@/store/modules/user'
 
 export default {
-  mounted(el: any, binding: any) {
+  mounted(el: any, binding: any): void {
     const userStore = useUserStore()
 
     const allPermissions: string = '*:*:*'
@@ -22,7 +22,7 @@ export default {
       })
     }
 
-    function hasPermission(permission: string) {
+    function hasPermission(permission: string): boolean {
       return permissions.includes(permission) || permissions.includes(allPermissions)
     }
   }

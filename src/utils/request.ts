@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStoreHook } from '@/store/modules/user'
 import { getToken, removeToken } from '@/utils/auth'
 
-let reLoginFlag:boolean = true
+let reLoginFlag: boolean = true
 
-const service = axios.create({
+const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 20000,
   headers: {
@@ -14,11 +14,7 @@ const service = axios.create({
 })
 
 // 添加请求拦截器
-service.interceptors.request.use((config: AxiosRequestConfig) => {
-  if (!config.headers) {
-    config.headers = {}
-  }
-
+service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const userStore = useUserStoreHook()
   if (userStore.token) {
     config.headers.Authorization = getToken()
@@ -44,10 +40,10 @@ service.interceptors.response.use((response: AxiosResponse) => {
       reLoginFlag = false
       ElMessageBox.confirm('登陆已失效，请重新登录', '提示', {
         type: 'warning'
-      }).then(() => {
+      }).then((): void => {
         removeToken()
         location.href = '/'
-      }).catch(() => {
+      }).catch((): void => {
         reLoginFlag = true
       })
     }
