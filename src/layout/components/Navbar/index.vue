@@ -1,15 +1,19 @@
 <template>
   <div class="navbar">
-    <el-radio-group
-      v-model="appStore.sidebar"
-      class="hamburger-container"
-      @click="toggleSidebar"
-    >
-      <el-icon v-show="!appStore.sidebar"><Expand /></el-icon>
-      <el-icon v-show="appStore.sidebar"><Fold /></el-icon>
-    </el-radio-group>
+    <div class="left-div">
+      <el-radio-group
+        v-model="appStore.sidebar"
+        class="hamburger-container"
+        @click="toggleSidebar"
+      >
+        <el-icon v-show="!appStore.sidebar"><Expand /></el-icon>
+        <el-icon v-show="appStore.sidebar"><Fold /></el-icon>
+      </el-radio-group>
 
-    <div>
+      <Breadcrumb style="margin-left: 10px;" />
+    </div>
+
+    <div class="right-div">
       <el-switch
         v-model="isDark"
         @change="toggleDark"
@@ -54,6 +58,7 @@ import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
 import { useDark, useToggle } from '@vueuse/core'
+import Breadcrumb from './Breadcrumb/index.vue'
 
 import userAvatar from '@/assets/logo.png'
 
@@ -97,7 +102,14 @@ function logout() {
     }
   }
 
-  div {
+  .left-div {
+    width: auto;
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+  }
+
+  .right-div {
     width: auto;
     display:flex;
     justify-content:space-between;
