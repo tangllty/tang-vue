@@ -74,3 +74,12 @@ export const deleteUsers = (userIds: number[]) => {
     data: userIds
   })
 }
+
+// 导出用户信息
+export const exportUser = (queryParams: SysUserQuery) => {
+  return request({
+    url: '/system/user/export',
+    method: 'get',
+    params: queryParams
+  })
+}
