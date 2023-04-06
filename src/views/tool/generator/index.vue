@@ -176,7 +176,6 @@ import { FormInstance } from 'element-plus'
 import { Edit, Delete, Search, Refresh, Upload, View, Download } from '@element-plus/icons-vue'
 import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes } from '@/api/tool/generator'
 import { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
-import { zip } from '@/utils/download'
 import ImportTable from './importTable.vue'
 import PreviewCode from './previewCode.vue'
 import EditTable from './editTable.vue'
@@ -275,7 +274,7 @@ function handleDeletes() {
 // 代码下载
 function handleDownload(row: any) {
   downloadCode(row.tableName).then((res) => {
-    zip(res)
+    proxy.$download(res)
   })
 }
 
@@ -283,7 +282,7 @@ function handleDownload(row: any) {
 function handleDownloads() {
   const tableNames: string = state.tableNames.toString()
   downloadCodes({ tableNames }).then((res) => {
-    zip(res)
+    proxy.$download(res)
   })
 }
 

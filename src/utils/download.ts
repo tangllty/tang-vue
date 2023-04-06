@@ -1,8 +1,16 @@
 import { saveAs } from 'file-saver'
 
-export function zip(res: any): void {
-  const blob: Blob = new Blob([res.data], { type: 'application/zip' })
+/**
+ * 下载文件
+ *
+ * @param res response
+ * @param fileName 文件名
+ */
+export function download(res: any, fileName: string): void {
+  const blob: Blob = new Blob([res.data], { type: res.headers['content-type'] })
   const contentDisposition: string = res.headers['content-disposition']
-  const fileName: string = contentDisposition.split(';')[1].trim().slice(9).replaceAll('"', '')
+  if (!fileName) {
+    fileName = contentDisposition.split(';')[1].split('=')[1]
+  }
   saveAs(blob, fileName)
 }

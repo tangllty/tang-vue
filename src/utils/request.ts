@@ -28,7 +28,12 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 // 添加响应拦截器
 service.interceptors.response.use((response: AxiosResponse) => {
-  if (response.headers['content-type'] === 'application/octet-stream') {
+  const binaryTypes = [
+    'application/octet-stream',
+    'application/zip',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  ]
+  if (binaryTypes.includes(response.headers['content-type'])) {
     return response
   }
   const { code, msg } = response.data

@@ -27,8 +27,10 @@ import DictTag from '@/components/Dict/Tag/index.vue'
 const app = createApp(App)
 
 import { getDicts } from '@/utils/dict'
+import { download } from '@/utils/download'
 
 app.config.globalProperties.$dict = getDicts
+app.config.globalProperties.$download = download
 
 setupStore(app)
 setupDirective(app)
