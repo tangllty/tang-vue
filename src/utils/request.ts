@@ -30,10 +30,9 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 service.interceptors.response.use((response: AxiosResponse) => {
   const binaryTypes = [
     'application/octet-stream',
-    'application/zip',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    'application/zip'
   ]
-  if (binaryTypes.includes(response.headers['content-type'])) {
+  if (binaryTypes.includes(response.headers['content-type']) || response.data instanceof ArrayBuffer) {
     return response
   }
   const { code, msg } = response.data

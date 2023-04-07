@@ -80,6 +80,7 @@ export const exportUser = (queryParams: SysUserQuery) => {
   return request({
     url: '/system/user/export',
     method: 'get',
-    params: queryParams
+    params: queryParams,
+    responseType: 'arraybuffer'
   })
 }
