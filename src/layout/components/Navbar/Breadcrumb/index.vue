@@ -23,6 +23,8 @@ function filterBreadcrumbs() {
   if (currentRoute.path === '/index') {
     breadcrumbs.value = []
   }
+  // 过滤没有设置 title 的路由
+  breadcrumbs.value = breadcrumbs.value.filter((item: any) => item.meta.title)
 }
 
 watch(currentRoute, () => {
