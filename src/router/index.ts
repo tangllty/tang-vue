@@ -34,12 +34,12 @@ export const routes: Array<RouteRecordRaw> = [
           {
             path: '/profile/info',
             component: () => import('@/views/profile/Info.vue'),
-            meta: { title: '个人中心', icon: 'House' }
+            meta: { title: '个人资料', icon: 'House' }
           },
           {
             path: '/profile/login-log',
             component: () => import('@/views/profile/LoginLog.vue'),
-            meta: { title: '个人中心', icon: 'House' }
+            meta: { title: '登陆历史', icon: 'House' }
           }
         ]
       }
