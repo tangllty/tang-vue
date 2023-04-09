@@ -1,36 +1,30 @@
-# tang-ui
+# tang-vue
 
-#### Description
-tang-ui
+[**简体中文**](./README.md) | [**English**](./README.en.md)
 
-#### Software Architecture
-Software architecture description
+#### Project Description
 
-#### Installation
+tang-vue is a permission management system based on Vue3
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+* Using Vue3 + Vite4 + Vue Router4 + TypeScript + Pinia + Element Plus
+* Customize multiple login authentication methods
+* Dynamic permissions menu
+* Code generator, one click to generate the basic front-end and back-end code
 
-#### Instructions
+#### Environment Requirements
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+* Node.js 18.14.0
 
-#### Contribution
+#### Project Startup
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+1. ```
+   $ yarn && yarn run dev
+   ```
+2. Visit [http://localhost:5173/](http://localhost:5173/)
 
+#### Project address
 
-#### Gitee Feature
-
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+| Project   | Gitee                                          | GitHub                                          |
+| --------- | ---------------------------------------------- | ----------------------------------------------- |
+| Back End  | [tang-boot](https://gitee.com/tangllty/tang-boot) | [tang-boot](https://github.com/tangllty/tang-boot) |
+| Front End | [tang-vue](https://gitee.com/tangllty/tang-vue)   | [tang-vue](https://github.com/tangllty/tang-vue)   |
