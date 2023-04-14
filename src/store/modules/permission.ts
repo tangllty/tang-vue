@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
 import { routes as constantRoutes, dynamicRoutes as allDynamicRoutes } from '@/router'
+import { AxiosResponse } from 'axios'
 import { store } from '@/store'
 import { getRoutes as getRoutesApi } from '@/api/auth'
 import { useUserStore } from './user'
@@ -16,12 +17,12 @@ export const usePermissionStore = defineStore('permission', () => {
 
   const filterAsyncRoutes = (routes: RouteRecordRaw[]) => {
     const res: RouteRecordRaw[] = []
-    routes.forEach(route  => {
-      const temp = { ...route } as any;
+    routes.forEach((route: RouteRecordRaw): void  => {
+      const temp = { ...route } as any
       if (temp.component == 'Layout') {
         temp.component = Layout
       } else {
-        temp.component = modules[`../../views/${route.component}.vue`] as any;
+        temp.component = modules[`../../views/${route.component}.vue`] as any
       }
       res.push(temp)
 
@@ -34,7 +35,7 @@ export const usePermissionStore = defineStore('permission', () => {
 
   const filterDynamicRoutes = (routes: RouteRecordRaw[]) => {
     const res: RouteRecordRaw[] = []
-    routes.forEach(route  => {
+    routes.forEach((route: RouteRecordRaw): void => {
       const adminRole: string = 'admin'
       const adminPermission: string = '*:*:*'
       const userRoles: Array<string> = userStore.roles
@@ -58,8 +59,8 @@ export const usePermissionStore = defineStore('permission', () => {
         permission.forEach(p => permissions.push(p))
       }
 
-      const hasRole: boolean = userRoles.some(r => adminRole === r || roles.includes(r))
-      const hasPermission: boolean = userPermissions.some(p => adminPermission === p || permissions.includes(p))
+      const hasRole: boolean = userRoles.some((r: string) => adminRole === r || roles.includes(r))
+      const hasPermission: boolean = userPermissions.some((p: string) => adminPermission === p || permissions.includes(p))
       if (hasRole || hasPermission) {
         res.push(route)
       }
@@ -67,9 +68,9 @@ export const usePermissionStore = defineStore('permission', () => {
     return res
   }
 
-  function getRoutes(): Promise<RouteRecordRaw[]> {
+  const getRoutes = (): Promise<RouteRecordRaw[]> => {
     return new Promise<RouteRecordRaw[]>((resolve, reject): void => {
-      getRoutesApi().then((response): void => {
+      getRoutesApi().then((response: AxiosResponse<any, any>): void => {
         const asyncRoutes = response.data
         const accessedRoutes: RouteRecordRaw[] = filterAsyncRoutes(asyncRoutes)
         const dynamicRoutes: RouteRecordRaw[] = filterDynamicRoutes(allDynamicRoutes)
@@ -88,6 +89,6 @@ export const usePermissionStore = defineStore('permission', () => {
 })
 
 // 非setup
-export function usePermissionStoreHook() {
+export const usePermissionStoreHook = () => {
   return usePermissionStore(store)
 }

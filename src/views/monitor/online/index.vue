@@ -233,7 +233,7 @@ const {
 const onlineUserQueryFormRef = ref<FormInstance>()
 
 // 查询在线用户列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listOnlineUser(state.queryParams).then((res: any) => {
     state.onlineUserList = res.rows
@@ -243,7 +243,7 @@ function handleList() {
 }
 
 // 查询在线用户
-function getInfo(row: any) {
+const getInfo = (row: any) => {
   getOnlineUser(row.token).then((res: any) => {
     state.onlineUserInfo = res.data
   })
@@ -253,7 +253,7 @@ function getInfo(row: any) {
 }
 
 // 删除在线用户信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认要强退"' + row.username + '"用户吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -265,13 +265,13 @@ function handleDelete(row: any) {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   onlineUserQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 关闭对话框
-function closeOnlineUserDialog() {
+const closeOnlineUserDialog = () => {
   state.onlineUserDialog.visible = false
 }
 

@@ -8,7 +8,7 @@
           </div>
         </template>
         <div class="el-table el-table--enable-row-hover el-table--medium">
-          <table cellspacing="0" cellpadding="0" width="100%">
+          <table>
             <thead>
               <th class="el-table__cell is-leaf"><div class="cell">主机名</div></th>
               <th class="el-table__cell is-leaf"><div class="cell">系统名称</div></th>
@@ -35,7 +35,7 @@
           </div>
         </template>
         <div class="el-table el-table--enable-row-hover el-table--medium">
-          <table cellspacing="0" cellpadding="0" width="100%">
+          <table>
             <thead>
               <th class="el-table__cell is-leaf"><div class="cell">Java 路径</div></th>
               <th class="el-table__cell is-leaf"><div class="cell">Java 版本</div></th>
@@ -62,7 +62,7 @@
           </div>
         </template>
         <div class="el-table el-table--enable-row-hover el-table--medium">
-          <table cellspacing="0" cellpadding="0" width="100%">
+          <table>
             <thead>
               <th class="el-table__cell is-leaf"><div class="cell">总内存</div></th>
               <th class="el-table__cell is-leaf"><div class="cell">已用内存</div></th>
@@ -89,7 +89,7 @@
           </div>
         </template>
         <div class="el-table el-table--enable-row-hover el-table--medium">
-          <table cellspacing="0" cellpadding="0" width="100%">
+          <table>
             <thead>
               <th class="el-table__cell is-leaf"><div class="cell">总内存</div></th>
               <th class="el-table__cell is-leaf"><div class="cell">已用内存</div></th>
@@ -116,7 +116,7 @@
           </div>
         </template>
         <div class="el-table el-table--enable-row-hover el-table--medium">
-          <table cellspacing="0" cellpadding="0" width="100%">
+          <table>
             <thead>
               <th class="el-table__cell is-leaf"><div class="cell">名称</div></th>
               <th class="el-table__cell is-leaf"><div class="cell">核心数</div></th>
@@ -194,7 +194,7 @@ const {
   fileStores
 } = toRefs(state)
 
-function handleList() {
+const handleList = () => {
   proxy.$message.warning('加载时间较长，请耐心等待...')
   state.loading = true
   getInfo().then((res: any) => {
@@ -214,4 +214,12 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+table {
+  border-spacing: 0;
+  width: 100%;
+}
+
+td, th {
+  padding: 0;
+}
 </style>

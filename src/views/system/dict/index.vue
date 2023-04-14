@@ -280,7 +280,7 @@ const dictTypeRules = reactive<FormRules>({
 })
 
 // 查询字典类型列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listDictType(state.queryParams).then((res:any) => {
     state.dictTypeList = res.rows
@@ -290,7 +290,7 @@ function handleList() {
 }
 
 // 添加字典类型信息
-function handleAdd() {
+const handleAdd = () => {
   state.dictTypeForm = {
     status: '0'
   } as SysDictTypeForm
@@ -303,7 +303,7 @@ function handleAdd() {
 }
 
 // 修改字典类型信息
-function handleEdit(row: any) {
+const handleEdit = (row: any) => {
   let typeId = state.dictTypeId
   if (row.typeId) {
     typeId = row.typeId
@@ -320,7 +320,7 @@ function handleEdit(row: any) {
 }
 
 // 删除字典类型信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认删除"' + row.dictType + '"字典类型信息吗？', '提示', {
     type: 'warning'
   }).then(() => {
@@ -332,7 +332,7 @@ function handleDelete(row: any) {
 }
 
 // 批量删除字典类型信息
-function handleDeletes() {
+const handleDeletes = () => {
   proxy.$confirm('确认删除"' + state.dictTypeIds + '"字典类型信息吗？', '提示', {
     type: 'warning'
   }).then(() => {
@@ -344,20 +344,20 @@ function handleDeletes() {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   dictTypeQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 关闭对话框
-function closeDictTypeDialog() {
+const closeDictTypeDialog = () => {
   state.dictTypeDialog.visible = false
   dictTypeRuleFormRef.value?.clearValidate()
   dictTypeRuleFormRef.value?.resetFields()
 }
 
 // 多选框
-function handleSelectionChange(selection: any) {
+const handleSelectionChange = (selection: any) => {
   state.dictTypeIds = selection.map((item: any) => item.typeId)
   if (selection.length === 1) {
     state.dictTypeId = dictTypeIds.value[0]

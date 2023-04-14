@@ -26,7 +26,7 @@ const props = defineProps({
     default: 'total, sizes, prev, pager, next, jumper'
   },
   pageSizes: {
-    type: Array<number>,
+    type: Array<Number>,
     default: [10, 20, 30, 50]
   },
   total: {
@@ -55,11 +55,11 @@ const pageSize = computed<number | undefined>({
   set: (val) => emit('update:pageSize', val)
 })
 
-function handleSizeChange(val: number) {
+const handleSizeChange = (val: number) => {
   emit('pagination', { pageNum: currentPage, pageSize: val })
 }
 
-function handleCurrentChange(val: number) {
+const handleCurrentChange = (val: number) => {
   currentPage.value = val
   emit('pagination', { pageNum: val, pageSize: props.pageSize })
 }

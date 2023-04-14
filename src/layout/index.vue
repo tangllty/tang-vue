@@ -49,7 +49,6 @@ const appWrapper = computed(() => ({
   expandSidebar: !appStore.sidebar,
   foldSidebar: appStore.sidebar
 }))
-
 </script>
 
 <style lang="scss" scoped>

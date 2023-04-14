@@ -52,14 +52,14 @@ const {
 } = toRefs(state)
 
 // 查询代码生成列表
-function handlePreviewCode(tableId: number) {
+const handlePreviewCode = (tableId: number) => {
   previewCode(tableId).then((res: any) => {
     state.code = res.data
   })
 }
 
 // 显示对话框
-function handleShow(tableId: number) {
+const handleShow = (tableId: number) => {
   handlePreviewCode(tableId)
   state.previewCodeDialog = {
     title: '代码预览',
@@ -69,18 +69,18 @@ function handleShow(tableId: number) {
 }
 
 // 获取 key
-function getKey(key: string): string {
+const getKey = (key: string): string => {
   return key.substring(key.lastIndexOf('/') + 1, key.indexOf('.vm'))
 }
 
 // 代码复制
-function handleCopy(code: string) {
+const handleCopy = (code: string) => {
   // TODO
   ElMessage.success("复制成功");
 }
 
 // 关闭对话框
-function closePreviewCodeDialog() {
+const closePreviewCodeDialog = () => {
   state.previewCodeDialog.visible = false
   state.activeName = 'entity.java'
   state.code = {}

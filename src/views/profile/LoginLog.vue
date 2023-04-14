@@ -68,7 +68,7 @@ const {
 
 const sysLogLoginQueryFormRef = ref<FormInstance>()
 
-function handleList() {
+const handleList = () => {
   listSysLogLoginByUser(state.queryParams).then((res: any) => {
     state.sysLogLoginList = res.rows
     state.total = res.total

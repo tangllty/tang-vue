@@ -374,7 +374,7 @@ const editTableRules = reactive<FormRules>({
 const emit = defineEmits(["submitted"]);
 
 // 查询代码生成列表
-function handleEditTable(tableId: number) {
+const handleEditTable = (tableId: number) => {
   getGenTable(tableId).then((res: any) => {
     state.activeName = 'tableInfo'
     state.editTableDialog.title = '编辑[' + res.data.table.tableName + ']表代码生成信息'
@@ -384,7 +384,7 @@ function handleEditTable(tableId: number) {
 }
 
 // 显示对话框
-function handleShow(tableId: number) {
+const handleShow = (tableId: number) => {
   handleEditTable(tableId)
   state.editTableDialog = {
     title: '编辑[]表代码生成信息',
@@ -395,7 +395,7 @@ function handleShow(tableId: number) {
 }
 
 // 关闭对话框
-function closeEditTableDialog() {
+const closeEditTableDialog = () => {
   state.editTableDialog.visible = false
   editTableRuleFormRef.value?.clearValidate()
   editTableRuleFormRef.value?.resetFields()

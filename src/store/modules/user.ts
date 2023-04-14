@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { Ref, ref, UnwrapRef } from 'vue'
 import { store } from '@/store'
 import { resetRouter } from '@/router'
+import { AxiosResponse } from 'axios'
 import { LoginForm } from '@/api/auth/types'
 import { login as loginApi, logout as logoutApi, getInfo as getInfoApi } from '@/api/auth'
 import { getToken, removeToken, setToken } from '@/utils/auth'
@@ -9,17 +10,17 @@ import { SysUser, UserInfo } from '@/api/system/user/types'
 
 export const useUserStore = defineStore('user', () => {
 
-  const user = ref<SysUser>({} as SysUser)
-  const token = ref<String>(getToken() ||'')
+  const user: Ref<UnwrapRef<SysUser>> = ref<SysUser>({} as SysUser)
+  const token: Ref<UnwrapRef<String>> = ref<String>(getToken() || '')
   // 角色集合
-  const roles = ref<Array<string>>([])
+  const roles: Ref<string[]> = ref<Array<string>>([])
   // 权限集合
-  const permissions = ref<Array<string>>([])
+  const permissions: Ref<string[]> = ref<Array<string>>([])
 
   // 登录
-  function login(loginForm: LoginForm): Promise<void> {
+  const login = (loginForm: LoginForm): Promise<void> => {
     return new Promise<void>((resolve, reject): void => {
-      loginApi(loginForm).then(response => {
+      loginApi(loginForm).then((response: AxiosResponse<any>): void => {
         const getToken = response.data.token
         token.value = getToken
         setToken(getToken)
@@ -31,7 +32,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   // 登出
-  function logout(): Promise<void> {
+  const logout = (): Promise<void> => {
     return new Promise<void>((resolve, reject): void => {
       logoutApi().then((): void => {
         resetAuth()
@@ -44,7 +45,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   // 获取信息
-  function getInfo(): Promise<UserInfo> {
+  const getInfo = (): Promise<UserInfo> => {
     return new Promise<UserInfo>((resolve, reject): void => {
       getInfoApi().then(({ data }): void => {
         user.value = data.user
@@ -58,7 +59,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   // 重置
-  function resetAuth(): void {
+  const resetAuth = (): void => {
     removeToken()
     token.value = ''
     roles.value = []
@@ -77,6 +78,6 @@ export const useUserStore = defineStore('user', () => {
 })
 
 // 非setup
-export function useUserStoreHook() {
+export const useUserStoreHook = () => {
   return useUserStore(store)
 }

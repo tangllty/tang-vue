@@ -1,4 +1,4 @@
-// 登陆
+// 登陆表单对象
 export interface LoginForm {
     username: string
     email: string

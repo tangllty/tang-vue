@@ -289,7 +289,7 @@ const roleRules = reactive<FormRules>({
 })
 
 // 查询角色列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listRole(state.queryParams).then((res:any) => {
     state.roleList = res.rows
@@ -299,7 +299,7 @@ function handleList() {
 }
 
 // 添加角色信息
-function handleAdd() {
+const handleAdd = () => {
   state.roleForm = {
     sort: 1
   } as SysRoleForm
@@ -314,14 +314,14 @@ function handleAdd() {
 }
 
 // 查询菜单树
-function getMenuTree() {
+const getMenuTree = () => {
   selectMenuTree().then((res:any) => {
     state.menuTree = res.data
   })
 }
 
 // 修改角色信息
-function handleEdit(row: any) {
+const handleEdit = (row: any) => {
   let roleId = state.roleId
   if (row.roleId) {
     roleId = row.roleId
@@ -341,7 +341,7 @@ function handleEdit(row: any) {
 }
 
 // 修改角色状态
-function handleChangeStatus(row: SysRole) {
+const handleChangeStatus = (row: SysRole) => {
   const text = row.status === '0' ? '启用' : '停用'
   proxy.$confirm('确认要' + text + '"' + row.roleName + '"角色吗?', '警告', {
     type: 'warning'
@@ -356,7 +356,7 @@ function handleChangeStatus(row: SysRole) {
 }
 
 // 删除角色信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认要删除"' + row.roleName + '"角色信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -368,7 +368,7 @@ function handleDelete(row: any) {
 }
 
 // 批量删除角色信息
-function handleDeletes() {
+const handleDeletes = () => {
   proxy.$confirm('确认要删除"' + state.roleIds + '"角色信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -380,20 +380,20 @@ function handleDeletes() {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   roleQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 关闭对话框
-function closeRoleDialog() {
+const closeRoleDialog = () => {
   state.roleDialog.visible = false
   roleRuleFormRef.value?.clearValidate()
   roleRuleFormRef.value?.resetFields()
 }
 
 // 多选框
-function handleSelectionChange(selection: any) {
+const handleSelectionChange = (selection: any) => {
   state.roleIds = selection.map((item: any) => item.roleId)
   if (selection.length === 1) {
     state.roleId = roleIds.value[0]

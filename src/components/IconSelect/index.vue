@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 
@@ -28,19 +28,19 @@ const iconName = ref('')
 
 const emit = defineEmits(['selected'])
 
-function filterIcons() {
+const filterIcons = () => {
   iconList.value = icons
   if (iconName.value) {
     iconList.value = icons.filter(item => item.indexOf(iconName.value) !== -1)
   }
 }
 
-function selectedIcon(name: string) {
+const selectedIcon = (name: string) => {
   emit('selected', name)
   document.body.click()
 }
 
-function reset() {
+const reset = () => {
   iconName.value = ''
   iconList.value = icons
 }

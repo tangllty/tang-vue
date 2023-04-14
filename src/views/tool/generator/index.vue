@@ -219,7 +219,7 @@ const editTableRef = ref<InstanceType<typeof EditTable>>()
 const genTableQueryFormRef = ref<FormInstance>()
 
 // 查询代码生成列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listGenTable(state.queryParams).then((res:any) => {
     state.genTableList = res.rows
@@ -229,17 +229,17 @@ function handleList() {
 }
 
 // 导入代码生成信息
-function handleImportTable() {
+const handleImportTable = () => {
   importTableRef.value?.handleShow()
 }
 
 // 代码预览
-function handlePreviewCode(row: any) {
+const handlePreviewCode = (row: any) => {
   previewCodeRef.value?.handleShow(row.tableId)
 }
 
 // 修改代码生成信息
-function handleEdit(row: any) {
+const handleEdit = (row: any) => {
   let genTableId = state.genTableId
   if (row.tableId) {
     genTableId = row.tableId
@@ -248,7 +248,7 @@ function handleEdit(row: any) {
 }
 
 // 删除代码生成信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认要删除"' + row.tableNames + '"代码生成信息吗？', '提示', {
     type: 'warning'
   }).then(() => {
@@ -260,7 +260,7 @@ function handleDelete(row: any) {
 }
 
 // 批量删除代码生成信息
-function handleDeletes() {
+const handleDeletes = () => {
   proxy.$confirm('确认要删除"' + state.tableNames.toString() + '"代码生成信息吗？', '提示', {
     type: 'warning'
   }).then(() => {
@@ -272,14 +272,14 @@ function handleDeletes() {
 }
 
 // 代码下载
-function handleDownload(row: any) {
+const handleDownload = (row: any) => {
   downloadCode(row.tableName).then((res) => {
     proxy.$download(res)
   })
 }
 
 // 批量代码下载
-function handleDownloads() {
+const handleDownloads = () => {
   const tableNames: string = state.tableNames.toString()
   downloadCodes({ tableNames }).then((res) => {
     proxy.$download(res)
@@ -287,13 +287,13 @@ function handleDownloads() {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   genTableQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 多选框
-function handleSelectionChange(selection: any) {
+const handleSelectionChange = (selection: any) => {
   state.genTableIds = selection.map((item: any) => item.tableId)
   state.tableNames = selection.map((item: any) => item.tableName)
   if (selection.length === 1) {

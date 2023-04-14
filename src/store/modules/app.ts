@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { Ref, ref } from 'vue'
 
 export const useAppStore = defineStore('app', () => {
-    const sidebar = ref(false)
+    const sidebar: Ref<Boolean> = ref(false)
 
     return {
       sidebar

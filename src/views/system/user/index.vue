@@ -444,7 +444,7 @@ const filterNode = (value: string, data: TreeSelect) => {
 }
 
 // 查询用户列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listUser(state.queryParams).then((res:any) => {
     state.userList = res.rows
@@ -454,7 +454,7 @@ function handleList() {
 }
 
 // 添加用户信息
-function handleAdd() {
+const handleAdd = () => {
   state.userForm = {
     password: '123456',
     gender: '0'
@@ -472,7 +472,7 @@ function handleAdd() {
 }
 
 // 修改用户信息
-function handleEdit(row: any) {
+const handleEdit = (row: any) => {
   let userId = state.userId
   if (row.userId) {
     userId = row.userId
@@ -492,7 +492,7 @@ function handleEdit(row: any) {
 }
 
 // 删除用户信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认要删除"' + row.username + '"用户信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -504,7 +504,7 @@ function handleDelete(row: any) {
 }
 
 // 批量删除用户信息
-function handleDeletes() {
+const handleDeletes = () => {
   proxy.$confirm('确认要删除"' + state.userIds + '"用户信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -516,20 +516,20 @@ function handleDeletes() {
 }
 
 // 导出用户信息
-function handleExport() {
+const handleExport = () => {
   exportUser(state.queryParams).then((res: any) => {
     proxy.$download(res)
   })
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   userQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 关闭对话框
-function closeUserDialog() {
+const closeUserDialog = () => {
   state.userForm.password = '123456'
   state.userDialog.visible = false
   userRuleFormRef.value?.resetFields()
@@ -537,7 +537,7 @@ function closeUserDialog() {
 }
 
 // 修改用户状态
-function handleChangeStatus(row: SysUser) {
+const handleChangeStatus = (row: SysUser) => {
   const text = row.status === '0' ? '启用' : '停用'
   proxy.$confirm('确认要' + text + '"' + row.username + '"用户吗?', '警告', {
     type: 'warning'
@@ -552,7 +552,7 @@ function handleChangeStatus(row: SysUser) {
 }
 
 // 多选框
-function handleSelectionChange(selection: any) {
+const handleSelectionChange = (selection: any) => {
   state.userIds = selection.map((item: any) => item.userId)
   if (selection.length === 1) {
     state.userId = userIds.value[0]
@@ -560,14 +560,14 @@ function handleSelectionChange(selection: any) {
 }
 
 // 查询部门树
-function getDeptTree() {
+const getDeptTree = () => {
   selectDeptTree().then (res => {
     state.deptTree = res.data
   })
 }
 
 // 部门树节点
-function handleDeptNodeClick(data: any ) {
+const handleDeptNodeClick = (data: any) => {
   state.queryParams.deptId = data.value
   handleList()
 }

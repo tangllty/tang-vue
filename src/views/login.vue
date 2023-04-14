@@ -100,7 +100,7 @@ import router from '@/router'
 import { ElButton, ElForm, ElFormItem, ElInput, ElTabPane, ElTabs, FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
 import { LoginForm } from '@/api/auth/types'
-import { useUserStore } from "@/store/modules/user"
+import { useUserStore } from '@/store/modules/user'
 
 const userStore = useUserStore()
 
@@ -129,7 +129,6 @@ const loginRules = reactive<FormRules>({
     { required: true, message: '邮箱不能为空', trigger: 'blur' },
     { min: 6, max: 32, message: '邮箱长度应在 6 到 64 之间', trigger: 'blur' },
     { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] },
-
   ],
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' },

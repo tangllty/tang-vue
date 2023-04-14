@@ -9,6 +9,10 @@ export default {
 
     const { value } = binding
 
+    const hasRole = (role: string): boolean => {
+      return roles.includes(role) || roles.includes(adminRole)
+    }
+
     if (typeof value === 'string') {
       if (!hasRole(value)) {
         el.parentNode.removeChild(el)
@@ -20,10 +24,6 @@ export default {
           el.parentNode.removeChild(el)
         }
       })
-    }
-
-    function hasRole(role: string): boolean {
-      return roles.includes(role) || roles.includes(adminRole)
     }
   }
 }

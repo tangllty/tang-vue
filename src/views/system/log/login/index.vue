@@ -196,7 +196,7 @@ const {
 const sysLogLoginQueryFormRef = ref<FormInstance>()
 
 // 查询登陆日志列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listSysLogLogin(state.queryParams).then((res:any) => {
     state.sysLogLoginList = res.rows
@@ -206,7 +206,7 @@ function handleList() {
 }
 
 // 删除登陆日志信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认删除"' + row.loginId + '"登陆日志信息吗？', '提示', {
     type: 'warning'
   }).then(() => {
@@ -218,7 +218,7 @@ function handleDelete(row: any) {
 }
 
 // 批量删除登陆日志信息
-function handleDeletes() {
+const handleDeletes = () => {
   proxy.$confirm('确认删除"' + state.loginIds + '"登陆日志信息吗？', '提示', {
     type: 'warning'
   }).then(() => {
@@ -230,13 +230,13 @@ function handleDeletes() {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   sysLogLoginQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 多选框
-function handleSelectionChange(selection: any) {
+const handleSelectionChange = (selection: any) => {
   state.loginIds = selection.map((item: any) => item.loginId)
   if (selection.length === 1) {
     state.loginId = loginIds.value[0]

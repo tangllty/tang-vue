@@ -1,9 +1,9 @@
+import { Ref, ref, ToRefs, toRefs } from 'vue'
 import { useDictStore } from '@/store/modules/dict'
 import { selectDictDataListByDictType as getDictData } from '@/api/system/dict/data'
-import { ref, ToRefs, toRefs } from 'vue'
 
-export function getDicts(...dictTypes: string[]): ToRefs<any> {
-  const dicts: any = ref({})
+export const getDicts = (...dictTypes: string[]): ToRefs => {
+  const dicts: Ref = ref({})
   const dictStore = useDictStore()
 
   return (() => {

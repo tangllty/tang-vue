@@ -19,7 +19,7 @@ const currentRoute = useRoute()
 
 const breadcrumbs = ref([] as Array<RouteLocationMatched>)
 
-function filterBreadcrumbs() {
+const filterBreadcrumbs = () => {
   if (currentRoute.path === '/index') {
     breadcrumbs.value = []
   }

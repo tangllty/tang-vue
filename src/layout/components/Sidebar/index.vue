@@ -1,5 +1,5 @@
 <template>
-  <el-scroller always = "true">
+  <el-scroller always>
     <el-menu
       :default-active="activeMenu"
       router

@@ -6,7 +6,7 @@ import { saveAs } from 'file-saver'
  * @param res response
  * @param fileName 文件名
  */
-export function download(res: any, fileName: string): void {
+export const download = (res: any, fileName: string): void => {
   const blob: Blob = new Blob([res.data], { type: res.headers['content-type'] })
   const contentDisposition: string = res.headers['content-disposition']
   if (!fileName) {

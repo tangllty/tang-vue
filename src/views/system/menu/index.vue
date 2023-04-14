@@ -334,7 +334,7 @@ const menuRules = reactive<FormRules>({
 })
 
 // 查询菜单列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listMenu(state.queryParams).then((res:any) => {
     state.menuList = res.data
@@ -343,7 +343,7 @@ function handleList() {
 }
 
 // 查询菜单树
-function getMenuTree() {
+const getMenuTree = () => {
   const menuTrees: any[] = []
   selectMenuTree().then((res:any) => {
     const menuTree = { value: 0, label: '顶级菜单', children: res.data }
@@ -353,7 +353,7 @@ function getMenuTree() {
 }
 
 // 添加菜单信息
-function handleAdd(row: any) {
+const handleAdd = (row: any) => {
   state.menuForm = {
     parentId: 0,
     menuType: 'D',
@@ -372,7 +372,7 @@ function handleAdd(row: any) {
 }
 
 // 修改菜单信息
-function handleEdit(row: any) {
+const handleEdit = (row: any) => {
   getMenuTree()
   getMenu(row.menuId).then((res:any) => {
     menuForm.value = res.data
@@ -385,7 +385,7 @@ function handleEdit(row: any) {
 }
 
 // 修改菜单状态
-function handleChangeStatus(row: SysMenu) {
+const handleChangeStatus = (row: SysMenu) => {
   const text = row.status === '0' ? '启用' : '停用'
   proxy.$confirm('确认要' + text + '"' + row.menuName + '"菜单吗?', '警告', {
     type: 'warning'
@@ -400,7 +400,7 @@ function handleChangeStatus(row: SysMenu) {
 }
 
 // 删除菜单信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认要删除"' + row.menuName + '"菜单信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -412,27 +412,27 @@ function handleDelete(row: any) {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   menuQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 关闭对话框
-function closeMenuDialog() {
+const closeMenuDialog = () => {
   state.menuDialog.visible = false
   menuRuleFormRef.value?.clearValidate()
   menuRuleFormRef.value?.resetFields()
 }
 
 // 选择图标后事件
- function selected(name: string) {
+const selected = (name: string) => {
   state.menuForm.icon = name
   state.iconSelectVisible = false
 }
 
 
 // 多选框
-function handleSelectionChange(selection: any) {
+const handleSelectionChange = (selection: any) => {
   state.menuIds = selection.map((item: any) => item.menuId)
   if (selection.length === 1) {
     state.menuId = menuIds.value[0]

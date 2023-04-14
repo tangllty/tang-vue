@@ -317,7 +317,7 @@ const dictDataRules = reactive<FormRules>({
 })
 
 // 查询字典数据列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listDictData(state.queryParams).then((res:any) => {
     state.dictDataList = res.rows
@@ -327,7 +327,7 @@ function handleList() {
 }
 
 // 添加字典数据信息
-function handleAdd() {
+const handleAdd = () => {
   state.dictDataForm = {
     typeClass: '',
     sort: 1,
@@ -346,7 +346,7 @@ function handleAdd() {
 }
 
 // 修改字典数据信息
-function handleEdit(row: any) {
+const handleEdit = (row: any) => {
   let dataId = state.dictDataId
   if (row.dataId) {
     dataId = row.dataId
@@ -363,7 +363,7 @@ function handleEdit(row: any) {
 }
 
 // 删除字典数据信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认要删除"' + row.dataLabel + '"字典数据信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -375,7 +375,7 @@ function handleDelete(row: any) {
 }
 
 // 批量删除字典数据信息
-function handleDeletes() {
+const handleDeletes = () => {
   proxy.$confirm('确认要删除"' + state.dictDataIds + '"字典数据信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -387,20 +387,20 @@ function handleDeletes() {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   dictDataQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 关闭对话框
-function closeDictDataDialog() {
+const closeDictDataDialog = () => {
   state.dictDataDialog.visible = false
   dictDataRuleFormRef.value?.clearValidate()
   dictDataRuleFormRef.value?.resetFields()
 }
 
 // 多选框
-function handleSelectionChange(selection: any) {
+const handleSelectionChange = (selection: any) => {
   state.dictDataIds = selection.map((item: any) => item.dataId)
   if (selection.length === 1) {
     state.dictDataId = dictDataIds.value[0]

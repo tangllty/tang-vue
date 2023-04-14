@@ -69,11 +69,11 @@ const userStore = useUserStore()
 const isDark = useDark()
 const toggleDark = () => useToggle(isDark)
 
-function toggleSidebar() {
+const toggleSidebar = () => {
   appStore.sidebar = !appStore.sidebar
 }
 
-function logout() {
+const logout = () => {
   proxy.$confirm('确定注销并退出系统吗？', '提示', {
     type: 'warning'
   }).then(() => {

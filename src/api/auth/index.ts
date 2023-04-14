@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import { LoginForm } from './types'
 
 // 登陆
-export function login(data: LoginForm) {
+export const login = (data: LoginForm) => {
   return request({
     url: '/login',
     method: 'post',
@@ -11,7 +11,7 @@ export function login(data: LoginForm) {
 }
 
 // 登出
-export function logout() {
+export const logout = () => {
   return request({
     url: '/logout',
     method: 'delete'
@@ -19,7 +19,7 @@ export function logout() {
 }
 
 // 获取用户信息
-export function getInfo() {
+export const getInfo = () => {
   return request({
     url: '/getInfo',
     method: 'get'
@@ -27,7 +27,7 @@ export function getInfo() {
 }
 
 // 获取路由信息
-export function getRoutes() {
+export const getRoutes = () => {
   return request({
     url: '/getRoutes',
     method: 'get'

@@ -147,12 +147,12 @@
 import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus'
+import router from '@/router'
+import { useUserStore } from '@/store/modules/user'
 import { editUserInfo, editUserPassword } from '@/api/profile'
 import { getRoleSelect as selectRoleSelect } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
-import { useUserStore } from '@/store/modules/user'
-import router from "@/router";
 
 const userStore = useUserStore()
 
@@ -220,26 +220,26 @@ const passwordRules = reactive<FormRules>({
 })
 
 // 获取用户信息
-function handleUserInfo() {
+const handleUserInfo = () => {
   state.userForm = userStore.user
 }
 
 // 查询部门树
-function getDeptTree() {
+const getDeptTree = () => {
   selectDeptTree().then (res => {
     state.deptTree = res.data
   })
 }
 
 // 查询角色下拉框
-function getRoleSelect() {
+const getRoleSelect = () => {
   selectRoleSelect().then (res => {
     state.roleSelect = res.data
   })
 }
 
 // 关闭对话框
-function close() {
+const close = () => {
   router.back()
   userRuleFormRef.value?.resetFields()
   userRuleFormRef.value?.clearValidate()

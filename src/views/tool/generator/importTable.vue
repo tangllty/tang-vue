@@ -100,11 +100,13 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
-import { ElMessage, FormInstance } from 'element-plus'
+import { getCurrentInstance, reactive, ref, toRefs } from 'vue'
+import { FormInstance } from 'element-plus'
 import { Search, Refresh } from '@element-plus/icons-vue'
 import { listDatabaseTable, importTable } from '@/api/tool/generator'
 import { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
+
+const { proxy }: any = getCurrentInstance()
 
 const state = reactive({
   // 遮罩层
@@ -143,10 +145,10 @@ const {
 const genTableRuleFormRef = ref<FormInstance>()
 const genTableQueryFormRef = ref<FormInstance>()
 
-const emit = defineEmits(["submitted"]);
+const emit = defineEmits(["submitted"])
 
 // 查询代码生成列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listDatabaseTable(state.queryParams).then((res:any) => {
     state.importTableList = res.rows
@@ -156,17 +158,17 @@ function handleList() {
 }
 
 // 导入表信息
-function handleImport() {
+const handleImport = () => {
   const tableNames = importTableNames.value.toString()
   importTable({ tableNames }).then(() => {
-    ElMessage.success("添加代码生成信息成功")
+    proxy.$message.success("添加代码生成信息成功")
     closeImportTableDialog()
     emit('submitted')
   })
 }
 
 // 显示对话框
-function handleShow() {
+const handleShow = () => {
   handleList()
   state.importTableDialog = {
     title: '导入表信息',
@@ -176,20 +178,20 @@ function handleShow() {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   genTableQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 关闭对话框
-function closeImportTableDialog() {
+const closeImportTableDialog = () => {
   state.importTableDialog.visible = false
   genTableRuleFormRef.value?.clearValidate()
   genTableRuleFormRef.value?.resetFields()
 }
 
 // 多选框
-function handleSelectionChange(selection: any) {
+const handleSelectionChange = (selection: any) => {
   state.importTableNames = selection.map((item: any) => item.tableName)
 }
 

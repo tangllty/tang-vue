@@ -27,8 +27,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { House, Menu } from '@element-plus/icons-vue'
 import { useRoute } from 'vue-router'
+import { House, Menu } from '@element-plus/icons-vue'
 
 import userAvatar from '@/assets/logo.png'
 

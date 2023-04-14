@@ -248,7 +248,7 @@ const deptRules = reactive<FormRules>({
 })
 
 // 查询部门列表
-function handleList() {
+const handleList = () => {
   state.loading = true
   listDept(state.queryParams).then((res:any) => {
     state.deptList = res.data
@@ -257,14 +257,14 @@ function handleList() {
 }
 
 // 查询部门树
-function getDeptTree() {
+const getDeptTree = () => {
   selectDeptTree().then((res:any) => {
     state.deptTree = res.data
   })
 }
 
 // 添加部门信息
-function handleAdd(row: any) {
+const handleAdd = (row: any) => {
   state.deptForm = {
     sort: 1
   } as SysDeptForm
@@ -279,7 +279,7 @@ function handleAdd(row: any) {
 }
 
 // 修改部门信息
-function handleEdit(row: any) {
+const handleEdit = (row: any) => {
   getDeptTree()
   getDept(row.deptId).then((res:any) => {
     state.deptForm = res.data
@@ -292,7 +292,7 @@ function handleEdit(row: any) {
 }
 
 // 删除部门信息
-function handleDelete(row: any) {
+const handleDelete = (row: any) => {
   proxy.$confirm('确认要删除"' + row.deptName + '"部门信息吗?', '警告', {
     type: 'warning'
   }).then(() => {
@@ -304,20 +304,20 @@ function handleDelete(row: any) {
 }
 
 // 重置表单
-function resetQuery() {
+const resetQuery = () => {
   deptQueryFormRef.value?.resetFields()
   handleList()
 }
 
 // 关闭对话框
-function closeDeptDialog() {
+const closeDeptDialog = () => {
   state.deptDialog.visible = false
   deptRuleFormRef.value?.clearValidate()
   deptRuleFormRef.value?.resetFields()
 }
 
 // 修改部门状态
-function handleChangeStatus(row: SysDept) {
+const handleChangeStatus = (row: SysDept) => {
   const text = row.status === '0' ? '启用' : '停用'
   proxy.$confirm('确认要' + text + '"' + row.deptName + '"部门吗?', '警告', {
     type: 'warning'

@@ -9,6 +9,10 @@ export default {
 
     const { value } = binding
 
+    const hasPermission = (permission: string): boolean => {
+      return permissions.includes(permission) || permissions.includes(allPermissions)
+    }
+
     if (typeof value === 'string') {
       if (!hasPermission(value)) {
         el.parentNode.removeChild(el)
@@ -20,10 +24,6 @@ export default {
           el.parentNode.removeChild(el)
         }
       })
-    }
-
-    function hasPermission(permission: string): boolean {
-      return permissions.includes(permission) || permissions.includes(allPermissions)
     }
   }
 }
