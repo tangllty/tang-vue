@@ -33,7 +33,7 @@ const route = useRoute()
 const appStore = useAppStore()
 const permissionStore = usePermissionStore()
 
-const isCollapse = computed(() => appStore.sidebar)
+const isCollapse = computed((): boolean => appStore.sidebar)
 
 const activeMenu = computed(() => {
   const { meta, path } = route
