@@ -1,3 +1,5 @@
+import { UploadFile } from 'element-plus'
+
 // 用户对象
 export interface SysUser {
   userId: number
@@ -44,6 +46,12 @@ export interface SysUserPasswordForm {
   oldPassword: string
   newPassword: string
   confirmPassword: string
+}
+
+export interface ImportForm {
+  file: UploadFile
+  deptId: number
+  roleIds: number[]
 }
 
 // 用户查询参数

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
+import { UploadFile } from 'element-plus'
 import { SysUserQuery, SysUserForm } from './types'
-
 
 // 查询用户列表
 export const listUser = (queryParams: SysUserQuery) => {
@@ -72,6 +72,20 @@ export const deleteUsers = (userIds: number[]) => {
     url: '/system/user',
     method: 'delete',
     data: userIds
+  })
+}
+
+// 导入用户信息
+export const importUser = (file: UploadFile, deptId: number, roleIds: number[]) => {
+  const formData = new FormData()
+  formData.append('file', file.raw as Blob)
+  formData.append('deptId', deptId.toString())
+  formData.append('roleIds', roleIds.toString())
+  return request({
+    url: '/system/user/import',
+    method: 'post',
+    data: formData,
+    headers: { 'Content-Type': 'multipart/form-data' }
   })
 }
 
