@@ -4,16 +4,16 @@
 
 #### Project Description
 
-tang-vue is a permission management system based on Vue3
+tang-vue is a permission management system based on Vue 3
 
-* Using Vue3 + Vite4 + Vue Router4 + TypeScript + Pinia + Element Plus
+* Using Vue 3 + Vite 4 + Vue Router 4 + TypeScript + Pinia + Element Plus
 * Customize multiple login authentication methods
 * Dynamic permissions menu
 * Code generator, one click to generate the basic front-end and back-end code
 
 #### Environment Requirements
 
-* Node.js 18.14.0
+* Node.js 18.15.0
 
 #### Project Startup
 
