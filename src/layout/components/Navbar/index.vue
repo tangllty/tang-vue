@@ -37,10 +37,10 @@
               </el-link>
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-link href="https://github.com/tangllty/tang-ui" target="_blank">GitHub</el-link>
+              <el-link href="https://github.com/tangllty/tang-vue" target="_blank">GitHub</el-link>
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-link href="https://gitee.com/tangllty/tang-ui" target="_blank">Gitee</el-link>
+              <el-link href="https://gitee.com/tangllty/tang-vue" target="_blank">Gitee</el-link>
             </el-dropdown-item>
             <el-dropdown-item disabled>文档</el-dropdown-item>
             <el-dropdown-item divided @click="logout">退出登陆</el-dropdown-item>

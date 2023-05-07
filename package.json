@@ -1,11 +1,11 @@
 {
-  "name": "tang-ui",
+  "name": "tang-vue",
   "private": true,
   "version": "1.5.3",
   "description": "糖猫猫后台管理系统",
   "author": {
     "name": "Tang",
-    "url": "https://gitee.com/tangllty/tang-ui"
+    "url": "https://gitee.com/tangllty/tang-vue"
   },
   "license": "MIT",
   "type": "module",
