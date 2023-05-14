@@ -10,6 +10,7 @@ tang-vue is a permission management system based on Vue 3
 * Customize multiple login authentication methods
 * Dynamic permissions menu
 * Code generator, one click to generate the basic front-end and back-end code
+* Instant messaging, sending and receiving friends and group messages anytime, anywhere, and transferring files to each other (v1.6.0)
 
 #### Environment Requirements
 
