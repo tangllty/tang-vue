@@ -3,7 +3,7 @@
     <el-pagination
       :background="background"
       :layout="layout"
-      :page-sizes="pageSizes"
+      :page-sizes="(pageSizes as number[])"
       :total="total"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
