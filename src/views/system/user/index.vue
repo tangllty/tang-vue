@@ -21,15 +21,6 @@
             :filter-node-method="filterNode"
             @node-click="handleDeptNodeClick"
           />
-          <!--
-            TODO 不明错误提示
-            :filter-node-method="filterNode" 会提示以下错误
-
-            Type '(value: string, data: TreeSelect) => boolean' is not assignable to type 'FilterNodeMethodFunction'.
-            Types of parameters 'data' and 'data' are incompatible.
-
-            经测试该错误只会在VSCode提示且不影响正常使用
-           -->
         </el-card>
       </el-col>
 
@@ -429,6 +420,7 @@
 import { getCurrentInstance, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules, UploadFile } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh, UploadFilled } from '@element-plus/icons-vue'
+import { TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'
 import { listUser, addUser, getUser, getRoleSelect as selectRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, importUser, exportUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, ImportForm, SysUserQuery } from '@/api/system/user/types'
@@ -526,7 +518,7 @@ watch(deptName, (val) => {
   deptTreeRef.value!.filter(val)
 })
 
-const filterNode = (value: string, data: TreeSelect) => {
+const filterNode = (value: string, data: TreeNodeData) => {
   if (!value) return true
   return data.label.includes(value)
 }
