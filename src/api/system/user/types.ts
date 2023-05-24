@@ -10,6 +10,7 @@ export interface SysUser {
   phone: string
   gender: string
   avatar: string
+  password: string
   status: string
   loginIp: string
   loginDate: Date
@@ -18,6 +19,7 @@ export interface SysUser {
   updateBy: string
   updateTime: Date
   remark: string
+  roleIds: number[]
 }
 
 // 用户信息
