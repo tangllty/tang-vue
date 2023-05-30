@@ -6,6 +6,8 @@
 
 tang-vue is a permission management system based on Vue 3
 
+You can read the [documentation](https://tangllty.eu.org/) for more information
+
 * Using Vue 3 + Vite 4 + Vue Router 4 + TypeScript + Pinia + Element Plus
 * Customize multiple login authentication methods
 * Dynamic permissions menu
