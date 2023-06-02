@@ -42,7 +42,9 @@
             <el-dropdown-item>
               <el-link href="https://gitee.com/tangllty/tang-vue" target="_blank">Gitee</el-link>
             </el-dropdown-item>
-            <el-dropdown-item disabled>文档</el-dropdown-item>
+            <el-dropdown-item>
+              <el-link href="https://tangllty.eu.org" target="_blank">文档</el-link>
+            </el-dropdown-item>
             <el-dropdown-item divided @click="logout">退出登陆</el-dropdown-item>
           </el-dropdown-menu>
         </template>
