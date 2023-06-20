@@ -72,7 +72,7 @@ const appWrapper = computed(() => ({
 
   .logo-title {
     margin-left: .75rem;
-    color: black;
+    color: var(--el-menu-text-color);
   }
 }
 
