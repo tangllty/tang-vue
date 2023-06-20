@@ -16,7 +16,7 @@
             v-else
           >
             <el-image :src="logo" class="logo-image" />
-            <span v-show="!title" class="logo-title">后台管理系统</span>
+            <span v-show="!title" class="logo-title">权限管理系统</span>
           </router-link>
         </transition>
       </el-header>
@@ -35,10 +35,10 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { useAppStore } from '@/store/modules/app'
 import Sidebar from '@/layout/components/Sidebar/index.vue'
 import Navbar from '@/layout/components/Navbar/index.vue'
 import AppMain from '@/layout/components/AppMain/index.vue'
-import { useAppStore } from '@/store/modules/app'
 import logo from '@/assets/logo.png'
 
 const appStore = useAppStore()

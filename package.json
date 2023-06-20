@@ -2,7 +2,7 @@
   "name": "tang-vue",
   "private": true,
   "version": "1.5.4",
-  "description": "糖猫猫后台管理系统",
+  "description": "糖猫猫权限管理系统",
   "author": {
     "name": "Tang",
     "url": "https://gitee.com/tangllty/tang-vue"
