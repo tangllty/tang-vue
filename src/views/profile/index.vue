@@ -2,8 +2,16 @@
   <el-row class="tac">
     <el-col :span="4">
       <el-card style="padding: 0;">
-        <el-image :src="userAvatar" class="user-avatar" />
-        糖猫猫
+        <div>
+          <Avatar />
+          <el-text
+            size="large"
+            truncated
+            style="margin-left: 8px;"
+          >
+            {{ userStore.user.nickname }}
+          </el-text>
+        </div>
         <el-menu
           :default-active="activeMenu"
           router
@@ -29,10 +37,11 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { House, Menu } from '@element-plus/icons-vue'
-
-import userAvatar from '@/assets/logo.png'
+import { useUserStore } from '@/store/modules/user'
+import Avatar from './Avatar.vue'
 
 const route = useRoute()
+const userStore = useUserStore()
 
 const activeMenu = computed(() => {
   const { meta, path } = route
@@ -44,9 +53,4 @@ const activeMenu = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.user-avatar {
-  width: 60px;
-  border-radius: 12%;
-  border: 1px solid #cccccc;
-}
 </style>

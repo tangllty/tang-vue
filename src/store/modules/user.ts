@@ -7,6 +7,7 @@ import { LoginForm } from '@/api/auth/types'
 import { login as loginApi, logout as logoutApi, getInfo as getInfoApi } from '@/api/auth'
 import { getToken, removeToken, setToken } from '@/utils/auth'
 import { SysUser, UserInfo } from '@/api/system/user/types'
+import defaultAvatar from '@/assets/avatar.png'
 
 export const useUserStore = defineStore('user', () => {
 
@@ -49,6 +50,7 @@ export const useUserStore = defineStore('user', () => {
     return new Promise<UserInfo>((resolve, reject): void => {
       getInfoApi().then(({ data }): void => {
         user.value = data.user
+        user.value.avatar = user.value.avatar ? import.meta.env.VITE_APP_BASE_API + data.user.avatar : defaultAvatar
         roles.value = data.roles
         permissions.value = data.permissions
         resolve(data)
