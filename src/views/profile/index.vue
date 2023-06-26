@@ -6,11 +6,10 @@
           <Avatar />
           <el-text
             size="large"
+            tag="b"
             truncated
-            style="margin-left: 8px;"
-          >
-            {{ userStore.user.nickname }}
-          </el-text>
+            style="margin-left: 10px; line-height: 50px;"
+          >{{ userStore.user.nickname }}</el-text>
         </div>
         <el-menu
           :default-active="activeMenu"
