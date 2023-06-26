@@ -145,7 +145,7 @@ const closeAvatarDialog = () => {
 const handleAvatarChange: UploadProps['onChange'] = (uploadFile: UploadFile) => {
   const supportTypes = ['image/png', 'image/jpg', 'image/jpeg']
   if (!uploadFile.raw) return
-  if (supportTypes.includes(uploadFile.raw.type)) {
+  if (!supportTypes.includes(uploadFile.raw.type)) {
     proxy.$message.error('头像文件只能是 png/jpg/jpeg 格式!')
     return
   } else if (uploadFile.raw.size / 1024 / 1024 > 2) {
