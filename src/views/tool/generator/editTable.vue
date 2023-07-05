@@ -141,7 +141,7 @@
                 <el-option label="String" value="String" />
                 <el-option label="Integer" value="Integer" />
                 <el-option label="Long" value="Long" />
-                <el-option label="Date" value="Date" />
+                <el-option label="LocalDateTime" value="LocalDateTime" />
               </el-select>
             </template>
           </el-table-column>
