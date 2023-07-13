@@ -159,13 +159,14 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance } from 'element-plus'
 import { Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listSysLogLogin, deleteSysLogLogin, deleteSysLogLogins } from '@/api/system/log/login'
 import { SysLogLogin, SysLogLoginQuery } from '@/api/system/log/login/types'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 
 const state = reactive({
   // 遮罩层

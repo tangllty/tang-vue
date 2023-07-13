@@ -144,11 +144,12 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus'
 import router from '@/router'
 import { useUserStore } from '@/store/modules/user'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { editUserInfo, editUserPassword } from '@/api/profile'
 import { getRoleSelect as selectRoleSelect } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
@@ -156,7 +157,7 @@ import { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
 
 const userStore = useUserStore()
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 const { sys_user_gender, sys_status } = proxy.$dict('sys_user_gender', 'sys_status')
 
 const state = reactive({

@@ -225,14 +225,15 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listRole, getRole, addRole, editRole, changeStatus, deleteRole, deleteRoles } from '@/api/system/role'
 import { menuTree as selectMenuTree } from '@/api/system/menu'
 import { SysRole , SysRoleForm, SysRoleQuery } from '@/api/system/role/types'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 const { sys_status } = proxy.$dict('sys_status')
 
 const state = reactive({

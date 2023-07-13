@@ -263,14 +263,15 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listMenu, menuTree as selectMenuTree, getMenu, addMenu, editMenu, changeStatus, deleteMenu } from '@/api/system/menu'
 import { SysMenu, SysMenuForm, SysMenuQuery } from '@/api/system/menu/types'
 import IconSelect from '@/components/IconSelect/index.vue'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 const { sys_status } = proxy.$dict('sys_status')
 
 const state = reactive({

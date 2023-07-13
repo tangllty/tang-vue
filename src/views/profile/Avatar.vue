@@ -90,17 +90,18 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, reactive, ref, toRefs } from 'vue'
+import { reactive, ref, toRefs } from 'vue'
 import type { UploadProps, UploadFile, UploadInstance, UploadRawFile } from 'element-plus'
 import { Minus, Plus, Upload } from '@element-plus/icons-vue'
 import { Cropper, CropperResult, Preview } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 import { useUserStore } from '@/store/modules/user'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { editUserAvatar } from '@/api/profile'
 
 const userStore = useUserStore()
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 
 const state = reactive({
   imageUrl: '' as string,

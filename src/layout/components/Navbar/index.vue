@@ -55,16 +55,16 @@
 
 <script lang="ts" setup>
 import router from '@/router'
-import { getCurrentInstance } from 'vue'
 import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
 import { useDark, useToggle } from '@vueuse/core'
+import { getProxy } from '@/utils/getCurrentInstance'
 import Breadcrumb from './Breadcrumb/index.vue'
 
 import userAvatar from '@/assets/logo.png'
 
-const { proxy }: any = getCurrentInstance()
+const proxy: any = getProxy()
 
 const appStore = useAppStore()
 const userStore = useUserStore()

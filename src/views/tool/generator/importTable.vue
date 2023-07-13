@@ -100,13 +100,14 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, reactive, ref, toRefs } from 'vue'
+import { reactive, ref, toRefs } from 'vue'
 import { FormInstance } from 'element-plus'
 import { Search, Refresh } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listDatabaseTable, importTable } from '@/api/tool/generator'
 import { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 
 const state = reactive({
   // 遮罩层

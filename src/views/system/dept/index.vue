@@ -195,13 +195,14 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listDept, deptTree as selectDeptTree, getDept, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
 import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 const { sys_status } = proxy.$dict('sys_status')
 
 const state = reactive({

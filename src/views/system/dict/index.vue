@@ -221,13 +221,14 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listDictType, getDictType, addDictType, editDictType, deleteDictType, deleteDictTypes } from '@/api/system/dict'
 import { SysDictType, SysDictTypeForm, SysDictTypeQuery } from '@/api/system/dict/types'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 const { sys_status } = proxy.$dict('sys_status')
 
 const state = reactive({

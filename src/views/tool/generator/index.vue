@@ -171,17 +171,17 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance } from 'element-plus'
 import { Edit, Delete, Search, Refresh, Upload, View, Download } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes } from '@/api/tool/generator'
 import { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
 import ImportTable from './importTable.vue'
 import PreviewCode from './previewCode.vue'
 import EditTable from './editTable.vue'
 
-const { proxy }: any = getCurrentInstance()
-const { sys_status } = proxy.$dict('sys_status')
+const proxy = getProxy()
 
 const state = reactive({
   // 遮罩层

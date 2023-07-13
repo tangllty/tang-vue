@@ -417,15 +417,16 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules, UploadFile } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh, UploadFilled } from '@element-plus/icons-vue'
 import { TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listUser, addUser, getUser, getRoleSelect as selectRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, importUser, exportUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, ImportForm, SysUserQuery } from '@/api/system/user/types'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 const { sys_user_gender, sys_status } = proxy.$dict('sys_user_gender', 'sys_status')
 
 const state = reactive({

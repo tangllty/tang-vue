@@ -191,13 +191,14 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance } from 'element-plus'
 import { Delete, Search, Refresh, View } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { listOnlineUser, getOnlineUser, deleteOnlineUser } from '@/api/monitor/online'
 import { OnlineUser, OnlineUserQuery } from '@/api/monitor/online/types'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 
 const state = reactive({
   // 遮罩层

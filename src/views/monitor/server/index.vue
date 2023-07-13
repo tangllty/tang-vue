@@ -163,10 +163,11 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, reactive, toRefs } from 'vue'
+import { onMounted, reactive, toRefs } from 'vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { getInfo } from '@/api/monitor/server'
 
-const { proxy }: any = getCurrentInstance()
+const proxy = getProxy()
 
 const state = reactive({
   loading: false,
