@@ -2,7 +2,7 @@
 
 **简体中文** | [**English**](./README.en.md)
 
-#### 项目简介
+## 项目简介
 
 tang-vue 是基于 Vue 3 的权限管理系统
 
@@ -14,20 +14,28 @@ tang-vue 是基于 Vue 3 的权限管理系统
 * 代码生成器，一键生成前后端基本代码
 * 即时通信，随时随地收发好友和群消息，文件互传 (v1.6.0)
 
-#### 环境要求
+## 环境要求
 
 * Node.js 18.15.0
 
-#### 项目启动
+## 项目启动
 
 1. ```bash
    yarn && yarn run dev
    ```
 2. 访问 [http://localhost:5173/](http://localhost:5173/)
 
-#### 项目地址
+## 项目地址
 
 | 项目 | Gitee                                          | GitHub                                          |
 | ---- | ---------------------------------------------- | ----------------------------------------------- |
 | 后端 | [tang-boot](https://gitee.com/tangllty/tang-boot) | [tang-boot](https://github.com/tangllty/tang-boot) |
 | 前端 | [tang-vue](https://gitee.com/tangllty/tang-vue)   | [tang-vue](https://github.com/tangllty/tang-vue)   |
+
+## 交流群
+
+- 微信
+
+  - ![WeChat](https://gitee.com/tangllty/tang-docs/raw/master/docs/guide/image/wechat.png)
+- Telegram
+- QQ

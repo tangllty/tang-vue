@@ -2,7 +2,7 @@
 
 [**简体中文**](./README.md) | **English**
 
-#### Project Description
+## Project Description
 
 tang-vue is a permission management system based on Vue 3
 
@@ -14,20 +14,28 @@ You can read the [documentation](https://tangllty.eu.org/) for more information
 * Code generator, one click to generate the basic front-end and back-end code
 * Instant messaging, sending and receiving friends and group messages anytime, anywhere, and transferring files to each other (v1.6.0)
 
-#### Environment Requirements
+## Environment Requirements
 
 * Node.js 18.15.0
 
-#### Project Startup
+## Project Startup
 
 1. ```bash
    yarn && yarn run dev
    ```
 2. Visit [http://localhost:5173/](http://localhost:5173/)
 
-#### Project address
+## Project Address
 
 | Project   | Gitee                                          | GitHub                                          |
 | --------- | ---------------------------------------------- | ----------------------------------------------- |
 | Back End  | [tang-boot](https://gitee.com/tangllty/tang-boot) | [tang-boot](https://github.com/tangllty/tang-boot) |
 | Front End | [tang-vue](https://gitee.com/tangllty/tang-vue)   | [tang-vue](https://github.com/tangllty/tang-vue)   |
+
+## Discussion Group
+
+- WeChat
+
+  - ![WeChat](https://github.com/tangllty/tang-docs/raw/master/docs/guide/image/wechat.png)
+- Telegram
+- QQ
