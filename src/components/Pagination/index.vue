@@ -3,7 +3,7 @@
     <el-pagination
       :background="background"
       :layout="layout"
-      :page-sizes="(pageSizes as number[])"
+      :page-sizes="pageSizes"
       :total="total"
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
@@ -15,6 +15,9 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { getProxy } from '@/utils/getCurrentInstance'
+
+const proxy = getProxy()
 
 const props = defineProps({
   background: {
@@ -26,7 +29,7 @@ const props = defineProps({
     default: 'total, sizes, prev, pager, next, jumper'
   },
   pageSizes: {
-    type: Array<Number>,
+    type: Array<number>,
     default: [10, 20, 30, 50]
   },
   total: {
@@ -43,25 +46,23 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:pageNum', 'update:pageSize', 'pagination'])
-
 const currentPage = computed<number | undefined>({
   get: () => props.pageNum,
-  set: val => emit('update:pageNum', val)
+  set: val => proxy.$emit('update:pageNum', val)
 })
 
 const pageSize = computed<number | undefined>({
   get: () => props.pageSize,
-  set: (val) => emit('update:pageSize', val)
+  set: (val) => proxy.$emit('update:pageSize', val)
 })
 
 const handleSizeChange = (val: number) => {
-  emit('pagination', { pageNum: currentPage, pageSize: val })
+  proxy.$emit('pagination', { pageNum: currentPage, pageSize: val })
 }
 
 const handleCurrentChange = (val: number) => {
   currentPage.value = val
-  emit('pagination', { pageNum: val, pageSize: props.pageSize })
+  proxy.$emit('pagination', { pageNum: val, pageSize: pageSize })
 }
 </script>
 

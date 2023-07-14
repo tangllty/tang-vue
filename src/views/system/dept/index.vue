@@ -249,28 +249,27 @@ const deptRules = reactive<FormRules>({
 })
 
 // 查询部门列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listDept(state.queryParams).then((res:any) => {
-    state.deptList = res.data
-    state.loading = false
-  })
+  const res: any = await listDept(state.queryParams)
+  state.deptList = res.data
+  state.loading = false
 }
 
 // 查询部门树
-const getDeptTree = () => {
-  selectDeptTree().then((res:any) => {
-    state.deptTree = res.data
-  })
+const getDeptTree = async () => {
+  const res: any = await selectDeptTree()
+  state.deptTree = res.data
 }
 
 // 添加部门信息
-const handleAdd = (row: any) => {
+const handleAdd = async (row: any) => {
   state.deptForm = {
     sort: 1
   } as SysDeptForm
 
-  getDeptTree()
+  await getDeptTree()
+
   state.deptForm.parentId = row.deptId
   state.deptDialog = {
     title: '新增部门信息',
@@ -280,11 +279,10 @@ const handleAdd = (row: any) => {
 }
 
 // 修改部门信息
-const handleEdit = (row: any) => {
-  getDeptTree()
-  getDept(row.deptId).then((res:any) => {
-    state.deptForm = res.data
-  })
+const handleEdit = async (row: any) => {
+  await getDeptTree()
+  const res: any = await getDept(row.deptId)
+  state.deptForm = res.data
   state.deptDialog = {
     title: '修改部门信息',
     type: 'edit',
@@ -293,21 +291,23 @@ const handleEdit = (row: any) => {
 }
 
 // 删除部门信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认要删除"' + row.deptName + '"部门信息吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteDept(row.deptId).then(() => {
-      proxy.$message.success("删除部门信息成功")
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认要删除"' + row.deptName + '"部门信息吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteDept(row.deptId)
+    proxy.$message.success("删除部门信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   deptQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 关闭对话框
@@ -318,47 +318,44 @@ const closeDeptDialog = () => {
 }
 
 // 修改部门状态
-const handleChangeStatus = (row: SysDept) => {
+const handleChangeStatus = async (row: SysDept) => {
   const text = row.status === '0' ? '启用' : '停用'
-  proxy.$confirm('确认要' + text + '"' + row.deptName + '"部门吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    changeStatus(row.deptId, row.status).then(() => {
-      proxy.$message.success(text + '成功')
-      handleList()
+  try {
+    await proxy.$confirm('确认要' + text + '"' + row.deptName + '"部门吗?', '警告', {
+      type: 'warning'
     })
-  }).catch(() => {
+    await changeStatus(row.deptId, row.status)
+    proxy.$message.success(text + '成功')
+    await handleList()
+  } catch (error) {
     row.status = row.status === '1' ? '0' : '1'
-  })
+  }
 }
 
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      if (deptDialog.value.type == 'add') {
-        addDept(state.deptForm).then(() => {
-          proxy.$message.success("添加部门信息成功")
-          closeDeptDialog()
-          handleList()
-        })
-      }
-      if (deptDialog.value.type == 'edit') {
-        editDept(state.deptForm).then(() => {
-          proxy.$message.success("修改部门信息成功")
-          closeDeptDialog()
-          handleList()
-        })
-      }
-    } else {
-      console.log('error submit!', fields)
+  try {
+    await formEl.validate()
+    if (deptDialog.value.type == 'add') {
+      await addDept(state.deptForm)
+      proxy.$message.success("添加部门信息成功")
+      closeDeptDialog()
+      await handleList()
     }
-  })
+    if (deptDialog.value.type == 'edit') {
+      await editDept(state.deptForm)
+      proxy.$message.success("修改部门信息成功")
+      closeDeptDialog()
+      await handleList()
+    }
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
-onMounted(() => {
-  handleList()
+onMounted(async () => {
+  await handleList()
 })
 </script>
 

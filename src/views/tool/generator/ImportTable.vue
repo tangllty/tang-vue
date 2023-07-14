@@ -146,31 +146,27 @@ const {
 const genTableRuleFormRef = ref<FormInstance>()
 const genTableQueryFormRef = ref<FormInstance>()
 
-const emit = defineEmits(["submitted"])
-
 // 查询代码生成列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listDatabaseTable(state.queryParams).then((res:any) => {
-    state.importTableList = res.rows
-    state.total = res.total
-    state.loading = false
-  })
+  const res: any = await listDatabaseTable(state.queryParams)
+  state.importTableList = res.rows
+  state.total = res.total
+  state.loading = false
 }
 
 // 导入表信息
-const handleImport = () => {
+const handleImport = async () => {
   const tableNames = importTableNames.value.toString()
-  importTable({ tableNames }).then(() => {
-    proxy.$message.success("添加代码生成信息成功")
-    closeImportTableDialog()
-    emit('submitted')
-  })
+  await importTable({ tableNames })
+  proxy.$message.success("添加代码生成信息成功")
+  closeImportTableDialog()
+  proxy.$emit('submitted')
 }
 
 // 显示对话框
-const handleShow = () => {
-  handleList()
+const handleShow = async () => {
+  await handleList()
   state.importTableDialog = {
     title: '导入表信息',
     type: 'import',
@@ -179,9 +175,9 @@ const handleShow = () => {
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   genTableQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 关闭对话框
@@ -199,15 +195,14 @@ const handleSelectionChange = (selection: any) => {
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      if (importTableDialog.value.type == 'import') {
-        handleImport()
-      }
-    } else {
-      console.log('error submit!', fields)
+  try {
+    await formEl.validate()
+    if (importTableDialog.value.type == 'import') {
+      await handleImport()
     }
-  })
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
 defineExpose({

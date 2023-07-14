@@ -335,26 +335,24 @@ const menuRules = reactive<FormRules>({
 })
 
 // 查询菜单列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listMenu(state.queryParams).then((res:any) => {
-    state.menuList = res.data
-    state.loading = false
-  })
+  const res: any = await listMenu(state.queryParams)
+  state.menuList = res.data
+  state.loading = false
 }
 
 // 查询菜单树
-const getMenuTree = () => {
+const getMenuTree = async () => {
   const menuTrees: any[] = []
-  selectMenuTree().then((res:any) => {
-    const menuTree = { value: 0, label: '顶级菜单', children: res.data }
-    menuTrees.push(menuTree)
-    state.menuTree = menuTrees
-  })
+  const res: any = await selectMenuTree();
+  const menuTree = { value: 0, label: '顶级菜单', children: res.data }
+  menuTrees.push(menuTree)
+  state.menuTree = menuTrees
 }
 
 // 添加菜单信息
-const handleAdd = (row: any) => {
+const handleAdd = async (row: any) => {
   state.menuForm = {
     parentId: 0,
     menuType: 'D',
@@ -364,7 +362,7 @@ const handleAdd = (row: any) => {
   if (row.menuId) {
     state.menuForm.parentId = row.menuId
   }
-  getMenuTree()
+  await getMenuTree()
   state.menuDialog = {
     title: '新增菜单信息',
     type: 'add',
@@ -373,11 +371,10 @@ const handleAdd = (row: any) => {
 }
 
 // 修改菜单信息
-const handleEdit = (row: any) => {
-  getMenuTree()
-  getMenu(row.menuId).then((res:any) => {
-    menuForm.value = res.data
-  })
+const handleEdit = async (row: any) => {
+  await getMenuTree()
+  const res: any = await getMenu(row.menuId)
+  state.menuForm = res.data
   state.menuDialog = {
     title: '修改菜单信息',
     type: 'edit',
@@ -386,36 +383,38 @@ const handleEdit = (row: any) => {
 }
 
 // 修改菜单状态
-const handleChangeStatus = (row: SysMenu) => {
+const handleChangeStatus = async (row: SysMenu) => {
   const text = row.status === '0' ? '启用' : '停用'
-  proxy.$confirm('确认要' + text + '"' + row.menuName + '"菜单吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    changeStatus(row.menuId, row.status).then(() => {
-      proxy.$message.success(text + '成功')
-      handleList()
+  try {
+    await proxy.$confirm('确认要' + text + '"' + row.menuName + '"菜单吗?', '警告', {
+      type: 'warning'
     })
-  }).catch(() => {
+    await changeStatus(row.menuId, row.status)
+    proxy.$message.success(text + '成功')
+    await handleList()
+  } catch (error) {
     row.status = row.status === '1' ? '0' : '1'
-  })
+  }
 }
 
 // 删除菜单信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认要删除"' + row.menuName + '"菜单信息吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteMenu(row.menuId).then(() => {
-      proxy.$message.success('删除菜单信息成功')
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认要删除"' + row.menuName + '"菜单信息吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteMenu(row.menuId)
+    proxy.$message.success('删除菜单信息成功')
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   menuQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 关闭对话框
@@ -443,30 +442,27 @@ const handleSelectionChange = (selection: any) => {
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      if (menuDialog.value.type == 'add') {
-        addMenu(state.menuForm).then(() => {
-          proxy.$message.success("添加菜单信息成功")
-          closeMenuDialog()
-          handleList()
-        })
-      }
-      if (menuDialog.value.type == 'edit') {
-        editMenu(state.menuForm).then(() => {
-          proxy.$message.success("修改菜单信息成功")
-          closeMenuDialog()
-          handleList()
-        })
-      }
-    } else {
-      console.log('error submit!', fields)
+  try {
+    await formEl.validate()
+    if (menuDialog.value.type == 'add') {
+      await addMenu(state.menuForm)
+      proxy.$message.success("添加菜单信息成功")
+      closeMenuDialog()
+      await handleList()
     }
-  })
+    if (menuDialog.value.type == 'edit') {
+      await editMenu(state.menuForm)
+      proxy.$message.success("修改菜单信息成功")
+      closeMenuDialog()
+      await handleList()
+    }
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
-onMounted(() => {
-  handleList()
+onMounted(async () => {
+  await handleList()
 })
 </script>
 

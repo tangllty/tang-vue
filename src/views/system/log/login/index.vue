@@ -197,43 +197,46 @@ const {
 const sysLogLoginQueryFormRef = ref<FormInstance>()
 
 // 查询登陆日志列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listSysLogLogin(state.queryParams).then((res:any) => {
-    state.sysLogLoginList = res.rows
-    state.total = res.total
-    state.loading = false
-  })
+  const res: any = await listSysLogLogin(state.queryParams)
+  state.sysLogLoginList = res.rows
+  state.total = res.total
+  state.loading = false
 }
 
 // 删除登陆日志信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认删除"' + row.loginId + '"登陆日志信息吗？', '提示', {
-    type: 'warning'
-  }).then(() => {
-    deleteSysLogLogin(row.loginId).then(() => {
-      proxy.$message.success("删除${classComment}信息成功")
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认删除"' + row.loginId + '"登陆日志信息吗？', '提示', {
+      type: 'warning'
     })
-  })
+    await deleteSysLogLogin(row.loginId)
+    proxy.$message.success("删除登陆日志信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 批量删除登陆日志信息
-const handleDeletes = () => {
-  proxy.$confirm('确认删除"' + state.loginIds + '"登陆日志信息吗？', '提示', {
-    type: 'warning'
-  }).then(() => {
-    deleteSysLogLogins(state.loginIds).then(() => {
-      proxy.$message.success("删除${classComment}信息成功")
-      handleList()
+const handleDeletes = async () => {
+  try {
+    await proxy.$confirm('确认删除"' + state.loginIds + '"登陆日志信息吗？', '提示', {
+      type: 'warning'
     })
-  })
+    await deleteSysLogLogins(state.loginIds)
+    proxy.$message.success("删除登陆日志信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   sysLogLoginQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 多选框
@@ -244,8 +247,8 @@ const handleSelectionChange = (selection: any) => {
   }
 }
 
-onMounted(() => {
-  handleList()
+onMounted(async () => {
+  await handleList()
 })
 </script>
 

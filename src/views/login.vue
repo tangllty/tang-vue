@@ -96,11 +96,13 @@
 
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
-import router from '@/router'
+import { useUserStore } from '@/store/modules/user'
 import { ElButton, ElForm, ElFormItem, ElInput, ElTabPane, ElTabs, FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { LoginForm } from '@/api/auth/types'
-import { useUserStore } from '@/store/modules/user'
+
+const proxy = getProxy()
 
 const userStore = useUserStore()
 
@@ -136,22 +138,21 @@ const loginRules = reactive<FormRules>({
   ],
 })
 
+// 切换登陆方式
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   state.loginForm.loginType = String(tab.paneName)
 }
 
-const submitForm = (formEl: FormInstance | undefined) => {
+// 提交表单
+const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  formEl.validate((valid) => {
-    if (valid) {
-      userStore.login(state.loginForm).then(() => {
-        router.push({ path: '/' })
-      })
-    } else {
-      console.log('error submit!')
-      return false
-    }
-  })
+  try {
+    await formEl.validate()
+    await userStore.login(state.loginForm)
+    await proxy.$router.push({ path: '/' })
+  } catch (error) {
+    console.log('error submit!')
+  }
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {

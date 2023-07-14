@@ -234,41 +234,41 @@ const {
 const onlineUserQueryFormRef = ref<FormInstance>()
 
 // 查询在线用户列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listOnlineUser(state.queryParams).then((res: any) => {
-    state.onlineUserList = res.rows
-    state.total = res.total
-    state.loading = false
-  })
+  const res: any = await listOnlineUser(state.queryParams)
+  state.onlineUserList = res.rows
+  state.total = res.total
+  state.loading = false
 }
 
 // 查询在线用户
-const getInfo = (row: any) => {
-  getOnlineUser(row.token).then((res: any) => {
-    state.onlineUserInfo = res.data
-  })
+const getInfo = async (row: any) => {
+  const res: any = await getOnlineUser(row.token)
+  state.onlineUserInfo = res.data
 
   state.onlineUserDialog.title = '在线用户信息'
   state.onlineUserDialog.visible = true
 }
 
 // 删除在线用户信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认要强退"' + row.username + '"用户吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteOnlineUser(row.token).then(() => {
-      proxy.$message.success("强退" + row.username + "成功")
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认要强退"' + row.username + '"用户吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteOnlineUser(row.token)
+    proxy.$message.success("强退" + row.username + "成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   onlineUserQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 关闭对话框
@@ -276,16 +276,17 @@ const closeOnlineUserDialog = () => {
   state.onlineUserDialog.visible = false
 }
 
-onMounted(() => {
-  handleList()
+onMounted(async () => {
+  await handleList()
 })
 </script>
 
 <style lang="scss" scoped>
 .el-row {
   margin-bottom: 20px;
-}
-.el-row:last-child {
-  margin-bottom: 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 </style>

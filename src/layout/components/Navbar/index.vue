@@ -75,14 +75,16 @@ const toggleSidebar = () => {
   appStore.sidebar = !appStore.sidebar
 }
 
-const logout = () => {
-  proxy.$confirm('确定注销并退出系统吗？', '提示', {
-    type: 'warning'
-  }).then(() => {
-    userStore.logout().then(() => {
-      router.push({ path: '/login' })
+const logout = async () => {
+  try {
+    await proxy.$confirm('确定注销并退出系统吗？', '提示', {
+      type: 'warning'
     })
-  })
+    await userStore.logout()
+    router.push({ path: '/login' })
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 

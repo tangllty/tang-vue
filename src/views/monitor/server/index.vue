@@ -195,22 +195,21 @@ const {
   fileStores
 } = toRefs(state)
 
-const handleList = () => {
+const handleList = async () => {
   proxy.$message.warning('加载时间较长，请耐心等待...')
   state.loading = true
-  getInfo().then((res: any) => {
-    state.os = res.data.os
-    state.java = res.data.java
-    state.memory = res.data.memory
-    state.jvmMemory = res.data.jvmMemory
-    state.cpu = res.data.cpu
-    state.fileStores = res.data.fileStores
-    state.loading = false
-  })
+  const res: any = await getInfo()
+  state.os = res.data.os
+  state.java = res.data.java
+  state.memory = res.data.memory
+  state.jvmMemory = res.data.jvmMemory
+  state.cpu = res.data.cpu
+  state.fileStores = res.data.fileStores
+  state.loading = false
 }
 
-onMounted(() => {
-  handleList()
+onMounted(async () => {
+  await handleList()
 })
 </script>
 
@@ -218,9 +217,9 @@ onMounted(() => {
 table {
   border-spacing: 0;
   width: 100%;
-}
 
-td, th {
-  padding: 0;
+  td, th {
+    padding: 0;
+  }
 }
 </style>

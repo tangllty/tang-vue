@@ -3,61 +3,59 @@ import { Ref, ref, UnwrapRef } from 'vue'
 import { store } from '@/store'
 import { resetRouter } from '@/router'
 import { AxiosResponse } from 'axios'
-import { LoginForm } from '@/api/auth/types'
-import { login as loginApi, logout as logoutApi, getInfo as getInfoApi } from '@/api/auth'
 import { getToken, removeToken, setToken } from '@/utils/auth'
+import { login as loginApi, logout as logoutApi, getInfo as getInfoApi } from '@/api/auth'
+import { LoginForm } from '@/api/auth/types'
 import { SysUser, UserInfo } from '@/api/system/user/types'
 import defaultAvatar from '@/assets/avatar.png'
 
 export const useUserStore = defineStore('user', () => {
-
   const user: Ref<UnwrapRef<SysUser>> = ref<SysUser>({} as SysUser)
-  const token: Ref<UnwrapRef<String>> = ref<String>(getToken() || '')
+  const token: Ref<UnwrapRef<string>> = ref<string>(getToken() ?? '')
   // 角色集合
   const roles: Ref<string[]> = ref<Array<string>>([])
   // 权限集合
   const permissions: Ref<string[]> = ref<Array<string>>([])
 
   // 登录
-  const login = (loginForm: LoginForm): Promise<void> => {
-    return new Promise<void>((resolve, reject): void => {
-      loginApi(loginForm).then((response: AxiosResponse<any>): void => {
-        const getToken = response.data.token
-        token.value = getToken
-        setToken(getToken)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+  const login = async (loginForm: LoginForm): Promise<void> => {
+    try {
+      const res: any = await loginApi(loginForm)
+      const getToken: string = res.data.token
+      token.value = getToken
+      setToken(getToken)
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
   }
 
   // 登出
-  const logout = (): Promise<void> => {
-    return new Promise<void>((resolve, reject): void => {
-      logoutApi().then((): void => {
-        resetAuth()
-        resetRouter()
-        resolve()
-      }).catch((error): void => {
-        reject(error)
-      })
-    })
+  const logout = async (): Promise<void> => {
+    try {
+      await logoutApi()
+      resetAuth()
+      resetRouter()
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
   }
 
   // 获取信息
-  const getInfo = (): Promise<UserInfo> => {
-    return new Promise<UserInfo>((resolve, reject): void => {
-      getInfoApi().then(({ data }): void => {
-        user.value = data.user
-        user.value.avatar = user.value.avatar ? import.meta.env.VITE_APP_BASE_API + data.user.avatar : defaultAvatar
-        roles.value = data.roles
-        permissions.value = data.permissions
-        resolve(data)
-      }).catch((error): void => {
-        reject(error)
-      })
-    })
+  const getInfo = async (): Promise<UserInfo> => {
+    try {
+      const res: AxiosResponse<UserInfo> = await getInfoApi()
+      const data: UserInfo = res.data
+      user.value = data.user
+      user.value.avatar = user.value.avatar ? import.meta.env.VITE_APP_BASE_API + data.user.avatar : defaultAvatar
+      roles.value = data.roles
+      permissions.value = data.permissions
+      return data
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
   }
 
   // 重置

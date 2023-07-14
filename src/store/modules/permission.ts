@@ -1,85 +1,73 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
-import { routes as constantRoutes, dynamicRoutes as allDynamicRoutes } from '@/router'
-import { AxiosResponse } from 'axios'
 import { store } from '@/store'
+import { routes as constantRoutes, dynamicRoutes as allDynamicRoutes } from '@/router'
+import { useUserStore } from '@/store/modules/user'
 import { getRoutes as getRoutesApi } from '@/api/auth'
-import { useUserStore } from './user'
 
 const modules = import.meta.glob('../../views/**/**.vue')
-export const Layout = () => import('@/layout/index.vue')
+const Layout = () => import('@/layout/index.vue')
 
 export const usePermissionStore = defineStore('permission', () => {
-  const routes = ref<RouteRecordRaw[]>([])
-
   const userStore = useUserStore()
 
-  const filterAsyncRoutes = (routes: RouteRecordRaw[]) => {
-    const res: RouteRecordRaw[] = []
-    routes.forEach((route: RouteRecordRaw): void  => {
-      const temp = { ...route } as any
-      if (temp.component == 'Layout') {
-        temp.component = Layout
+  const routes = ref<RouteRecordRaw[]>([])
+
+  // 过滤异步路由
+  const filterAsyncRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
+    return routes.map((route) => {
+      const tempRoute: any = { ...route }
+      if (tempRoute.component === 'Layout') {
+        tempRoute.component = Layout
       } else {
-        temp.component = modules[`../../views/${route.component}.vue`] as any
+        tempRoute.component = modules[`../../views/${route.component}.vue`] as any
       }
-      res.push(temp)
-
-      if (temp.children) {
-        temp.children = filterAsyncRoutes(temp.children)
+      if (tempRoute.children) {
+        tempRoute.children = filterAsyncRoutes(tempRoute.children)
       }
+      return tempRoute
     })
-    return res
   }
 
+  // 过滤动态路由
   const filterDynamicRoutes = (routes: RouteRecordRaw[]) => {
-    const res: RouteRecordRaw[] = []
-    routes.forEach((route: RouteRecordRaw): void => {
-      const adminRole: string = 'admin'
-      const adminPermission: string = '*:*:*'
-      const userRoles: Array<string> = userStore.roles
-      const userPermissions: Array<string> = userStore.permissions
+    const adminRole: string = 'admin'
+    const adminPermission: string = '*:*:*'
+    const userRoles: string[] = userStore.roles
+    const userPermissions: string[] = userStore.permissions
 
-      const roles: string[] = []
-      const role = route.meta?.role
-      const permissions: string[] = []
-      const permission = route.meta?.permission
+    return routes.filter((route: RouteRecordRaw) => {
+      const { role, permission } = route.meta ?? {}
+      const roles: string[] = Array.isArray(role) ? role : [role].filter(Boolean)
+      const permissions: string[] = Array.isArray(permission) ? permission : [permission].filter(Boolean)
 
-      if (typeof role === 'string') {
-        roles.push(role)
-      }
-      if (role instanceof Array) {
-        role.forEach(r => roles.push(r))
-      }
-      if (typeof permission === 'string') {
-        permissions.push(permission)
-      }
-      if (permission instanceof Array) {
-        permission.forEach(p => permissions.push(p))
-      }
+      const hasRole: boolean = userRoles.includes(adminRole) || roles.some((role: string) => userRoles.includes(role))
+      const hasPermission: boolean = userPermissions.includes(adminPermission) || permissions.some((permission: string) => userPermissions.includes(permission))
 
-      const hasRole: boolean = userRoles.some((r: string) => adminRole === r || roles.includes(r))
-      const hasPermission: boolean = userPermissions.some((p: string) => adminPermission === p || permissions.includes(p))
       if (hasRole || hasPermission) {
-        res.push(route)
+        if (route.children) {
+          route.children = filterDynamicRoutes(route.children)
+        }
+        return true
       }
+      return false
     })
-    return res
   }
 
-  const getRoutes = (): Promise<RouteRecordRaw[]> => {
-    return new Promise<RouteRecordRaw[]>((resolve, reject): void => {
-      getRoutesApi().then((response: AxiosResponse<any, any>): void => {
-        const asyncRoutes = response.data
-        const accessedRoutes: RouteRecordRaw[] = filterAsyncRoutes(asyncRoutes)
-        const dynamicRoutes: RouteRecordRaw[] = filterDynamicRoutes(allDynamicRoutes)
-        routes.value = constantRoutes.concat(accessedRoutes)
-        resolve(accessedRoutes.concat(dynamicRoutes))
-      }).catch((error): void => {
-        reject(error)
-      })
-    })
+  // 获取路由
+  const getRoutes = async (): Promise<RouteRecordRaw[]> => {
+    try {
+      const res: any = await getRoutesApi()
+      const asyncRoutes = res.data
+      const accessedRoutes: RouteRecordRaw[] = filterAsyncRoutes(asyncRoutes)
+      const dynamicRoutes: RouteRecordRaw[] = filterDynamicRoutes(allDynamicRoutes)
+      routes.value = [...constantRoutes, ...accessedRoutes]
+      return [...accessedRoutes, ...dynamicRoutes]
+    } catch (error) {
+      console.error('Error during get routes:', error)
+      throw error
+    }
   }
 
   return {

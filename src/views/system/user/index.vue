@@ -525,23 +525,22 @@ const filterNode = (value: string, data: TreeNodeData) => {
 }
 
 // 查询用户列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listUser(state.queryParams).then((res:any) => {
-    state.userList = res.rows
-    state.total = res.total
-    state.loading = false
-  })
+  const res: any = await listUser(state.queryParams)
+  state.userList = res.rows
+  state.total = res.total
+  state.loading = false
 }
 
 // 添加用户信息
-const handleAdd = () => {
+const handleAdd = async () => {
   state.userForm = {
     password: '123456',
     gender: '0'
   } as SysUserForm
 
-  getRoleSelect()
+  await getRoleSelect()
 
   state.userDialog = {
     title: '新增用户信息',
@@ -551,15 +550,14 @@ const handleAdd = () => {
 }
 
 // 修改用户信息
-const handleEdit = (row: any) => {
+const handleEdit = async (row: any) => {
   let userId = state.userId
   if (row.userId) {
     userId = row.userId
   }
-  getUser(userId).then((res: any) => {
-    state.userForm = res.data
-  })
-  getRoleSelect()
+  const res: any = await getUser(userId)
+  state.userForm = res.data
+  await getRoleSelect()
 
   state.userDialog = {
     title: '修改用户信息',
@@ -569,65 +567,66 @@ const handleEdit = (row: any) => {
 }
 
 // 删除用户信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认要删除"' + row.username + '"用户信息吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteUser(row.userId).then(() => {
-      proxy.$message.success("删除用户信息成功")
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认要删除"' + row.username + '"用户信息吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteUser(row.userId)
+    proxy.$message.success("删除用户信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 批量删除用户信息
-const handleDeletes = () => {
-  proxy.$confirm('确认要删除"' + state.userIds + '"用户信息吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteUsers(state.userIds).then(() => {
-      proxy.$message.success("删除用户信息成功")
-      handleList()
+const handleDeletes = async () => {
+  try {
+    await proxy.$confirm('确认要删除"' + state.userIds + '"用户信息吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteUsers(state.userIds)
+    proxy.$message.success("删除用户信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 导入用户信息
-const handleImport = () => {
+const handleImport = async () => {
   state.importDialog = {
     title: '导入用户信息',
     type: 'import',
     visible: true
   }
 
-  getRoleSelect()
+  await getRoleSelect()
 }
 
 // 导出用户信息
-const handleExport = () => {
-  exportUser(state.queryParams).then((res: any) => {
-    proxy.$download(res)
-  })
+const handleExport = async () => {
+  const res: any = await exportUser(state.queryParams)
+  proxy.$download(res)
 }
 
 // 查询部门树
-const getDeptTree = () => {
-  selectDeptTree().then (res => {
-    state.deptTree = res.data
-  })
+const getDeptTree = async () => {
+  const res: any = await selectDeptTree()
+  state.deptTree = res.data
 }
 
 // 查询角色下拉框
-const getRoleSelect = () => {
-  return selectRoleSelect().then (res => {
-    state.roleSelect = res.data
-  })
+const getRoleSelect = async () => {
+  const res: any = await selectRoleSelect()
+  state.roleSelect = res.data
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   userQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 关闭对话框
@@ -647,18 +646,18 @@ const closeImportDialog = () => {
 }
 
 // 修改用户状态
-const handleChangeStatus = (row: SysUser) => {
+const handleChangeStatus = async (row: SysUser) => {
   const text = row.status === '0' ? '启用' : '停用'
-  proxy.$confirm('确认要' + text + '"' + row.username + '"用户吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    changeStatus(row.userId, row.status).then(() => {
-      proxy.$message.success(text + '成功')
-      handleList()
+  try {
+    await proxy.$confirm('确认要' + text + '"' + row.username + '"用户吗?', '警告', {
+      type: 'warning'
     })
-  }).catch(() => {
+    await changeStatus(row.userId, row.status)
+    proxy.$message.success(text + '成功')
+    await handleList()
+  } catch (error) {
     row.status = row.status === '1' ? '0' : '1'
-  })
+  }
 }
 
 // 多选框
@@ -670,50 +669,46 @@ const handleSelectionChange = (selection: any) => {
 }
 
 // 部门树节点
-const handleDeptNodeClick = (data: any) => {
+const handleDeptNodeClick = async (data: any) => {
   state.queryParams.deptId = data.value
-  handleList()
+  await handleList()
 }
 
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      if (userDialog.value.type == 'add') {
-        addUser(state.userForm).then(() => {
-          proxy.$message.success("添加用户信息成功")
-          closeUserDialog()
-          handleList()
-        })
-      }
-      if (userDialog.value.type == 'edit') {
-        editUser(state.userForm).then(() => {
-          proxy.$message.success("修改用户信息成功")
-          closeUserDialog()
-          handleList()
-        })
-      }
-      if (importDialog.value.type == 'import') {
-        if (!importFile.value) {
-          proxy.$message.error("请选择文件")
-          return
-        }
-        importUser(importFile.value, state.importForm.deptId, state.importForm.roleIds).then(() => {
-          proxy.$message.success("导入用户信息成功")
-          closeImportDialog()
-          handleList()
-        })
-      }
-    } else {
-      console.log('error submit!', fields)
+  try {
+    await formEl.validate()
+    if (state.userDialog.type == 'add') {
+      await addUser(state.userForm)
+      proxy.$message.success("添加用户信息成功")
+      closeUserDialog()
+      await handleList()
     }
-  })
+    if (state.userDialog.type == 'edit') {
+      await editUser(state.userForm)
+      proxy.$message.success("修改用户信息成功")
+      closeUserDialog()
+      await handleList()
+    }
+    if (state.importDialog.type == 'import') {
+      if (!importFile.value) {
+        proxy.$message.error("请选择文件")
+        return
+      }
+      await importUser(importFile.value, state.importForm.deptId, state.importForm.roleIds)
+      proxy.$message.success("导入用户信息成功")
+      closeImportDialog()
+      await handleList()
+    }
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
-onMounted(() => {
-  getDeptTree()
-  handleList()
+onMounted(async () => {
+  await getDeptTree()
+  await handleList()
 })
 </script>
 

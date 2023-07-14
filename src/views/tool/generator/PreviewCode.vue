@@ -30,9 +30,11 @@
 
 <script lang="ts" setup>
 import { reactive, toRefs } from 'vue'
-import { ElMessage } from 'element-plus'
 import { DocumentCopy } from '@element-plus/icons-vue'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { previewCode } from '@/api/tool/generator'
+
+const proxy = getProxy()
 
 const state = reactive({
   code: {},
@@ -52,15 +54,14 @@ const {
 } = toRefs(state)
 
 // 查询代码生成列表
-const handlePreviewCode = (tableId: number) => {
-  previewCode(tableId).then((res: any) => {
-    state.code = res.data
-  })
+const handlePreviewCode = async (tableId: number) => {
+  const res: any = await previewCode(tableId)
+  state.code = res.data
 }
 
 // 显示对话框
-const handleShow = (tableId: number) => {
-  handlePreviewCode(tableId)
+const handleShow = async (tableId: number) => {
+  await handlePreviewCode(tableId)
   state.previewCodeDialog = {
     title: '代码预览',
     type: 'list',
@@ -76,7 +77,7 @@ const getKey = (key: string): string => {
 // 代码复制
 const handleCopy = (code: string) => {
   // TODO
-  ElMessage.success("复制成功");
+  proxy.$message.success('复制成功')
 }
 
 // 关闭对话框

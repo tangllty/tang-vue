@@ -281,13 +281,12 @@ const dictTypeRules = reactive<FormRules>({
 })
 
 // 查询字典类型列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listDictType(state.queryParams).then((res:any) => {
-    state.dictTypeList = res.rows
-    state.total = res.total
-    state.loading = false
-  })
+  const res: any = await listDictType(state.queryParams)
+  state.dictTypeList = res.rows
+  state.total = res.total
+  state.loading = false
 }
 
 // 添加字典类型信息
@@ -304,14 +303,13 @@ const handleAdd = () => {
 }
 
 // 修改字典类型信息
-const handleEdit = (row: any) => {
+const handleEdit = async (row: any) => {
   let typeId = state.dictTypeId
   if (row.typeId) {
     typeId = row.typeId
   }
-  getDictType(typeId).then((res: any) => {
-    state.dictTypeForm = res.data
-  })
+  const res: any = await getDictType(typeId)
+  state.dictTypeForm = res.data
 
   state.dictTypeDialog = {
     title: '修改字典类型信息',
@@ -321,33 +319,37 @@ const handleEdit = (row: any) => {
 }
 
 // 删除字典类型信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认删除"' + row.dictType + '"字典类型信息吗？', '提示', {
-    type: 'warning'
-  }).then(() => {
-    deleteDictType(row.typeId).then(() => {
-      proxy.$message.success("删除字典类型信息成功")
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认删除"' + row.dictType + '"字典类型信息吗？', '提示', {
+      type: 'warning'
     })
-  })
+    await deleteDictType(row.typeId)
+    proxy.$message.success("删除字典类型信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 批量删除字典类型信息
-const handleDeletes = () => {
-  proxy.$confirm('确认删除"' + state.dictTypeIds + '"字典类型信息吗？', '提示', {
-    type: 'warning'
-  }).then(() => {
-    deleteDictTypes(state.dictTypeIds).then(() => {
-      proxy.$message.success("删除字典类型信息成功")
-      handleList()
+const handleDeletes = async () => {
+  try {
+    await proxy.$confirm('确认删除"' + state.dictTypeIds + '"字典类型信息吗？', '提示', {
+      type: 'warning'
     })
-  })
+    await deleteDictTypes(state.dictTypeIds)
+    proxy.$message.success("删除字典类型信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   dictTypeQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 关闭对话框
@@ -368,30 +370,27 @@ const handleSelectionChange = (selection: any) => {
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      if (dictTypeDialog.value.type == 'add') {
-        addDictType(state.dictTypeForm).then(() => {
-          proxy.$message.success("添加字典类型信息成功")
-          closeDictTypeDialog()
-          handleList()
-        })
-      }
-      if (dictTypeDialog.value.type == 'edit') {
-        editDictType(state.dictTypeForm).then(() => {
-          proxy.$message.success("修改字典类型信息成功")
-          closeDictTypeDialog()
-          handleList()
-        })
-      }
-    } else {
-      console.log('error submit!', fields)
+  try {
+    await formEl.validate()
+    if (dictTypeDialog.value.type == 'add') {
+      await addDictType(state.dictTypeForm)
+      proxy.$message.success("添加字典类型信息成功")
+      closeDictTypeDialog()
+      await handleList()
     }
-  })
+    if (dictTypeDialog.value.type == 'edit') {
+      await editDictType(state.dictTypeForm)
+      proxy.$message.success("修改字典类型信息成功")
+      closeDictTypeDialog()
+      await handleList()
+    }
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
-onMounted(() => {
-  handleList()
+onMounted(async () => {
+  await handleList()
 })
 </script>
 

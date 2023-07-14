@@ -318,26 +318,24 @@ const dictDataRules = reactive<FormRules>({
 })
 
 // 查询字典数据列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listDictData(state.queryParams).then((res:any) => {
-    state.dictDataList = res.rows
-    state.total = res.total
-    state.loading = false
-  })
+  const res: any = await listDictData(state.queryParams)
+  state.dictDataList = res.rows
+  state.total = res.total
+  state.loading = false
 }
 
 // 添加字典数据信息
-const handleAdd = () => {
+const handleAdd = async () => {
   state.dictDataForm = {
     typeClass: '',
     sort: 1,
     status: '0'
   } as SysDictDataForm
 
-  getDictType(props.typeId).then((res: any) => {
-    state.dictDataForm.dictType = res.data.dictType
-  })
+  const res: any = await getDictType(props.typeId)
+  state.dictDataForm.dictType = res.data.dictType
 
   state.dictDataDialog = {
     title: '新增字典数据信息',
@@ -347,14 +345,13 @@ const handleAdd = () => {
 }
 
 // 修改字典数据信息
-const handleEdit = (row: any) => {
+const handleEdit = async (row: any) => {
   let dataId = state.dictDataId
   if (row.dataId) {
     dataId = row.dataId
   }
-  getDictData(dataId).then((res: any) => {
-    state.dictDataForm = res.data
-  })
+  const res: any = await getDictData(dataId)
+  state.dictDataForm = res.data
 
   state.dictDataDialog = {
     title: '修改字典数据信息',
@@ -364,33 +361,37 @@ const handleEdit = (row: any) => {
 }
 
 // 删除字典数据信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认要删除"' + row.dataLabel + '"字典数据信息吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteDictData(row.dataId).then(() => {
-      proxy.$message.success("删除字典数据信息成功")
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认要删除"' + row.dataLabel + '"字典数据信息吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteDictData(row.dataId)
+    proxy.$message.success("删除字典数据信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 批量删除字典数据信息
-const handleDeletes = () => {
-  proxy.$confirm('确认要删除"' + state.dictDataIds + '"字典数据信息吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteDictDatas(state.dictDataIds).then(() => {
-      proxy.$message.success("删除字典数据信息成功")
-      handleList()
+const handleDeletes = async () => {
+  try {
+    await proxy.$confirm('确认要删除"' + state.dictDataIds + '"字典数据信息吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteDictDatas(state.dictDataIds)
+    proxy.$message.success("删除字典数据信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   dictDataQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 关闭对话框
@@ -411,33 +412,29 @@ const handleSelectionChange = (selection: any) => {
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      if (dictDataDialog.value.type == 'add') {
-        addDictData(state.dictDataForm).then(() => {
-          proxy.$message.success("添加字典数据信息成功")
-          closeDictDataDialog()
-          handleList()
-        })
-      }
-      if (dictDataDialog.value.type == 'edit') {
-        editDictData(state.dictDataForm).then(() => {
-          proxy.$message.success("修改字典数据信息成功")
-          closeDictDataDialog()
-          handleList()
-        })
-      }
-    } else {
-      console.log('error submit!', fields)
+  try {
+    await formEl.validate()
+    if (dictDataDialog.value.type == 'add') {
+      await addDictData(state.dictDataForm)
+      proxy.$message.success("添加字典数据信息成功")
+      closeDictDataDialog()
+      await handleList()
     }
-  })
+    if (dictDataDialog.value.type == 'edit') {
+      await editDictData(state.dictDataForm)
+      proxy.$message.success("修改字典数据信息成功")
+      closeDictDataDialog()
+      await handleList()
+    }
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
-onMounted(() => {
-  getDictType(props.typeId).then((res: any) => {
-    state.queryParams.dictType = res.data.dictType
-    handleList()
-  })
+onMounted(async () => {
+  const res: any = await getDictType(props.typeId)
+  state.queryParams.dictType = res.data.dictType
+  await handleList()
 })
 </script>
 

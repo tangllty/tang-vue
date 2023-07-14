@@ -2,9 +2,11 @@ import router from '@/router'
 import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import { useUserStoreHook } from '@/store/modules/user'
 import { usePermissionStoreHook } from '@/store/modules/permission'
-
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+
+const userStore = useUserStoreHook()
+const permissionStore = usePermissionStoreHook()
 
 // 全局进度条的配置
 NProgress.configure({
@@ -12,39 +14,40 @@ NProgress.configure({
   minimum: 0.25,
 })
 
-router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): Promise<void> => {
+router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
   NProgress.start()
-  const userStore = useUserStoreHook()
-  const permissionStore = usePermissionStoreHook()
 
   // 白名单路由
-  const whiteList: String[] = ['/login'] as Array<String>
+  const whiteList: string[] = ['/login']
 
-  if (userStore.token) {
-    if (to.path === '/login') {
-      next({ path: '/' })
-    } else {
-      const gotUserInfo: boolean = userStore.roles.length > 0
-      if (gotUserInfo) {
-        if (to.matched.length === 0) {
-          from.path ? next({ path: from.path as string }) : next('/401')
-        } else {
-          next()
-        }
-      } else {
-        await userStore.getInfo()
-        const accessRoutes: RouteRecordRaw[] = await permissionStore.getRoutes()
-        accessRoutes.forEach((route: RouteRecordRaw) => router.addRoute(route))
-        next({ ...to, replace: true })
-      }
-    }
-  } else {
-    // 白名单
+  if (!userStore.token) {
     if (whiteList.includes(to.path)) {
-      next()
-    } else {
-      next({ path: '/login'})
+      return next()
     }
+    return next({ path: '/login' })
+  }
+
+  if (to.path === '/login') {
+    return next({ path: '/' })
+  }
+
+  const gotUserInfo: boolean = userStore.roles.length > 0
+
+  if (gotUserInfo) {
+    if (to.matched.length === 0) {
+      return next(from.path ? { path: from.path } : '/401')
+    }
+    return next()
+  }
+
+  try {
+    await Promise.all([userStore.getInfo(), permissionStore.getRoutes()])
+    const accessRoutes: RouteRecordRaw[] = permissionStore.routes
+    accessRoutes.forEach((route: RouteRecordRaw) => router.addRoute(route))
+    next({ ...to, replace: true })
+  } catch (error) {
+    console.error('Error during route navigation:', error)
+    next('/500')
   }
 })
 

@@ -290,22 +290,21 @@ const roleRules = reactive<FormRules>({
 })
 
 // 查询角色列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listRole(state.queryParams).then((res:any) => {
-    state.roleList = res.rows
-    state.total = res.total
-    state.loading = false
-  })
+  const res: any = await listRole(state.queryParams)
+  state.roleList = res.rows
+  state.total = res.total
+  state.loading = false
 }
 
 // 添加角色信息
-const handleAdd = () => {
+const handleAdd = async () => {
   state.roleForm = {
     sort: 1
   } as SysRoleForm
 
-  getMenuTree()
+  await getMenuTree()
 
   state.roleDialog = {
     title: '新增角色信息',
@@ -315,24 +314,22 @@ const handleAdd = () => {
 }
 
 // 查询菜单树
-const getMenuTree = () => {
-  selectMenuTree().then((res:any) => {
-    state.menuTree = res.data
-  })
+const getMenuTree = async () => {
+  const res: any = await selectMenuTree()
+  state.menuTree = res.data
 }
 
 // 修改角色信息
-const handleEdit = (row: any) => {
+const handleEdit = async (row: any) => {
   let roleId = state.roleId
   if (row.roleId) {
     roleId = row.roleId
   }
-  getMenuTree()
-  getRole(roleId).then((res: any) => {
-    state.roleForm = res.data
-    const menuIds = res.data.menuIds
-    menuIds.forEach((menuId: number) => menuTreeRef.value?.setChecked(menuId, true, false))
-  })
+  await getMenuTree()
+  const res: any = await getRole(roleId)
+  state.roleForm = res.data
+  const menuIds = res.data.menuIds
+  menuIds.forEach((menuId: number) => menuTreeRef.value?.setChecked(menuId, true, false))
 
   state.roleDialog = {
     title: '修改角色信息',
@@ -342,48 +339,52 @@ const handleEdit = (row: any) => {
 }
 
 // 修改角色状态
-const handleChangeStatus = (row: SysRole) => {
+const handleChangeStatus = async (row: SysRole) => {
   const text = row.status === '0' ? '启用' : '停用'
-  proxy.$confirm('确认要' + text + '"' + row.roleName + '"角色吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    changeStatus(row.roleId, row.status).then(() => {
-      proxy.$message.success(text + '成功')
-      handleList()
+  try {
+    await proxy.$confirm('确认要' + text + '"' + row.roleName + '"角色吗?', '警告', {
+      type: 'warning'
     })
-  }).catch(() => {
+    await changeStatus(row.roleId, row.status)
+    proxy.$message.success(text + '成功')
+    await handleList()
+  } catch (error) {
     row.status = row.status === '1' ? '0' : '1'
-  })
+  }
 }
 
 // 删除角色信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认要删除"' + row.roleName + '"角色信息吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteRole(row.roleId).then(() => {
-      proxy.$message.success("删除角色信息成功")
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认要删除"' + row.roleName + '"角色信息吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteRole(row.roleId)
+    proxy.$message.success("删除角色信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 批量删除角色信息
-const handleDeletes = () => {
-  proxy.$confirm('确认要删除"' + state.roleIds + '"角色信息吗?', '警告', {
-    type: 'warning'
-  }).then(() => {
-    deleteRoles(state.roleIds).then(() => {
-      proxy.$message.success("删除角色信息成功")
-      handleList()
+const handleDeletes = async () => {
+  try {
+    await proxy.$confirm('确认要删除"' + state.roleIds + '"角色信息吗?', '警告', {
+      type: 'warning'
     })
-  })
+    await deleteRoles(state.roleIds)
+    proxy.$message.success("删除角色信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   roleQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 关闭对话框
@@ -404,37 +405,34 @@ const handleSelectionChange = (selection: any) => {
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      const halfCheckedNodes = menuTreeRef.value?.getHalfCheckedNodes()
-      const checkedNodes = menuTreeRef.value?.getCheckedNodes()
-      const menuIds: number[] = []
-      halfCheckedNodes?.forEach(halfCheckedNode => menuIds.push(halfCheckedNode.value))
-      checkedNodes?.forEach(checkedNode => menuIds.push(checkedNode.value))
-      state.roleForm.menuIds = menuIds
+  try {
+    await formEl.validate()
+    const halfCheckedNodes = menuTreeRef.value?.getHalfCheckedNodes()
+    const checkedNodes = menuTreeRef.value?.getCheckedNodes()
+    const menuIds: number[] = []
+    halfCheckedNodes?.forEach(halfCheckedNode => menuIds.push(halfCheckedNode.value))
+    checkedNodes?.forEach(checkedNode => menuIds.push(checkedNode.value))
+    state.roleForm.menuIds = menuIds
 
-      if (roleDialog.value.type == 'add') {
-        addRole(state.roleForm).then(() => {
-          proxy.$message.success("添加角色信息成功")
-          closeRoleDialog()
-          handleList()
-        })
-      }
-      if (roleDialog.value.type == 'edit') {
-        editRole(state.roleForm).then(() => {
-          proxy.$message.success("修改角色信息成功")
-          closeRoleDialog()
-          handleList()
-        })
-      }
-    } else {
-      console.log('error submit!', fields)
+    if (roleDialog.value.type == 'add') {
+      await addRole(state.roleForm)
+      proxy.$message.success("添加角色信息成功")
+      closeRoleDialog()
+      await handleList()
     }
-  })
+    if (roleDialog.value.type == 'edit') {
+      await editRole(state.roleForm)
+      proxy.$message.success("修改角色信息成功")
+      closeRoleDialog()
+      await handleList()
+    }
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
-onMounted(() => {
-  handleList()
+onMounted(async () => {
+  await handleList()
 })
 </script>
 

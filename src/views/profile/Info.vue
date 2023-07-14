@@ -147,30 +147,23 @@
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus'
-import router from '@/router'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { editUserInfo, editUserPassword } from '@/api/profile'
 import { getRoleSelect as selectRoleSelect } from '@/api/system/user'
-import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
-
-const userStore = useUserStore()
+import { deptTree as selectDeptTree } from '@/api/system/dept'
 
 const proxy = getProxy()
 const { sys_user_gender, sys_status } = proxy.$dict('sys_user_gender', 'sys_status')
+
+const userStore = useUserStore()
 
 const state = reactive({
   // 部门树数据
   deptTree: [] as TreeSelect[],
   // 角色下拉框数据
   roleSelect: [] as TreeSelect[],
-  // 对话框
-  userDialog: {
-    title: '',
-    type: '',
-    visible: false
-  } as Dialog,
   // 个人资料表单
   userForm: {} as SysUserForm,
   // 修改密码表单
@@ -180,7 +173,6 @@ const state = reactive({
 const {
   deptTree,
   roleSelect,
-  userDialog,
   userForm,
   passwordForm
 } = toRefs(state)
@@ -226,49 +218,43 @@ const handleUserInfo = () => {
 }
 
 // 查询部门树
-const getDeptTree = () => {
-  selectDeptTree().then (res => {
-    state.deptTree = res.data
-  })
+const getDeptTree = async () => {
+  const res: any = await selectDeptTree()
+  state.deptTree = res.data
 }
 
 // 查询角色下拉框
-const getRoleSelect = () => {
-  selectRoleSelect().then (res => {
-    state.roleSelect = res.data
-  })
+const getRoleSelect = async () => {
+  const res: any = await selectRoleSelect()
+  state.roleSelect = res.data
 }
 
 // 关闭对话框
 const close = () => {
-  router.back()
+  proxy.$router.back()
   userRuleFormRef.value?.resetFields()
   userRuleFormRef.value?.clearValidate()
 }
 
 const submitForm = async (formEl: FormInstance | undefined, type: string) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      console.log(formEl)
-      if (type == 'userForm') {
-        editUserInfo(state.userForm).then(() => {
-          proxy.$message.success("修改个人资料成功")
-          resetForm(userRuleFormRef.value)
-          handleUserInfo()
-        })
-      }
-      if (type == 'passwordForm') {
-        state.passwordForm.userId = userStore.user.userId
-        editUserPassword(state.passwordForm).then(() => {
-          proxy.$message.success("修改密码成功")
-          resetForm(passwordRuleFormRef.value)
-        })
-      }
-    } else {
-      console.log('error submit!', fields)
+  try {
+    await formEl.validate()
+    if (type == 'userForm') {
+      await editUserInfo(state.userForm)
+      proxy.$message.success("修改个人资料成功")
+      resetForm(userRuleFormRef.value)
+      handleUserInfo()
     }
-  })
+    if (type == 'passwordForm') {
+      state.passwordForm.userId = userStore.user.userId
+      await editUserPassword(state.passwordForm)
+      proxy.$message.success("修改密码成功")
+      resetForm(passwordRuleFormRef.value)
+    }
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -276,10 +262,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields()
 }
 
-onMounted(() => {
+onMounted(async () => {
   handleUserInfo()
-  getDeptTree()
-  getRoleSelect()
+  await getDeptTree()
+  await getRoleSelect()
 })
 </script>
 

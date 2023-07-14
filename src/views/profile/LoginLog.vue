@@ -68,15 +68,14 @@ const {
 
 const sysLogLoginQueryFormRef = ref<FormInstance>()
 
-const handleList = () => {
-  listSysLogLoginByUser(state.queryParams).then((res: any) => {
-    state.sysLogLoginList = res.rows
-    state.total = res.total
-  })
+const handleList = async () => {
+  const res: any = await listSysLogLoginByUser(state.queryParams)
+  state.sysLogLoginList = res.rows
+  state.total = res.total
 }
 
-onMounted(() => {
-  handleList()
+onMounted( async () => {
+  await handleList()
 })
 </script>
 

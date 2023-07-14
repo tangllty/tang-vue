@@ -316,9 +316,12 @@
 
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
-import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { FormInstance, FormRules } from 'element-plus'
+import { getProxy } from '@/utils/getCurrentInstance'
 import { getGenTable, editGenTable } from '@/api/tool/generator'
 import { GenTableForm, GenTableColumn } from '@/api/tool/generator/types'
+
+const proxy = getProxy()
 
 const state = reactive({
   loading: false,
@@ -371,21 +374,18 @@ const editTableRules = reactive<FormRules>({
   ],
 })
 
-const emit = defineEmits(["submitted"]);
-
 // 查询代码生成列表
-const handleEditTable = (tableId: number) => {
-  getGenTable(tableId).then((res: any) => {
-    state.activeName = 'tableInfo'
-    state.editTableDialog.title = '编辑[' + res.data.table.tableName + ']表代码生成信息'
-    state.editTableForm = res.data.table
-    state.tableColumnList = res.data.tableColumn
-  })
+const handleEditTable = async (tableId: number) => {
+  const res: any = await getGenTable(tableId)
+  state.activeName = 'tableInfo'
+  state.editTableDialog.title = '编辑[' + res.data.table.tableName + ']表代码生成信息'
+  state.editTableForm = res.data.table
+  state.tableColumnList = res.data.tableColumn
 }
 
 // 显示对话框
-const handleShow = (tableId: number) => {
-  handleEditTable(tableId)
+const handleShow = async (tableId: number) => {
+  await handleEditTable(tableId)
   state.editTableDialog = {
     title: '编辑[]表代码生成信息',
     type: 'edit',
@@ -404,20 +404,18 @@ const closeEditTableDialog = () => {
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      state.editTableForm.tableColumnList = state.tableColumnList
-      if (editTableDialog.value.type == 'edit') {
-        editGenTable(state.editTableForm).then(() => {
-          ElMessage.success("修改字典数据信息成功")
-          closeEditTableDialog()
-          emit('submitted')
-        })
-      }
-    } else {
-      console.log('error submit!', fields)
+  try {
+    await formEl.validate()
+    state.editTableForm.tableColumnList = state.tableColumnList
+    if (editTableDialog.value.type == 'edit') {
+      await editGenTable(state.editTableForm)
+      proxy.$message.success("修改字典数据信息成功")
+      closeEditTableDialog()
+      proxy.$emit('submitted')
     }
-  })
+  } catch (error) {
+    console.log('error submit!', error)
+  }
 }
 
 defineExpose({

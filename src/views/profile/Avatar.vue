@@ -99,9 +99,9 @@ import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { editUserAvatar } from '@/api/profile'
 
-const userStore = useUserStore()
-
 const proxy = getProxy()
+
+const userStore = useUserStore()
 
 const state = reactive({
   imageUrl: '' as string,
@@ -183,11 +183,11 @@ const decreaseZoom = () => {
 }
 
 // 提交头像上传
-const submitUpload = () => {
-  editUserAvatar(state.imageFile).then(() => {
-    proxy.$message.success('头像上传成功!')
-    closeAvatarDialog()
-  })
+const submitUpload = async () => {
+  if (!state.imageFile.raw) return
+  await editUserAvatar(state.imageFile)
+  proxy.$message.success('头像上传成功!')
+  closeAvatarDialog()
 }
 </script>
 

@@ -177,9 +177,9 @@ import { Edit, Delete, Search, Refresh, Upload, View, Download } from '@element-
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes } from '@/api/tool/generator'
 import { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
-import ImportTable from './importTable.vue'
-import PreviewCode from './previewCode.vue'
-import EditTable from './editTable.vue'
+import ImportTable from './ImportTable.vue'
+import PreviewCode from './PreviewCode.vue'
+import EditTable from './EditTable.vue'
 
 const proxy = getProxy()
 
@@ -219,13 +219,12 @@ const editTableRef = ref<InstanceType<typeof EditTable>>()
 const genTableQueryFormRef = ref<FormInstance>()
 
 // 查询代码生成列表
-const handleList = () => {
+const handleList = async () => {
   state.loading = true
-  listGenTable(state.queryParams).then((res:any) => {
-    state.genTableList = res.rows
-    state.total = res.total
-    state.loading = false
-  })
+  const res: any = await listGenTable(state.queryParams)
+  state.genTableList = res.rows
+  state.total = res.total
+  state.loading = false
 }
 
 // 导入代码生成信息
@@ -248,48 +247,50 @@ const handleEdit = (row: any) => {
 }
 
 // 删除代码生成信息
-const handleDelete = (row: any) => {
-  proxy.$confirm('确认要删除"' + row.tableNames + '"代码生成信息吗？', '提示', {
-    type: 'warning'
-  }).then(() => {
-    deleteGenTable(row.tableId).then(() => {
-      proxy.$message.success("删除代码生成信息成功")
-      handleList()
+const handleDelete = async (row: any) => {
+  try {
+    await proxy.$confirm('确认要删除"' + row.tableNames + '"代码生成信息吗？', '提示', {
+      type: 'warning'
     })
-  })
+    await deleteGenTable(row.tableId)
+    proxy.$message.success("删除代码生成信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 批量删除代码生成信息
-const handleDeletes = () => {
-  proxy.$confirm('确认要删除"' + state.tableNames.toString() + '"代码生成信息吗？', '提示', {
-    type: 'warning'
-  }).then(() => {
-    deleteGenTables(state.genTableIds).then(() => {
-      proxy.$message.success("删除代码生成信息成功")
-      handleList()
+const handleDeletes = async () => {
+  try {
+    await proxy.$confirm('确认要删除"' + state.tableNames.toString() + '"代码生成信息吗？', '提示', {
+      type: 'warning'
     })
-  })
+    await deleteGenTables(state.genTableIds)
+    proxy.$message.success("删除代码生成信息成功")
+    await handleList()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 代码下载
-const handleDownload = (row: any) => {
-  downloadCode(row.tableName).then((res) => {
-    proxy.$download(res)
-  })
+const handleDownload = async (row: any) => {
+  const res: any = await downloadCode(row.tableName)
+  proxy.$download(res)
 }
 
 // 批量代码下载
-const handleDownloads = () => {
+const handleDownloads = async () => {
   const tableNames: string = state.tableNames.toString()
-  downloadCodes({ tableNames }).then((res) => {
-    proxy.$download(res)
-  })
+  const res: any = await downloadCodes({ tableNames })
+  proxy.$download(res)
 }
 
 // 重置表单
-const resetQuery = () => {
+const resetQuery = async () => {
   genTableQueryFormRef.value?.resetFields()
-  handleList()
+  await handleList()
 }
 
 // 多选框
@@ -301,8 +302,8 @@ const handleSelectionChange = (selection: any) => {
   }
 }
 
-onMounted(() => {
-  handleList()
+onMounted(async () => {
+  await handleList()
 })
 </script>
 
