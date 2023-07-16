@@ -149,12 +149,12 @@ const handleAvatarChange: UploadProps['onChange'] = (uploadFile: UploadFile) => 
   if (!supportTypes.includes(uploadFile.raw.type)) {
     proxy.$message.error('头像文件只能是 png/jpg/jpeg 格式!')
     return
-  } else if (uploadFile.raw.size / 1024 / 1024 > 2) {
-    proxy.$message.error('头像文件大小不能超过 2MB!')
+  } else if (uploadFile.raw.size / 1024 / 1024 > 5) {
+    proxy.$message.error('头像文件大小不能超过 5MB!')
     return
   }
 
-  state.imageUrl = URL.createObjectURL(uploadFile.raw!)
+  state.imageUrl = URL.createObjectURL(uploadFile.raw)
   state.imageFile = uploadFile
 }
 
