@@ -28,9 +28,11 @@ const app = createApp(App)
 
 import { getDicts } from '@/utils/dict'
 import { download } from '@/utils/download'
+import { getFullPath } from '@/utils/path'
 
 app.config.globalProperties.$dict = getDicts
 app.config.globalProperties.$download = download
+app.config.globalProperties.$path = getFullPath
 
 setupStore(app)
 setupDirective(app)

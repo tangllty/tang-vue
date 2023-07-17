@@ -175,6 +175,19 @@
               </template>
             </el-table-column>
             <el-table-column
+              label="头像"
+              prop="avatar"
+              align="center"
+            >
+              <template #default="scope">
+                <el-image
+                  style="width: 50px; height: 50px"
+                  :src="proxy.$path(scope.row.avatar)"
+                  fit="cover"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column
               label="状态"
               prop="status"
               align="center"
@@ -362,7 +375,7 @@
             action=""
             :auto-upload="false"
             :limit="1"
-            :on-exceed="() => $message.warning('只能上传一个文件')"
+            :on-exceed="() => proxy.$message.warning('只能上传一个文件')"
             :on-change="(file: UploadFile) => importFile = file"
             :on-remove="() => importFile = undefined"
             v-model="importForm.file"
