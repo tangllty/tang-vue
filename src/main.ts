@@ -7,7 +7,8 @@ import { setupDirective } from '@/directives'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
-import zhLocale from 'element-plus/lib/locale/lang/zh-cn'
+// import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import '@/permission'
 
 // 自定义样式
@@ -38,7 +39,7 @@ setupStore(app)
 setupDirective(app)
 app
   .use(router)
-  .use(ElementPlus, { locale: zhLocale })
+  .use(ElementPlus, { locale: zhCn })
   .component('SvgIcon', SvgIcon)
   .component('Pagination', Pagination)
   .component('DictSpan', DictSpan)
