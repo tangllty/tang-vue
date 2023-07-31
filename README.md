@@ -36,6 +36,6 @@ tang-vue 是基于 Vue 3 的权限管理系统
 
 - 微信
 
-  - ![WeChat](https://gitee.com/tangllty/tang-docs/raw/master/docs/guide/image/wechat.png)
+  - ![WeChat](https://gitee.com/tangllty/tang-docs/raw/master/docs/public/wechat.png)
 - Telegram
 - QQ
