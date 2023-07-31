@@ -25,6 +25,14 @@ tang-vue 是基于 Vue 3 的权限管理系统
    ```
 2. 访问 [http://localhost:5173/](http://localhost:5173/)
 
+## 贡献
+
+如果你有任何问题、建议或发现了 bug，请提交 [Issues](https://gitee.com/tangllty/tang-vue/issues/new) 或提供 [Pull Request](https://gitee.com/tangllty/tang-vue/pull/new) 来帮助改进该项目。
+
+## 许可证
+
+tang-vue 使用 MIT 许可证。更多详情请查阅 [LICENSE](https://gitee.com/tangllty/tang-vue/blob/master/LICENSE) 文件。
+
 ## 项目地址
 
 | 项目 | Gitee                                          | GitHub                                          |

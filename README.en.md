@@ -25,6 +25,14 @@ You can read the [documentation](https://tangllty.eu.org/) for more information
    ```
 2. Visit [http://localhost:5173/](http://localhost:5173/)
 
+## Contributing
+
+If you have any questions, suggestions, or find bugs, please submit an [Issues](https://github.com/tangllty/tang-vue/issues/new) or provide a [Pull Request](https://github.com/tangllty/tang-vue/pull/new) to help improve the project.
+
+## License
+
+tang-vue uses the MIT license. For more details, please refer to [LICENSE](https://github.com/tangllty/tang-vue/blob/master/LICENSE) files.
+
 ## Project Address
 
 | Project   | Gitee                                          | GitHub                                          |
