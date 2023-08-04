@@ -7,7 +7,7 @@
           </div>
         </template>
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="用户名密码" name="username">
+          <el-tab-pane label="用户名密码" :name="LoginType.USERNAME">
             <el-form
               ref="loginRuleFormRef"
               :model="loginForm"
@@ -48,7 +48,7 @@
               </el-form-item>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane label="邮箱密码" name="email">
+          <el-tab-pane label="邮箱密码" :name="LoginType.EMAIL">
             <el-form
               ref="loginRuleFormRef"
               :model="loginForm"
@@ -100,6 +100,7 @@ import { useUserStore } from '@/store/modules/user'
 import { ElButton, ElForm, ElFormItem, ElInput, ElTabPane, ElTabs, FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
+import { LoginType } from '@/enums'
 import { LoginForm } from '@/api/auth/types'
 
 const proxy = getProxy()
@@ -111,9 +112,9 @@ const state = reactive({
       username: 'admin',
       email: 'admin@163.com',
       password: '123456',
-      loginType: 'username'
+      loginType: LoginType.USERNAME
     } as LoginForm,
-    activeName: 'username'
+    activeName: LoginType.USERNAME
 })
 
 const {
@@ -140,7 +141,7 @@ const loginRules = reactive<FormRules>({
 
 // 切换登陆方式
 const handleClick = (tab: TabsPaneContext, event: Event) => {
-  state.loginForm.loginType = String(tab.paneName)
+  state.loginForm.loginType = tab.paneName as LoginType
 }
 
 // 提交表单
