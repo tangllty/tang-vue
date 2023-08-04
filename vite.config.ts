@@ -26,7 +26,7 @@ export default ({ mode }:ConfigEnv) => {
       open: false,
       proxy: {
         [env.VITE_APP_BASE_API]: {
-          target: 'http://127.0.0.1:8080',
+          target: env.VITE_APP_URL,
           changeOrigin: true,
           rewrite: (path: string) => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
         }
