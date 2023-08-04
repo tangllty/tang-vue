@@ -1,5 +1,8 @@
+import { useUserStoreHook } from '@/store/modules/user'
 import type { Message } from '@/types'
 import { MessageType } from '@/enums'
+
+const userStore = useUserStoreHook()
 
 // WebSocket 服务
 class WebSocketService {
@@ -17,7 +20,6 @@ class WebSocketService {
   constructor() {
     this.socket = null
     this.messages = {}
-    this.connect(import.meta.env.VITE_APP_WS_URL)
     this.startHeartbeat()
   }
 
@@ -50,12 +52,12 @@ class WebSocketService {
 
   // 接收到消息时触发
   handleMessage(event: MessageEvent): void {
-    const message = JSON.parse(event.data)
-    const messageType = message.type
+    const message = JSON.parse(event.data) as Message
+    const messageType = message.messageType
 
     if (this.messages[messageType]) {
       this.messages[messageType].forEach(callback => {
-        callback(message)
+        callback(message.data)
       })
     }
   }
@@ -88,7 +90,7 @@ class WebSocketService {
   reconnect(): void {
     if (this.socket && this.socket.readyState !== WebSocket.OPEN) {
       setTimeout((): void => {
-        this.connect(import.meta.env.VITE_APP_WS_URL)
+        this.connect(import.meta.env.VITE_APP_WS_URL + userStore.user.userId)
       }, this.reconnectDelay)
     }
   }

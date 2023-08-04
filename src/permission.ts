@@ -2,6 +2,7 @@ import router from '@/router'
 import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import { useUserStoreHook } from '@/store/modules/user'
 import { usePermissionStoreHook } from '@/store/modules/permission'
+import webSocketService from '@/utils/websocket'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -29,6 +30,10 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
 
   if (to.path === '/login') {
     return next({ path: '/' })
+  }
+
+  if (userStore.user.userId) {
+    webSocketService.connect(import.meta.env.VITE_APP_WS_URL + userStore.user.userId)
   }
 
   const gotUserInfo: boolean = userStore.roles.length > 0
