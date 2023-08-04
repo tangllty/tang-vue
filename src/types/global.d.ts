@@ -23,14 +23,4 @@ declare global {
     children: TreeSelect[]
   }
 
-  type Message = {
-    type: MessageType
-    content: string
-  }
-
-  enum MessageType {
-    NOTICE = 'notice',
-    MESSAGE = 'message',
-  }
-
 }

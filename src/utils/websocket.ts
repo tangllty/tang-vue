@@ -1,3 +1,6 @@
+import type { Message } from '@/types'
+import { MessageType } from '@/enums'
+
 // WebSocket 服务
 class WebSocketService {
 
@@ -15,6 +18,11 @@ class WebSocketService {
 
   // 连接 WebSocket 服务
   connect(url: string): void {
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      console.log('WebSocket connection already open')
+      return
+    }
+
     this.socket = new WebSocket(url)
     this.socket.onopen = this.handleOpen.bind(this)
     this.socket.onmessage = this.handleMessage.bind(this)
@@ -50,7 +58,7 @@ class WebSocketService {
   }
 
   // 发送消息
-  sendMessage(message: any): void {
+  sendMessage(message: Message): void {
     if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
       console.error('WebSocket connection not open')
       return
@@ -60,7 +68,7 @@ class WebSocketService {
   }
 
   // 订阅特定类型消息
-  subscribe(messageType: string, callback: Function): void {
+  subscribe(messageType: MessageType, callback: Function): void {
     if (!this.messages[messageType]) {
       this.messages[messageType] = []
     }
@@ -69,7 +77,7 @@ class WebSocketService {
   }
 
   // 取消订阅特定类型消息
-  unsubscribe(messageType: string, callback: Function): void {
+  unsubscribe(messageType: MessageType, callback: Function): void {
     if (this.messages[messageType]) {
       const index: number = this.messages[messageType].indexOf(callback)
       if (index !== -1) {
