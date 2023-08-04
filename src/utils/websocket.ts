@@ -71,17 +71,20 @@ class WebSocketService {
     console.error('WebSocket connection error')
   }
 
+  // 开始心跳检测
   startHeartbeat(): void {
     setInterval(() => {
       this.sendHeartbeat()
     }, this.heartbeatInterval)
   }
 
+  // 发送心跳消息
   sendHeartbeat(): void {
     const heartbeatMessage: Message = { messageType: MessageType.HEARTBEAT, data: 'heartbeat' }
     this.sendMessage(heartbeatMessage)
   }
 
+  // 重连
   reconnect(): void {
     if (this.socket && this.socket.readyState !== WebSocket.OPEN) {
       setTimeout((): void => {
