@@ -2,4 +2,5 @@
 export enum MessageType {
   NOTICE = 'notice',
   MESSAGE = 'message',
+  HEARTBEAT = 'heartbeat',
 }
