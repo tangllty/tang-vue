@@ -30,10 +30,12 @@ const app = createApp(App)
 import { getDicts } from '@/utils/dict'
 import { download } from '@/utils/download'
 import { getFullPath } from '@/utils/path'
+import webSocketService from '@/utils/websocket'
 
 app.config.globalProperties.$dict = getDicts
 app.config.globalProperties.$download = download
 app.config.globalProperties.$path = getFullPath
+app.config.globalProperties.$socket = webSocketService
 
 setupStore(app)
 setupDirective(app)

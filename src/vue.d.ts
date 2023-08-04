@@ -1,6 +1,7 @@
 import { getDicts } from '@/utils/dict'
 import { download } from '@/utils/download'
 import { getFullPath } from '@/utils/path'
+import webSocketService from '@/utils/websocket'
 
 // 在 Vue 实例上扩展自定义属性
 declare module '@vue/runtime-core' {
@@ -8,6 +9,7 @@ declare module '@vue/runtime-core' {
     $dict: getDicts
     $download: download
     $path: getFullPath
+    $socket: typeof webSocketService
   }
 }
 
