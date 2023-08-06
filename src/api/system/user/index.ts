@@ -10,6 +10,7 @@ export const listUser = (queryParams: SysUserQuery) => {
     params: queryParams
   })
 }
+
 // 查询用户列表
 export const getUser = (userId: number) => {
   return request({

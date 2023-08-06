@@ -64,3 +64,8 @@ export interface SysUserQuery extends PageQuery {
   gender: string
   status: string
 }
+
+// 模糊查询用户列表参数
+export interface SysUserFuzzyQuery extends PageQuery {
+  keyword: string
+}
