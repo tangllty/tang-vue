@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 信息检索 -->
-    <el-card style="margin-bottom: 10px;">
+    <el-card class="mb-10">
       <el-form
         ref="sysLogLoginQueryFormRef"
         :model="queryParams"
@@ -46,7 +46,7 @@
 
       <!-- 登陆日志操作 -->
       <template #header>
-        <el-row class="mb-8">
+        <el-row>
           <el-button
             type="danger"
             :icon="Delete"

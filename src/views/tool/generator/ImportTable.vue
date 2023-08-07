@@ -16,7 +16,6 @@
         <el-input
           v-model="queryParams.tableName"
           placeholder="表名称"
-          style="width: 200px"
           @keyup.enter="handleList"
         />
       </el-form-item>
@@ -24,7 +23,6 @@
         <el-input
           v-model="queryParams.tableComment"
           placeholder="表描述"
-          style="width: 200px"
           @keyup.enter="handleList"
         />
       </el-form-item>

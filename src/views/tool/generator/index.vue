@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 信息检索 -->
-    <el-card style="margin-bottom: 10px;">
+    <el-card class="mb-10">
       <el-form
         ref="genTableQueryFormRef"
         :model="queryParams"
@@ -43,7 +43,7 @@
 
       <!-- 代码生成操作 -->
       <template #header>
-        <el-row class="mb-8">
+        <el-row>
           <el-button
             type="primary"
             :icon="Download"

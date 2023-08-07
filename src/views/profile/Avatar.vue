@@ -59,7 +59,7 @@
           size="small"
           circle
           @click="increaseZoom"
-          style="margin-left: 10px;"
+          class="ml-10"
         />
         <el-button
           :icon="Minus"

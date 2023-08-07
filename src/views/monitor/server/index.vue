@@ -27,7 +27,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :span="24" style="margin-top: 15px;">
+    <el-col :span="24" class="mt-15">
       <el-card>
         <template #header>
           <div class="card-header">
@@ -54,7 +54,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :span="24" style="margin-top: 15px;">
+    <el-col :span="24" class="mt-15">
       <el-card>
         <template #header>
           <div class="card-header">
@@ -81,7 +81,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :span="24" style="margin-top: 15px;">
+    <el-col :span="24" class="mt-15">
       <el-card>
         <template #header>
           <div class="card-header">
@@ -108,7 +108,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :span="24" style="margin-top: 15px;">
+    <el-col :span="24" class="mt-15">
       <el-card>
         <template #header>
           <div class="card-header">
@@ -141,14 +141,14 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :span="24" style="margin-top: 15px;">
+    <el-col :span="24" class="mt-15">
       <el-card>
         <template #header>
           <div class="card-header">
             <span>分区信息</span>
           </div>
         </template>
-        <el-table :data="fileStores" style="width: 100%">
+        <el-table :data="fileStores" class="file-stores">
           <el-table-column prop="name" label="分区名" />
           <el-table-column prop="type" label="文件系统" />
           <el-table-column prop="mountPoint" label="挂载点" />
@@ -221,5 +221,9 @@ table {
   td, th {
     padding: 0;
   }
+}
+
+.file-stores {
+  width: 100%;
 }
 </style>

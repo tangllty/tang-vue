@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 信息检索 -->
-    <el-card style="margin-bottom: 10px;">
+    <el-card class="mb-10">
       <el-form ref="deptQueryFormRef" :model="queryParams" inline>
         <el-form-item label="部门名称" prop="deptName">
           <el-input
@@ -44,7 +44,7 @@
 
       <!-- 部门操作 -->
       <template #header>
-        <el-row class="mb-8">
+        <el-row>
           <el-button
             type="primary"
             :icon="Plus"
@@ -70,7 +70,7 @@
         <el-table-column
           prop="sort"
           label="显示顺序"
-          width="80"
+          width="100"
           align="center"
         />
         <el-table-column

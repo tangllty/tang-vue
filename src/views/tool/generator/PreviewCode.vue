@@ -19,7 +19,7 @@
           link
           :icon="DocumentCopy"
           size="small"
-          style="float: right;"
+          class="fr"
           @click="handleCopy(value)"
         >复制</el-button>
         <pre>{{ value }}</pre>

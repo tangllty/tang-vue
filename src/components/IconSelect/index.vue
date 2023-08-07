@@ -1,9 +1,19 @@
 <template>
   <div class="icon-select">
-    <el-input v-model="iconName" clearable placeholder="请输入图标名称" @clear="filterIcons" @input="filterIcons" />
+    <el-input
+      v-model="iconName"
+      clearable
+      placeholder="请输入图标名称"
+      @clear="filterIcons"
+      @input="filterIcons"
+    />
     <div class="icon-select__list">
-      <div v-for="(item, index) in iconList" :key="index" @click="selectedIcon(item)">
-        <svg-icon color="#999" :name="item" style="height: 30px; width: 16px; margin-right: 5px" />
+      <div
+        v-for="(item, index) in iconList"
+        :key="index"
+        @click="selectedIcon(item)"
+      >
+        <svg-icon color="#999" :name="item" class="mr-5" />
         <span>{{ item }}</span>
       </div>
     </div>
@@ -66,6 +76,10 @@ defineExpose({
       cursor: pointer;
       width: 25%;
       float: left;
+
+      .svg-icon {
+        height: 25px !important;
+      }
     }
 
     span {

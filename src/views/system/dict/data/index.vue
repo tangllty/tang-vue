@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 信息检索 -->
-    <el-card style="margin-bottom: 10px;">
+    <el-card class="mb-10">
       <el-form ref="dictDataQueryFormRef" :model="queryParams" :inline="true">
         <el-form-item label="字典标签" prop="dataLabel">
           <el-input
@@ -50,7 +50,7 @@
 
       <!-- 字典数据操作 -->
       <template #header>
-        <el-row class="mb-8">
+        <el-row>
           <el-button
             type="primary"
             :icon="Plus"

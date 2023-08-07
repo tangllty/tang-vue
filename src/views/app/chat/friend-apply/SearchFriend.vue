@@ -75,11 +75,9 @@
 
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
-import { FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { Edit } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listAppFriendApply, listUserFuzzy, getAppFriendApply, addAppFriendApply, editAppFriendApply, deleteAppFriendApply, deleteAppFriendApplys } from '@/api/app/chat/friend-apply'
-import { AppFriendApply, AppFriendApplyForm } from '@/api/app/chat/friend-apply/types'
+import { listUserFuzzy } from '@/api/app/chat/friend-apply'
 import { SysUser, SysUserFuzzyQuery } from '@/api/system/user/types'
 import SendRequest from './SendRequest.vue'
 
@@ -104,8 +102,6 @@ const state = reactive({
     type: '',
     visible: false
   } as Dialog,
-  // 用户好友申请表单
-  appFriendApplyForm: {} as AppFriendApplyForm,
 })
 
 const {
@@ -114,7 +110,6 @@ const {
   searchUserList,
   queryParams,
   searchUserDialog,
-  appFriendApplyForm
 } = toRefs(state)
 
 const sendRequestRef = ref<InstanceType<typeof SendRequest>>()

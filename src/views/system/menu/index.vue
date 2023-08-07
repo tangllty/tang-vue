@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 信息检索 -->
-    <el-card style="margin-bottom: 10px;">
+    <el-card class="mb-10">
       <el-form ref="menuQueryFormRef" :model="queryParams" inline>
         <el-form-item label="菜单名称" prop="menuName">
           <el-input
@@ -44,7 +44,7 @@
 
       <!-- 菜单操作 -->
       <template #header>
-        <el-row class="mb-8">
+        <el-row>
           <el-button
             type="primary"
             :icon="Plus"

@@ -1,14 +1,14 @@
 <template>
-  <el-row class="tac">
+  <el-row>
     <el-col :span="4">
-      <el-card style="padding: 0;">
+      <el-card>
         <div>
           <Avatar />
           <el-text
             size="large"
             tag="b"
             truncated
-            style="margin-left: 10px; line-height: 50px;"
+            class="ml-10"
           >{{ userStore.user.nickname }}</el-text>
         </div>
         <el-menu

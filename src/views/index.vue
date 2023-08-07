@@ -5,14 +5,14 @@
         <el-card>
           <el-row :gutter="20">
             <el-col :span="3">
-              <el-image :src="userAvatar" style="width: 40px; height: 40px; border-radius: 5px; border: #304156 solid 1px;" />
+              <el-image :src="userAvatar" class="user-avatar" />
             </el-col>
             <el-col :span="21">
-              <span style="line-height: 42px;">
-                <span style="font-size: 22px; margin-right: 10px;">
+              <span class="user-info">
+                <span class="mr-10">
                   糖猫猫
                 </span>
-                <span style="margin-right: 10px">
+                <span class="mr-10">
                   系统管理员
                 </span>
                 <span>
@@ -31,7 +31,7 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row style="margin-top: 15px;">
+    <el-row class="mt-15">
       <el-col :span="24">
         <el-card>
           <template #header>
@@ -39,7 +39,7 @@
               <span>用户访问量</span>
             </div>
           </template>
-          <div id="user" style="height: 450px;" />
+          <div id="user" class="user" />
         </el-card>
       </el-col>
     </el-row>
@@ -76,4 +76,22 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border: #304156 solid 1px;
+}
+
+.user-info {
+  line-height: 42px;
+
+  &:first-child {
+    font-size: 22px;
+  }
+}
+
+.user {
+  height: 450px;
+}
 </style>

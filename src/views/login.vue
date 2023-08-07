@@ -96,9 +96,9 @@
 
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
-import { useUserStore } from '@/store/modules/user'
 import { ElButton, ElForm, ElFormItem, ElInput, ElTabPane, ElTabs, FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
+import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { LoginType } from '@/enums'
 import { LoginForm } from '@/api/auth/types'

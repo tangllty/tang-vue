@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 信息检索 -->
-    <el-card style="margin-bottom: 10px;">
+    <el-card class="mb-10">
       <el-form ref="onlineUserQueryFormRef" :model="queryParams" :inline="true">
         <el-form-item label="用户名称" prop="username">
           <el-input
@@ -139,8 +139,8 @@
     >
       <div>
         <el-row :gutter="20">
-          <el-col :span="13">会话编号: {{ onlineUserInfo.token }}</el-col>
-          <el-col :span="11">部门名称: {{ onlineUserInfo.deptName }}</el-col>
+          <el-col :span="12">会话编号: {{ onlineUserInfo.token }}</el-col>
+          <el-col :span="12">部门名称: {{ onlineUserInfo.deptName }}</el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">用户账号: {{ onlineUserInfo.username }}</el-col>

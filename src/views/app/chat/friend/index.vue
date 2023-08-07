@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 信息检索 -->
-    <el-card style="margin-bottom: 10px;">
+    <el-card class="mb-10">
       <el-form
         ref="appFriendQueryFormRef"
         :model="queryParams"
@@ -51,7 +51,7 @@
 
       <!-- 用户好友操作 -->
       <template #header>
-        <el-row class="mb-8">
+        <el-row>
           <el-button
             type="success"
             :icon="Edit"

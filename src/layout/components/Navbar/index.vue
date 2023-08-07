@@ -10,7 +10,7 @@
         <el-icon v-show="appStore.sidebar"><Fold /></el-icon>
       </el-radio-group>
 
-      <Breadcrumb style="margin-left: 10px;" />
+      <Breadcrumb class="ml-10" />
     </div>
 
     <div class="right-div">
@@ -20,7 +20,7 @@
         inline-prompt
         :active-icon="Moon"
         :inactive-icon="Sunny"
-        style="margin-right: 10px;"
+        class="mr-10"
       />
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 信息检索 -->
-    <el-card style="margin-bottom: 10px;">
+    <el-card class="mb-10">
       <el-form ref="roleQueryFormRef" :model="queryParams" inline>
         <el-form-item label="角色名称" prop="roleName">
           <el-input
@@ -44,7 +44,7 @@
 
       <!-- 角色操作 -->
       <template #header>
-        <el-row class="mb-8">
+        <el-row>
           <el-button
             type="primary"
             :icon="Plus"

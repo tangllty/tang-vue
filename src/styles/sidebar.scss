@@ -1,25 +1,38 @@
 @import './variables.scss';
 
-#app {
-  .app-wrapper {
+.expandSidebar {
+  .sidebar-container {
+    width: $sidebarExpandWidth;
+    transition: width 280ms;
 
-    .sidebar-container {
-      overflow-x: hidden;
-
-      .scrollbar-wrapper {
-        overflow-x: hidden !important;
-      }
-
-      .sidebar {
-
-      }
+    .logo {
+      width: $sidebarExpandWidth;
+      transition: width 280ms;
+    }
+    .sidebar {
+      transition: width 280ms;
     }
   }
 }
 
-.icon {
-  height: 1em;
-  width: 24px;
-  text-align: center;
-  font-size: 18px;
+.foldSidebar {
+  .sidebar-container {
+    width: $sidebarFoldWidth;
+    transition: width 280ms;
+
+    .logo {
+      width: $sidebarFoldWidth;
+      transition: width 280ms;
+    }
+
+    .sidebar {
+      .title-span {
+        display: none;
+      }
+
+      i.el-icon.el-sub-menu__icon-arrow {
+        display: none;
+      }
+    }
+  }
 }

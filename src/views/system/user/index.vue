@@ -10,7 +10,7 @@
             placeholder="部门名称"
             clearable
             :prefix-icon="Search"
-            style="margin-bottom: 20px"
+            class="mb-20"
           />
           <el-tree
             ref="deptTreeRef"
@@ -28,7 +28,7 @@
       <el-col :span="20">
 
         <!-- 信息检索 -->
-        <el-card style="margin-bottom: 10px;">
+        <el-card class="mb-10">
           <el-form ref="userQueryFormRef" :model="queryParams" inline>
             <el-form-item label="用户名" prop="username">
               <el-input
@@ -91,7 +91,7 @@
         <!-- 用户操作 -->
         <el-card>
           <template #header>
-            <el-row class="mb-8">
+            <el-row>
               <el-button
                 type="primary"
                 :icon="Plus"
@@ -181,8 +181,8 @@
             >
               <template #default="scope">
                 <el-image
-                  style="width: 50px; height: 50px"
                   :src="proxy.$path(scope.row.avatar)"
+                  class="user-avatar"
                   fit="cover"
                 />
               </template>
@@ -726,4 +726,8 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+.user-avatar {
+  width: 50px;
+  height: 50px
+}
 </style>

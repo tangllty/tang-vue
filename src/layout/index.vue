@@ -52,27 +52,48 @@ const appWrapper = computed(() => ({
 </script>
 
 <style lang="scss" scoped>
-.logo {
-  padding-left: 0;
+@import '@/styles/variables.scss';
 
-  .logo-link {
-    display: flex;
-    height: 50px;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-weight: 600;
+.app-wrapper {
+  height: 100%;
+
+  .sidebar-container {
+    box-shadow: 2px 0 6px 2px rgba(0, 0, 0, .18);
+    z-index: 1001;
+    overflow-x: hidden;
+
+    .logo {
+      height: $headerHeight;
+      box-sizing: content-box;
+      padding-left: 0;
+
+      .logo-link {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        font-weight: 600;
+      }
+
+      .logo-image {
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgb(194, 194, 194);
+      }
+
+      .logo-title {
+        margin-left: .75rem;
+        color: var(--el-menu-text-color);
+      }
+    }
   }
 
-  .logo-image {
-    width: 30px;
-    height: 30px;
-    border: 1px solid rgb(194, 194, 194);
-  }
-
-  .logo-title {
-    margin-left: .75rem;
-    color: var(--el-menu-text-color);
+  .app-container {
+    .header-container {
+      height: $headerHeight;
+      box-shadow: 0 2px 6px 2px rgba(0, 0, 0, .08);
+    }
   }
 }
 

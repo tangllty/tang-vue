@@ -302,7 +302,7 @@
         </el-table>
       </el-tab-pane>
     </el-tabs>
-    <div style="text-align: center; margin-top: 10px;">
+    <template #footer>
       <el-button
         type="primary"
         @click="submitForm(editTableRuleFormRef)"
@@ -310,7 +310,7 @@
       <el-button
         @click="closeEditTableDialog"
       >取 消</el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card style="margin-left: 20px;">
+    <el-card class="ml-20">
       <template #header>
         个人资料
       </template>
@@ -93,7 +93,7 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <el-card style="margin-left: 20px; margin-top: 15px;">
+    <el-card class="ml-20 mt-15">
       <template #header>
         修改密码
       </template>

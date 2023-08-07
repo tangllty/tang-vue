@@ -102,13 +102,11 @@
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listAppFriendApply, listUserFuzzy, getAppFriendApply, addAppFriendApply, editAppFriendApply, deleteAppFriendApply, deleteAppFriendApplys } from '@/api/app/chat/friend-apply'
-import { AppFriendApply, AppFriendApplyForm } from '@/api/app/chat/friend-apply/types'
+import { addAppFriendApply, editAppFriendApply } from '@/api/app/chat/friend-apply'
+import { AppFriendApplyForm } from '@/api/app/chat/friend-apply/types'
 import { getUser } from '@/api/system/user'
-import { SysUser, SysUserFuzzyQuery } from '@/api/system/user/types'
 
 const userStore = useUserStore()
 
@@ -187,25 +185,6 @@ const handleRequest = async (row: any) => {
     type: 'add',
     visible: true
   }
-}
-
-// 发送用户好友申请
-const handleSendRequest = (row: any) => {
-  console.log(row);
-
-  // let applyId = state.applyId
-  // if (row.applyId) {
-  //   applyId = row.applyId
-  // }
-  // getAppFriendApply(applyId).then((res: any) => {
-  //   state.appFriendApplyForm = res.data
-  // })
-
-  // state.appFriendApplyDialog = {
-  //   title: '发送用户好友申请',
-  //   type: 'send',
-  //   visible: true
-  // }
 }
 
 // 关闭对话框
