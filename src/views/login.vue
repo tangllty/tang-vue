@@ -3,7 +3,7 @@
       <el-card class="login">
         <template #header>
           <div class="login-header">
-            <span>权限管理系统</span>
+            <span>{{ settings.title }}</span>
           </div>
         </template>
         <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -102,6 +102,7 @@ import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { LoginType } from '@/enums'
 import { LoginForm } from '@/api/auth/types'
+import settings from '@/settings'
 
 const proxy = getProxy()
 

@@ -16,7 +16,7 @@
             v-else
           >
             <el-image :src="logo" class="logo-image" />
-            <span v-show="!title" class="logo-title">权限管理系统</span>
+            <span v-show="!title" class="logo-title">{{ settings.title }}</span>
           </router-link>
         </transition>
       </el-header>
@@ -40,6 +40,7 @@ import Sidebar from '@/layout/components/Sidebar/index.vue'
 import Navbar from '@/layout/components/Navbar/index.vue'
 import AppMain from '@/layout/components/AppMain/index.vue'
 import logo from '@/assets/logo.png'
+import settings from '@/settings'
 
 const appStore = useAppStore()
 
