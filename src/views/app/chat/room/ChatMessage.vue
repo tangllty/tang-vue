@@ -53,7 +53,7 @@ const handleList = async (chatListId: number) => {
   state.chatMessageList = res.rows
 }
 
-const handleSendedMessage = (message: AppChatMessage) => {
+const handleSentMessage = (message: AppChatMessage) => {
   state.chatMessageList.push(message)
   scrollToBottom()
 }
@@ -81,7 +81,7 @@ onMounted(() => {
 
 defineExpose({
   handleList,
-  handleSendedMessage
+  handleSentMessage
 })
 </script>
 
