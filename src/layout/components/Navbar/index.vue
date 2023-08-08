@@ -32,9 +32,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>
-              <el-link :underline="false">
-                <router-link to="/profile">个人中心</router-link>
-              </el-link>
+              <el-link :underline="false" @click="proxy.$router.push({ path: '/profile' })">个人中心</el-link>
             </el-dropdown-item>
             <el-dropdown-item>
               <el-link href="https://github.com/tangllty/tang-vue" target="_blank">GitHub</el-link>
