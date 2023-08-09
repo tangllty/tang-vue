@@ -22,7 +22,9 @@ export const localStorage: LocalStorage = {
   // 获取 localStorage
   get: (key: string): any => {
     const value: any = windowLocalStorage.getItem(key)
-    return value ? JSON.parse(value) : null
+    if (!value) return null
+    if (value.indexOf('{') === -1) return value
+    return JSON.parse(value)
   },
   // 设置 localStorage
   set: (key: string, value: any): void => {
@@ -43,7 +45,9 @@ export const sessionStorage: SessionStorage = {
   // 获取 sessionStorage
   get: (key: string): any => {
     const value: any = windowSessionStorage.getItem(key)
-    return value ? JSON.parse(value) : null
+    if (!value) return null
+    if (value.indexOf('{') === -1) return value
+    return JSON.parse(value)
   },
   // 设置 sessionStorage
   set: (key: string, value: any): void => {
