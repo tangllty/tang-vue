@@ -28,7 +28,10 @@ export const localStorage: LocalStorage = {
   },
   // 设置 localStorage
   set: (key: string, value: any): void => {
-    windowLocalStorage.setItem(key, JSON.stringify(value))
+    if (typeof value === 'object') {
+      value = JSON.stringify(value)
+    }
+    windowLocalStorage.setItem(key, value)
   },
   // 移除 localStorage
   remove: (key: string): void => {
@@ -51,7 +54,10 @@ export const sessionStorage: SessionStorage = {
   },
   // 设置 sessionStorage
   set: (key: string, value: any): void => {
-    windowSessionStorage.setItem(key, JSON.stringify(value))
+    if (typeof value === 'object') {
+      value = JSON.stringify(value)
+    }
+    windowSessionStorage.setItem(key, value)
   },
   // 移除 sessionStorage
   remove: (key: string): void => {
