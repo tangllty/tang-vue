@@ -123,7 +123,7 @@ const {
 } = toRefs(state)
 
 const uploadRef = ref<UploadInstance>()
-const cropperRef = ref<any>()
+const cropperRef = ref<InstanceType<typeof Cropper>>()
 
 // 打开用户头像上传对话框
 const openAvatarDialog = () => {
@@ -174,12 +174,12 @@ const handleCropperChange = (cropperResult: CropperResult) => {
 
 // 增加缩放比例
 const increaseZoom = () => {
-  cropperRef.value.zoom += 0.1
+  cropperRef.value?.zoom( 2)
 }
 
 // 减小缩放比例
 const decreaseZoom = () => {
-  cropperRef.value.zoom -= 0.1
+  cropperRef.value?.zoom(-2)
 }
 
 // 提交头像上传
