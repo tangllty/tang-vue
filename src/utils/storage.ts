@@ -22,16 +22,11 @@ export const localStorage: LocalStorage = {
   // 获取 localStorage
   get: (key: string): any => {
     const value: any = windowLocalStorage.getItem(key)
-    if (!value) return null
-    if (value.indexOf('{') === -1) return value
     return JSON.parse(value)
   },
   // 设置 localStorage
   set: (key: string, value: any): void => {
-    if (typeof value === 'object') {
-      value = JSON.stringify(value)
-    }
-    windowLocalStorage.setItem(key, value)
+    windowLocalStorage.setItem(key, JSON.stringify(value))
   },
   // 移除 localStorage
   remove: (key: string): void => {
@@ -48,16 +43,11 @@ export const sessionStorage: SessionStorage = {
   // 获取 sessionStorage
   get: (key: string): any => {
     const value: any = windowSessionStorage.getItem(key)
-    if (!value) return null
-    if (value.indexOf('{') === -1) return value
     return JSON.parse(value)
   },
   // 设置 sessionStorage
   set: (key: string, value: any): void => {
-    if (typeof value === 'object') {
-      value = JSON.stringify(value)
-    }
-    windowSessionStorage.setItem(key, value)
+    windowSessionStorage.setItem(key, JSON.stringify(value))
   },
   // 移除 sessionStorage
   remove: (key: string): void => {
