@@ -28,11 +28,11 @@ const proxy: any = getProxy()
 const settingStore = useSettingStore()
 
 const state = reactive({
-  drawer: true,
+  drawer: false
 })
 
 const {
-  drawer,
+  drawer
 } = toRefs(state)
 
 // 打开抽屉
