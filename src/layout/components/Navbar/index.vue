@@ -24,7 +24,7 @@
       />
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
-          <el-image :src="userAvatar" class="user-avatar" />
+          <el-image :src="userStore.user.avatar" class="user-avatar" />
           <el-icon class="el-icon--right">
             <ArrowDown />
           </el-icon>
@@ -43,34 +43,45 @@
             <el-dropdown-item>
               <el-link href="https://tangllty.eu.org" target="_blank">文档</el-link>
             </el-dropdown-item>
+            <el-dropdown-item>
+              <el-link :underline="false" @click="handleSettings">系统设置</el-link>
+            </el-dropdown-item>
             <el-dropdown-item divided @click="logout">退出登陆</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </div>
+
+    <Settings ref="settingsRef" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import router from '@/router'
+import { ref } from 'vue'
 import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
+import { useDark, useToggle } from '@vueuse/core'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
-import { useDark, useToggle } from '@vueuse/core'
 import { getProxy } from '@/utils/getCurrentInstance'
 import Breadcrumb from './Breadcrumb/index.vue'
-
-import userAvatar from '@/assets/logo.png'
+import Settings from './Settings/index.vue'
 
 const proxy: any = getProxy()
 
 const appStore = useAppStore()
 const userStore = useUserStore()
 const isDark = useDark()
+
+const settingsRef = ref<InstanceType<typeof Settings>>()
+
 const toggleDark = () => useToggle(isDark)
 
 const toggleSidebar = () => {
   appStore.sidebar = !appStore.sidebar
+}
+
+const handleSettings = () => {
+  settingsRef.value?.handleOpen()
 }
 
 const logout = async () => {
@@ -79,7 +90,7 @@ const logout = async () => {
       type: 'warning'
     })
     await userStore.logout()
-    router.push({ path: '/login' })
+    await proxy.$router.push({ path: '/login' })
   } catch (error) {
     console.log(error)
   }
