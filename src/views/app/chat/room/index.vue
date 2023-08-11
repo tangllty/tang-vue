@@ -76,7 +76,7 @@ const handleItemClick = (item: AppChatList): void => {
 }
 
 const handleSendMessage = (sentMessage: AppChatMessage): void => {
-  chatMessageRef.value?.handleSendedMessage(sentMessage)
+  chatMessageRef.value?.handleSentMessage(sentMessage)
 }
 
 const toggleDrawer = (): void => {
