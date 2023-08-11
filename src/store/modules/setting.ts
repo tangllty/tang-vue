@@ -1,16 +1,23 @@
 import { defineStore } from 'pinia'
 import { Ref, ref } from 'vue'
-import { useCssVar } from '@vueuse/core'
+import { useCssVar, useDark } from '@vueuse/core'
 import { store } from '@/store'
-import { saveTheme, setTheme } from '@/utils/theme'
+import { getTheme, saveTheme, setTheme } from '@/utils/theme'
 
 export const useSettingStore = defineStore('setting', () => {
-  const theme: Ref<string> = ref(localStorage.getItem('theme') ?? useCssVar('--el-color-primary', document.documentElement))
-  setTheme(theme.value)
-  saveTheme(theme.value)
+  const isDark: Ref<boolean> = ref(useDark().value ?? false)
+  const theme: Ref<string> = ref(getTheme() ?? useCssVar('--el-color-primary', document.documentElement))
+
+  // 刷新主题
+  const flashTheme = (): void => {
+    setTheme(theme.value)
+    saveTheme(theme.value)
+  }
 
   return {
-    theme
+    isDark,
+    theme,
+    flashTheme
   }
 })
 

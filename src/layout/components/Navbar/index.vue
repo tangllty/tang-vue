@@ -57,10 +57,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import Breadcrumb from './Breadcrumb/index.vue'
@@ -69,12 +70,18 @@ import Settings from './Settings/index.vue'
 const proxy: any = getProxy()
 
 const appStore = useAppStore()
+const settingStore = useSettingStore()
 const userStore = useUserStore()
 const isDark = useDark()
 
 const settingsRef = ref<InstanceType<typeof Settings>>()
 
 const toggleDark = () => useToggle(isDark)
+
+watch(isDark, (value) => {
+  settingStore.isDark = value
+  settingStore.flashTheme()
+})
 
 const toggleSidebar = () => {
   appStore.sidebar = !appStore.sidebar
