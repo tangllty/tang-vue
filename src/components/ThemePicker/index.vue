@@ -10,15 +10,13 @@
 <script lang="ts" setup>
 import { reactive, toRefs } from 'vue'
 import { useSettingStore } from '@/store/modules/setting'
-import { getProxy } from '@/utils/getCurrentInstance'
 import { removeTheme, saveTheme, setTheme } from '@/utils/theme'
-
-const proxy: any = getProxy()
 
 const settingStore = useSettingStore()
 
 const state = reactive({
   theme: settingStore.theme,
+  // https://flatuicolors.com/
   predefineColors: [
     '#409eff',
     '#00ced1',
