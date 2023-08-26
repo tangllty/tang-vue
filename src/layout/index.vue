@@ -1,25 +1,7 @@
 <template>
   <el-container :class="appWrapper" class="app-wrapper">
     <el-aside class="sidebar-container">
-      <el-header class="logo">
-        <transition>
-          <router-link
-            class="logo-link"
-            to="/index"
-            v-if="title"
-          >
-            <el-image :src="logo" class="logo-image" />
-          </router-link>
-          <router-link
-            class="logo-link"
-            to="/index"
-            v-else
-          >
-            <el-image :src="logo" class="logo-image" />
-            <span v-show="!title" class="logo-title">{{ settings.title }}</span>
-          </router-link>
-        </transition>
-      </el-header>
+      <SidebarHeader />
       <Sidebar class="sidebar" />
     </el-aside>
     <el-container class="app-container">
@@ -36,15 +18,12 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useAppStore } from '@/store/modules/app'
+import SidebarHeader from '@/layout/components/SidebarHeader/index.vue'
 import Sidebar from '@/layout/components/Sidebar/index.vue'
 import Navbar from '@/layout/components/Navbar/index.vue'
 import AppMain from '@/layout/components/AppMain/index.vue'
-import logo from '@/assets/logo.png'
-import settings from '@/settings'
 
 const appStore = useAppStore()
-
-const title = computed(() => appStore.sidebar)
 
 const appWrapper = computed(() => ({
   expandSidebar: !appStore.sidebar,
@@ -62,32 +41,6 @@ const appWrapper = computed(() => ({
     box-shadow: 2px 0 6px 2px rgba(0, 0, 0, .18);
     z-index: 1001;
     overflow-x: hidden;
-
-    .logo {
-      height: $headerHeight;
-      box-sizing: content-box;
-      padding-left: 0;
-
-      .logo-link {
-        display: flex;
-        height: 50px;
-        align-items: center;
-        justify-content: center;
-        color: black;
-        font-weight: 600;
-      }
-
-      .logo-image {
-        width: 30px;
-        height: 30px;
-        border: 1px solid rgb(194, 194, 194);
-      }
-
-      .logo-title {
-        margin-left: .75rem;
-        color: var(--el-menu-text-color);
-      }
-    }
   }
 
   .app-container {
@@ -96,14 +49,5 @@ const appWrapper = computed(() => ({
       box-shadow: 0 2px 6px 2px rgba(0, 0, 0, .08);
     }
   }
-}
-
-.v-enter-active {
-  transition: opacity 1200ms ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
 }
 </style>
