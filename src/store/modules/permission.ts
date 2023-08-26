@@ -62,7 +62,7 @@ export const usePermissionStore = defineStore('permission', () => {
       const asyncRoutes = res.data
       const accessedRoutes: RouteRecordRaw[] = filterAsyncRoutes(asyncRoutes)
       const dynamicRoutes: RouteRecordRaw[] = filterDynamicRoutes(allDynamicRoutes)
-      routes.value = [...constantRoutes, ...accessedRoutes]
+      routes.value = [...constantRoutes, ...accessedRoutes, ...dynamicRoutes]
       return [...accessedRoutes, ...dynamicRoutes]
     } catch (error) {
       console.error('Error during get routes:', error)

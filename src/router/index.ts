@@ -52,7 +52,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
   {
     path: '/system/dict',
     component: () => import('@/layout/index.vue'),
-    meta: { permission: 'system:dict:list' },
+    meta: { permission: 'system:dict:list', hidden: true },
     children: [
       {
         path: 'data/:typeId(\\d+)',
