@@ -92,6 +92,8 @@
           prop="os"
           label="操作系统"
           align="center"
+          width="120"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="browser"
