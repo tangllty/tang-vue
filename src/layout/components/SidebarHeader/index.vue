@@ -1,5 +1,5 @@
 <template>
-  <el-header class="logo">
+  <el-header v-if="sidebarHeader" class="logo">
     <transition>
       <router-link
         class="logo-link"
@@ -13,7 +13,11 @@
         to="/index"
         v-else
       >
-        <el-image :src="logo" class="logo-image" />
+        <el-image
+          v-if="sidebarHeaderLogo"
+          :src="logo"
+          class="logo-image"
+        />
         <span v-show="!title" class="logo-title">{{ settings.title }}</span>
       </router-link>
     </transition>
@@ -28,6 +32,8 @@ import settings from '@/settings'
 
 const appStore = useAppStore()
 
+const sidebarHeader = computed(() => appStore.sidebarHeader)
+const sidebarHeaderLogo = computed(() => appStore.sidebarHeaderLogo)
 const title = computed(() => appStore.sidebar)
 </script>
 
@@ -36,8 +42,7 @@ const title = computed(() => appStore.sidebar)
 
 .logo {
   height: $headerHeight;
-  box-sizing: content-box;
-  padding-left: 0;
+  padding: 0 1rem;
 
   .logo-link {
     display: flex;

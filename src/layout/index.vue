@@ -1,8 +1,15 @@
 <template>
   <el-container :class="appWrapper" class="app-wrapper">
     <el-aside class="sidebar-container">
-      <SidebarHeader />
-      <Sidebar class="sidebar" />
+      <SidebarHeader v-if="fixedHeader" />
+      <el-scrollbar v-if="fixedHeader">
+        <Sidebar class="sidebar" />
+      </el-scrollbar>
+
+      <el-scrollbar v-else>
+        <SidebarHeader />
+        <Sidebar class="sidebar" />
+      </el-scrollbar>
     </el-aside>
     <el-container class="app-container">
       <el-header class="header-container">
@@ -29,6 +36,8 @@ const appWrapper = computed(() => ({
   expandSidebar: !appStore.sidebar,
   foldSidebar: appStore.sidebar
 }))
+
+const fixedHeader = computed(() => appStore.fixedHeader)
 </script>
 
 <style lang="scss" scoped>
@@ -40,7 +49,7 @@ const appWrapper = computed(() => ({
   .sidebar-container {
     box-shadow: 2px 0 6px 2px rgba(0, 0, 0, .18);
     z-index: 1001;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   .app-container {
