@@ -5,21 +5,9 @@
       <!-- 部门树 -->
       <el-col :span="4">
         <el-card>
-          <el-input
-            v-model="deptName"
-            placeholder="部门名称"
-            clearable
-            :prefix-icon="Search"
-            class="mb-20"
-          />
-          <el-tree
-            ref="deptTreeRef"
-            :data="deptTree"
-            :props="{ children: 'children', label: 'label' }"
-            :expand-on-click-node="false"
-            default-expand-all
-            :filter-node-method="filterNode"
-            @node-click="handleDeptNodeClick"
+          <DeptTree
+            v-model:deptId="queryParams.deptId"
+            @nodeClick="handleList"
           />
         </el-card>
       </el-col>
@@ -359,87 +347,20 @@
       </template>
     </el-dialog>
 
-    <!-- 导入用户信息对话框 -->
-    <el-dialog
-      :title="importDialog.title"
-      v-model="importDialog.visible"
-      @close="closeImportDialog"
-    >
-      <el-form
-        ref="importRuleFormRef"
-        :model="importForm"
-        :rules="importRules"
-        label-width="120px"
-        status-icon
-      >
-        <el-form-item label="上传文件" props="file">
-          <el-upload
-            action=""
-            :auto-upload="false"
-            :limit="1"
-            :on-exceed="() => proxy.$message.warning('只能上传一个文件')"
-            :on-change="(file: UploadFile) => importFile = file"
-            :on-remove="() => importFile = undefined"
-            v-model="importForm.file"
-            :file-list="importFile ? [importFile] : []"
-            drag
-          >
-            <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-            <div class="el-upload__text">
-              Drop file here or <em>click to upload</em>
-            </div>
-            <template #tip>
-              <div class="el-upload__tip">
-                xlsx files with a size less than 500kb
-              </div>
-            </template>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="部门" prop="deptId">
-          <el-tree-select
-            v-model="importForm.deptId"
-            :data="deptTree"
-            check-strictly
-            filterable
-            placeholder="请输入部门"
-          />
-        </el-form-item>
-        <el-form-item label="角色" prop="roleIds">
-          <el-select v-model="importForm.roleIds" multiple placeholder="请选择角色">
-            <el-option
-              v-for="role in roleSelect"
-              :key="role.value"
-              :label="role.label"
-              :value="role.value"
-            />
-          </el-select>
-        </el-form-item>
-      </el-form>
-
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button
-            type="primary"
-            @click="submitForm(importRuleFormRef)"
-          >确 定</el-button>
-          <el-button
-            @click="closeImportDialog"
-          >取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <ImportUser ref="importUserRef" @submitted="handleList" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { ElButton, ElCard, ElCol, ElDialog, ElForm, ElFormItem, ElInput, ElRow, ElTable, ElTableColumn, ElTree, FormInstance, FormRules, UploadFile } from 'element-plus'
-import { Plus, Edit, Delete, Download, Upload, Search, Refresh, UploadFilled } from '@element-plus/icons-vue'
-import { TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'
+import { onMounted, reactive, ref, toRefs } from 'vue'
+import { FormInstance, FormRules } from 'element-plus'
+import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listUser, addUser, getUser, getRoleSelect as selectRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, importUser, exportUser } from '@/api/system/user'
+import { listUser, addUser, getUser, getRoleSelect as selectRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, exportUser } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
-import { SysUser, SysUserForm, ImportForm, SysUserQuery } from '@/api/system/user/types'
+import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
+import DeptTree from './DeptTree.vue'
+import ImportUser from './ImportUser.vue'
 
 const proxy = getProxy()
 const { sys_user_gender, sys_status } = proxy.$dict('sys_user_gender', 'sys_status')
@@ -451,8 +372,6 @@ const state = reactive({
   userId: 0 as number,
   // 选中数据数组
   userIds: [] as number[],
-  // 部门名称
-  deptName: undefined,
   // 总条数
   total: 0,
   // 用户表格数据
@@ -469,34 +388,23 @@ const state = reactive({
     type: '',
     visible: false
   } as Dialog,
-  // 导入对话框
-  importDialog: {
-    title: '',
-    type: '',
-    visible: false
-  } as Dialog,
   // 表单
-  userForm: {} as SysUserForm,
-  // 导入表单
-  importForm: {} as ImportForm
+  userForm: {} as SysUserForm
 })
 
 const {
   loading,
   userIds,
-  deptName,
   total,
   userList,
   deptTree,
   roleSelect,
   queryParams,
   userDialog,
-  importDialog,
-  userForm,
-  importForm
+  userForm
 } = toRefs(state)
 
-const deptTreeRef = ref<InstanceType<typeof ElTree>>()
+const importUserRef = ref<InstanceType<typeof ImportUser>>()
 const userRuleFormRef = ref<FormInstance>()
 const userQueryFormRef = ref<FormInstance>()
 const userRules = reactive<FormRules>({
@@ -521,23 +429,6 @@ const userRules = reactive<FormRules>({
   deptId: [{ required: true, message: '部门不能为空', trigger: 'blur' }],
   roleIds: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
 })
-const importFile = ref<UploadFile>()
-const importRuleFormRef = ref<FormInstance>()
-const importRules = reactive<FormRules>({
-  file: [{ required: true, message: '文件不能为空', trigger: 'blur' }],
-  deptId: [{ required: true, message: '部门不能为空', trigger: 'blur' }],
-  roleIds: [{ required: true, message: '角色不能为空', trigger: 'blur' }],
-})
-
-// 筛选部门树信息
-watch(deptName, (val) => {
-  deptTreeRef.value!.filter(val)
-})
-
-const filterNode = (value: string, data: TreeNodeData) => {
-  if (!value) return true
-  return data.label.includes(value)
-}
 
 // 查询用户列表
 const handleList = async () => {
@@ -611,13 +502,7 @@ const handleDeletes = async () => {
 
 // 导入用户信息
 const handleImport = async () => {
-  state.importDialog = {
-    title: '导入用户信息',
-    type: 'import',
-    visible: true
-  }
-
-  await getRoleSelect()
+  importUserRef.value?.handleImport()
 }
 
 // 导出用户信息
@@ -652,14 +537,6 @@ const closeUserDialog = () => {
   userRuleFormRef.value?.clearValidate()
 }
 
-// 关闭导入对话框
-const closeImportDialog = () => {
-  state.importDialog.visible = false
-  importFile.value = undefined
-  importRuleFormRef.value?.resetFields()
-  importRuleFormRef.value?.clearValidate()
-}
-
 // 修改用户状态
 const handleChangeStatus = async (row: SysUser) => {
   const text = row.status === '0' ? '启用' : '停用'
@@ -683,12 +560,6 @@ const handleSelectionChange = (selection: any) => {
   }
 }
 
-// 部门树节点
-const handleDeptNodeClick = async (data: any) => {
-  state.queryParams.deptId = data.value
-  await handleList()
-}
-
 // 提交表单
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -704,16 +575,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       await editUser(state.userForm)
       proxy.$message.success("修改用户信息成功")
       closeUserDialog()
-      await handleList()
-    }
-    if (state.importDialog.type == 'import') {
-      if (!importFile.value) {
-        proxy.$message.error("请选择文件")
-        return
-      }
-      await importUser(importFile.value, state.importForm.deptId, state.importForm.roleIds)
-      proxy.$message.success("导入用户信息成功")
-      closeImportDialog()
       await handleList()
     }
   } catch (error) {
