@@ -82,11 +82,13 @@
           prop="account"
           label="登陆账号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="loginType"
           label="登陆类型"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="os"
@@ -109,6 +111,7 @@
           prop="location"
           label="登录地点"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="loginTime"
@@ -120,6 +123,7 @@
           prop="success"
           label="是否成功"
           align="center"
+          width="100"
         >
           <template #default="scope">
             <el-tag :type="scope.row.success === '成功' ? 'success' : 'danger'">{{ scope.row.success }}</el-tag>
@@ -129,6 +133,7 @@
           prop="message"
           label="返回消息"
           align="center"
+          width="100"
         />
         <el-table-column
           label="操作"

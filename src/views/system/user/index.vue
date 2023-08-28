@@ -136,11 +136,13 @@
               label="用户编号"
               prop="userId"
               align="center"
+              width="100"
             />
             <el-table-column
               label="部门名称"
               prop="dept.deptName"
               align="center"
+              width="100"
             />
             <el-table-column
               label="用户名"

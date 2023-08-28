@@ -131,6 +131,8 @@
           prop="reason"
           label="申请理由"
           align="center"
+          width="100"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="remark"
@@ -141,6 +143,7 @@
           prop="applyType"
           label="申请类型"
           align="center"
+          width="100"
         >
           <template #default="scope">
             <dict-tag :data="app_friend_apply_type" :value="scope.row.applyType" />
@@ -150,6 +153,7 @@
           prop="status"
           label="申请状态"
           align="center"
+          width="100"
         >
           <template #default="scope">
             <dict-tag :data="app_friend_apply_status" :value="scope.row.status" />

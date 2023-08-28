@@ -81,7 +81,7 @@
         <el-table-column
           prop="sort"
           label="显示顺序"
-          width="80"
+          width="100"
           align="center"
         />
         <el-table-column
