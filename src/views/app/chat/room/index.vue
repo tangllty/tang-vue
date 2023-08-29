@@ -72,8 +72,7 @@ const chatMessageRef = ref<InstanceType<typeof ChatMessage>>()
 
 const handleItemClick = (item: AppChatList): void => {
   state.selectedItem = item
-  chatMessageRef.value?.handleList(item.chatListId)
-  chatMessageRef.value?.scrollToBottom()
+  chatMessageRef.value?.handleList(item.chatListId, true)
 }
 
 const handleSendMessage = (sentMessage: AppChatMessage): void => {

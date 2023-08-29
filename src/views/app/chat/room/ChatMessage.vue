@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
+import { nextTick, onMounted, reactive, ref, toRefs } from 'vue'
 import { ElScrollbar } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
@@ -55,10 +55,13 @@ const {
 const innerRef = ref<HTMLDivElement>()
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 
-const handleList = async (chatListId: number) => {
+const handleList = async (chatListId: number, scroll: boolean = false) => {
   state.queryParams.chatListId = chatListId
   const res: any = await listAppChatMessage(state.queryParams)
   state.chatMessageList = res.rows
+  if (scroll) {
+    scrollToBottom(false)
+  }
 }
 
 const handleSentMessage = (message: AppChatMessage) => {
@@ -67,11 +70,17 @@ const handleSentMessage = (message: AppChatMessage) => {
 }
 
 // 将滚动条滚动到底部
-const scrollToBottom = (): void => {
-  if (!scrollbarRef.value || !innerRef.value) return
-  scrollbarRef.value.scrollTo({
-    top: innerRef.value.clientHeight,
-    behavior: 'smooth'
+const scrollToBottom = (animation: boolean = true) => {
+  nextTick(() => {
+    if (!scrollbarRef.value || !innerRef.value) return
+    if (!animation) {
+      scrollbarRef.value.scrollTo(0, innerRef.value.clientHeight)
+      return
+    }
+    scrollbarRef.value.scrollTo({
+      top: innerRef.value.clientHeight,
+      behavior: 'smooth'
+    })
   })
 }
 
