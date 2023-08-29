@@ -52,15 +52,10 @@ const handleInputMessage = async () => {
   state.appChatMessageForm.chatListId = props.selectedItem.chatListId
   state.appChatMessageForm.senderId = userStore.user.userId
   state.appChatMessageForm.content = state.inputMessage
-  await addAppChatMessage(state.appChatMessageForm)
-  proxy.$emit('sendMessage', state.appChatMessageForm)
-  const chatMessage: ChatMessage = {
-    chatListId: props.selectedItem.chatListId,
-    userId: props.selectedItem.friendId,
-    senderId: userStore.user.userId,
-    content: state.inputMessage
-  }
-  proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: chatMessage })
+  const res = await addAppChatMessage(state.appChatMessageForm)
+  proxy.$emit('sendMessage', res.data)
+  res.data.userId = props.selectedItem.friendId
+  proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
   state.inputMessage = ''
 }
 </script>
