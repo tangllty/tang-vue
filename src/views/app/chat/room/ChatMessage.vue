@@ -1,28 +1,31 @@
 <template>
-  <div
-    v-for="item in chatMessageList"
-    :key="item.messageId"
-    class="message-container"
-  >
-    <!-- 自己 -->
-    <div v-if="item.senderId === userStore.user.userId" class="self-container">
-      <div class="self-message">
-        <span class="self-message">{{ item.content }}</span>
-        <el-avatar :src="proxy.$path(item.avatar)" />
+  <el-scrollbar ref="scrollbarRef" always>
+    <div
+      v-for="item in chatMessageList"
+      :key="item.messageId"
+      class="message-container"
+    >
+      <!-- 自己 -->
+      <div v-if="item.senderId === userStore.user.userId" class="self-container">
+        <div class="self-message">
+          <span class="self-message">{{ item.content }}</span>
+          <el-avatar :src="proxy.$path(item.avatar)" />
+        </div>
+      </div>
+      <!-- 对方 -->
+      <div v-else class="other-container">
+        <div class="other-message">
+          <el-avatar :src="proxy.$path(item.avatar)" />
+          <span class="other-message">{{ item.content }}</span>
+        </div>
       </div>
     </div>
-    <!-- 对方 -->
-    <div v-else class="other-container">
-      <div class="other-message">
-        <el-avatar :src="proxy.$path(item.avatar)" />
-        <span class="other-message">{{ item.content }}</span>
-      </div>
-    </div>
-  </div>
+  </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
+import { ElScrollbar } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatMessage } from '@/api/app/chat/message'
@@ -47,6 +50,8 @@ const {
   chatMessageList
 } = toRefs(state)
 
+const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
+
 const handleList = async (chatListId: number) => {
   state.queryParams.chatListId = chatListId
   const res: any = await listAppChatMessage(state.queryParams)
@@ -60,10 +65,14 @@ const handleSentMessage = (message: AppChatMessage) => {
 
 // 将滚动条滚动到底部
 const scrollToBottom = (): void => {
+  if (!scrollbarRef.value) return
   const el = document.querySelector('.chat-content')
-  if (el) {
-    el.scrollTop = el.scrollHeight
-  }
+  if (!el) return
+  el.scrollTop = el.scrollHeight
+  scrollbarRef.value.scrollTo({
+    top: el.scrollHeight,
+    behavior: 'smooth'
+  })
 }
 
 onMounted(() => {
