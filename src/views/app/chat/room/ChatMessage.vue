@@ -1,22 +1,24 @@
 <template>
   <el-scrollbar ref="scrollbarRef" always>
-    <div
-      v-for="item in chatMessageList"
-      :key="item.messageId"
-      class="message-container"
-    >
-      <!-- 自己 -->
-      <div v-if="item.senderId === userStore.user.userId" class="self-container">
-        <div class="self-message">
-          <span class="self-message">{{ item.content }}</span>
-          <el-avatar :src="proxy.$path(item.avatar)" />
+    <div ref="innerRef">
+      <div
+        v-for="item in chatMessageList"
+        :key="item.messageId"
+        class="message-container"
+      >
+        <!-- 自己 -->
+        <div v-if="item.senderId === userStore.user.userId" class="self-container">
+          <div class="self-message">
+            <span class="self-message">{{ item.content }}</span>
+            <el-avatar :src="proxy.$path(item.avatar)" />
+          </div>
         </div>
-      </div>
-      <!-- 对方 -->
-      <div v-else class="other-container">
-        <div class="other-message">
-          <el-avatar :src="proxy.$path(item.avatar)" />
-          <span class="other-message">{{ item.content }}</span>
+        <!-- 对方 -->
+        <div v-else class="other-container">
+          <div class="other-message">
+            <el-avatar :src="proxy.$path(item.avatar)" />
+            <span class="other-message">{{ item.content }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -40,7 +42,7 @@ const userStore = useUserStore()
 const state = reactive({
   queryParams: {
     pageNum: 1,
-    pageSize: 1000
+    pageSize: 10
   } as AppChatMessageQuery,
   chatMessageList: [] as AppChatMessage[]
 })
@@ -50,6 +52,7 @@ const {
   chatMessageList
 } = toRefs(state)
 
+const innerRef = ref<HTMLDivElement>()
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 
 const handleList = async (chatListId: number) => {
@@ -65,12 +68,9 @@ const handleSentMessage = (message: AppChatMessage) => {
 
 // 将滚动条滚动到底部
 const scrollToBottom = (): void => {
-  if (!scrollbarRef.value) return
-  const el = document.querySelector('.chat-content')
-  if (!el) return
-  el.scrollTop = el.scrollHeight
+  if (!scrollbarRef.value || !innerRef.value) return
   scrollbarRef.value.scrollTo({
-    top: el.scrollHeight,
+    top: innerRef.value.clientHeight,
     behavior: 'smooth'
   })
 }
@@ -90,7 +90,8 @@ onMounted(() => {
 
 defineExpose({
   handleList,
-  handleSentMessage
+  handleSentMessage,
+  scrollToBottom
 })
 </script>
 
