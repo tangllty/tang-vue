@@ -33,7 +33,6 @@ import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatMessage } from '@/api/app/chat/message'
 import { AppChatMessage, AppChatMessageQuery } from '@/api/app/chat/message/types'
 import { MessageType } from '@/enums'
-import { ChatMessage } from '@/types'
 
 const proxy = getProxy()
 
@@ -86,14 +85,8 @@ const scrollToBottom = (animation: boolean = true) => {
 
 onMounted(() => {
   proxy.$socket.subscribe(MessageType.CHAT_MESSAGE, (chatMessage: string) => {
-    const { chatListId, senderId, content } = JSON.parse(chatMessage) as ChatMessage
-    const appChatMessage: AppChatMessage = {
-      chatListId,
-      senderId,
-      content
-    } as AppChatMessage
-    state.chatMessageList.push(appChatMessage)
-    scrollToBottom()
+    const appChatMessage = JSON.parse(chatMessage) as AppChatMessage
+    handleSentMessage(appChatMessage)
   })
 })
 

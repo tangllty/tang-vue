@@ -27,7 +27,6 @@ import { addAppChatMessage } from '@/api/app/chat/message'
 import { AppChatMessageForm } from '@/api/app/chat/message/types'
 import { AppChatList } from '@/api/app/chat/chat-list/types'
 import { MessageType } from '@/enums'
-import { ChatMessage } from '@/types'
 
 const proxy = getProxy()
 
@@ -43,8 +42,7 @@ const state = reactive({
 })
 
 const {
-  inputMessage,
-  appChatMessageForm
+  inputMessage
 } = toRefs(state)
 
 const handleInputMessage = async () => {
