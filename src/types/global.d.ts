@@ -6,6 +6,7 @@ declare global {
   interface PageQuery {
     pageNum: number
     pageSize: number
+    reasonable?: boolean
   }
 
   // 对话框参数

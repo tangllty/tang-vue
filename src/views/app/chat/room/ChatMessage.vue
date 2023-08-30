@@ -1,6 +1,13 @@
 <template>
   <el-scrollbar ref="scrollbarRef">
     <div ref="innerRef">
+      <InfiniteLoading
+        v-if="showInfiniteLoading"
+        @infinite="loadMore"
+        spinner="spiral"
+        direction="top"
+        force-use-infinite-wrapper
+      />
       <div
         v-for="item in chatMessageList"
         :key="item.messageId"
@@ -28,6 +35,8 @@
 <script lang="ts" setup>
 import { nextTick, onMounted, reactive, ref, toRefs } from 'vue'
 import { ElScrollbar } from 'element-plus'
+import InfiniteLoading from 'v3-infinite-loading'
+import 'v3-infinite-loading/lib/style.css'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatMessage } from '@/api/app/chat/message'
@@ -40,21 +49,43 @@ const proxy = getProxy()
 const userStore = useUserStore()
 
 const state = reactive({
+  pageNum: 1,
+  showInfiniteLoading: false,
   queryParams: {
     pageNum: 1,
-    pageSize: 10
+    pageSize: 10,
+    reasonable: false
   } as AppChatMessageQuery,
   chatMessageList: [] as AppChatMessage[]
 })
 
 const {
-  queryParams,
+  showInfiniteLoading,
   chatMessageList
 } = toRefs(state)
 
 const innerRef = ref<HTMLDivElement>()
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 
+// 加载更多
+const loadMore = async () => {
+  if (!innerRef.value) return
+  state.queryParams.pageNum = ++state.pageNum
+  state.queryParams.chatListId = state.queryParams.chatListId
+  const res: any = await listAppChatMessage(state.queryParams)
+  state.chatMessageList = [...res.rows, ...state.chatMessageList]
+
+  // 滚动条滚动到原来的位置
+  const currentHeight = innerRef.value.clientHeight
+  nextTick(() => {
+    if (!innerRef.value) return
+    const newHeight = innerRef.value.clientHeight
+    scrollbarRef.value?.scrollTo(0, newHeight - currentHeight)
+  })
+  state.showInfiniteLoading = res.rows.length === state.queryParams.pageSize
+}
+
+// 获取聊天消息列表
 const handleList = async (chatListId: number, scroll: boolean = false) => {
   state.queryParams.chatListId = chatListId
   const res: any = await listAppChatMessage(state.queryParams)
@@ -62,8 +93,10 @@ const handleList = async (chatListId: number, scroll: boolean = false) => {
   if (scroll) {
     scrollToBottom(false)
   }
+  state.showInfiniteLoading = true
 }
 
+// 处理发送的消息
 const handleSentMessage = (message: AppChatMessage) => {
   state.chatMessageList.push(message)
   scrollToBottom()
