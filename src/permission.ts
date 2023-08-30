@@ -25,10 +25,24 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
     if (whiteList.includes(to.path)) {
       return next()
     }
-    return next({ path: '/login' })
+    return next({ path: '/login', query: { redirect: to.fullPath } })
   }
 
   if (to.path === '/login') {
+    const redirectUrl: string = to.query.redirect as string
+    if (redirectUrl) {
+      const redirectUrlArr: string[] = redirectUrl.split('?')
+      if (redirectUrlArr.length > 1) {
+        const redirectUrlParams: string[] = redirectUrlArr[1].split('&')
+        const redirectUrlParamsObj: any = {}
+        redirectUrlParams.forEach((item: string) => {
+          const itemArr: string[] = item.split('=')
+          redirectUrlParamsObj[itemArr[0]] = itemArr[1]
+        })
+        return next({ path: redirectUrlArr[0], query: redirectUrlParamsObj })
+      }
+      return next({ path: redirectUrl })
+    }
     return next({ path: '/' })
   }
 

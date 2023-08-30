@@ -97,7 +97,7 @@ const logout = async () => {
       type: 'warning'
     })
     await userStore.logout()
-    await proxy.$router.push({ path: '/login' })
+    await proxy.$router.push({ path: '/login', query: { redirect: proxy.$route.fullPath } })
   } catch (error) {
     console.log(error)
   }

@@ -151,6 +151,22 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   try {
     await formEl.validate()
     await userStore.login(state.loginForm)
+    const redirectUrl = proxy.$route.query.redirect as string
+    if (redirectUrl) {
+      const redirectUrlArr: string[] = redirectUrl.split('?')
+      if (redirectUrlArr.length > 1) {
+        const redirectUrlParams: string[] = redirectUrlArr[1].split('&')
+        const redirectUrlParamsObj: any = {}
+        redirectUrlParams.forEach((item: string) => {
+          const itemArr: string[] = item.split('=')
+          redirectUrlParamsObj[itemArr[0]] = itemArr[1]
+        })
+        await proxy.$router.push({ path: redirectUrlArr[0], query: redirectUrlParamsObj })
+        return
+      }
+      await proxy.$router.push({ path: redirectUrl })
+      return
+    }
     await proxy.$router.push({ path: '/' })
   } catch (error) {
     console.log('error submit!')
