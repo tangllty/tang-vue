@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar ref="scrollbarRef" always>
+  <el-scrollbar ref="scrollbarRef">
     <div ref="innerRef">
       <div
         v-for="item in chatMessageList"
@@ -33,6 +33,7 @@ import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatMessage } from '@/api/app/chat/message'
 import { AppChatMessage, AppChatMessageQuery } from '@/api/app/chat/message/types'
 import { MessageType } from '@/enums'
+import { ChatMessage } from '@/types'
 
 const proxy = getProxy()
 
@@ -85,7 +86,13 @@ const scrollToBottom = (animation: boolean = true) => {
 
 onMounted(() => {
   proxy.$socket.subscribe(MessageType.CHAT_MESSAGE, (chatMessage: string) => {
-    const appChatMessage = JSON.parse(chatMessage) as AppChatMessage
+    const { chatListId, senderId, avatar, content } = JSON.parse(chatMessage) as ChatMessage
+    const appChatMessage: AppChatMessage = {
+      chatListId,
+      senderId,
+      avatar,
+      content
+    } as AppChatMessage
     handleSentMessage(appChatMessage)
   })
 })

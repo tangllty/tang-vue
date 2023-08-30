@@ -11,5 +11,6 @@ export type ChatMessage = {
   chatListId: number
   userId: number
   senderId: number
+  avatar: string
   content: string
 }
