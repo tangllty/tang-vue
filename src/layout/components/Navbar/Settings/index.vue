@@ -1,25 +1,25 @@
 <template>
   <el-drawer v-model="drawer">
-    <template #header="{ titleId, titleClass }">
-      <span class="header">系统设置</span>
+    <template #header>
+      <span class="header">{{ $t('settings.title') }}</span>
     </template>
     <template #default>
-      <el-divider>基础设置</el-divider>
+      <el-divider>{{ $t('settings.basic.title') }}</el-divider>
       <div class="item">
-        <span>主题设置</span>
+        <span>{{ $t('settings.basic.theme') }}</span>
         <ThemePicker />
       </div>
-      <el-divider>导航栏设置</el-divider>
+      <el-divider>{{ $t('settings.sidebar.title') }}</el-divider>
       <div class="item">
-        <span>显示头部</span>
+        <span>{{ $t('settings.sidebar.showHeader') }}</span>
         <el-switch v-model="appStore.sidebarHeader" />
       </div>
       <div class="item">
-        <span>侧边栏展开时显示 LOGO</span>
+        <span>{{ $t('settings.sidebar.showLogo') }}</span>
         <el-switch v-model="appStore.sidebarHeaderLogo" :disabled="!appStore.sidebarHeader" />
       </div>
       <div class="item">
-        <span>固定头部</span>
+        <span>{{ $t('settings.sidebar.fixedHeader') }}</span>
         <el-switch v-model="appStore.fixedHeader" :disabled="!appStore.sidebarHeader" />
       </div>
     </template>
@@ -32,17 +32,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, toRefs } from 'vue'
-import { useToggle } from '@vueuse/core'
+import { reactive, toRefs } from 'vue'
 import { useAppStore } from '@/store/modules/app'
-import { useSettingStore } from '@/store/modules/setting'
-import { getProxy } from '@/utils/getCurrentInstance'
 import ThemePicker from '@/components/ThemePicker/index.vue'
 
-const proxy: any = getProxy()
-
 const appStore = useAppStore()
-const settingStore = useSettingStore()
 
 const state = reactive({
   drawer: false
@@ -51,16 +45,6 @@ const state = reactive({
 const {
   drawer
 } = toRefs(state)
-
-const sidebarHeader = computed({
-  get: () => appStore.sidebarHeader,
-  set: (value) => appStore.sidebarHeader = value
-})
-
-const sidebarHeaderLogo = computed({
-  get: () => appStore.sidebarHeaderLogo,
-  set: (value) => appStore.sidebarHeaderLogo = value
-})
 
 // 打开抽屉
 const handleOpen = () => {

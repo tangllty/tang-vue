@@ -7,7 +7,7 @@
           </div>
         </template>
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="用户名密码" :name="LoginType.USERNAME">
+          <el-tab-pane :label="$t('login.loginType.username')" :name="LoginType.USERNAME">
             <el-form
               ref="loginRuleFormRef"
               :model="loginForm"
@@ -16,24 +16,24 @@
               label-width="120px"
               class="login-form"
             >
-              <el-form-item label="用户名" prop="username">
+              <el-form-item :label="$t('login.username')" prop="username">
                 <el-input
                   v-model="loginForm.username"
                   type="text"
                   autocomplete="off"
                   @keyup.enter="submitForm(loginRuleFormRef)"
-                  placeholder="用户名"
+                  :placeholder="$t('login.usernamePlaceholder')"
                   :prefix-icon="User"
                 />
               </el-form-item>
-              <el-form-item label="密码" prop="password">
+              <el-form-item :label="$t('login.password')" prop="password">
                 <el-input
                   v-model="loginForm.password"
                   type="password"
                   autocomplete="off"
                   @keyup.enter="submitForm(loginRuleFormRef)"
                   show-password
-                  placeholder="密码"
+                  :placeholder="$t('login.passwordPlaceholder')"
                   :prefix-icon="Lock"
                 />
               </el-form-item>
@@ -41,14 +41,14 @@
                 <el-button
                   type="primary"
                   @click="submitForm(loginRuleFormRef)"
-                >登陆</el-button>
+                >{{ $t('login.submit') }}</el-button>
                 <el-button
                   @click="resetForm(loginRuleFormRef)"
-                >Reset</el-button>
+                >{{ $t('login.reset') }}</el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane label="邮箱密码" :name="LoginType.EMAIL">
+          <el-tab-pane :label="$t('login.email')" :name="LoginType.EMAIL">
             <el-form
               ref="loginRuleFormRef"
               :model="loginForm"
@@ -57,24 +57,24 @@
               label-width="120px"
               class="login-form"
             >
-              <el-form-item label="邮箱" prop="email">
+              <el-form-item :label="$t('login.email')" prop="email">
                 <el-input
                   v-model="loginForm.email"
                   type="text"
                   autocomplete="off"
                   @keyup.enter="submitForm(loginRuleFormRef)"
-                  placeholder="用户名"
+                  :placeholder="$t('login.emailPlaceholder')"
                   :prefix-icon="Message"
                 />
               </el-form-item>
-              <el-form-item label="密码" prop="password">
+              <el-form-item :label="$t('login.password')" prop="password">
                 <el-input
                   v-model="loginForm.password"
                   type="password"
                   autocomplete="off"
                   @keyup.enter="submitForm(loginRuleFormRef)"
                   show-password
-                  placeholder="密码"
+                  :placeholder="$t('login.passwordPlaceholder')"
                   :prefix-icon="Lock"
                 />
               </el-form-item>
@@ -82,10 +82,10 @@
                 <el-button
                   type="primary"
                   @click="submitForm(loginRuleFormRef)"
-                >登陆</el-button>
+                >{{ $t('login.submit') }}</el-button>
                 <el-button
                   @click="resetForm(loginRuleFormRef)"
-                >Reset</el-button>
+                >{{ $t('login.reset') }}</el-button>
               </el-form-item>
             </el-form>
           </el-tab-pane>

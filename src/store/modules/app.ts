@@ -20,18 +20,22 @@ export const useAppStore = defineStore('app', () => {
   const fixedHeader: Ref<boolean> = ref(getValue('fixedHeader') ?? settings.fixedHeader)
   // 折叠侧边栏
   const sidebar: Ref<boolean> = ref(getValue('sidebar') ?? settings.sidebar)
+  // 语言
+  const language: Ref<string> = ref(localStorage.getItem('language') ?? settings.language)
 
   watch([sidebarHeader, sidebarHeaderLogo, fixedHeader, sidebar], (): void => {
     localStorage.setItem('sidebarHeader', String(sidebarHeader.value))
     localStorage.setItem('sidebarHeaderLogo', String(sidebarHeaderLogo.value))
     localStorage.setItem('fixedHeader', String(fixedHeader.value))
     localStorage.setItem('sidebar', String(sidebar.value))
+    localStorage.setItem('language', language.value)
   }, { deep: true })
 
   return {
     sidebarHeader,
     sidebarHeaderLogo,
     fixedHeader,
-    sidebar
+    sidebar,
+    language
   }
 })

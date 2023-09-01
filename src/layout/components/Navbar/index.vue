@@ -22,6 +22,7 @@
         :inactive-icon="Sunny"
         class="mr-10"
       />
+      <LangSelect class="mr-10" />
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
           <el-image :src="userStore.user.avatar" class="user-avatar" />
@@ -32,7 +33,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>
-              <el-link :underline="false" @click="proxy.$router.push({ path: '/profile' })">个人中心</el-link>
+              <el-link :underline="false" @click="proxy.$router.push({ path: '/profile' })">{{ $t('layout.profile') }}</el-link>
             </el-dropdown-item>
             <el-dropdown-item>
               <el-link href="https://github.com/tangllty/tang-vue" target="_blank">GitHub</el-link>
@@ -41,12 +42,12 @@
               <el-link href="https://gitee.com/tangllty/tang-vue" target="_blank">Gitee</el-link>
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-link href="https://tangllty.eu.org" target="_blank">文档</el-link>
+              <el-link href="https://tangllty.eu.org" target="_blank">{{ $t('layout.documentation') }}</el-link>
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-link :underline="false" @click="handleSettings">系统设置</el-link>
+              <el-link :underline="false" @click="handleSettings">{{ $t('layout.settings') }}</el-link>
             </el-dropdown-item>
-            <el-dropdown-item divided @click="logout">退出登陆</el-dropdown-item>
+            <el-dropdown-item divided @click="logout">{{ $t('layout.logout') }}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -66,8 +67,9 @@ import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import Breadcrumb from './Breadcrumb/index.vue'
 import Settings from './Settings/index.vue'
+import LangSelect from './LangSelect/index.vue'
 
-const proxy: any = getProxy()
+const proxy = getProxy()
 
 const appStore = useAppStore()
 const settingStore = useSettingStore()
@@ -93,7 +95,7 @@ const handleSettings = () => {
 
 const logout = async () => {
   try {
-    await proxy.$confirm('确定注销并退出系统吗？', '提示', {
+    await proxy.$confirm(proxy.$t('layout.logoutConfirm.message'), proxy.$t('layout.logoutConfirm.title'), {
       type: 'warning'
     })
     await userStore.logout()

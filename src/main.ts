@@ -4,11 +4,8 @@ import router from '@/router'
 import { setupStore } from '@/store'
 import { setupDirective } from '@/directives'
 
-import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
-// import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import '@/permission'
 
 // 自定义样式
@@ -17,6 +14,9 @@ import '@/styles/index.scss'
 // 注册 svg
 import 'virtual:svg-icons-register'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+
+// 国际化
+import { setupI18n, setupElementPlusI18n } from '@/locales'
 
 // 分页
 import Pagination from '@/components/Pagination/index.vue'
@@ -39,9 +39,10 @@ app.config.globalProperties.$socket = webSocketService
 
 setupStore(app)
 setupDirective(app)
+setupI18n(app)
+setupElementPlusI18n(app)
 app
   .use(router)
-  .use(ElementPlus, { locale: zhCn })
   .component('SvgIcon', SvgIcon)
   .component('Pagination', Pagination)
   .component('DictSpan', DictSpan)

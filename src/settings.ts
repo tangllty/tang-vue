@@ -5,6 +5,7 @@ interface DefaultSettings {
   sidebarHeaderLogo: boolean
   fixedHeader: boolean
   sidebar: boolean
+  language: string
 }
 
 // 默认系统设置
@@ -13,7 +14,8 @@ const defaultSettings: DefaultSettings = {
   sidebarHeader: true,
   sidebarHeaderLogo: true,
   fixedHeader: true,
-  sidebar: false
+  sidebar: false,
+  language: 'zh-cn'
 }
 
 export default defaultSettings
