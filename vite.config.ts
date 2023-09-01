@@ -1,6 +1,7 @@
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ConfigEnv, defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import topLevelAwait from 'vite-plugin-top-level-await'
 import path from 'path'
 
 // https://vitejs.dev/config/
@@ -13,6 +14,10 @@ export default ({ mode }:ConfigEnv) => {
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
         symbolId: 'icon-[dir]-[name]'
+      }),
+      topLevelAwait({
+        promiseExportName: '__tla',
+        promiseImportName: i => `__tla_${i}`
       })
     ],
     resolve: {
