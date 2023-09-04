@@ -2,13 +2,12 @@ import type { App } from 'vue'
 import { createI18n } from 'vue-i18n'
 import ElementPlus from 'element-plus'
 import type { Language } from 'element-plus/es/locale';
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import en from 'element-plus/es/locale/lang/en'
 import { useAppStore } from '@/store/modules/app'
 
 const appStore = useAppStore()
 
 const modules = import.meta.glob('./lang/*.ts')
+const elementPlusModules = import.meta.glob('../../node_modules/element-plus/es/locale/lang/*.mjs')
 
 const messages: { [key: string]: any } = {}
 export const langs: { key: string, title: string, sort: number }[] = []
@@ -32,13 +31,13 @@ const i18n = createI18n({
   legacy: false
 })
 
-const getLocale = (): Language => {
-  // TODO 暂时的解决方案，后续需要做成动态加载
-  return appStore.language === 'zh-cn' ? zhCn : en
+const getLocale = async (): Promise<Language> => {
+  const elementPlusLangModule = await elementPlusModules[`../../node_modules/element-plus/es/locale/lang/${appStore.language}.mjs`]() as any
+  return elementPlusLangModule.default
 }
 
 const elementPlusI18n = {
-  locale: getLocale(),
+  locale: await getLocale(),
 }
 
 export const setupI18n = (app: App<Element>): void => {

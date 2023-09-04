@@ -23,7 +23,7 @@ export const useAppStore = defineStore('app', () => {
   // 语言
   const language: Ref<string> = ref(localStorage.getItem('language') ?? settings.language)
 
-  watch([sidebarHeader, sidebarHeaderLogo, fixedHeader, sidebar], (): void => {
+  watch([sidebarHeader, sidebarHeaderLogo, fixedHeader, sidebar, language], (): void => {
     localStorage.setItem('sidebarHeader', String(sidebarHeader.value))
     localStorage.setItem('sidebarHeaderLogo', String(sidebarHeaderLogo.value))
     localStorage.setItem('fixedHeader', String(fixedHeader.value))
