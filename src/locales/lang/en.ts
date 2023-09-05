@@ -27,6 +27,11 @@ export default {
         title: 'Tips',
       }
     },
+    size: {
+      large: 'Large',
+      default: 'Default',
+      small: 'Small',
+    },
     settings: {
       title: 'Settings',
       basic: {

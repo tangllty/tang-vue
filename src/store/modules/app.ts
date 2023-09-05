@@ -22,13 +22,16 @@ export const useAppStore = defineStore('app', () => {
   const sidebar: Ref<boolean> = ref(getValue('sidebar') ?? settings.sidebar)
   // 语言
   const language: Ref<string> = ref(localStorage.getItem('language') ?? settings.language)
+  // 组件大小
+  const size: Ref<string> = ref(localStorage.getItem('size') ?? settings.size)
 
-  watch([sidebarHeader, sidebarHeaderLogo, fixedHeader, sidebar, language], (): void => {
+  watch([sidebarHeader, sidebarHeaderLogo, fixedHeader, sidebar, language, size], (): void => {
     localStorage.setItem('sidebarHeader', String(sidebarHeader.value))
     localStorage.setItem('sidebarHeaderLogo', String(sidebarHeaderLogo.value))
     localStorage.setItem('fixedHeader', String(fixedHeader.value))
     localStorage.setItem('sidebar', String(sidebar.value))
     localStorage.setItem('language', language.value)
+    localStorage.setItem('size', size.value)
   }, { deep: true })
 
   return {
@@ -36,6 +39,7 @@ export const useAppStore = defineStore('app', () => {
     sidebarHeaderLogo,
     fixedHeader,
     sidebar,
-    language
+    language,
+    size
   }
 })

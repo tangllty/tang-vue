@@ -27,6 +27,11 @@ export default {
         title: '提示',
       }
     },
+    size: {
+      large: '大',
+      default: '默认',
+      small: '小',
+    },
     settings: {
       title: '系统设置',
       basic: {

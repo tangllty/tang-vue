@@ -23,6 +23,7 @@
         class="mr-10"
       />
       <LangSelect class="mr-10" />
+      <SizeSelect class="mr-10" />
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
           <el-image :src="userStore.user.avatar" class="user-avatar" />
@@ -67,6 +68,7 @@ import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import Breadcrumb from './Breadcrumb/index.vue'
 import Settings from './Settings/index.vue'
+import SizeSelect from './SizeSelect/index.vue'
 import LangSelect from './LangSelect/index.vue'
 
 const proxy = getProxy()

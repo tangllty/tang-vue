@@ -1,7 +1,8 @@
 import type { App } from 'vue'
 import { createI18n } from 'vue-i18n'
 import ElementPlus from 'element-plus'
-import type { Language } from 'element-plus/es/locale';
+import type { EpPropMergeType } from 'element-plus/es/utils'
+import type { Language } from 'element-plus/es/locale'
 import { useAppStore } from '@/store/modules/app'
 
 const appStore = useAppStore()
@@ -36,12 +37,19 @@ const getLocale = async (): Promise<Language> => {
   return langModule.default
 }
 
+type ElementPlusSize = EpPropMergeType<StringConstructor, '' | 'default' | 'small' | 'large', never>
+
 const elementPlusI18n = {
   locale: await getLocale(),
+  size: appStore.size as ElementPlusSize
 }
 
-export const flash = async (): Promise<void> => {
+export const flashLocale = async (): Promise<void> => {
   elementPlusI18n.locale = await getLocale()
+}
+
+export const flashSize = (): void => {
+  elementPlusI18n.size = appStore.size as ElementPlusSize
 }
 
 export const setupI18n = (app: App<Element>): void => {
