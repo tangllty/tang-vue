@@ -7,7 +7,6 @@ import { useAppStore } from '@/store/modules/app'
 const appStore = useAppStore()
 
 const modules = import.meta.glob('./lang/*.ts')
-const elementPlusModules = import.meta.glob('../../node_modules/element-plus/es/locale/lang/*.mjs')
 
 const messages: { [key: string]: any } = {}
 export const langs: { key: string, title: string, sort: number }[] = []
@@ -31,13 +30,18 @@ const i18n = createI18n({
   legacy: false
 })
 
+// 加载 Element Plus 国际化语言包
 const getLocale = async (): Promise<Language> => {
-  const elementPlusLangModule = await elementPlusModules[`../../node_modules/element-plus/es/locale/lang/${appStore.language}.mjs`]() as any
-  return elementPlusLangModule.default
+  const langModule = await import(`../../node_modules/element-plus/dist/locale/${appStore.language}.mjs`) as any
+  return langModule.default
 }
 
 const elementPlusI18n = {
   locale: await getLocale(),
+}
+
+export const flash = async (): Promise<void> => {
+  elementPlusI18n.locale = await getLocale()
 }
 
 export const setupI18n = (app: App<Element>): void => {

@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/store/modules/app'
-import { langs } from '@/locales'
+import { langs, flash } from '@/locales'
 
 const appStore = useAppStore()
 const { locale } = useI18n()
@@ -35,6 +35,7 @@ const { locale } = useI18n()
 const handleLanguage = (key: string): void => {
   locale.value = key
   appStore.language = key
+  flash()
 }
 
 const disabled = (key: any): boolean => {
