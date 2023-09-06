@@ -44,6 +44,22 @@ export const editAppChatList = (data: AppChatListForm) => {
   })
 }
 
+// 置顶聊天列信息
+export const stickAppChatList = (chatListId: number) => {
+  return request({
+    url: '/app/chat/chat-list/stick/' + chatListId,
+    method: 'put'
+  })
+}
+
+// 取消置顶聊天列信息
+export const unstickAppChatList = (chatListId: number) => {
+  return request({
+    url: '/app/chat/chat-list/unstick/' + chatListId,
+    method: 'put'
+  })
+}
+
 // 删除聊天列信息
 export const deleteAppChatList = (chatListId: number) => {
   return request({

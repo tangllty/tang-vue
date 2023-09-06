@@ -1,33 +1,41 @@
 <template>
   <div class="chat-item">
-    <div
+    <el-dropdown
+      trigger="contextmenu"
       v-for="item in chatList"
       :key="item.nickname"
-      @click="handleItemClick(item)"
-      class="chat-item-wrapper"
-      :class="{ 'active': selectedItem === item }"
+      style="display: flex;"
     >
-      <div class="chat-item-wrapper__avatar-wrapper">
-        <el-avatar :src="proxy.$path(item.avatar)" />
-      </div>
-      <div class="chat-item-wrapper__content-wrapper">
-        <div class="content-header">
-          <el-text truncated>{{ item.nickname }}</el-text>
-          <span class="time">{{ item.time }}</span>
+      <div @click="handleItemClick(item)" class="chat-item-wrapper" :class="{ 'active': selectedItem === item, 'stick': item.stickFlag === '1' }">
+        <div class="chat-item-wrapper__avatar-wrapper">
+          <el-avatar :src="proxy.$path(item.avatar)" />
         </div>
-        <div class="content-body">
-          <el-text truncated>{{ item.message }}</el-text>
-          <el-badge v-if="item.unreadCount > 0" :value="item.unreadCount" />
+        <div class="chat-item-wrapper__content-wrapper">
+          <div class="content-header">
+            <el-text truncated>{{ item.nickname }}</el-text>
+            <span class="time">{{ item.time }}</span>
+          </div>
+          <div class="content-body">
+            <el-text truncated>{{ item.message }}</el-text>
+            <el-badge v-if="item.unreadCount > 0" :value="item.unreadCount" />
+          </div>
         </div>
       </div>
-    </div>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item @click="handleStick(item)">{{ item.stickFlag === '0' ? '置顶' : '取消置顶' }}</el-dropdown-item>
+          <el-dropdown-item>{{ true ? '隐藏' : '取消隐藏'}}</el-dropdown-item>
+          <el-dropdown-item>{{ false ? '静音' : '取消静音'}}</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { reactive, toRefs } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listAppChatListAll } from '@/api/app/chat/chat-list'
+import { listAppChatListAll, stickAppChatList, unstickAppChatList } from '@/api/app/chat/chat-list'
 import { AppChatList } from '@/api/app/chat/chat-list/types'
 
 const proxy = getProxy()
@@ -67,6 +75,16 @@ const handleItemClick = (item: AppChatList): void => {
   proxy.$emit('clicked', selectedItem.value)
 }
 
+// 置顶
+const handleStick = async (appChatList: AppChatList): Promise<void> => {
+  if (appChatList.stickFlag === '0') {
+    await stickAppChatList(appChatList.chatListId)
+  } else {
+    await unstickAppChatList(appChatList.chatListId)
+  }
+  await handleChatList()
+}
+
 defineExpose({
   handleChatList
 })
@@ -91,7 +109,7 @@ defineExpose({
     width: 100%;
 
     &:hover {
-      background-color: #eee;
+      background-color: #d5d3d2 !important;
     }
 
     &__avatar-wrapper {
@@ -144,7 +162,11 @@ defineExpose({
   }
 
   &-wrapper.active {
-    background-color: #eee;
+    background-color: #c9c8c6 !important;
+  }
+
+  &-wrapper.stick {
+    background-color: #e1dedd;
   }
 }
 </style>
