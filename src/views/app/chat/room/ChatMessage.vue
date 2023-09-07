@@ -88,12 +88,13 @@ const loadMore = async () => {
 // 获取聊天消息列表
 const handleList = async (chatListId: number, scroll: boolean = false) => {
   state.queryParams.chatListId = chatListId
+  state.queryParams.pageNum = 1
   const res: any = await listAppChatMessage(state.queryParams)
   state.chatMessageList = res.rows
   if (scroll) {
     scrollToBottom(false)
   }
-  state.showInfiniteLoading = true
+  state.showInfiniteLoading = res.rows.length === state.queryParams.pageSize
 }
 
 // 处理发送的消息
