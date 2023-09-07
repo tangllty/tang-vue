@@ -8,6 +8,9 @@ import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import '@/permission'
 
+// uno.css
+import 'virtual:uno.css'
+
 // 自定义样式
 import '@/styles/index.scss'
 

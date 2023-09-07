@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import topLevelAwait from 'vite-plugin-top-level-await'
 import path from 'path'
+import UnoCSS from 'unocss/vite'
 
 // https://vitejs.dev/config/
 export default ({ mode }:ConfigEnv) => {
@@ -18,7 +19,8 @@ export default ({ mode }:ConfigEnv) => {
       topLevelAwait({
         promiseExportName: '__tla',
         promiseImportName: i => `__tla_${i}`
-      })
+      }),
+      UnoCSS()
     ],
     resolve: {
       alias: {
