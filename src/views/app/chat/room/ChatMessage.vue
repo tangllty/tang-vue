@@ -16,7 +16,11 @@
         <!-- 自己 -->
         <div v-if="item.senderId === userStore.user.userId" class="self-container">
           <div class="self-message">
-            <span class="self-message">{{ item.content }}</span>
+            <span class="self-message">
+              <span class="message">
+                {{ item.content }}
+              </span>
+            </span>
             <el-avatar :src="proxy.$path(item.avatar)" />
           </div>
         </div>
@@ -24,7 +28,11 @@
         <div v-else class="other-container">
           <div class="other-message">
             <el-avatar :src="proxy.$path(item.avatar)" />
-            <span class="other-message">{{ item.content }}</span>
+            <span class="other-message">
+              <span class="message">
+                {{ item.content }}
+              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -161,9 +169,8 @@ defineExpose({
 
       .self-message {
         margin-right: 10px;
-        background-color: #e6f7ff;
+        background-color: #d5f5e2;
         border-radius: 10px;
-        padding: 10px;
       }
     }
   }
@@ -177,7 +184,6 @@ defineExpose({
     .other-message {
       display: flex;
       align-items: center;
-      margin-left: 10px;
 
       .el-avatar {
         margin-right: 10px;
@@ -185,10 +191,18 @@ defineExpose({
 
       .other-message {
         margin-left: 10px;
-        background-color: #e6f7ff;
+        background-color: #ffffff;
         border-radius: 10px;
-        padding: 10px;
       }
+    }
+  }
+
+  .message {
+    padding: 10px;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: #cfcfcf75 !important;
     }
   }
 }

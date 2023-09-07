@@ -132,6 +132,7 @@ onMounted(() => {
           flex: 1;
           overflow-y: auto;
           padding: 15px;
+          background-color: #f5f5f5;
         }
       }
 

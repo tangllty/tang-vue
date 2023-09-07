@@ -4,7 +4,7 @@
       trigger="contextmenu"
       v-for="item in chatList"
       :key="item.nickname"
-      style="display: flex;"
+      class="flex"
     >
       <div @click="handleItemClick(item)" class="chat-item-wrapper" :class="{ 'active': selectedItem === item, 'stick': item.stickFlag === '1' }">
         <div class="chat-item-wrapper__avatar-wrapper">
