@@ -47,7 +47,7 @@ service.interceptors.response.use(async (response: AxiosResponse) => {
           type: 'warning'
         })
         removeToken()
-        window.location.href = '/'
+        window.location.href = '/login?redirect=' + window.location.pathname + window.location.search
       } catch (error) {
         reLoginFlag = true
       }
