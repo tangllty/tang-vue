@@ -347,7 +347,7 @@ const handleList = async () => {
 // 查询菜单树
 const getMenuTree = async () => {
   const menuTrees: any[] = []
-  const res: any = await selectMenuTree();
+  const res: any = await selectMenuTree()
   const menuTree = { value: 0, label: '顶级菜单', children: res.data }
   menuTrees.push(menuTree)
   state.menuTree = menuTrees

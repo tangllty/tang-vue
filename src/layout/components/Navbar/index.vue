@@ -112,8 +112,8 @@ const logout = async () => {
 .navbar {
   height: 50px;
   margin-bottom: 20px;
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 
   .hamburger-container {
@@ -128,15 +128,15 @@ const logout = async () => {
 
   .left-div {
     width: auto;
-    display:flex;
-    justify-content:space-between;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
   }
 
   .right-div {
     width: auto;
-    display:flex;
-    justify-content:space-between;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 
     .user-avatar {

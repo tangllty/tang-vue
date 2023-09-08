@@ -24,7 +24,7 @@
 import { ref } from 'vue'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 
-const icons = [] as string[];
+const icons = [] as string[]
 const modules = import.meta.glob('../../assets/icons/*.svg')
 
 for (const path in modules) {

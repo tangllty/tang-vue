@@ -353,7 +353,7 @@ const handleDelete = async (row: any) => {
     proxy.$message.success("删除用户好友信息成功")
     await handleList()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 
@@ -367,7 +367,7 @@ const handleDeletes = async () => {
     proxy.$message.success("删除用户好友信息成功")
     await handleList()
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 

@@ -71,7 +71,7 @@ const router: Router = createRouter({
 
 // 重置路由
 export const resetRouter = (): void => {
-  const permissionStore = usePermissionStoreHook();
+  const permissionStore = usePermissionStoreHook()
   permissionStore.routes.forEach(route => {
     const name: RouteRecordName | undefined = route.name
     if (name && router.hasRoute(name)) {
