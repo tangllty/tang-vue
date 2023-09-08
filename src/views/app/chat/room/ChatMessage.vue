@@ -16,11 +16,22 @@
         <!-- 自己 -->
         <div v-if="item.senderId === userStore.user.userId" class="self-container">
           <div class="self-message">
-            <span class="self-message">
-              <span class="message">
-                {{ item.content }}
+            <el-dropdown trigger="contextmenu">
+              <span class="self-message">
+                <span class="message">
+                  {{ item.content }}
+                </span>
               </span>
-            </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="handleCopy(item.content)">复制</el-dropdown-item>
+                  <el-dropdown-item>引用(未实装)</el-dropdown-item>
+                  <el-dropdown-item>转发(未实装)</el-dropdown-item>
+                  <el-dropdown-item>多选(未实装)</el-dropdown-item>
+                  <el-dropdown-item>删除(未实装)</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
             <el-avatar :src="proxy.$path(item.avatar)" />
           </div>
         </div>
@@ -28,11 +39,22 @@
         <div v-else class="other-container">
           <div class="other-message">
             <el-avatar :src="proxy.$path(item.avatar)" />
-            <span class="other-message">
-              <span class="message">
-                {{ item.content }}
+            <el-dropdown trigger="contextmenu">
+              <span class="other-message">
+                <span class="message">
+                  {{ item.content }}
+                </span>
               </span>
-            </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="handleCopy(item.content)">复制</el-dropdown-item>
+                  <el-dropdown-item>引用(未实装)</el-dropdown-item>
+                  <el-dropdown-item>转发(未实装)</el-dropdown-item>
+                  <el-dropdown-item>多选(未实装)</el-dropdown-item>
+                  <el-dropdown-item>删除(未实装)</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </div>
         </div>
       </div>
@@ -126,6 +148,11 @@ const scrollToBottom = (animation: boolean = true) => {
   })
 }
 
+// 复制
+const handleCopy = async (content: string) => {
+  await navigator.clipboard.writeText(content)
+}
+
 onMounted(() => {
   proxy.$socket.subscribe(MessageType.CHAT_MESSAGE, (chatMessage: string) => {
     const { chatListId, senderId, avatar, content } = JSON.parse(chatMessage) as ChatMessage
@@ -169,7 +196,7 @@ defineExpose({
 
       .self-message {
         margin-right: 10px;
-        background-color: #d5f5e2;
+        background-color: #c9e7ff;
         border-radius: 10px;
       }
     }

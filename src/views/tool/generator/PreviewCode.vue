@@ -75,8 +75,8 @@ const getKey = (key: string): string => {
 }
 
 // 代码复制
-const handleCopy = (code: string) => {
-  // TODO
+const handleCopy = async (code: string) => {
+  await navigator.clipboard.writeText(code)
   proxy.$message.success('复制成功')
 }
 
