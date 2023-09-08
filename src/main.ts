@@ -28,6 +28,11 @@ import Pagination from '@/components/Pagination/index.vue'
 import DictSpan from '@/components/Dict/Span/index.vue'
 import DictTag from '@/components/Dict/Tag/index.vue'
 
+// 代码高亮
+import 'highlight.js/lib/common';
+import 'highlight.js/styles/github.css'
+import hljsVuePlugin from '@highlightjs/vue-plugin'
+
 const app = createApp(App)
 
 import { getDicts } from '@/utils/dict'
@@ -46,6 +51,7 @@ setupI18n(app)
 setupElementPlusI18n(app)
 app
   .use(router)
+  .use(hljsVuePlugin)
   .component('SvgIcon', SvgIcon)
   .component('Pagination', Pagination)
   .component('DictSpan', DictSpan)

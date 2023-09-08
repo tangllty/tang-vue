@@ -22,7 +22,7 @@
           class="fr"
           @click="handleCopy(value)"
         >复制</el-button>
-        <pre>{{ value }}</pre>
+        <highlightjs :code="value" />
       </el-tab-pane>
     </el-tabs>
   </el-dialog>
