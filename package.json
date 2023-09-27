@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "vite serve --mode development",
     "build": "vue-tsc && vite build --mode production",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:eslint": "eslint --ext .ts,.vue src"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
@@ -39,10 +40,14 @@
     "@types/node": "^18.11.16",
     "@types/nprogress": "^0.2.0",
     "@types/path-browserify": "^1.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
     "@vitejs/plugin-vue": "^4.0.0",
+    "eslint": "^8.50.0",
+    "eslint-plugin-vue": "^9.17.0",
     "fast-glob": "^3.2.12",
     "sass": "^1.57.0",
-    "typescript": "^4.9.3",
+    "typescript": "^5.2.2",
     "unocss": "^0.55.7",
     "vite": "^4.4.4",
     "vite-plugin-svg-icons": "^2.0.1",
