@@ -157,7 +157,7 @@ const handleList = async () => {
 const handleImport = async () => {
   const tableNames = importTableNames.value.toString()
   await importTable({ tableNames })
-  proxy.$message.success("添加代码生成信息成功")
+  proxy.$message.success('添加代码生成信息成功')
   closeImportTableDialog()
   proxy.$emit('submitted')
 }

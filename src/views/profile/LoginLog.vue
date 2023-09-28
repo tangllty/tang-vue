@@ -7,7 +7,7 @@
         :timestamp="item.loginTime.toString()"
       >
         <el-row>
-          登陆账号：{{ item.account }}（{{ item.loginType }}）
+          登陆账号：{{ item.account }} [{{ item.loginType }}]
         </el-row>
         <el-row>
           <el-col :span="4">
@@ -35,8 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
-import { FormInstance } from 'element-plus'
+import { onMounted, reactive, toRefs } from 'vue'
 import { listSysLogLoginByUser } from '@/api/profile'
 import { SysLogLogin, SysLogLoginQuery } from '@/api/system/log/login/types'
 
@@ -59,14 +58,10 @@ const state = reactive({
 })
 
 const {
-  loading,
-  loginIds,
   total,
   sysLogLoginList,
   queryParams
 } = toRefs(state)
-
-const sysLogLoginQueryFormRef = ref<FormInstance>()
 
 const handleList = async () => {
   const res: any = await listSysLogLoginByUser(state.queryParams)

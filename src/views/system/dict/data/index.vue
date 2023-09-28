@@ -25,6 +25,7 @@
           >
             <el-option
               v-for="item in sys_status"
+              :key="item.dataId"
               :label="item.dataLabel"
               :value="item.dataValue"
             />
@@ -367,7 +368,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteDictData(row.dataId)
-    proxy.$message.success("删除字典数据信息成功")
+    proxy.$message.success('删除字典数据信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -381,7 +382,7 @@ const handleDeletes = async () => {
       type: 'warning'
     })
     await deleteDictDatas(state.dictDataIds)
-    proxy.$message.success("删除字典数据信息成功")
+    proxy.$message.success('删除字典数据信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -416,13 +417,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate()
     if (dictDataDialog.value.type == 'add') {
       await addDictData(state.dictDataForm)
-      proxy.$message.success("添加字典数据信息成功")
+      proxy.$message.success('添加字典数据信息成功')
       closeDictDataDialog()
       await handleList()
     }
     if (dictDataDialog.value.type == 'edit') {
       await editDictData(state.dictDataForm)
-      proxy.$message.success("修改字典数据信息成功")
+      proxy.$message.success('修改字典数据信息成功')
       closeDictDataDialog()
       await handleList()
     }

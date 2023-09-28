@@ -409,7 +409,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     state.editTableForm.tableColumnList = state.tableColumnList
     if (editTableDialog.value.type == 'edit') {
       await editGenTable(state.editTableForm)
-      proxy.$message.success("修改字典数据信息成功")
+      proxy.$message.success('修改字典数据信息成功')
       closeEditTableDialog()
       proxy.$emit('submitted')
     }

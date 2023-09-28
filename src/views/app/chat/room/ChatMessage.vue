@@ -101,7 +101,6 @@ const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 const loadMore = async () => {
   if (!innerRef.value) return
   state.queryParams.pageNum = ++state.pageNum
-  state.queryParams.chatListId = state.queryParams.chatListId
   const res: any = await listAppChatMessage(state.queryParams)
   state.chatMessageList = [...res.rows, ...state.chatMessageList]
 

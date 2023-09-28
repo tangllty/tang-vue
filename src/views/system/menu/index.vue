@@ -19,6 +19,7 @@
           >
             <el-option
               v-for="item in sys_status"
+              :key="item.dataId"
               :label="item.dataLabel"
               :value="item.dataValue"
             />
@@ -448,13 +449,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate()
     if (menuDialog.value.type == 'add') {
       await addMenu(state.menuForm)
-      proxy.$message.success("添加菜单信息成功")
+      proxy.$message.success('添加菜单信息成功')
       closeMenuDialog()
       await handleList()
     }
     if (menuDialog.value.type == 'edit') {
       await editMenu(state.menuForm)
-      proxy.$message.success("修改菜单信息成功")
+      proxy.$message.success('修改菜单信息成功')
       closeMenuDialog()
       await handleList()
     }

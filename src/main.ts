@@ -29,7 +29,7 @@ import DictSpan from '@/components/Dict/Span/index.vue'
 import DictTag from '@/components/Dict/Tag/index.vue'
 
 // 代码高亮
-import 'highlight.js/lib/common';
+import 'highlight.js/lib/common'
 import 'highlight.js/styles/github.css'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 

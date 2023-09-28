@@ -219,7 +219,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteSysLogLogin(row.loginId)
-    proxy.$message.success("删除登陆日志信息成功")
+    proxy.$message.success('删除登陆日志信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -233,7 +233,7 @@ const handleDeletes = async () => {
       type: 'warning'
     })
     await deleteSysLogLogins(state.loginIds)
-    proxy.$message.success("删除登陆日志信息成功")
+    proxy.$message.success('删除登陆日志信息成功')
     await handleList()
   } catch (error) {
     console.log(error)

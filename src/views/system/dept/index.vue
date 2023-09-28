@@ -19,6 +19,7 @@
           >
             <el-option
               v-for="item in sys_status"
+              :key="item.dataId"
               :label="item.dataLabel"
               :value="item.dataValue"
             />
@@ -297,7 +298,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteDept(row.deptId)
-    proxy.$message.success("删除部门信息成功")
+    proxy.$message.success('删除部门信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -339,13 +340,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate()
     if (deptDialog.value.type == 'add') {
       await addDept(state.deptForm)
-      proxy.$message.success("添加部门信息成功")
+      proxy.$message.success('添加部门信息成功')
       closeDeptDialog()
       await handleList()
     }
     if (deptDialog.value.type == 'edit') {
       await editDept(state.deptForm)
-      proxy.$message.success("修改部门信息成功")
+      proxy.$message.success('修改部门信息成功')
       closeDeptDialog()
       await handleList()
     }

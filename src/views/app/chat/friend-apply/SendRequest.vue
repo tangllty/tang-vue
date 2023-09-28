@@ -201,13 +201,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate()
     if (appFriendApplyDialog.value.type == 'add') {
       await addAppFriendApply(state.appFriendApplyForm)
-      proxy.$message.success("添加用户好友申请信息成功")
+      proxy.$message.success('添加用户好友申请信息成功')
       closeAppFriendApplyDialog()
       proxy.$emit('submitted')
     }
     if (appFriendApplyDialog.value.type == 'edit') {
       await editAppFriendApply(state.appFriendApplyForm)
-      proxy.$message.success("修改用户好友申请信息成功")
+      proxy.$message.success('修改用户好友申请信息成功')
       closeAppFriendApplyDialog()
     }
   } catch (error) {

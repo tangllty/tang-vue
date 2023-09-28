@@ -150,11 +150,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate()
     if (state.importDialog.type == 'import') {
       if (!importFile.value) {
-        proxy.$message.error("请选择文件")
+        proxy.$message.error('请选择文件')
         return
       }
       await importUser(importFile.value, state.importForm.deptId, state.importForm.roleIds)
-      proxy.$message.success("导入用户信息成功")
+      proxy.$message.success('导入用户信息成功')
       closeImportDialog()
       proxy.$emit('submitted')
     }
@@ -164,7 +164,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 }
 
 defineExpose({
-    handleImport
+  handleImport
 })
 </script>
 

@@ -109,18 +109,18 @@ const proxy = getProxy()
 const userStore = useUserStore()
 
 const state = reactive({
-    loginForm: {
-      username: 'admin',
-      email: 'admin@163.com',
-      password: '123456',
-      loginType: LoginType.USERNAME
-    } as LoginForm,
-    activeName: LoginType.USERNAME
+  loginForm: {
+    username: 'admin',
+    email: 'admin@163.com',
+    password: '123456',
+    loginType: LoginType.USERNAME
+  } as LoginForm,
+  activeName: LoginType.USERNAME
 })
 
 const {
-    loginForm,
-    activeName
+  loginForm,
+  activeName
 } = toRefs(state)
 
 const loginRuleFormRef = ref<FormInstance>()

@@ -253,7 +253,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteGenTable(row.tableId)
-    proxy.$message.success("删除代码生成信息成功")
+    proxy.$message.success('删除代码生成信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -267,7 +267,7 @@ const handleDeletes = async () => {
       type: 'warning'
     })
     await deleteGenTables(state.genTableIds)
-    proxy.$message.success("删除代码生成信息成功")
+    proxy.$message.success('删除代码生成信息成功')
     await handleList()
   } catch (error) {
     console.log(error)

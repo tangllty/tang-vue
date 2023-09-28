@@ -19,6 +19,7 @@
           >
             <el-option
               v-for="item in sys_status"
+              :key="item.dataId"
               :label="item.dataLabel"
               :value="item.dataValue"
             />
@@ -360,7 +361,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteRole(row.roleId)
-    proxy.$message.success("删除角色信息成功")
+    proxy.$message.success('删除角色信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -374,7 +375,7 @@ const handleDeletes = async () => {
       type: 'warning'
     })
     await deleteRoles(state.roleIds)
-    proxy.$message.success("删除角色信息成功")
+    proxy.$message.success('删除角色信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -416,13 +417,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
     if (roleDialog.value.type == 'add') {
       await addRole(state.roleForm)
-      proxy.$message.success("添加角色信息成功")
+      proxy.$message.success('添加角色信息成功')
       closeRoleDialog()
       await handleList()
     }
     if (roleDialog.value.type == 'edit') {
       await editRole(state.roleForm)
-      proxy.$message.success("修改角色信息成功")
+      proxy.$message.success('修改角色信息成功')
       closeRoleDialog()
       await handleList()
     }

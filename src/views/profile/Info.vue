@@ -155,7 +155,7 @@ import { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 
 const proxy = getProxy()
-const { sys_user_gender, sys_status } = proxy.$dict('sys_user_gender', 'sys_status')
+const { sys_user_gender } = proxy.$dict('sys_user_gender')
 
 const userStore = useUserStore()
 
@@ -242,14 +242,14 @@ const submitForm = async (formEl: FormInstance | undefined, type: string) => {
     await formEl.validate()
     if (type == 'userForm') {
       await editUserInfo(state.userForm)
-      proxy.$message.success("修改个人资料成功")
+      proxy.$message.success('修改个人资料成功')
       resetForm(userRuleFormRef.value)
       handleUserInfo()
     }
     if (type == 'passwordForm') {
       state.passwordForm.userId = userStore.user.userId
       await editUserPassword(state.passwordForm)
-      proxy.$message.success("修改密码成功")
+      proxy.$message.success('修改密码成功')
       resetForm(passwordRuleFormRef.value)
     }
   } catch (error) {

@@ -7,7 +7,7 @@ export interface SysDictData {
   dataLabel: string
   dataValue: string
   cssClass: string
-  typeClass: EpPropMergeType<StringConstructor, "" | "success" | "warning" | "info" | "danger", unknown>
+  typeClass: EpPropMergeType<StringConstructor, '' | 'success' | 'warning' | 'info' | 'danger', unknown>
   sort: number
   status: string
   createTime: Date

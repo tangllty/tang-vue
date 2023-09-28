@@ -350,7 +350,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteAppFriend(row.userFriendId)
-    proxy.$message.success("删除用户好友信息成功")
+    proxy.$message.success('删除用户好友信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -364,7 +364,7 @@ const handleDeletes = async () => {
       type: 'warning'
     })
     await deleteAppFriends(state.userFriendIds)
-    proxy.$message.success("删除用户好友信息成功")
+    proxy.$message.success('删除用户好友信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -399,7 +399,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate()
     if (appFriendDialog.value.type == 'edit') {
       await editAppFriend(state.appFriendForm)
-      proxy.$message.success("修改用户好友信息成功")
+      proxy.$message.success('修改用户好友信息成功')
       closeAppFriendDialog()
       await handleList()
     }

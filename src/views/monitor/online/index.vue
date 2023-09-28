@@ -214,8 +214,8 @@ const state = reactive({
     pageNum: 1,
     pageSize: 10
   } as OnlineUserQuery,
-   // 对话框
-   onlineUserDialog: {
+  // 对话框
+  onlineUserDialog: {
     title: '',
     type: '',
     visible: false
@@ -258,7 +258,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteOnlineUser(row.token)
-    proxy.$message.success("强退" + row.username + "成功")
+    proxy.$message.success('强退' + row.username + '成功')
     await handleList()
   } catch (error) {
     console.log(error)

@@ -51,6 +51,11 @@ module.exports = {
       'error',
       'never'
     ],
+    'no-undef': 'off', // https://eslint.org/docs/latest/rules/no-undef
     'vue/multi-word-component-names': 'off', // https://eslint.vuejs.org/rules/multi-word-component-names.html
+    'vue/no-deprecated-v-on-native-modifier': 'off', // https://eslint.vuejs.org/rules/no-deprecated-v-on-native-modifier.html
+    '@typescript-eslint/no-explicit-any': 'off', // https://typescript-eslint.io/rules/no-explicit-any/
+    '@typescript-eslint/ban-types': 'off', // https://typescript-eslint.io/rules/ban-types/
+    '@typescript-eslint/no-unused-vars': 'off', // https://typescript-eslint.io/rules/no-unused-vars/
   }
 }

@@ -43,6 +43,7 @@
               >
                 <el-option
                   v-for="item in sys_user_gender"
+                  :key="item.dataId"
                   :label="item.dataLabel"
                   :value="item.dataValue"
                 />
@@ -56,6 +57,7 @@
               >
                 <el-option
                   v-for="item in sys_status"
+                  :key="item.dataId"
                   :label="item.dataLabel"
                   :value="item.dataValue"
                 />
@@ -479,7 +481,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteUser(row.userId)
-    proxy.$message.success("删除用户信息成功")
+    proxy.$message.success('删除用户信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -493,7 +495,7 @@ const handleDeletes = async () => {
       type: 'warning'
     })
     await deleteUsers(state.userIds)
-    proxy.$message.success("删除用户信息成功")
+    proxy.$message.success('删除用户信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -567,13 +569,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate()
     if (state.userDialog.type == 'add') {
       await addUser(state.userForm)
-      proxy.$message.success("添加用户信息成功")
+      proxy.$message.success('添加用户信息成功')
       closeUserDialog()
       await handleList()
     }
     if (state.userDialog.type == 'edit') {
       await editUser(state.userForm)
-      proxy.$message.success("修改用户信息成功")
+      proxy.$message.success('修改用户信息成功')
       closeUserDialog()
       await handleList()
     }

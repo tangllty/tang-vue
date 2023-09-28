@@ -315,7 +315,7 @@ import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh, Check, Close } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listAppFriendApply, getAppFriendApply, addAppFriendApply, editAppFriendApply, acceptAppFriendApply, declineAppFriendApply, deleteAppFriendApply, deleteAppFriendApplys } from '@/api/app/chat/friend-apply'
+import { listAppFriendApply, getAppFriendApply, editAppFriendApply, acceptAppFriendApply, declineAppFriendApply, deleteAppFriendApply, deleteAppFriendApplys } from '@/api/app/chat/friend-apply'
 import { AppFriendApply, AppFriendApplyForm, AppFriendApplyQuery } from '@/api/app/chat/friend-apply/types'
 import SearchFriend from './SearchFriend.vue'
 
@@ -437,7 +437,7 @@ const handleAccept = async (row: any) => {
       type: 'warning'
     })
     await acceptAppFriendApply(row.uniqueId)
-    proxy.$message.success("同意用户好友申请信息成功")
+    proxy.$message.success('同意用户好友申请信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -451,7 +451,7 @@ const handleDecline = async (row: any) => {
       type: 'warning'
     })
     await declineAppFriendApply(row.uniqueId)
-    proxy.$message.success("拒绝用户好友申请信息成功")
+    proxy.$message.success('拒绝用户好友申请信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -465,7 +465,7 @@ const handleDelete = async (row: any) => {
       type: 'warning'
     })
     await deleteAppFriendApply(row.applyId)
-    proxy.$message.success("删除用户好友申请信息成功")
+    proxy.$message.success('删除用户好友申请信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -479,7 +479,7 @@ const handleDeletes = async () => {
       type: 'warning'
     })
     await deleteAppFriendApplys(state.applyIds)
-    proxy.$message.success("删除用户好友申请信息成功")
+    proxy.$message.success('删除用户好友申请信息成功')
     await handleList()
   } catch (error) {
     console.log(error)
@@ -514,7 +514,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     await formEl.validate()
     if (appFriendApplyDialog.value.type == 'edit') {
       await editAppFriendApply(state.appFriendApplyForm)
-      proxy.$message.success("修改用户好友申请信息成功")
+      proxy.$message.success('修改用户好友申请信息成功')
       closeAppFriendApplyDialog()
       await handleList()
     }
