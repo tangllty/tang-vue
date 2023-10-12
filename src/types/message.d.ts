@@ -1,4 +1,5 @@
 import { MessageType } from '@/enums'
+import { AppChatMessage } from '@/api/app/chat/message/types'
 
 // 消息对象
 export type Message = {
@@ -11,6 +12,8 @@ export type ChatMessage = {
   chatListId: number
   userId: number
   senderId: number
+  replyMessageId: number
+  replyMessage: AppChatMessage
   avatar: string
   content: string
 }

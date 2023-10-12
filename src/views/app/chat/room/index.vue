@@ -16,10 +16,10 @@
             <ChatHeader :selectedItem="selectedItem" />
           </div>
           <div class="chat-content">
-            <ChatMessage ref="chatMessageRef" />
+            <ChatMessage ref="chatMessageRef" @replyMessage="handleReply" />
           </div>
           <div class="chat-input">
-            <MessageInput :selectedItem="selectedItem" @sendMessage="handleSendMessage" />
+            <MessageInput ref="messageInputRef" :selectedItem="selectedItem" @sendMessage="handleSendMessage" />
           </div>
         </div>
 
@@ -59,16 +59,19 @@ const proxy = getProxy()
 
 const state = reactive({
   selectedItem: null as (AppChatList | null),
+  replyMessage: null as (AppChatMessage | null),
   showDrawer: false,
 })
 
 const {
   selectedItem,
+  replyMessage,
   showDrawer
 } = toRefs(state)
 
 const chatListRef = ref<InstanceType<typeof ChatList>>()
 const chatMessageRef = ref<InstanceType<typeof ChatMessage>>()
+const messageInputRef = ref<InstanceType<typeof MessageInput>>()
 
 const handleItemClick = (item: AppChatList): void => {
   state.selectedItem = item
@@ -77,6 +80,11 @@ const handleItemClick = (item: AppChatList): void => {
 
 const handleSendMessage = (sentMessage: AppChatMessage): void => {
   chatMessageRef.value?.handleSentMessage(sentMessage)
+}
+
+const handleReply = (item: AppChatMessage): void => {
+  state.replyMessage = item
+  messageInputRef.value?.handleReply(item)
 }
 
 const toggleDrawer = (): void => {

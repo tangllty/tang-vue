@@ -3,6 +3,8 @@ export interface AppChatMessage {
   messageId: number
   chatListId: number
   senderId: number
+  replyMessageId: number
+  replyMessage: AppChatMessage
   username: string
   nickname: string
   avatar: string
@@ -17,6 +19,8 @@ export interface AppChatMessageForm {
   messageId: number
   chatListId: number
   senderId: number
+  replyMessageId: number
+  replyMessage: AppChatMessage
   content: string
   createBy: string
   updateBy: string
@@ -28,6 +32,7 @@ export interface AppChatMessageQuery extends PageQuery {
   messageId: number
   chatListId: number
   senderId: number
+  replyMessageId: number
   content: string
   createBy: string
   updateBy: string

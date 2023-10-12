@@ -3,7 +3,28 @@
     <div class="toolbar">
       <el-button :icon="Picture" circle />
       <el-button :icon="Files" circle />
-      <!-- 其他功能按钮 -->
+      <el-button
+        type="primary"
+        :disabled="!replyMessage"
+        @click="handleCancelReply"
+      >取消回复</el-button>
+      <div
+        v-if="replyMessage"
+        class="ml-10"
+        style="line-height: 32px;"
+      >
+        回复消息：<span
+          style="
+            display: inline-block;
+            color: #6e6e6e;
+            border-left: 1px solid #919191;
+            background-color: aliceblue;
+            padding: 0 10px;
+          "
+        >
+          {{ replyMessage?.content }}
+        </span>
+      </div>
     </div>
     <div class="input-wrapper">
       <el-input
@@ -24,7 +45,7 @@ import { Files, Picture } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { addAppChatMessage } from '@/api/app/chat/message'
-import { AppChatMessageForm } from '@/api/app/chat/message/types'
+import { AppChatMessage, AppChatMessageForm } from '@/api/app/chat/message/types'
 import { AppChatList } from '@/api/app/chat/chat-list/types'
 import { MessageType } from '@/enums'
 
@@ -38,24 +59,46 @@ const props = defineProps<{
 
 const state = reactive({
   inputMessage: '',
-  appChatMessageForm: {} as AppChatMessageForm
+  appChatMessageForm: {} as AppChatMessageForm,
+  replyMessage: null as AppChatMessage | null
 })
 
 const {
-  inputMessage
+  inputMessage,
+  replyMessage
 } = toRefs(state)
 
 const handleInputMessage = async () => {
   if (!props.selectedItem) return
   state.appChatMessageForm.chatListId = props.selectedItem.chatListId
   state.appChatMessageForm.senderId = userStore.user.userId
+  if (state.replyMessage) {
+    state.appChatMessageForm.replyMessageId = state.replyMessage.messageId
+    state.appChatMessageForm.replyMessage = state.replyMessage
+  }
   state.appChatMessageForm.content = state.inputMessage
   const res = await addAppChatMessage(state.appChatMessageForm)
   proxy.$emit('sendMessage', res.data)
   res.data.userId = props.selectedItem.friendId
   proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
   state.inputMessage = ''
+  state.appChatMessageForm = {} as AppChatMessageForm
+  state.replyMessage = null
 }
+
+// 消息回复
+const handleReply = (item: AppChatMessage): void => {
+  state.replyMessage = item
+}
+
+// 取消回复
+const handleCancelReply = (): void => {
+  state.replyMessage = null
+}
+
+defineExpose({
+  handleReply
+})
 </script>
 
 <style lang="scss" scoped>

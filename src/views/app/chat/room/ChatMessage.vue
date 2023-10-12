@@ -11,21 +11,31 @@
       <div
         v-for="item in chatMessageList"
         :key="item.messageId"
-        class="message-container"
+        class="message-container mb-10"
       >
         <!-- 自己 -->
         <div v-if="item.senderId === userStore.user.userId" class="self-container">
           <div class="self-message">
             <el-dropdown trigger="contextmenu">
-              <span class="self-message">
-                <span class="message">
-                  {{ item.content }}
-                </span>
-              </span>
+              <div class="message-container">
+                <div class="message-box">
+                  <div class="message">
+                    {{ item.content }}
+                  </div>
+                </div>
+                <div
+                  v-if="item.replyMessage"
+                  class="reply-message"
+                >
+                  <div class="message">
+                    {{ item.replyMessage.content }}
+                  </div>
+                </div>
+              </div>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item @click="handleCopy(item.content)">复制</el-dropdown-item>
-                  <el-dropdown-item>引用(未实装)</el-dropdown-item>
+                  <el-dropdown-item @click="handleReply(item)">回复(正在实装)</el-dropdown-item>
                   <el-dropdown-item>转发(未实装)</el-dropdown-item>
                   <el-dropdown-item>多选(未实装)</el-dropdown-item>
                   <el-dropdown-item>删除(未实装)</el-dropdown-item>
@@ -40,15 +50,25 @@
           <div class="other-message">
             <el-avatar :src="proxy.$path(item.avatar)" />
             <el-dropdown trigger="contextmenu">
-              <span class="other-message">
-                <span class="message">
-                  {{ item.content }}
-                </span>
-              </span>
+              <div class="message-container">
+                <div class="message-box">
+                  <div class="message">
+                    {{ item.content }}
+                  </div>
+                </div>
+                <div
+                  v-if="item.replyMessage"
+                  class="reply-message"
+                >
+                  <div class="message">
+                    {{ item.replyMessage.content }}
+                  </div>
+                </div>
+              </div>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item @click="handleCopy(item.content)">复制</el-dropdown-item>
-                  <el-dropdown-item>引用(未实装)</el-dropdown-item>
+                  <el-dropdown-item @click="handleReply(item)">回复(正在实装)</el-dropdown-item>
                   <el-dropdown-item>转发(未实装)</el-dropdown-item>
                   <el-dropdown-item>多选(未实装)</el-dropdown-item>
                   <el-dropdown-item>删除(未实装)</el-dropdown-item>
@@ -152,12 +172,19 @@ const handleCopy = async (content: string) => {
   await navigator.clipboard.writeText(content)
 }
 
+// 回复
+const handleReply = (replyMessage: AppChatMessage) => {
+  proxy.$emit('replyMessage', replyMessage)
+}
+
 onMounted(() => {
   proxy.$socket.subscribe(MessageType.CHAT_MESSAGE, (chatMessage: string) => {
-    const { chatListId, senderId, avatar, content } = JSON.parse(chatMessage) as ChatMessage
+    const { chatListId, senderId, replyMessageId, replyMessage, avatar, content } = JSON.parse(chatMessage) as ChatMessage
     const appChatMessage: AppChatMessage = {
       chatListId,
       senderId,
+      replyMessageId,
+      replyMessage,
       avatar,
       content
     } as AppChatMessage
@@ -176,7 +203,6 @@ defineExpose({
 .message-container {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 
   .self-container {
     display: flex;
@@ -186,17 +212,51 @@ defineExpose({
 
     .self-message {
       display: flex;
-      align-items: center;
       margin-right: 10px;
 
       .el-avatar {
         margin-left: 10px;
       }
 
-      .self-message {
-        margin-right: 10px;
-        background-color: #c9e7ff;
-        border-radius: 10px;
+      .message-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        .message-box {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 2px;
+          border-radius: 10px;
+          background-color: #c9e7ff;
+
+          .message {
+            display: flex;
+            align-items: center;
+          }
+        }
+
+        .message-box::before {
+          content: '';
+          position: absolute;
+          top: 17px;
+          right: -5px;
+          transform: translateY(-50%);
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 5px 0 5px 5px;
+          border-color: transparent transparent transparent #c9e7ff;
+        }
+
+        .reply-message {
+          display: flex;
+          padding: 8px;
+          border-radius: 10px;
+          margin-top: 5px;
+          background-color: #ffffff88;
+        }
       }
     }
   }
@@ -209,26 +269,62 @@ defineExpose({
 
     .other-message {
       display: flex;
-      align-items: center;
 
       .el-avatar {
         margin-right: 10px;
       }
 
-      .other-message {
-        margin-left: 10px;
-        background-color: #ffffff;
-        border-radius: 10px;
+      .message-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .message-box {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 2px;
+          border-radius: 10px;
+          background-color: #ffffff;
+
+          .message {
+            display: flex;
+            align-items: center;
+          }
+        }
+
+        .message-box::before {
+          content: '';
+          position: absolute;
+          top: 17px;
+          left: -5px;
+          transform: translateY(-50%);
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 5px 5px 5px 0;
+          border-color: transparent #ffffff transparent transparent;
+        }
+
+        .reply-message {
+          display: flex;
+          padding: 8px;
+          border-radius: 10px;
+          margin-top: 5px;
+          background-color: #ffffff88;
+        }
       }
     }
   }
 
-  .message {
-    padding: 10px;
-    border-radius: 10px;
+  .message-box {
+    .message {
+      padding: 6px;
+      border-radius: 10px;
 
-    &:hover {
-      background-color: #cfcfcf75 !important;
+      &:hover {
+        background-color: #cfcfcf75;
+      }
     }
   }
 }
