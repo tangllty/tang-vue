@@ -7,11 +7,13 @@
       在线
     </div>
   </div>
-  <div class="settings-icon" @click="toggleDrawer">
+  <div class="settings-icon">
     <!-- 设置图标 -->
-    <el-icon>
-      <Setting />
-    </el-icon>
+    <el-button
+      :icon="Setting"
+      circle
+      @click="toggleDrawer"
+    />
   </div>
 </template>
 
@@ -37,6 +39,7 @@ const {
 
 const toggleDrawer = (): void => {
   state.showDrawer = !state.showDrawer
+  proxy.$emit('showSetting', state.showDrawer)
 }
 
 const closeDrawer = (): void => {
