@@ -1,30 +1,28 @@
 <template>
+  <div v-if="replyMessage" class="reply-message-container">
+    <div class="reply-message-box">
+      <el-button
+        type="primary"
+        size="small"
+        plain
+        text
+      >定位(未实装)</el-button>
+      <div class="reply-message">
+        {{ replyMessage?.content }}
+      </div>
+      <el-button
+        type="danger"
+        size="small"
+        plain
+        text
+        @click="handleCancelReply"
+      >取消回复</el-button>
+    </div>
+  </div>
   <div class="input-container">
     <div class="toolbar">
       <el-button :icon="Picture" circle />
       <el-button :icon="Files" circle />
-      <el-button
-        type="primary"
-        :disabled="!replyMessage"
-        @click="handleCancelReply"
-      >取消回复</el-button>
-      <div
-        v-if="replyMessage"
-        class="ml-10"
-        style="line-height: 32px;"
-      >
-        回复消息：<span
-          style="
-            display: inline-block;
-            color: #6e6e6e;
-            border-left: 1px solid #919191;
-            background-color: aliceblue;
-            padding: 0 10px;
-          "
-        >
-          {{ replyMessage?.content }}
-        </span>
-      </div>
     </div>
     <div class="input-wrapper">
       <el-input
@@ -102,11 +100,31 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+.reply-message-container {
+  margin-bottom: 5px;
+
+  .reply-message-box {
+    width: 80%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .reply-message {
+      margin-right: auto;
+      margin-left: 10px;
+    }
+  }
+}
+
 .input-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 100%;
+  background-color: white;
 
   .toolbar {
     display: flex;
