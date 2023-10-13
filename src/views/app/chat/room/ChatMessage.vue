@@ -17,6 +17,12 @@
         <div v-if="item.senderId === userStore.user.userId" class="self-container">
           <div class="self-message">
             <div class="message-container">
+              <div class="message-time">
+                <el-icon>
+                  <Clock />
+                </el-icon>
+                {{ item.createTime }}
+              </div>
               <el-dropdown trigger="contextmenu">
                 <div class="message-box">
                   <div class="message">
@@ -50,6 +56,12 @@
           <div class="other-message">
             <el-avatar :src="proxy.$path(item.avatar)" />
             <div class="message-container">
+              <div class="message-time">
+                <el-icon>
+                  <Clock />
+                </el-icon>
+                {{ item.createTime }}
+              </div>
               <el-dropdown trigger="contextmenu">
                 <div class="message-box">
                   <div class="message">
@@ -85,6 +97,7 @@
 <script lang="ts" setup>
 import { nextTick, onMounted, reactive, ref, toRefs } from 'vue'
 import { ElScrollbar } from 'element-plus'
+import { Clock } from '@element-plus/icons-vue'
 import InfiniteLoading from 'v3-infinite-loading'
 import 'v3-infinite-loading/lib/style.css'
 import { useUserStore } from '@/store/modules/user'
@@ -216,12 +229,18 @@ defineExpose({
 
       .el-avatar {
         margin-left: 10px;
+        margin-top: 10px;
       }
 
       .message-container {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+
+        .message-time {
+          font-size: 10px;
+          margin-bottom: 2px;
+        }
 
         .message-box {
           display: flex;
@@ -272,12 +291,18 @@ defineExpose({
 
       .el-avatar {
         margin-right: 10px;
+        margin-top: 10px;
       }
 
       .message-container {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+
+        .message-time {
+          font-size: 10px;
+          margin-bottom: 2px;
+        }
 
         .message-box {
           display: flex;

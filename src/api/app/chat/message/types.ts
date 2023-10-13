@@ -10,6 +10,7 @@ export interface AppChatMessage {
   avatar: string
   content: string
   createBy: string
+  createTime: Date
   updateBy: string
   remark: string
 }
