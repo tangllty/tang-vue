@@ -16,32 +16,32 @@
         <!-- 自己 -->
         <div v-if="item.senderId === userStore.user.userId" class="self-container">
           <div class="self-message">
-            <el-dropdown trigger="contextmenu">
-              <div class="message-container">
+            <div class="message-container">
+              <el-dropdown trigger="contextmenu">
                 <div class="message-box">
                   <div class="message">
                     {{ item.content }}
                   </div>
                 </div>
-                <div
-                  v-if="item.replyMessage"
-                  class="reply-message"
-                >
-                  <div class="message">
-                    {{ item.replyMessage.content }}
-                  </div>
+                  <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="handleCopy(item.content)">复制</el-dropdown-item>
+                    <el-dropdown-item @click="handleReply(item)">回复(正在实装)</el-dropdown-item>
+                    <el-dropdown-item>转发(未实装)</el-dropdown-item>
+                    <el-dropdown-item>多选(未实装)</el-dropdown-item>
+                    <el-dropdown-item>删除(未实装)</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+              <div
+                v-if="item.replyMessage"
+                class="reply-message"
+              >
+                <div class="message">
+                  {{ item.replyMessage.content }}
                 </div>
               </div>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item @click="handleCopy(item.content)">复制</el-dropdown-item>
-                  <el-dropdown-item @click="handleReply(item)">回复(正在实装)</el-dropdown-item>
-                  <el-dropdown-item>转发(未实装)</el-dropdown-item>
-                  <el-dropdown-item>多选(未实装)</el-dropdown-item>
-                  <el-dropdown-item>删除(未实装)</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
+            </div>
             <el-avatar :src="proxy.$path(item.avatar)" />
           </div>
         </div>
@@ -49,32 +49,32 @@
         <div v-else class="other-container">
           <div class="other-message">
             <el-avatar :src="proxy.$path(item.avatar)" />
-            <el-dropdown trigger="contextmenu">
-              <div class="message-container">
+            <div class="message-container">
+              <el-dropdown trigger="contextmenu">
                 <div class="message-box">
                   <div class="message">
                     {{ item.content }}
                   </div>
                 </div>
-                <div
-                  v-if="item.replyMessage"
-                  class="reply-message"
-                >
-                  <div class="message">
-                    {{ item.replyMessage.content }}
-                  </div>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="handleCopy(item.content)">复制</el-dropdown-item>
+                    <el-dropdown-item @click="handleReply(item)">回复(正在实装)</el-dropdown-item>
+                    <el-dropdown-item>转发(未实装)</el-dropdown-item>
+                    <el-dropdown-item>多选(未实装)</el-dropdown-item>
+                    <el-dropdown-item>删除(未实装)</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+              <div
+                v-if="item.replyMessage"
+                class="reply-message"
+              >
+                <div class="message">
+                  {{ item.replyMessage.content }}
                 </div>
               </div>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item @click="handleCopy(item.content)">复制</el-dropdown-item>
-                  <el-dropdown-item @click="handleReply(item)">回复(正在实装)</el-dropdown-item>
-                  <el-dropdown-item>转发(未实装)</el-dropdown-item>
-                  <el-dropdown-item>多选(未实装)</el-dropdown-item>
-                  <el-dropdown-item>删除(未实装)</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
+            </div>
           </div>
         </div>
       </div>
