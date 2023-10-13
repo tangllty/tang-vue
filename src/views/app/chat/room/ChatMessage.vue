@@ -25,7 +25,11 @@
               </div>
               <el-dropdown trigger="contextmenu">
                 <div class="message-box">
-                  <div class="message">
+                  <div
+                    class="message"
+                    @mouseover="handleMouseOver"
+                    @mouseout="handleMouseOut"
+                  >
                     {{ item.content }}
                   </div>
                 </div>
@@ -64,7 +68,11 @@
               </div>
               <el-dropdown trigger="contextmenu">
                 <div class="message-box">
-                  <div class="message">
+                  <div
+                    class="message"
+                    @mouseover="handleMouseOver"
+                    @mouseout="handleMouseOut"
+                  >
                     {{ item.content }}
                   </div>
                 </div>
@@ -190,6 +198,20 @@ const handleReply = (replyMessage: AppChatMessage) => {
   proxy.$emit('replyMessage', replyMessage)
 }
 
+// 鼠标移入
+const handleMouseOver = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
+  targetElement.style.visibility = 'visible'
+}
+
+// 鼠标移出
+const handleMouseOut = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
+  targetElement.style.visibility = 'hidden'
+}
+
 onMounted(() => {
   proxy.$socket.subscribe(MessageType.CHAT_MESSAGE, (chatMessage: string) => {
     const { chatListId, senderId, replyMessageId, replyMessage, avatar, content } = JSON.parse(chatMessage) as ChatMessage
@@ -240,6 +262,7 @@ defineExpose({
         .message-time {
           font-size: 10px;
           margin-bottom: 2px;
+          visibility: hidden;
         }
 
         .message-box {
@@ -302,6 +325,7 @@ defineExpose({
         .message-time {
           font-size: 10px;
           margin-bottom: 2px;
+          visibility: hidden;
         }
 
         .message-box {
