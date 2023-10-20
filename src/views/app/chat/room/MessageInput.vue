@@ -37,6 +37,7 @@
         ref="inputMessageRef"
         style="border: 1px solid grey; width: 100%; height: 100px;"
         contenteditable="true"
+        @input="handleInput"
         @keyup="handleKeyUp"
         @keydown="handleKeyDown"
         @keydown.left="handleKeyDownLeft"
@@ -143,11 +144,6 @@ const handleCancelReply = (): void => {
   state.replyMessage = null
 }
 
-type SelectionRange = {
-  selection: Selection
-  range: Range
-}
-
 // 获取光标的位置(x, y)
 const getCursorPosition = (): { x: number, y: number } => {
   const selection = window.getSelection()
@@ -171,6 +167,16 @@ const handleAt = () => {
   const range = window.getSelection()?.getRangeAt(0)
   state.cursorRange = range
   state.atListVisible = true
+}
+
+const handleInput = (event: Event) => {
+  const range = window.getSelection()?.getRangeAt(0)
+  const inputMessage = getInputMessage()
+  if (range?.startContainer.parentNode?.nodeName === 'SPAN') {
+    const inputEvent = event as InputEvent
+    inputEvent.preventDefault()
+    inputMessage.appendChild(document.createTextNode(inputEvent.data || ''))
+  }
 }
 
 const handleKeyUp = (e: KeyboardEvent) => {
