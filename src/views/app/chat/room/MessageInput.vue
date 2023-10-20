@@ -41,7 +41,7 @@
         @keydown="handleKeyDown"
         @keydown.left="handleKeyDownLeft"
         @keydown.right="handleKeyDownRight"
-      />
+      >3213<span style="color: #0087ff;" @click="handleAtClick">@糖猫猫</span>123456<span style="color: #0087ff;" @click="handleAtClick">@糖猫猫猫</span></div>
       <div
         v-if="atListVisible"
         class="at-list"
@@ -250,24 +250,43 @@ const handleKeyDownRight = (event: KeyboardEvent) => {
 // TODO make any to specific type
 // @列表点击事件
 const handleItemClick = (item: any) => {
+  const selection = window.getSelection()
+  if (!selection) return
+  const range = selection.getRangeAt(0)
   const startOffset = cursorRange.value?.startOffset
-  if (!startOffset) return
+  const startContainer = cursorRange.value?.startContainer
+  if (!startOffset || !startContainer) return
   const inputMessage = getInputMessage()
-  const text = inputMessage.innerHTML
+
+  const text = startContainer.textContent || ''
   const startText = text.substring(0, startOffset - 1)
   const endText = text.substring(startOffset, text.length)
-  const range = document.createRange()
-  range.setStart(inputMessage, 1)
-  inputMessage.innerHTML = ''
-  const spanAt = document.createElement('span')
-  spanAt.innerText = `@${item.name}`
-  spanAt.style.color = '#0087ff'
-  // spanAt.setAttribute('contenteditable', 'false')
-  // range.insertNode(document.createTextNode(' '))
-  range.insertNode(document.createTextNode(endText))
-  range.insertNode(spanAt)
-  range.insertNode(document.createTextNode(startText))
-  console.log(range)
+  const startNode = document.createTextNode(startText)
+  const endNode = document.createTextNode(endText)
+
+  const atNode = document.createElement('span')
+  atNode.innerText = `@${item.name}`
+  atNode.style.color = '#0087ff'
+
+  console.log(startContainer)
+
+  if (inputMessage.parentNode) {
+    inputMessage.appendChild(atNode)
+    // 如果最后一个节点是文本节点，那么直接在后面插入
+  } else if (inputMessage.lastChild?.isSameNode(startContainer)) {
+    inputMessage.removeChild(startContainer)
+    inputMessage.appendChild(startNode)
+    inputMessage.appendChild(atNode)
+    inputMessage.appendChild(endNode)
+    range.setStart(endNode, 0)
+    range.setEnd(endNode, 0)
+  } else {
+    const nextSibling = cursorRange.value?.startContainer.nextSibling ?? null
+    inputMessage.removeChild(startContainer)
+    inputMessage.insertBefore(startNode, nextSibling)
+    inputMessage.insertBefore(atNode, nextSibling)
+    inputMessage.insertBefore(endNode, nextSibling)
+  }
 
   atListVisible.value = false
 }
