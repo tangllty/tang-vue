@@ -41,7 +41,9 @@
         @keydown="handleKeyDown"
         @keydown.left="handleKeyDownLeft"
         @keydown.right="handleKeyDownRight"
-      />
+      >
+        3213<span style="color: rgb(0, 135, 255);" @click="handleAtClick">@糖猫猫</span>123123
+      </div>
       <div
         v-if="atListVisible"
         class="at-list"
@@ -279,6 +281,18 @@ const handleItemClick = (item: any) => {
   console.log(range)
 
   atListVisible.value = false
+}
+
+// @点击事件
+const handleAtClick = () => {
+  const selection = window.getSelection()
+  if (!selection) return
+  const range = selection.getRangeAt(0)
+  const focusNode = selection.focusNode
+  if (!focusNode) return
+  console.log(range)
+  range.setStart(focusNode, 0)
+  range.setEnd(focusNode, range.startContainer.textContent?.length || 0)
 }
 
 const getInputMessage = (): HTMLElement => {
