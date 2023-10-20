@@ -41,9 +41,7 @@
         @keydown="handleKeyDown"
         @keydown.left="handleKeyDownLeft"
         @keydown.right="handleKeyDownRight"
-      >
-        3213<span style="color: rgb(0, 135, 255);" @click="handleAtClick">@糖猫猫</span>123123
-      </div>
+      />
       <div
         v-if="atListVisible"
         class="at-list"
@@ -150,17 +148,6 @@ type SelectionRange = {
   range: Range
 }
 
-const getSelectionRange = (): SelectionRange => {
-  const selection = window.getSelection()
-  if (selection && selection.rangeCount > 0) {
-    return {
-      selection,
-      range: selection.getRangeAt(0)
-    }
-  }
-  throw new Error('getSelectionRange error')
-}
-
 // 获取光标的位置(x, y)
 const getCursorPosition = (): { x: number, y: number } => {
   const selection = window.getSelection()
@@ -217,6 +204,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
   }
 }
 
+// 光标左移逻辑，如果光标在 @xxx 后面或者光标在 @xxx 里面，那么光标移动到 @xxx 前面
 const handleKeyDownLeft = (event: KeyboardEvent) => {
   const selection = window.getSelection()
   if (!selection) return false
@@ -237,6 +225,7 @@ const handleKeyDownLeft = (event: KeyboardEvent) => {
   }
 }
 
+// 光标右移逻辑，如果光标在 @xxx 前面或者光标在 @xxx 里面，那么光标移动到 @xxx 后面
 const handleKeyDownRight = (event: KeyboardEvent) => {
   const selection = window.getSelection()
   if (!selection) return false
