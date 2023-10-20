@@ -25,20 +25,41 @@
       <el-button :icon="Files" circle />
     </div>
     <div class="input-wrapper">
-      <el-input
+      <!-- <el-input
         v-model="inputMessage"
         type="textarea"
         :rows="6"
         placeholder="请输入内容..."
         @keydown.enter.exact.prevent="handleInputMessage"
         @keydown.enter.shift.exact.prevent="inputMessage += '\n'"
+      /> -->
+      <div
+        ref="inputMessageRef"
+        style="border: 1px solid grey; width: 100%; height: 100px;"
+        contenteditable="true"
+        @keyup="handleKeyUp"
+        @keydown="handleKeyDown"
+        @keydown.left="handleKeyDownLeft"
+        @keydown.right="handleKeyDownRight"
       />
+      <div
+        v-if="atListVisible"
+        class="at-list"
+        :style="{ left: cursorPosition.x + 'px', top: cursorPosition.y + 20 + 'px' }"
+      >
+        <div
+          v-for="(item, index) in atList"
+          :key="item.id"
+          :class="{'active': index === activeIndex}"
+          @click="handleItemClick(item)"
+        >{{ item.name }}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
+import { reactive, ref, toRefs } from 'vue'
 import { Files, Picture } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
@@ -55,16 +76,44 @@ const props = defineProps<{
   selectedItem: AppChatList | null
 }>()
 
+const atList = [
+  {
+    name: '糖猫猫',
+    id: 1
+  },
+  {
+    name: '猫猫糖',
+    id: 2
+  },
+  {
+    name: '糖猫猫猫',
+    id: 3
+  }
+]
+
 const state = reactive({
   inputMessage: '',
   appChatMessageForm: {} as AppChatMessageForm,
-  replyMessage: null as AppChatMessage | null
+  replyMessage: null as AppChatMessage | null,
+  cursorPosition: {
+    x: 0,
+    y: 0
+  },
+  cursorRange: undefined as Range | undefined,
+  atListVisible: false,
+  activeIndex: 0
 })
 
 const {
   inputMessage,
-  replyMessage
+  replyMessage,
+  cursorPosition,
+  cursorRange,
+  atListVisible,
+  activeIndex
 } = toRefs(state)
+
+const inputMessageRef = ref<HTMLInputElement | null>(null)
 
 const handleInputMessage = async () => {
   if (!props.selectedItem) return
@@ -92,6 +141,148 @@ const handleReply = (item: AppChatMessage): void => {
 // 取消回复
 const handleCancelReply = (): void => {
   state.replyMessage = null
+}
+
+type SelectionRange = {
+  selection: Selection
+  range: Range
+}
+
+const getSelectionRange = (): SelectionRange => {
+  const selection = window.getSelection()
+  if (selection && selection.rangeCount > 0) {
+    return {
+      selection,
+      range: selection.getRangeAt(0)
+    }
+  }
+  throw new Error('getSelectionRange error')
+}
+
+// 获取光标的位置(x, y)
+const getCursorPosition = (): { x: number, y: number } => {
+  const selection = window.getSelection()
+  if (selection) {
+    const range = selection.getRangeAt(0)
+    const rect = range.getBoundingClientRect()
+    return {
+      x: rect.left,
+      y: rect.top
+    }
+  }
+  throw new Error('getCursorPosition error')
+}
+
+// @功能
+const handleAt = () => {
+  const cursorPosition = getCursorPosition()
+  state.cursorPosition.x = cursorPosition.x
+  state.cursorPosition.y = cursorPosition.y
+
+  const range = window.getSelection()?.getRangeAt(0)
+  state.cursorRange = range
+  state.atListVisible = true
+}
+
+const handleKeyUp = (e: KeyboardEvent) => {
+  const selection = window.getSelection()
+  if (!selection) return
+  const range = selection.getRangeAt(0)
+  const focusNode = selection.focusNode
+  if (!focusNode) return
+
+  if (e.key === '@') {
+    handleAt()
+  }
+}
+
+const handleKeyDown = (e: KeyboardEvent) => {
+  const arrowDown = 'ArrowDown'
+  const arrowUp = 'ArrowUp'
+
+  if (e.key === arrowDown || e.key === arrowUp) {
+    e.preventDefault()
+
+    if (e.key === arrowDown && activeIndex.value < atList.length - 1) {
+      activeIndex.value++
+      return
+    }
+
+    if (e.key === arrowUp && activeIndex.value > 0) {
+      activeIndex.value--
+      return
+    }
+  }
+}
+
+const handleKeyDownLeft = (event: KeyboardEvent) => {
+  const selection = window.getSelection()
+  if (!selection) return false
+  const range = selection.getRangeAt(0)
+  const focusNode = selection.focusNode
+  if (!focusNode) return false
+  console.log(range)
+
+  if (range.startContainer.nodeValue?.includes('@') && range.startOffset !== 0) {
+    range.setStart(range.startContainer, 1)
+    range.setEnd(range.startContainer, 1)
+  }
+  if (range.startOffset === 0 && range.startContainer.previousSibling?.nodeName === 'SPAN') {
+    const firstChild = range.startContainer.previousSibling.firstChild
+    if (!firstChild) return false
+    range.setStart(firstChild, 1)
+    range.setEnd(firstChild, 1)
+  }
+}
+
+const handleKeyDownRight = (event: KeyboardEvent) => {
+  const selection = window.getSelection()
+  if (!selection) return false
+  const range = selection.getRangeAt(0)
+  const focusNode = selection.focusNode
+  if (!focusNode) return false
+  const startContainer = range.startContainer
+  const offsetNumber = startContainer.textContent?.length
+  if (!offsetNumber) return false
+
+  if (range.startContainer.nodeValue?.includes('@') && range.startOffset !== offsetNumber) {
+    range.setStart(startContainer,  offsetNumber - 1)
+    range.setEnd(startContainer, offsetNumber - 1)
+  } else if ((range.startOffset === range.startContainer.textContent?.length) && range.startContainer.nextSibling?.nodeName === 'SPAN') {
+    const firstChild = range.startContainer.nextSibling.firstChild
+    if (!firstChild) return false
+    range.setStart(firstChild, offsetNumber - 1)
+    range.setEnd(firstChild, offsetNumber - 1)
+  }
+}
+
+// TODO make any to specific type
+// @列表点击事件
+const handleItemClick = (item: any) => {
+  const startOffset = cursorRange.value?.startOffset
+  if (!startOffset) return
+  const inputMessage = getInputMessage()
+  const text = inputMessage.innerHTML
+  const startText = text.substring(0, startOffset - 1)
+  const endText = text.substring(startOffset, text.length)
+  const range = document.createRange()
+  range.setStart(inputMessage, 1)
+  inputMessage.innerHTML = ''
+  const spanAt = document.createElement('span')
+  spanAt.innerText = `@${item.name}`
+  spanAt.style.color = '#0087ff'
+  // spanAt.setAttribute('contenteditable', 'false')
+  // range.insertNode(document.createTextNode(' '))
+  range.insertNode(document.createTextNode(endText))
+  range.insertNode(spanAt)
+  range.insertNode(document.createTextNode(startText))
+  console.log(range)
+
+  atListVisible.value = false
+}
+
+const getInputMessage = (): HTMLElement => {
+  return proxy.$refs.inputMessageRef as HTMLElement
 }
 
 defineExpose({
@@ -145,6 +336,35 @@ defineExpose({
 
     .el-button {
       border-radius: 4px;
+    }
+
+    .at-list {
+      width: 300px;
+      border: 1px solid #cecece;
+      position: fixed;
+      z-index: 999;
+
+      div {
+        width: 100%;
+        height: 30px;
+        background-color: #fbfbfb;
+        border-bottom: 1px solid #ebebeb;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #eaeaea;
+        }
+      }
+
+      div:last-child {
+        border-bottom: none;
+      }
+
+      .active {
+        background-color: #ebebeb;
+      }
     }
   }
 }
