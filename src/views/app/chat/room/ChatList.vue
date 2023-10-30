@@ -6,7 +6,11 @@
       :key="item.nickname"
       class="flex"
     >
-      <div @click="handleItemClick(item)" class="chat-item-wrapper" :class="{ 'active': selectedItem === item, 'stick': item.stickFlag === '1' }">
+      <div
+        @click="handleItemClick(item)"
+        class="chat-item-wrapper"
+        :class="{ 'active': selectedItem === item, 'stick': item.stickFlag === '1' }"
+      >
         <div class="chat-item-wrapper__avatar-wrapper">
           <el-avatar :src="proxy.$path(item.avatar)" />
         </div>
