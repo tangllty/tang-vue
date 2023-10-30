@@ -16,7 +16,7 @@
             <span class="time">{{ item.time }}</span>
           </div>
           <div class="content-body">
-            <el-text truncated>{{ item.message }}</el-text>
+            <div truncated v-html="item.message" />
             <el-badge v-if="item.unreadCount > 0" :value="item.unreadCount" />
           </div>
         </div>

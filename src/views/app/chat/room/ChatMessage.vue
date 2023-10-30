@@ -27,11 +27,10 @@
                 <div class="message-box">
                   <div
                     class="message"
+                    v-html="item.content"
                     @mouseover="handleMouseOver"
                     @mouseout="handleMouseOut"
-                  >
-                    {{ item.content }}
-                  </div>
+                  />
                 </div>
                   <template #dropdown>
                   <el-dropdown-menu>
@@ -47,9 +46,10 @@
                 v-if="item.replyMessage"
                 class="reply-message"
               >
-                <div class="message">
-                  {{ item.replyMessage.content }}
-                </div>
+                <div
+                  class="message"
+                  v-html="item.replyMessage.content"
+                />
               </div>
             </div>
             <el-avatar :src="proxy.$path(item.avatar)" />
@@ -70,11 +70,10 @@
                 <div class="message-box">
                   <div
                     class="message"
+                    v-html="item.content"
                     @mouseover="handleMouseOver"
                     @mouseout="handleMouseOut"
-                  >
-                    {{ item.content }}
-                  </div>
+                  />
                 </div>
                 <template #dropdown>
                   <el-dropdown-menu>
@@ -90,9 +89,10 @@
                 v-if="item.replyMessage"
                 class="reply-message"
               >
-                <div class="message">
-                  {{ item.replyMessage.content }}
-                </div>
+                <div
+                  class="message"
+                  v-html="item.replyMessage.content"
+                />
               </div>
             </div>
           </div>
@@ -201,15 +201,35 @@ const handleReply = (replyMessage: AppChatMessage) => {
 // 鼠标移入
 const handleMouseOver = (event: MouseEvent) => {
   const target = event.target as HTMLElement
-  const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
-  targetElement.style.visibility = 'visible'
+
+  if (target.nodeName === 'DIV') {
+    const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
+    targetElement.style.visibility = 'visible'
+    return
+  }
+
+  if (target.nodeName === 'SPAN') {
+    const targetElement = target.parentElement?.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
+    targetElement.style.visibility = 'visible'
+    return
+  }
 }
 
 // 鼠标移出
 const handleMouseOut = (event: MouseEvent) => {
   const target = event.target as HTMLElement
-  const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
-  targetElement.style.visibility = 'hidden'
+
+  if (target.nodeName === 'DIV') {
+    const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
+    targetElement.style.visibility = 'hidden'
+    return
+  }
+
+  if (target.nodeName === 'SPAN') {
+    const targetElement = target.parentElement?.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
+    targetElement.style.visibility = 'hidden'
+    return
+  }
 }
 
 onMounted(() => {

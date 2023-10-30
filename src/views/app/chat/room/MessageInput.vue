@@ -7,9 +7,10 @@
         plain
         text
       >定位(未实装)</el-button>
-      <div class="reply-message">
-        {{ replyMessage?.content }}
-      </div>
+      <div
+        class="reply-message"
+        v-html="replyMessage?.content"
+      />
       <el-button
         type="danger"
         size="small"
