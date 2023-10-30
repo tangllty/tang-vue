@@ -25,24 +25,17 @@
       <el-button :icon="Files" circle />
     </div>
     <div class="input-wrapper">
-      <!-- <el-input
-        v-model="inputMessage"
-        type="textarea"
-        :rows="6"
-        placeholder="请输入内容..."
-        @keydown.enter.exact.prevent="handleInputMessage"
-        @keydown.enter.shift.exact.prevent="inputMessage += '\n'"
-      /> -->
       <div
         ref="inputMessageRef"
-        style="border: 1px solid grey; width: 100%; height: 100px;"
         contenteditable="true"
+        class="input-message"
         @input="handleInput"
         @keyup="handleKeyUp"
         @keydown="handleKeyDown"
         @keydown.left="handleKeyDownLeft"
         @keydown.right="handleKeyDownRight"
-      >3213<span style="color: #0087ff;" @click="handleAtClick">@糖猫猫</span>123456<span style="color: #0087ff;" @click="handleAtClick">@糖猫猫猫</span></div>
+        @keydown.enter.exact.prevent="handleInputMessage"
+      />
       <div
         v-if="atListVisible"
         class="at-list"
@@ -93,7 +86,6 @@ const atList = [
 ]
 
 const state = reactive({
-  inputMessage: '',
   appChatMessageForm: {} as AppChatMessageForm,
   replyMessage: null as AppChatMessage | null,
   cursorPosition: {
@@ -106,7 +98,6 @@ const state = reactive({
 })
 
 const {
-  inputMessage,
   replyMessage,
   cursorPosition,
   cursorRange,
@@ -124,12 +115,13 @@ const handleInputMessage = async () => {
     state.appChatMessageForm.replyMessageId = state.replyMessage.messageId
     state.appChatMessageForm.replyMessage = state.replyMessage
   }
-  state.appChatMessageForm.content = state.inputMessage
+  const inputMessage = getInputMessage()
+  state.appChatMessageForm.content = inputMessage.innerHTML
   const res = await addAppChatMessage(state.appChatMessageForm)
   proxy.$emit('sendMessage', res.data)
   res.data.userId = props.selectedItem.friendId
   proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
-  state.inputMessage = ''
+  inputMessage.innerHTML = ''
   state.appChatMessageForm = {} as AppChatMessageForm
   state.replyMessage = null
 }
@@ -273,6 +265,7 @@ const handleItemClick = (item: any) => {
   const atNode = document.createElement('span')
   atNode.innerText = `@${item.name}`
   atNode.style.color = '#0087ff'
+  atNode.addEventListener('click', handleAtClick)
 
   console.log(startContainer)
 
@@ -364,6 +357,12 @@ defineExpose({
 
     .el-button {
       border-radius: 4px;
+    }
+
+    .input-message {
+      width: 100%;
+      height: 100px;
+      border: 1px solid grey;
     }
 
     .at-list {
