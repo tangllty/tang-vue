@@ -3,6 +3,8 @@ import { Ref, ref, UnwrapRef } from 'vue'
 import { store } from '@/store'
 import { resetRouter } from '@/router'
 import { AxiosResponse } from 'axios'
+import sha256 from 'crypto-js/sha256'
+import base64 from 'crypto-js/enc-base64'
 import { getToken, removeToken, setToken } from '@/utils/auth'
 import { login as loginApi, logout as logoutApi, getInfo as getInfoApi } from '@/api/auth'
 import { LoginForm } from '@/api/auth/types'
@@ -20,7 +22,12 @@ export const useUserStore = defineStore('user', () => {
   // 登录
   const login = async (loginForm: LoginForm): Promise<void> => {
     try {
-      const res: any = await loginApi(loginForm)
+      // 加密后的表单
+      const loginFormEncrypted: LoginForm = {
+        ...loginForm,
+        password: base64.stringify(sha256(loginForm.password))
+      }
+      const res: any = await loginApi(loginFormEncrypted)
       const getToken: string = res.data.token
       token.value = getToken
       setToken(getToken)
