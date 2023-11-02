@@ -15,7 +15,9 @@ export default {
       password: 'Password',
       passwordPlaceholder: 'Please enter password',
       email: 'Email',
-      emailPlaceholder: 'Please enter email'
+      emailPlaceholder: 'Please enter email',
+      captcha: 'Captcha',
+      captchaPlaceholder: 'Please enter captcha',
     },
     layout: {
       profile: 'Profile',

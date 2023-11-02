@@ -33,3 +33,12 @@ export const getRoutes = () => {
     method: 'get'
   })
 }
+
+// 获取验证码
+export const getCaptcha = () => {
+  return request({
+    url: '/captcha',
+    method: 'get'
+  })
+}
+

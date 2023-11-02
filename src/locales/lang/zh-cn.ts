@@ -15,7 +15,9 @@ export default {
       password: '密码',
       passwordPlaceholder: '请输入密码',
       email: '邮箱',
-      emailPlaceholder: '请输入邮箱'
+      emailPlaceholder: '请输入邮箱',
+      captcha: '验证码',
+      captchaPlaceholder: '请输入验证码',
     },
     layout: {
       profile: '个人中心',

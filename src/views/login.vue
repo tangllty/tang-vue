@@ -37,6 +37,24 @@
                   :prefix-icon="Lock"
                 />
               </el-form-item>
+              <el-form-item :label="$t('login.captcha')" prop="captcha">
+                <el-input
+                  v-model="loginForm.captcha.text"
+                  type="text"
+                  autocomplete="off"
+                  @keyup.enter="submitForm(loginRuleFormRef)"
+                  :placeholder="$t('login.captchaPlaceholder')"
+                  :prefix-icon="Message"
+                  style="width: 50%;"
+                />
+                <div style="width: 24%; margin-left: 20px; height: 31px">
+                  <el-image
+                    v-loading="loading"
+                    :src="captchaUrl"
+                    @click="handleCaptcha"
+                  />
+                </div>
+              </el-form-item>
               <el-form-item>
                 <el-button
                   type="primary"
@@ -78,6 +96,24 @@
                   :prefix-icon="Lock"
                 />
               </el-form-item>
+              <el-form-item :label="$t('login.captcha')" prop="captcha">
+                <el-input
+                  v-model="loginForm.captcha.text"
+                  type="text"
+                  autocomplete="off"
+                  @keyup.enter="submitForm(loginRuleFormRef)"
+                  :placeholder="$t('login.captchaPlaceholder')"
+                  :prefix-icon="Message"
+                  style="width: 50%;"
+                />
+                <div style="width: 24%; margin-left: 20px; height: 31px">
+                  <el-image
+                    v-loading="loading"
+                    :src="captchaUrl"
+                    @click="handleCaptcha"
+                  />
+                </div>
+              </el-form-item>
               <el-form-item>
                 <el-button
                   type="primary"
@@ -95,13 +131,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue'
+import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElButton, ElForm, ElFormItem, ElInput, ElTabPane, ElTabs, FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { LoginType } from '@/enums'
-import { LoginForm } from '@/api/auth/types'
+import { getCaptcha } from '@/api/auth'
+import { LoginForm, CaptchaForm } from '@/api/auth/types'
 import settings from '@/settings'
 
 const proxy = getProxy()
@@ -113,14 +150,22 @@ const state = reactive({
     username: 'admin',
     email: 'admin@163.com',
     password: '123456',
-    loginType: LoginType.USERNAME
+    loginType: LoginType.USERNAME,
+    captcha: {
+      id: 0,
+      text: ''
+    } as CaptchaForm
   } as LoginForm,
-  activeName: LoginType.USERNAME
+  activeName: LoginType.USERNAME,
+  loading: false,
+  captchaUrl: ''
 })
 
 const {
   loginForm,
-  activeName
+  activeName,
+  loading,
+  captchaUrl
 } = toRefs(state)
 
 const loginRuleFormRef = ref<FormInstance>()
@@ -143,6 +188,16 @@ const loginRules = reactive<FormRules>({
 // 切换登陆方式
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   state.loginForm.loginType = tab.paneName as LoginType
+  handleCaptcha()
+}
+
+// 获取验证码
+const handleCaptcha = async () => {
+  state.loading = true
+  const res = await getCaptcha()
+  state.loginForm.captcha.id = res.data.id
+  state.captchaUrl = `data:image/png;base64,${res.data.text}`
+  state.loading = false
 }
 
 // 提交表单
@@ -168,7 +223,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       return
     }
     await proxy.$router.push({ path: '/' })
-  } catch (error) {
+  } catch (error: any) {
+    if (error.message === '验证码错误' || error.message === '验证码已过期') {
+      handleCaptcha()
+    }
     console.log('error submit!')
   }
 }
@@ -177,6 +235,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.resetFields()
 }
+
+onMounted(() => {
+  handleCaptcha()
+})
 </script>
 
 <style lang="scss" scoped>

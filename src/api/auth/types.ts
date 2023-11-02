@@ -6,4 +6,11 @@ export interface LoginForm {
     email: string
     password: string
     loginType: LoginType
+    captcha: CaptchaForm
+}
+
+// 验证码表单对象
+export interface CaptchaForm {
+    id: number
+    text: string
 }
