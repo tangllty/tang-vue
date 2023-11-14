@@ -65,4 +65,5 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         port: 22
         script: |
+          cd /root/tang-vue/
           unzip dist.zip -d dist
