@@ -66,4 +66,4 @@ jobs:
         port: 22
         script: |
           cd /root/tang-vue/
-          unzip dist.zip -d dist
+          unzip dist.zip
