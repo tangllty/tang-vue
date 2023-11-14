@@ -56,5 +56,5 @@ jobs:
         port: 22
         source: 'dist.zip'
         target: /root/tang-vue/
-      run: |
-        unzip dist.zip -d dist
+        script: |
+          unzip dist.zip -d dist
