@@ -47,7 +47,7 @@ jobs:
           zip -r dists/dist-$(date +%Y%m%d%H%M%S).zip dist/
           rm -rf dist/
 
-    - name: Deploy to server
+    - name: Upload to server
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_HOST }}
@@ -56,5 +56,13 @@ jobs:
         port: 22
         source: 'dist.zip'
         target: /root/tang-vue/
+
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: 22
         script: |
           unzip dist.zip -d dist
