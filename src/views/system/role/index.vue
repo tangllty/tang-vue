@@ -2,7 +2,11 @@
   <div>
     <!-- 信息检索 -->
     <el-card class="mb-10">
-      <el-form ref="roleQueryFormRef" :model="queryParams" inline>
+      <el-form
+        ref="roleQueryFormRef"
+        :model="queryParams"
+        inline
+      >
         <el-form-item label="角色名称" prop="roleName">
           <el-input
             v-model="queryParams.roleName"
@@ -201,6 +205,15 @@
             show-checkbox
           />
         </el-form-item>
+        <el-form-item label="字典权限" prop="dictIds">
+          <el-tree
+            ref="dictTreeRef"
+            :data="dictTree"
+            node-key="value"
+            :props="{ children: 'children', label: 'label' }"
+            show-checkbox
+          />
+        </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input
             v-model="roleForm.remark"
@@ -232,6 +245,7 @@ import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listRole, getRole, addRole, editRole, changeStatus, deleteRole, deleteRoles } from '@/api/system/role'
 import { menuTree as selectMenuTree } from '@/api/system/menu'
+import { listDictTree } from '@/api/system/dict'
 import { SysRole , SysRoleForm, SysRoleQuery } from '@/api/system/role/types'
 
 const proxy = getProxy()
@@ -250,6 +264,8 @@ const state = reactive({
   roleList: [] as SysRole[],
   // 菜单树数据
   menuTree: [] as TreeSelect[],
+  // 字典树数据
+  dictTree: [] as TreeSelect[],
   // 查询参数
   queryParams: {
     pageNum: 1,
@@ -271,12 +287,14 @@ const {
   total,
   roleList,
   menuTree,
+  dictTree,
   queryParams,
   roleDialog,
   roleForm
 } = toRefs(state)
 
 const menuTreeRef = ref<InstanceType<typeof ElTree>>()
+const dictTreeRef = ref<InstanceType<typeof ElTree>>()
 const roleRuleFormRef = ref<FormInstance>()
 const roleQueryFormRef = ref<FormInstance>()
 const roleRules = reactive<FormRules>({
@@ -306,6 +324,7 @@ const handleAdd = async () => {
   } as SysRoleForm
 
   await getMenuTree()
+  await getDictTree()
 
   state.roleDialog = {
     title: '新增角色信息',
@@ -320,6 +339,12 @@ const getMenuTree = async () => {
   state.menuTree = res.data
 }
 
+// 查询字典树
+const getDictTree = async () => {
+  const res: any = await listDictTree()
+  state.dictTree = res.data
+}
+
 // 修改角色信息
 const handleEdit = async (row: any) => {
   let roleId = state.roleId
@@ -327,10 +352,13 @@ const handleEdit = async (row: any) => {
     roleId = row.roleId
   }
   await getMenuTree()
+  await getDictTree()
   const res: any = await getRole(roleId)
   state.roleForm = res.data
   const menuIds = res.data.menuIds
+  const dictIds = res.data.dictIds
   menuIds.forEach((menuId: number) => menuTreeRef.value?.setChecked(menuId, true, false))
+  dictIds.forEach((dictId: number) => dictTreeRef.value?.setChecked(dictId, true, false))
 
   state.roleDialog = {
     title: '修改角色信息',
@@ -414,6 +442,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     halfCheckedNodes?.forEach(halfCheckedNode => menuIds.push(halfCheckedNode.value))
     checkedNodes?.forEach(checkedNode => menuIds.push(checkedNode.value))
     state.roleForm.menuIds = menuIds
+
+    const dictHalfCheckedNodes = dictTreeRef.value?.getHalfCheckedNodes()
+    const dictCheckedNodes = dictTreeRef.value?.getCheckedNodes()
+    const dictIds: string[] = []
+    dictHalfCheckedNodes?.forEach(halfCheckedNode => dictIds.push(halfCheckedNode.value))
+    dictCheckedNodes?.forEach(checkedNode => dictIds.push(checkedNode.value))
+    state.roleForm.dictIds = dictIds
 
     if (roleDialog.value.type == 'add') {
       await addRole(state.roleForm)

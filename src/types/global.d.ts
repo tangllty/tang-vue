@@ -18,7 +18,7 @@ declare global {
 
   // 树结构参数
   type TreeSelect = {
-    value: number
+    value: number | string
     label: string
     checked: boolean
     children: TreeSelect[]

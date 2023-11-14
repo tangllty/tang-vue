@@ -18,6 +18,7 @@ export interface SysRoleForm {
   sort: number
   status: string
   menuIds: number[]
+  dictIds: string[]
   remark: string
 }
 

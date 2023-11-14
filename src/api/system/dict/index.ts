@@ -10,6 +10,14 @@ export const listDictType = (queryParams: SysDictTypeQuery) => {
   })
 }
 
+// 获取字典树下拉选项
+export const listDictTree = () => {
+  return request({
+    url: '/system/dict/type/dict-tree',
+    method: 'get'
+  })
+}
+
 // 查询字典类型信息
 export const getDictType = (typeId: number) => {
   return request({
