@@ -3,7 +3,7 @@
       <el-card class="login">
         <template #header>
           <div class="login-header">
-            <span>{{ settings.title }}</span>
+            <span>{{ settings.loginTitle }}</span>
           </div>
         </template>
         <el-tabs v-model="activeName" @tab-click="handleClick">
