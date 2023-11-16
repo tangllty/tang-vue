@@ -385,13 +385,14 @@ const handleEditTable = async (tableId: number) => {
 
 // 显示对话框
 const handleShow = async (tableId: number) => {
-  await handleEditTable(tableId)
   state.editTableDialog = {
     title: '编辑[]表代码生成信息',
     type: 'edit',
     visible: true
   }
   state.tableColumnList = []
+
+  await handleEditTable(tableId)
 }
 
 // 关闭对话框
