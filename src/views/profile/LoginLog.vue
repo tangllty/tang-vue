@@ -36,7 +36,7 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs } from 'vue'
-import { listSysLogLoginByUser } from '@/api/profile'
+import { listLogLoginByUser } from '@/api/profile'
 import { SysLogLogin, SysLogLoginQuery } from '@/api/system/log/login/types'
 
 const state = reactive({
@@ -64,7 +64,7 @@ const {
 } = toRefs(state)
 
 const handleList = async () => {
-  const res: any = await listSysLogLoginByUser(state.queryParams)
+  const res: any = await listLogLoginByUser(state.queryParams)
   state.sysLogLoginList = res.rows
   state.total = res.total
 }

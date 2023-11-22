@@ -2,7 +2,7 @@
   <svg
     aria-hidden="true"
     class="svg-icon"
-    :style="'width:' + size + ';height:' + size"
+    :style="`width: ${size}; height: ${size};`"
   >
     <use :xlink:href="symbolId" :fill="color" />
   </svg>

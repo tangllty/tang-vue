@@ -13,7 +13,11 @@
         :key="index"
         @click="selectedIcon(item)"
       >
-        <svg-icon color="#999" :name="item" class="mr-5" />
+        <svg-icon
+          color="#999"
+          :name="item"
+          class="mr-5"
+        />
         <span>{{ item }}</span>
       </div>
     </div>
@@ -38,19 +42,19 @@ const iconName = ref('')
 
 const emit = defineEmits(['selected'])
 
-const filterIcons = () => {
+const filterIcons = (): void => {
   iconList.value = icons
   if (iconName.value) {
     iconList.value = icons.filter(item => item.indexOf(iconName.value) !== -1)
   }
 }
 
-const selectedIcon = (name: string) => {
+const selectedIcon = (name: string): void => {
   emit('selected', name)
   document.body.click()
 }
 
-const reset = () => {
+const reset = (): void => {
   iconName.value = ''
   iconList.value = icons
 }

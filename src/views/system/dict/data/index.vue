@@ -2,7 +2,11 @@
   <div>
     <!-- 信息检索 -->
     <el-card class="mb-10">
-      <el-form ref="dictDataQueryFormRef" :model="queryParams" :inline="true">
+      <el-form
+        ref="dictDataQueryFormRef"
+        :model="queryParams"
+        inline
+      >
         <el-form-item label="字典标签" prop="dataLabel">
           <el-input
             v-model="queryParams.dataLabel"

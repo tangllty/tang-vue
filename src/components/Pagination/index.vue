@@ -56,11 +56,11 @@ const pageSize = computed<number | undefined>({
   set: (val) => proxy.$emit('update:pageSize', val)
 })
 
-const handleSizeChange = (val: number) => {
+const handleSizeChange = (val: number): void => {
   proxy.$emit('pagination', { pageNum: currentPage, pageSize: val })
 }
 
-const handleCurrentChange = (val: number) => {
+const handleCurrentChange = (val: number): void => {
   currentPage.value = val
   proxy.$emit('pagination', { pageNum: val, pageSize: pageSize })
 }

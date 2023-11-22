@@ -101,11 +101,11 @@
 
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { addAppFriendApply, editAppFriendApply } from '@/api/app/chat/friend-apply'
-import { AppFriendApplyForm } from '@/api/app/chat/friend-apply/types'
+import type { AppFriendApplyForm } from '@/api/app/chat/friend-apply/types'
 import { getUser } from '@/api/system/user'
 
 const userStore = useUserStore()

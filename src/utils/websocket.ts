@@ -12,9 +12,9 @@ class WebSocketService {
   // 消息类型与回调函数的映射
   public messages: { [key: string]: Function[] }
   // 心跳时间间隔，单位：毫秒
-  private heartbeatInterval: number = 30000
+  private heartbeatInterval: number = 30 * 1000
   // 重连延迟时间，单位：毫秒
-  private reconnectDelay: number = 5000
+  private reconnectDelay: number = 5 * 1000
 
   // 构造函数
   constructor() {

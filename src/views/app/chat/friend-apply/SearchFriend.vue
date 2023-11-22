@@ -78,7 +78,7 @@ import { reactive, ref, toRefs } from 'vue'
 import { Edit } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listUserFuzzy } from '@/api/app/chat/friend-apply'
-import { SysUser, SysUserFuzzyQuery } from '@/api/system/user/types'
+import type { SysUser, SysUserFuzzyQuery } from '@/api/system/user/types'
 import SendRequest from './SendRequest.vue'
 
 const proxy = getProxy()

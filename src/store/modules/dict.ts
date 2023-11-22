@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { Ref, ref } from 'vue'
-import { SysDictData } from '@/api/system/dict/data/types'
+import type { SysDictData } from '@/api/system/dict/data/types'
 
 export const useDictStore = defineStore('dict', () => {
   const dict: Ref<Map<string, SysDictData[]>> = ref<Map<string, SysDictData[]>>(new Map())

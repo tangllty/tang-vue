@@ -151,7 +151,7 @@ import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { editUserInfo, editUserPassword } from '@/api/profile'
 import { getRoleSelect as selectRoleSelect } from '@/api/system/user'
-import { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
+import type { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 
 const proxy = getProxy()

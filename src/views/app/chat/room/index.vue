@@ -19,7 +19,11 @@
             <ChatMessage ref="chatMessageRef" @replyMessage="handleReply" />
           </div>
           <div class="chat-input">
-            <MessageInput ref="messageInputRef" :selectedItem="selectedItem" @sendMessage="handleSendMessage" />
+            <MessageInput
+              ref="messageInputRef"
+              :selectedItem="selectedItem"
+              @sendMessage="handleSendMessage"
+            />
           </div>
         </div>
 

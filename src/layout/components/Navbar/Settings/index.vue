@@ -26,7 +26,11 @@
     <template #footer>
       <el-button @click="handleClose">取消</el-button>
       <el-button type="primary" @click="handleSubmit">保存配置</el-button>
-      <el-button type="primary" @click="handleReset" plain>重置配置</el-button>
+      <el-button
+        type="primary"
+        @click="handleReset"
+        plain
+      >重置配置</el-button>
     </template>
   </el-drawer>
 </template>

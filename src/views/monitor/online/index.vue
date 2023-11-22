@@ -2,7 +2,11 @@
   <div>
     <!-- 信息检索 -->
     <el-card class="mb-10">
-      <el-form ref="onlineUserQueryFormRef" :model="queryParams" :inline="true">
+      <el-form
+        ref="onlineUserQueryFormRef"
+        :model="queryParams"
+        inline
+      >
         <el-form-item label="用户名称" prop="username">
           <el-input
             v-model="queryParams.username"

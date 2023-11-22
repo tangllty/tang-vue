@@ -3,7 +3,7 @@
     <!-- 信息检索 -->
     <el-card class="mb-10">
       <el-form
-        ref="sysLogLoginQueryFormRef"
+        ref="logLoginQueryFormRef"
         :model="queryParams"
         inline
       >
@@ -201,7 +201,7 @@ const {
   queryParams
 } = toRefs(state)
 
-const sysLogLoginQueryFormRef = ref<FormInstance>()
+const logLoginQueryFormRef = ref<FormInstance>()
 
 // 查询登陆日志列表
 const handleList = async () => {
@@ -242,7 +242,7 @@ const handleDeletes = async () => {
 
 // 重置表单
 const resetQuery = async () => {
-  sysLogLoginQueryFormRef.value?.resetFields()
+  logLoginQueryFormRef.value?.resetFields()
   await handleList()
 }
 

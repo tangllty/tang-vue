@@ -12,7 +12,7 @@
       :model="importTableForm"
       inline
     >
-    <el-form-item label="表名称" prop="tableName">
+      <el-form-item label="表名称" prop="tableName">
         <el-input
           v-model="queryParams.tableName"
           placeholder="表名称"

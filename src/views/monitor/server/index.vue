@@ -68,7 +68,11 @@
           </div>
         </template>
         <el-table :data="[cpu]">
-          <el-table-column prop="name" label="名称" width="320" />
+          <el-table-column
+            prop="name"
+            label="名称"
+            width="320"
+          />
           <el-table-column prop="cpuNum" label="核心数" />
           <el-table-column prop="total" label="总的使用率" />
           <el-table-column prop="sys" label="系统使用率" />

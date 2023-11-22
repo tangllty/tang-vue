@@ -11,10 +11,7 @@
             class="ml-10"
           >{{ userStore.user.nickname }}</el-text>
         </div>
-        <el-menu
-          :default-active="activeMenu"
-          router
-        >
+        <el-menu :default-active="activeMenu" router>
           <el-menu-item index="/profile/info">
             <el-icon><House /></el-icon>
             <span>个人资料</span>

@@ -52,7 +52,7 @@ const {
 } = toRefs(state)
 
 // 面板中显示的颜色发生改变时触发
-const handleActiveChange = (color: string | null) => {
+const handleActiveChange = (color: string | null): void => {
   if (!color) {
     removeTheme()
     return
@@ -61,7 +61,7 @@ const handleActiveChange = (color: string | null) => {
 }
 
 // 绑定值发生改变时触发
-const handleChange = (color: string | null) => {
+const handleChange = (color: string | null): void => {
   if (!color) {
     removeTheme()
     return

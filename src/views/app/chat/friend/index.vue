@@ -213,9 +213,9 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listAppFriend, getAppFriend, addAppFriend, editAppFriend, deleteAppFriend, deleteAppFriends } from '@/api/app/chat/friend'
+import { listAppFriend, getAppFriend, editAppFriend, deleteAppFriend, deleteAppFriends } from '@/api/app/chat/friend'
 import { AppFriend, AppFriendForm, AppFriendQuery } from '@/api/app/chat/friend/types'
 import { listAppChatListAll, addAppChatList } from '@/api/app/chat/chat-list'
 import { AppChatListForm } from '@/api/app/chat/chat-list/types'

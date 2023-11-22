@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts" setup>
-import { SysDictData } from '@/api/system/dict/data/types'
+import type { SysDictData } from '@/api/system/dict/data/types'
 
-const props = defineProps({
+defineProps({
   data: {
     type: Array<SysDictData>,
     required: true

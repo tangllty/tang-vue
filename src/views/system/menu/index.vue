@@ -2,7 +2,11 @@
   <div>
     <!-- 信息检索 -->
     <el-card class="mb-10">
-      <el-form ref="menuQueryFormRef" :model="queryParams" inline>
+      <el-form
+        ref="menuQueryFormRef"
+        :model="queryParams"
+        inline
+      >
         <el-form-item label="菜单名称" prop="menuName">
           <el-input
             v-model="queryParams.menuName"

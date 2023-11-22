@@ -30,7 +30,7 @@ export const editUserPassword = (passwordForm: SysUserPasswordForm) => {
 }
 
 // 获取用户登陆日志列表
-export const listSysLogLoginByUser = (queryParams: SysLogLoginQuery) => {
+export const listLogLoginByUser = (queryParams: SysLogLoginQuery) => {
   return request({
     url: '/profile/login-log',
     method: 'get',

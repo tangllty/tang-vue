@@ -2,7 +2,11 @@
   <div>
     <!-- 信息检索 -->
     <el-card class="mb-10">
-      <el-form ref="dictTypeQueryFormRef" :model="queryParams" :inline="true">
+      <el-form
+        ref="dictTypeQueryFormRef"
+        :model="queryParams"
+        inline
+      >
         <el-form-item label="字典名称" prop="typeName">
           <el-input
             v-model="queryParams.typeName"
@@ -98,7 +102,11 @@
           label="字典名称"
           align="center"
         />
-        <el-table-column label="字典类型" align="center" show-overflow-tooltip>
+        <el-table-column
+          label="字典类型"
+          align="center"
+          show-overflow-tooltip
+        >
           <template #default="scope">
             <router-link :to="'/system/dict/data/' + scope.row.typeId">
               <el-link :underline="false">{{ scope.row.dictType }}</el-link>

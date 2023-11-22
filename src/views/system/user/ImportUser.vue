@@ -45,7 +45,11 @@
         />
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
-        <el-select v-model="importForm.roleIds" multiple placeholder="请选择角色">
+        <el-select
+          v-model="importForm.roleIds"
+          placeholder="请选择角色"
+          multiple
+        >
           <el-option
             v-for="role in roleSelect"
             :key="role.value"

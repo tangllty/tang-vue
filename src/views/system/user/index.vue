@@ -17,7 +17,11 @@
 
         <!-- 信息检索 -->
         <el-card class="mb-10">
-          <el-form ref="userQueryFormRef" :model="queryParams" inline>
+          <el-form
+            ref="userQueryFormRef"
+            :model="queryParams"
+            inline
+          >
             <el-form-item label="用户名" prop="username">
               <el-input
                 v-model="queryParams.username"
@@ -300,7 +304,11 @@
             maxlength="11"
           />
         </el-form-item>
-        <el-form-item v-if="userDialog.type === 'add'" label="密码" prop="password">
+        <el-form-item
+          v-if="userDialog.type === 'add'"
+          label="密码"
+          prop="password"
+        >
           <el-input
             v-model="userForm.password"
             placeholder="请输入密码"
@@ -318,7 +326,11 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="角色" prop="roleIds">
-          <el-select v-model="userForm.roleIds" multiple placeholder="请选择角色">
+          <el-select
+            v-model="userForm.roleIds"
+            placeholder="请选择角色"
+            multiple
+          >
             <el-option
               v-for="role in roleSelect"
               :key="role.value"

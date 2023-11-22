@@ -4,12 +4,15 @@ import router from '@/router'
 import { setupStore } from '@/store'
 import { setupDirective } from '@/directives'
 
-import 'element-plus/dist/index.css'
-import 'element-plus/theme-chalk/dark/css-vars.css'
+// 权限
 import '@/permission'
 
 // uno.css
 import 'virtual:uno.css'
+
+// element-plus 样式
+import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 // 自定义样式
 import '@/styles/index.scss'
