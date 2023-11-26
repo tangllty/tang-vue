@@ -125,6 +125,12 @@
               </el-form-item>
             </el-form>
           </el-tab-pane>
+
+          <el-divider>其他登录方式</el-divider>
+          <el-button
+            type="primary"
+            @click="handleGitHubLogin"
+          >GitHub 授权码</el-button>
         </el-tabs>
       </el-card>
     </div>
@@ -198,6 +204,14 @@ const handleCaptcha = async () => {
   state.loginForm.captcha.id = res.data.id
   state.captchaUrl = `data:image/png;base64,${res.data.text}`
   state.loading = false
+}
+
+// GitHub 登录
+const handleGitHubLogin = () => {
+  const clientID = 'Iv1.49e0be67d53b2007'
+  const authorize_uri = 'https://github.com/login/oauth/authorize'
+  const redirect_uri = 'http://localhost:8080/third-party/oauth/github/redirect'
+  window.location.href = `${authorize_uri}?client_id=${clientID}&redirect_uri=${redirect_uri}`
 }
 
 // 提交表单
