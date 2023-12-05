@@ -1,5 +1,7 @@
 # tang-vue
 
+[![Build and Deploy](https://github.com/tangllty/tang-vue/actions/workflows/deploy.yml/badge.svg)](https://github.com/tangllty/tang-vue/actions/workflows/deploy.yml) [![Dependency Review](https://github.com/tangllty/tang-vue/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/tangllty/tang-vue/actions/workflows/dependency-review.yml)
+
 **简体中文** | [**English**](./README.en.md)
 
 ## 项目简介
