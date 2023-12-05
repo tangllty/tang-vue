@@ -21,10 +21,10 @@ jobs:
         node-version: 18
 
     - name: Install dependencies
-      run: npm install
+      run: pnpm install
 
     - name: Build
-      run: npm run build
+      run: pnpm run build
 
     - name: Zip
       run: sh bin/zip.sh

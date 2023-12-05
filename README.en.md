@@ -34,7 +34,7 @@ You can read the [documentation](https://tangllty.eu.org/) for more information
 ## Project Startup
 
 1. ```bash
-   yarn && yarn run dev
+   pnpm install && pnpm run dev
    ```
 2. Visit [http://localhost:5173/](http://localhost:5173/)
 

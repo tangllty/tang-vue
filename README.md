@@ -34,7 +34,7 @@ tang-vue 是基于 Vue 3 的权限管理系统
 ## 项目启动
 
 1. ```bash
-   yarn && yarn run dev
+   pnpm install && pnpm run dev
    ```
 2. 访问 [http://localhost:5173/](http://localhost:5173/)
 
