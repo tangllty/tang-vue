@@ -4,6 +4,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import topLevelAwait from 'vite-plugin-top-level-await'
 import path from 'path'
 import UnoCSS from 'unocss/vite'
+import autoprefixer from 'autoprefixer'
 
 // https://vitejs.dev/config/
 export default ({ mode }:ConfigEnv) => {
@@ -25,6 +26,13 @@ export default ({ mode }:ConfigEnv) => {
     resolve: {
       alias: {
         '@': path.resolve('src'),
+      }
+    },
+    css: {
+      postcss: {
+        plugins: [
+          autoprefixer()
+        ]
       }
     },
     server: {
