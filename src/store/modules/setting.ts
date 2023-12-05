@@ -8,7 +8,9 @@ export const useSettingStore = defineStore('setting', () => {
   const isDark: Ref<boolean> = ref(useDark().value ?? false)
   const theme: Ref<string> = ref(getTheme() ?? useCssVar('--el-color-primary', document.documentElement))
 
-  // 刷新主题
+  /**
+   * 刷新主题
+   */
   const flashTheme = (): void => {
     setTheme(theme.value)
     saveTheme(theme.value)
@@ -21,7 +23,11 @@ export const useSettingStore = defineStore('setting', () => {
   }
 })
 
-// 非setup
+/**
+ * 在非 setup 中使用
+ *
+ * @returns setting store
+ */
 export const useSettingStoreHook = () => {
   return useSettingStore(store)
 }

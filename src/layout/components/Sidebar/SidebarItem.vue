@@ -52,6 +52,11 @@ const props = defineProps({
   }
 })
 
+/**
+ * 获取路由的绝对路径
+ *
+ * @param routePath 路由路径
+ */
 const resolvePath = (routePath: string) => {
   return path.resolve(props.basePath, routePath)
 }

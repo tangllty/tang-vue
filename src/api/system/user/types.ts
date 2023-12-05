@@ -42,7 +42,9 @@ export interface SysUserForm {
   remark: string
 }
 
-// 用户密码表单对象
+/**
+ * 用户密码表单对象
+ */
 export interface SysUserPasswordForm {
   userId: number
   oldPassword: string
@@ -50,13 +52,18 @@ export interface SysUserPasswordForm {
   confirmPassword: string
 }
 
+/**
+ * 用户导入表单对象
+ */
 export interface ImportForm {
   file: UploadFile
   deptId: number
   roleIds: number[]
 }
 
-// 用户查询参数
+/**
+ * 用户查询参数
+ */
 export interface SysUserQuery extends PageQuery {
   deptId: number
   username: string
@@ -65,7 +72,9 @@ export interface SysUserQuery extends PageQuery {
   status: string
 }
 
-// 模糊查询用户列表参数
+/**
+ * 模糊查询用户列表参数
+ */
 export interface SysUserFuzzyQuery extends PageQuery {
   keyword: string
 }

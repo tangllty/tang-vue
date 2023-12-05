@@ -4,7 +4,9 @@ import { getToken, removeToken } from '@/utils/auth'
 
 let reLoginFlag: boolean = true
 
-// 创建 axios 实例
+/**
+ * 创建 axios 实例
+ */
 const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 20000,

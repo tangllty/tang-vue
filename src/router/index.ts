@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory, Router, RouteRecordName, RouteRecordRaw } from 'vue-router'
 import { usePermissionStoreHook } from '@/store/modules/permission'
 
+/**
+ * 静态路由
+ */
 export const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
@@ -47,7 +50,9 @@ export const routes: Array<RouteRecordRaw> = [
   }
 ]
 
-// 动态路由
+/**
+ * 动态路由
+ */
 export const dynamicRoutes: Array<RouteRecordRaw> = [
   {
     path: '/system/dict',
@@ -69,7 +74,9 @@ const router: Router = createRouter({
   routes
 })
 
-// 重置路由
+/**
+ * 重置路由
+ */
 export const resetRouter = (): void => {
   const permissionStore = usePermissionStoreHook()
   permissionStore.routes.forEach(route => {

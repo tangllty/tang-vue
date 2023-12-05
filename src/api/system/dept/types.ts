@@ -1,4 +1,6 @@
-// 部门对象
+/**
+ * 部门对象
+ */
 export interface SysDept {
   deptId: number
   parentId: number
@@ -10,7 +12,9 @@ export interface SysDept {
   children: SysDept[]
 }
 
-// 部门表单对象
+/**
+ * 部门表单对象
+ */
 export interface SysDeptForm {
   deptId: number
   parentId: number
@@ -20,7 +24,9 @@ export interface SysDeptForm {
   remark: string
 }
 
-// 部门查询参数
+/**
+ * 部门查询参数
+ */
 export interface SysDeptQuery extends PageQuery {
   deptId: number
   deptName: string

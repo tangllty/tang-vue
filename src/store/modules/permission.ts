@@ -14,7 +14,12 @@ export const usePermissionStore = defineStore('permission', () => {
 
   const routes = ref<RouteRecordRaw[]>([])
 
-  // 过滤异步路由
+  /**
+   * 过滤异步路由
+   *
+   * @param routes 路由
+   * @returns 过滤后的路由
+   */
   const filterAsyncRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
     return routes.map((route) => {
       const tempRoute: any = { ...route }
@@ -30,7 +35,12 @@ export const usePermissionStore = defineStore('permission', () => {
     })
   }
 
-  // 过滤动态路由
+  /**
+   * 过滤动态路由
+   *
+   * @param routes 路由
+   * @returns 过滤后的路由
+   */
   const filterDynamicRoutes = (routes: RouteRecordRaw[]) => {
     const adminRole: string = 'admin'
     const adminPermission: string = '*:*:*'
@@ -55,7 +65,11 @@ export const usePermissionStore = defineStore('permission', () => {
     })
   }
 
-  // 获取路由
+  /**
+   * 获取路由
+   *
+   * @returns 路由
+   */
   const getRoutes = async (): Promise<RouteRecordRaw[]> => {
     try {
       const res: any = await getRoutesApi()
@@ -76,7 +90,11 @@ export const usePermissionStore = defineStore('permission', () => {
   }
 })
 
-// 非setup
+/**
+ * 在非 setup 中使用
+ *
+ * @returns permission store
+ */
 export const usePermissionStoreHook = () => {
   return usePermissionStore(store)
 }

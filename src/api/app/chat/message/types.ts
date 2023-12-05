@@ -1,4 +1,6 @@
-// 聊天消息对象
+/**
+ * 聊天消息对象
+ */
 export interface AppChatMessage {
   messageId: number
   chatListId: number
@@ -15,7 +17,9 @@ export interface AppChatMessage {
   remark: string
 }
 
-// 聊天消息表单对象
+/**
+ * 聊天消息表单对象
+ */
 export interface AppChatMessageForm {
   messageId: number
   chatListId: number

@@ -1,6 +1,8 @@
 import { LoginType } from '@/enums'
 
-// 登陆表单对象
+/**
+ * 登陆表单对象
+ */
 export interface LoginForm {
     username: string
     email: string
@@ -9,7 +11,9 @@ export interface LoginForm {
     captcha: CaptchaForm
 }
 
-// 验证码表单对象
+/**
+ * 验证码表单对象
+ */
 export interface CaptchaForm {
     id: number
     text: string

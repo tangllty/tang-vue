@@ -1,4 +1,6 @@
-// 用户好友申请对象
+/**
+ * 用户好友申请对象
+ */
 export interface AppFriendApply {
   applyId: number
   userId: number
@@ -15,7 +17,9 @@ export interface AppFriendApply {
   remark: string
 }
 
-// 用户好友申请表单对象
+/**
+ * 用户好友申请表单对象
+ */
 export interface AppFriendApplyForm {
   applyId: number
   userId: number
@@ -34,7 +38,9 @@ export interface AppFriendApplyForm {
   phone: string
 }
 
-// 用户好友申请查询参数
+/**
+ * 用户好友申请查询参数
+ */
 export interface AppFriendApplyQuery extends PageQuery {
   applyId: number
   userId: number

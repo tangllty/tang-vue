@@ -19,6 +19,9 @@ const currentRoute = useRoute()
 
 const breadcrumbs = ref([] as Array<RouteLocationMatched>)
 
+/**
+ * 过滤面包屑
+ */
 const filterBreadcrumbs = () => {
   if (currentRoute.path === '/index') {
     breadcrumbs.value = []

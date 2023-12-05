@@ -48,6 +48,11 @@ const sizes = [
   }
 ]
 
+/**
+ * 切换组件大小
+ *
+ * @param key 语言 key
+ */
 const handleSize = (key: string): void => {
   appStore.size = key
   flashSize()

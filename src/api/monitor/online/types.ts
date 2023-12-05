@@ -1,4 +1,6 @@
-// 在线用户对象
+/**
+ * 在线用户对象
+ */
 export interface OnlineUser {
   token: string
   username: string
@@ -26,7 +28,9 @@ export interface OnlineUser {
   expireTime: string
 }
 
-// 在线用户查询参数
+/**
+ * 在线用户查询参数
+ */
 export interface OnlineUserQuery extends PageQuery {
   token: string
   username: string

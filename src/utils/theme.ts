@@ -1,10 +1,16 @@
 import { useCssVar } from '@vueuse/core'
 import { useSettingStore } from '@/store/modules/setting'
 
-// HEX 颜色正则
+/**
+ * HEX 颜色正则
+ */
 const colorReg: RegExp = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/
 
-// 设置主题
+/**
+ * 设置主题色
+ *
+ * @param color 主题色
+ */
 export const setTheme = (color: string): void => {
   const settingStore = useSettingStore()
   const isDark: boolean = settingStore.isDark
@@ -24,22 +30,39 @@ export const setTheme = (color: string): void => {
   useCssVar('--el-color-primary-dark-2', root).value = mix(color, darkColor, weight)
 }
 
-// 保存主题
+/**
+ * 保存主题色
+ *
+ * @param color 主题色
+ */
 export const saveTheme = (color: string): void => {
   localStorage.setItem('theme', color)
 }
 
-// 获取主题
+/**
+ * 获取主题色
+ *
+ * @returns 主题色
+ */
 export const getTheme = (): string | null => {
   return localStorage.getItem('theme')
 }
 
-// 删除主题
+/**
+ * 删除主题
+ */
 export const removeTheme = (): void => {
   localStorage.removeItem('theme')
 }
 
-// 混合颜色
+/**
+ * 混合颜色
+ *
+ * @param color 颜色
+ * @param mixColor 混合颜色
+ * @param weight 权重
+ * @returns 混合后的颜色
+ */
 const mix = (color: string, mixColor: string, weight: number): string => {
   if (!colorReg.test(color) || !colorReg.test(mixColor) || weight < 0 || weight > 1) {
     return ''
@@ -59,7 +82,12 @@ const mix = (color: string, mixColor: string, weight: number): string => {
   return rgbToHex(rgb)
 }
 
-// HEX 转 RGB
+/**
+ * HEX 转 RGB
+ *
+ * @param hex HEX
+ * @returns RGB
+ */
 const hexToRgb = (hex: string): number[] | null => {
   if (!colorReg.test(hex)) {
     return null
@@ -72,7 +100,12 @@ const hexToRgb = (hex: string): number[] | null => {
   return rgb
 }
 
-// RGB 转 HEX
+/**
+ * RGB 转 HEX
+ *
+ * @param rgb RGB
+ * @returns HEX
+ */
 const rgbToHex = (rgb: number[]): string => {
   let hex = '#'
   for (let i = 0; i < 3; i++) {

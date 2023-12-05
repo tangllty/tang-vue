@@ -3,7 +3,7 @@ import { saveAs } from 'file-saver'
 /**
  * 下载文件
  *
- * @param res response
+ * @param res 响应
  * @param fileName 文件名
  */
 export const download = (res: any, fileName: string): void => {

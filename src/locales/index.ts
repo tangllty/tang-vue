@@ -31,12 +31,17 @@ const i18n = createI18n({
   legacy: false
 })
 
-// 加载 Element Plus 国际化语言包
+/**
+ * 加载 Element Plus 国际化语言包
+ *
+ * @returns Element Plus 国际化语言包
+ */
 const getLocale = async (): Promise<Language> => {
   const langModule = await import(`../../node_modules/element-plus/dist/locale/${appStore.language}.mjs`) as any
   return langModule.default
 }
 
+// Element 大小类型
 type ElementPlusSize = EpPropMergeType<StringConstructor, '' | 'default' | 'small' | 'large', never>
 
 const elementPlusI18n = {

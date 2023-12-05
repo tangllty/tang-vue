@@ -9,6 +9,12 @@ export default {
 
     const { value } = binding
 
+    /**
+     * 判断是否有角色
+     *
+     * @param role 角色
+     * @returns 是否有角色
+     */
     const hasRole = (role: string): boolean => {
       return roles.includes(role) || roles.includes(adminRole)
     }

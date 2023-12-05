@@ -1,4 +1,6 @@
-// 聊天列对象
+/**
+ * 聊天列对象
+ */
 export interface AppChatList {
   chatListId: number
   userId: number
@@ -18,7 +20,9 @@ export interface AppChatList {
   remark: string
 }
 
-// 聊天列表单对象
+/**
+ * 聊天列表单对象
+ */
 export interface AppChatListForm {
   chatListId: number
   userId: number
@@ -31,7 +35,9 @@ export interface AppChatListForm {
   remark: string
 }
 
-// 聊天列查询参数
+/**
+ * 聊天列查询参数
+ */
 export interface AppChatListQuery extends PageQuery {
   chatListId: number
   userId: number

@@ -1,4 +1,6 @@
-// 登陆日志对象
+/**
+ * 登陆日志对象
+ */
 export interface SysLogLogin {
   loginId: number
   userId: number
@@ -13,7 +15,9 @@ export interface SysLogLogin {
   message: string
 }
 
-// 登陆日志表单对象
+/**
+ * 登陆日志表单对象
+ */
 export interface SysLogLoginForm {
   loginId: number
   userId: number
@@ -28,7 +32,9 @@ export interface SysLogLoginForm {
   message: string
 }
 
-// 登陆日志查询参数
+/**
+ * 登陆日志查询参数
+ */
 export interface SysLogLoginQuery extends PageQuery {
   loginId: number
   userId: number

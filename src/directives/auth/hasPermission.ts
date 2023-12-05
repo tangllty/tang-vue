@@ -9,6 +9,12 @@ export default {
 
     const { value } = binding
 
+    /**
+     * 判断是否有权限
+     *
+     * @param permission 权限
+     * @returns 是否有权限
+     */
     const hasPermission = (permission: string): boolean => {
       return permissions.includes(permission) || permissions.includes(allPermissions)
     }

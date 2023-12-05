@@ -1,4 +1,6 @@
-// 代码生成对象
+/**
+ * 代码生成对象
+ */
 export interface GenTable {
   tableId: string
   tableName: string
@@ -13,7 +15,9 @@ export interface GenTable {
   updateTime: Date
 }
 
-// 代码生成字段对象
+/**
+ * 代码生成字段对象
+ */
 export interface GenTableColumn {
   columnId: string
   tableId: string
@@ -37,7 +41,9 @@ export interface GenTableColumn {
   updateTime: Date
 }
 
-// 代码生成表单对象
+/**
+ * 代码生成表单对象
+ */
 export interface GenTableForm {
   tableId: string
   tableName: string
@@ -52,7 +58,9 @@ export interface GenTableForm {
   tableColumnList: GenTableColumn[]
 }
 
-// 代码生成查询参数
+/**
+ * 代码生成查询参数
+ */
 export interface GenTableQuery extends PageQuery {
   tableId: string
   tableName: string

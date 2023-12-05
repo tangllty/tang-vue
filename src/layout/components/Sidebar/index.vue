@@ -35,6 +35,9 @@ const permissionStore = usePermissionStore()
 
 const isCollapse = computed((): boolean => appStore.sidebar)
 
+/**
+ * 通过路由的 meta.activeMenu 属性来判断当前路由是否激活
+ */
 const activeMenu = computed(() => {
   const { meta, path } = route
   if (meta.activeMenu) {

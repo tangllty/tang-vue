@@ -1,6 +1,8 @@
 import { EpPropMergeType } from 'element-plus/es/utils/vue/props/types'
 
-// 字典数据对象
+/**
+ * 字典数据对象
+ */
 export interface SysDictData {
   dataId: number
   dictType: string
@@ -14,7 +16,9 @@ export interface SysDictData {
   updateTime: Date
 }
 
-// 字典数据表单对象
+/**
+ * 字典数据表单对象
+ */
 export interface SysDictDataForm {
   dataId: number
   dictType: string
@@ -27,7 +31,9 @@ export interface SysDictDataForm {
   remark: string
 }
 
-// 字典数据查询参数
+/**
+ * 字典数据查询参数
+ */
 export interface SysDictDataQuery extends PageQuery {
   dataId: number
   dictType: string

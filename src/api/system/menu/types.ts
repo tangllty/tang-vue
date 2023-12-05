@@ -1,4 +1,6 @@
-// 菜单对象
+/**
+ * 菜单对象
+ */
 export interface SysMenu {
   menuId: number
   parentId: number
@@ -16,7 +18,9 @@ export interface SysMenu {
   children: SysMenu[]
 }
 
-// 菜单表单对象
+/**
+ * 菜单表单对象
+ */
 export interface SysMenuForm {
   menuId: number
   parentId: number
@@ -31,7 +35,9 @@ export interface SysMenuForm {
   status: string
 }
 
-// 菜单查询参数
+/**
+ * 菜单查询参数
+ */
 export interface SysMenuQuery extends PageQuery {
   menuId: number
   parentId: number

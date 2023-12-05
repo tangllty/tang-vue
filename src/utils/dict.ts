@@ -2,6 +2,9 @@ import { ref, ToRefs, toRefs } from 'vue'
 import { useDictStore } from '@/store/modules/dict'
 import { selectDictDataListByDictType as getDictData } from '@/api/system/dict/data'
 
+/**
+ * 字典数据类型
+ */
 type Dicts = { [key: string]: any }
 
 /**
@@ -14,7 +17,11 @@ export const getDicts = (...dictTypes: string[]): ToRefs<Dicts> => {
   const dicts = ref<Dicts>({})
   const dictStore = useDictStore()
 
-  // 获取字典数据
+  /**
+   * 获取字典数据
+   *
+   * @param dictType 字典类型
+   */
   const fetchDictData = async (dictType: string) => {
     const res: any = await getDictData(dictType)
     dicts.value[dictType] = res.data

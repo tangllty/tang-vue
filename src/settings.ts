@@ -1,4 +1,6 @@
-// 默认系统设置
+/**
+ * 默认系统设置
+ */
 interface DefaultSettings {
   loginTitle: string
   title: string
@@ -10,7 +12,9 @@ interface DefaultSettings {
   size: string
 }
 
-// 默认系统设置
+/**
+ * 默认系统设置
+ */
 const defaultSettings: DefaultSettings = {
   loginTitle: '糖猫猫权限管理系统',
   title: '权限管理系统',

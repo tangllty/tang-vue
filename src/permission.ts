@@ -18,7 +18,9 @@ NProgress.configure({
 router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
   NProgress.start()
 
-  // 白名单路由
+  /**
+   * 白名单路由
+   */
   const whiteList: string[] = ['/login']
 
   if (!userStore.token) {

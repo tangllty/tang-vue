@@ -84,7 +84,11 @@ export const useUserStore = defineStore('user', () => {
   }
 })
 
-// 非setup
+/**
+ * 在非 setup 中使用
+ *
+ * @returns app store
+ */
 export const useUserStoreHook = () => {
   return useUserStore(store)
 }

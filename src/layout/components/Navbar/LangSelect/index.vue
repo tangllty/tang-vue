@@ -32,6 +32,11 @@ import { langs, flashLocale } from '@/locales'
 const appStore = useAppStore()
 const { locale } = useI18n()
 
+/**
+ * 切换语言
+ *
+ * @param key 语言 key
+ */
 const handleLanguage = (key: string): void => {
   locale.value = key
   appStore.language = key

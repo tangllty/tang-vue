@@ -1,4 +1,6 @@
-// 角色对象
+/**
+ * 角色对象
+ */
 export interface SysRole {
   roleId: number
   roleName: string
@@ -10,7 +12,9 @@ export interface SysRole {
   updateTime: Date
 }
 
-// 角色表单对象
+/**
+ * 角色表单对象
+ */
 export interface SysRoleForm {
   roleId: number
   roleName: string
@@ -22,7 +26,9 @@ export interface SysRoleForm {
   remark: string
 }
 
-// 角色查询参数
+/**
+ * 角色查询参数
+ */
 export interface SysRoleQuery extends PageQuery {
   roleId: number
   roleName: string

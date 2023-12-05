@@ -87,14 +87,23 @@ watch(isDark, (value) => {
   settingStore.flashTheme()
 })
 
+/**
+ * 切换侧边栏
+ */
 const toggleSidebar = () => {
   appStore.sidebar = !appStore.sidebar
 }
 
+/**
+ * 打开设置抽屉
+ */
 const handleSettings = () => {
   settingsRef.value?.handleOpen()
 }
 
+/**
+ * 退出登录
+ */
 const logout = async () => {
   try {
     await proxy.$confirm(proxy.$t('layout.logoutConfirm.message'), proxy.$t('layout.logoutConfirm.title'), {
