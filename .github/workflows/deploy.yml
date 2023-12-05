@@ -20,16 +20,11 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8
-
     - name: Install dependencies
-      run: pnpm install
+      run: npm install
 
     - name: Build
-      run: pnpm run build
+      run: npm run build
 
     - name: Zip
       run: sh bin/zip.sh
