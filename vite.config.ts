@@ -10,7 +10,7 @@ import autoprefixer from 'autoprefixer'
 export default ({ mode }: ConfigEnv) => {
   const env: Record<string, string> = loadEnv(mode, process.cwd())
 
-  return defineConfig ({
+  return defineConfig({
     plugins: [
       vue(),
       createSvgIconsPlugin({
