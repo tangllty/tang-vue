@@ -1,139 +1,139 @@
 <template>
-    <div class="login-container">
-      <el-card class="login">
-        <template #header>
-          <div class="login-header">
-            <span>{{ settings.loginTitle }}</span>
-          </div>
-        </template>
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane :label="$t('login.loginType.username')" :name="LoginType.USERNAME">
-            <el-form
-              ref="loginRuleFormRef"
-              :model="loginForm"
-              status-icon
-              :rules="loginRules"
-              label-width="120px"
-              class="login-form"
-            >
-              <el-form-item :label="$t('login.username')" prop="username">
-                <el-input
-                  v-model="loginForm.username"
-                  type="text"
-                  autocomplete="off"
-                  @keyup.enter="submitForm(loginRuleFormRef)"
-                  :placeholder="$t('login.usernamePlaceholder')"
-                  :prefix-icon="User"
+  <div class="login-container">
+    <el-card class="login">
+      <template #header>
+        <div class="login-header">
+          <span>{{ settings.loginTitle }}</span>
+        </div>
+      </template>
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane :label="$t('login.loginType.username')" :name="LoginType.USERNAME">
+          <el-form
+            ref="loginRuleFormRef"
+            :model="loginForm"
+            status-icon
+            :rules="loginRules"
+            label-width="120px"
+            class="login-form"
+          >
+            <el-form-item :label="$t('login.username')" prop="username">
+              <el-input
+                v-model="loginForm.username"
+                type="text"
+                autocomplete="off"
+                @keyup.enter="submitForm(loginRuleFormRef)"
+                :placeholder="$t('login.usernamePlaceholder')"
+                :prefix-icon="User"
+              />
+            </el-form-item>
+            <el-form-item :label="$t('login.password')" prop="password">
+              <el-input
+                v-model="loginForm.password"
+                type="password"
+                autocomplete="off"
+                @keyup.enter="submitForm(loginRuleFormRef)"
+                show-password
+                :placeholder="$t('login.passwordPlaceholder')"
+                :prefix-icon="Lock"
+              />
+            </el-form-item>
+            <el-form-item :label="$t('login.captcha')" prop="captcha">
+              <el-input
+                v-model="loginForm.captcha.text"
+                type="text"
+                autocomplete="off"
+                @keyup.enter="submitForm(loginRuleFormRef)"
+                :placeholder="$t('login.captchaPlaceholder')"
+                :prefix-icon="Message"
+                style="width: 50%;"
+              />
+              <div style="width: 24%; margin-left: 20px; height: 31px">
+                <el-image
+                  v-loading="loading"
+                  :src="captchaUrl"
+                  @click="handleCaptcha"
                 />
-              </el-form-item>
-              <el-form-item :label="$t('login.password')" prop="password">
-                <el-input
-                  v-model="loginForm.password"
-                  type="password"
-                  autocomplete="off"
-                  @keyup.enter="submitForm(loginRuleFormRef)"
-                  show-password
-                  :placeholder="$t('login.passwordPlaceholder')"
-                  :prefix-icon="Lock"
+              </div>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="submitForm(loginRuleFormRef)"
+              >{{ $t('login.submit') }}</el-button>
+              <el-button
+                @click="resetForm(loginRuleFormRef)"
+              >{{ $t('login.reset') }}</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane :label="$t('login.email')" :name="LoginType.EMAIL">
+          <el-form
+            ref="loginRuleFormRef"
+            :model="loginForm"
+            status-icon
+            :rules="loginRules"
+            label-width="120px"
+            class="login-form"
+          >
+            <el-form-item :label="$t('login.email')" prop="email">
+              <el-input
+                v-model="loginForm.email"
+                type="text"
+                autocomplete="off"
+                @keyup.enter="submitForm(loginRuleFormRef)"
+                :placeholder="$t('login.emailPlaceholder')"
+                :prefix-icon="Message"
+              />
+            </el-form-item>
+            <el-form-item :label="$t('login.password')" prop="password">
+              <el-input
+                v-model="loginForm.password"
+                type="password"
+                autocomplete="off"
+                @keyup.enter="submitForm(loginRuleFormRef)"
+                show-password
+                :placeholder="$t('login.passwordPlaceholder')"
+                :prefix-icon="Lock"
+              />
+            </el-form-item>
+            <el-form-item :label="$t('login.captcha')" prop="captcha">
+              <el-input
+                v-model="loginForm.captcha.text"
+                type="text"
+                autocomplete="off"
+                @keyup.enter="submitForm(loginRuleFormRef)"
+                :placeholder="$t('login.captchaPlaceholder')"
+                :prefix-icon="Message"
+                style="width: 50%;"
+              />
+              <div style="width: 24%; margin-left: 20px; height: 31px">
+                <el-image
+                  v-loading="loading"
+                  :src="captchaUrl"
+                  @click="handleCaptcha"
                 />
-              </el-form-item>
-              <el-form-item :label="$t('login.captcha')" prop="captcha">
-                <el-input
-                  v-model="loginForm.captcha.text"
-                  type="text"
-                  autocomplete="off"
-                  @keyup.enter="submitForm(loginRuleFormRef)"
-                  :placeholder="$t('login.captchaPlaceholder')"
-                  :prefix-icon="Message"
-                  style="width: 50%;"
-                />
-                <div style="width: 24%; margin-left: 20px; height: 31px">
-                  <el-image
-                    v-loading="loading"
-                    :src="captchaUrl"
-                    @click="handleCaptcha"
-                  />
-                </div>
-              </el-form-item>
-              <el-form-item>
-                <el-button
-                  type="primary"
-                  @click="submitForm(loginRuleFormRef)"
-                >{{ $t('login.submit') }}</el-button>
-                <el-button
-                  @click="resetForm(loginRuleFormRef)"
-                >{{ $t('login.reset') }}</el-button>
-              </el-form-item>
-            </el-form>
-          </el-tab-pane>
-          <el-tab-pane :label="$t('login.email')" :name="LoginType.EMAIL">
-            <el-form
-              ref="loginRuleFormRef"
-              :model="loginForm"
-              status-icon
-              :rules="loginRules"
-              label-width="120px"
-              class="login-form"
-            >
-              <el-form-item :label="$t('login.email')" prop="email">
-                <el-input
-                  v-model="loginForm.email"
-                  type="text"
-                  autocomplete="off"
-                  @keyup.enter="submitForm(loginRuleFormRef)"
-                  :placeholder="$t('login.emailPlaceholder')"
-                  :prefix-icon="Message"
-                />
-              </el-form-item>
-              <el-form-item :label="$t('login.password')" prop="password">
-                <el-input
-                  v-model="loginForm.password"
-                  type="password"
-                  autocomplete="off"
-                  @keyup.enter="submitForm(loginRuleFormRef)"
-                  show-password
-                  :placeholder="$t('login.passwordPlaceholder')"
-                  :prefix-icon="Lock"
-                />
-              </el-form-item>
-              <el-form-item :label="$t('login.captcha')" prop="captcha">
-                <el-input
-                  v-model="loginForm.captcha.text"
-                  type="text"
-                  autocomplete="off"
-                  @keyup.enter="submitForm(loginRuleFormRef)"
-                  :placeholder="$t('login.captchaPlaceholder')"
-                  :prefix-icon="Message"
-                  style="width: 50%;"
-                />
-                <div style="width: 24%; margin-left: 20px; height: 31px">
-                  <el-image
-                    v-loading="loading"
-                    :src="captchaUrl"
-                    @click="handleCaptcha"
-                  />
-                </div>
-              </el-form-item>
-              <el-form-item>
-                <el-button
-                  type="primary"
-                  @click="submitForm(loginRuleFormRef)"
-                >{{ $t('login.submit') }}</el-button>
-                <el-button
-                  @click="resetForm(loginRuleFormRef)"
-                >{{ $t('login.reset') }}</el-button>
-              </el-form-item>
-            </el-form>
-          </el-tab-pane>
+              </div>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="submitForm(loginRuleFormRef)"
+              >{{ $t('login.submit') }}</el-button>
+              <el-button
+                @click="resetForm(loginRuleFormRef)"
+              >{{ $t('login.reset') }}</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
 
-          <el-divider>其他登录方式</el-divider>
-          <el-button
-            type="primary"
-            @click="handleGitHubLogin"
-          >GitHub 授权码</el-button>
-        </el-tabs>
-      </el-card>
-    </div>
+        <el-divider>其他登录方式</el-divider>
+        <el-button
+          type="primary"
+          @click="handleGitHubLogin"
+        >GitHub 授权码</el-button>
+      </el-tabs>
+    </el-card>
+  </div>
 </template>
 
 <script lang="ts" setup>

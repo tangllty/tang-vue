@@ -7,7 +7,7 @@ import UnoCSS from 'unocss/vite'
 import autoprefixer from 'autoprefixer'
 
 // https://vitejs.dev/config/
-export default ({ mode }:ConfigEnv) => {
+export default ({ mode }: ConfigEnv) => {
   const env: Record<string, string> = loadEnv(mode, process.cwd())
 
   return defineConfig ({
