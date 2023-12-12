@@ -1,8 +1,11 @@
 <template>
   <li v-if="item.children" class="sub-menu">
     <div class="sub-menu__title menu-item" @click="handleItemClick">
-      <div>
-        <span>{{ item.label }} ></span>
+      <div class="menu-item__container">
+        <div v-if="item.icon" class="icon">
+          <SvgIcon :name="item.icon" />
+        </div>
+        <span class="title">{{ item.label }} ></span>
       </div>
     </div>
     <ul class="menu">
@@ -21,8 +24,11 @@
     :class="item.disabled ? 'disabled' : ''"
     @click="handleItemClick"
   >
-    <div>
-      <span>{{ item.label }}</span>
+    <div class="menu-item__container">
+      <div v-if="item.icon" class="icon">
+        <SvgIcon :name="item.icon" />
+      </div>
+      <span class="title">{{ item.label }}</span>
     </div>
   </li>
 </template>
@@ -30,6 +36,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { MenuItem as ContextMenuItem } from './types'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const props = defineProps({
   item: {
@@ -100,11 +107,22 @@ const handleItemClick = computed(() => {
   cursor: pointer;
   list-style: none;
 
-  div {
-    span {
+  &__container {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      padding-left: 8px;
+    }
+
+    .title {
       display: list-item;
       padding: 8px 12px;
       width: max-content;
+    }
+
+    .icon + .title {
+      padding-left: 2px;
     }
 
     &:hover {
@@ -129,7 +147,7 @@ ul > li {
   cursor: not-allowed;
   color: #c5c5c5;
 
-  div {
+  &__container {
     span {
       &:hover {
         color: #c5c5c5;
