@@ -57,7 +57,7 @@ const contextMenu = (mouseEvent: MouseEvent, options: ContextMenuOptions) => {
 
   // 设置菜单的位置
   currentMenu.style[leftOrRight] = leftOrRight === 'left' ? `${clientX + 2}px` : `${offsetLeft}px`
-  currentMenu.style[topOrBottom] = topOrBottom === 'top' ? `${clientY - 2}px` : `${offsetTop}px`
+  currentMenu.style[topOrBottom] = topOrBottom === 'top' ? `${clientY + 1}px` : `${offsetTop}px`
 
   // 菜单实例
   const instance: ContextMenuInstance = {
