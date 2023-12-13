@@ -79,7 +79,6 @@ const handleItemClick = computed(() => {
     props.onClose()
   }
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -110,6 +109,12 @@ const handleItemClick = computed(() => {
   &:hover {
     & > .menu {
       display: block;
+    }
+
+    & > .menu-item > .menu-item__container > .menu-item__container__content {
+      color: #68b3ff;
+      background-color: #dfedfd;
+      border-radius: 5px;
     }
   }
 }
