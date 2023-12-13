@@ -15,9 +15,10 @@ export interface ContextMenuOptions {
 }
 
 export interface MenuItem {
-  label: string
+  label?: string
   icon?: string
   disabled?: boolean
+  divided?: boolean
   children?: MenuItem[]
   onClick?: () => void
 }

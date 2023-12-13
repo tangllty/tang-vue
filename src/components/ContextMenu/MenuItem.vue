@@ -24,12 +24,14 @@
     :class="item.disabled ? 'disabled' : ''"
     @click="handleItemClick"
   >
-    <div class="menu-item__container">
+    <div v-if="!item.divided" class="menu-item__container">
       <div v-if="item.icon" class="icon">
         <SvgIcon :name="item.icon" />
       </div>
       <span class="title">{{ item.label }}</span>
     </div>
+
+    <div v-else class="menu-item__divider"></div>
   </li>
 </template>
 
@@ -130,6 +132,12 @@ const handleItemClick = computed(() => {
       background-color: #dfedfd;
       border-radius: 6px;
     }
+  }
+
+  &__divider {
+    height: 1px;
+    margin: 4px 0;
+    border-bottom: 1px solid #c5c5c5;
   }
 }
 
