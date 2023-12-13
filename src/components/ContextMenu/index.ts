@@ -5,6 +5,10 @@ import MenuContext from './index.vue'
 let currentInstance: ContextMenuInstance = null as any
 let seed = 1
 const contextMenu = (mouseEvent: MouseEvent, options: ContextMenuOptions) => {
+  // 阻止默认事件和冒泡
+  mouseEvent.preventDefault()
+  mouseEvent.stopPropagation()
+  // 销毁之前的菜单
   if (currentInstance) {
     currentInstance.destroy()
   }
