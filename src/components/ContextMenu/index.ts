@@ -61,7 +61,10 @@ const contextMenu = (mouseEvent: MouseEvent, options: ContextMenuOptions) => {
 
   // 设置菜单的位置
   currentMenu.style[leftOrRight] = leftOrRight === 'left' ? `${clientX + 2}px` : `${offsetLeft}px`
-  currentMenu.style[topOrBottom] = topOrBottom === 'top' ? `${clientY + 1}px` : `${offsetTop}px`
+  currentMenu.style[topOrBottom] = topOrBottom === 'top' ? `${clientY - 12}px` : `${offsetTop - 12}px`
+
+  setSubMenuPosition(currentMenu.children, mouseEvent, offsetWidth, offsetHeight)
+  removeSubMenuDisplay(currentMenu.children)
 
   // 菜单实例
   const instance: ContextMenuInstance = {
@@ -73,6 +76,47 @@ const contextMenu = (mouseEvent: MouseEvent, options: ContextMenuOptions) => {
   }
   currentInstance = instance
   return instance
+}
+
+const setSubMenuPosition = (children: any, mouseEvent: MouseEvent, parentClientWidth: number, parentClientHeight: number) => {
+  let parentSubMenuClientHeight = 0
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i]
+    parentSubMenuClientHeight += child.offsetHeight
+    if (child.classList.contains('sub-menu')) {
+      child.children[1].style.display = 'block'
+
+      const { offsetWidth, offsetHeight } = child.children[1]
+      const body = document.body
+      const { clientWidth } = body
+      const { clientX, clientY } = mouseEvent
+
+      const clientHeight = window.innerHeight
+
+      if (clientHeight - clientY - parentSubMenuClientHeight > offsetHeight) {
+        child.children[1].style.top = '0'
+      } else {
+        child.children[1].style.bottom = '0'
+      }
+
+      if (clientWidth - clientX > parentClientWidth + offsetWidth) {
+        child.children[1].style.left = '100%'
+      } else {
+        child.children[1].style.right = '100%'
+      }
+      setSubMenuPosition(child.children[1].children, mouseEvent, parentClientWidth + offsetWidth, parentClientHeight + offsetHeight)
+    }
+  }
+}
+
+const removeSubMenuDisplay = (children: any) => {
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i]
+    if (child.classList.contains('sub-menu')) {
+      child.children[1].style.removeProperty('display')
+      removeSubMenuDisplay(child.children[1].children)
+    }
+  }
 }
 
 export default contextMenu

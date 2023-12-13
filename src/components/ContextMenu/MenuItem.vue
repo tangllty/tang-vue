@@ -94,8 +94,6 @@ const handleItemClick = computed(() => {
 
   .menu {
     position: absolute;
-    top: 0;
-    left: 100%;
     margin-top: 2px;
     padding: 0;
     border-radius: 5px;
