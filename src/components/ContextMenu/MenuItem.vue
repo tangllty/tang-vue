@@ -2,10 +2,16 @@
   <li v-if="item.children" class="sub-menu">
     <div class="sub-menu__title menu-item" @click="handleItemClick">
       <div class="menu-item__container">
-        <div v-if="item.icon" class="icon">
-          <SvgIcon :name="item.icon" />
+        <div class="menu-item__container__content">
+          <div v-if="item.icon" class="icon">
+            <SvgIcon :name="item.icon" />
+          </div>
+          <span class="title">{{ item.label }}</span>
+
+          <div class="icon">
+            <SvgIcon name="右箭头" />
+          </div>
         </div>
-        <span class="title">{{ item.label }} ></span>
       </div>
     </div>
     <ul class="menu">
@@ -25,13 +31,17 @@
     @click="handleItemClick"
   >
     <div v-if="!item.divided" class="menu-item__container">
-      <div v-if="item.icon" class="icon">
-        <SvgIcon :name="item.icon" />
+      <div class="menu-item__container__content">
+        <div v-if="item.icon" class="icon">
+          <SvgIcon :name="item.icon" />
+        </div>
+        <span class="title">{{ item.label }}</span>
       </div>
-      <span class="title">{{ item.label }}</span>
     </div>
 
-    <div v-else class="menu-item__divider"></div>
+    <div v-else>
+      <div class="menu-item__divider"></div>
+    </div>
   </li>
 </template>
 
@@ -91,7 +101,7 @@ const handleItemClick = computed(() => {
     padding: 0;
     border-radius: 5px;
     background-color: #f9f9fb;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     border: 1px solid  #c5c5c5;
     width: fit-content;
     display: none;
@@ -113,24 +123,31 @@ const handleItemClick = computed(() => {
     display: flex;
     align-items: center;
 
-    .icon {
-      padding-left: 8px;
-    }
-
-    .title {
-      display: list-item;
-      padding: 8px 12px;
+    &__content {
+      min-width: calc(100% - 24px);
       width: max-content;
-    }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
 
-    .icon + .title {
-      padding-left: 2px;
+      .icon {
+        width: 1em;
+      }
+
+      .title {
+        margin-right: auto;
+      }
+
+      .icon + .title {
+        margin-left: 5px;
+      }
     }
 
     &:hover {
       color: #68b3ff;
       background-color: #dfedfd;
-      border-radius: 6px;
+      border-radius: 5px;
     }
   }
 
@@ -138,6 +155,8 @@ const handleItemClick = computed(() => {
     height: 1px;
     margin: 4px 0;
     border-bottom: 1px solid #c5c5c5;
+    width: calc(100% - 20px);
+    margin-left: 10px;
   }
 }
 
@@ -156,7 +175,7 @@ ul > li {
   color: #c5c5c5;
 
   &__container {
-    span {
+    .title {
       &:hover {
         color: #c5c5c5;
         background-color: transparent;

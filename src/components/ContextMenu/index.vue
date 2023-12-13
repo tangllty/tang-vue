@@ -45,8 +45,8 @@ onMounted(async () => {
 .context-menu {
   position: fixed;
   background-color: #f9f9fb;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  min-width: 120px;
   padding-left: 0;
   border-radius: 5px;
   border: 1px solid  #c5c5c5;
