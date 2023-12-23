@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import qs from 'qs'
 import { getToken, removeToken } from '@/utils/auth'
 
 let reLoginFlag: boolean = true
@@ -20,6 +21,11 @@ service.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
   const token = getToken()
   if (token) {
     config.headers.Authorization = token
+  }
+  if (config.method === 'get') {
+    config.paramsSerializer = {
+      serialize: (params: Record<string, any>): string => qs.stringify(params, { arrayFormat: 'repeat' })
+    }
   }
   // 在发送请求之前做些什么
   return config
