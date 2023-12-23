@@ -277,6 +277,7 @@
                 placeholder="请选择HTML类型"
               >
                 <el-option label="文本框" value="input" />
+                <el-option label="数字框" value="number" />
                 <el-option label="文本域" value="textarea" />
                 <el-option label="单选框" value="radio" />
                 <el-option label="复选框" value="checkbox" />
