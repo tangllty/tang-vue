@@ -262,6 +262,7 @@
               >
                 <el-option label="等于" value="equal" />
                 <el-option label="模糊" value="fuzzy" />
+                <el-option label="包含" value="findInSet" />
               </el-select>
             </template>
           </el-table-column>
