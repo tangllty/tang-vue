@@ -11,7 +11,7 @@ export const listMenu = (queryParams: SysMenuQuery) => {
 }
 
 // 查询菜单树
-export const menuTree = () => {
+export const listMenuTree = () => {
   return request({
     url: '/system/menu/menuTree',
     method: 'get'

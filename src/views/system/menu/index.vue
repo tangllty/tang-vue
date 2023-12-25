@@ -274,7 +274,7 @@ import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listMenu, menuTree as selectMenuTree, getMenu, addMenu, editMenu, changeStatus, deleteMenu } from '@/api/system/menu'
+import { listMenu, listMenuTree, getMenu, addMenu, editMenu, changeStatus, deleteMenu } from '@/api/system/menu'
 import { SysMenu, SysMenuForm, SysMenuQuery } from '@/api/system/menu/types'
 import IconSelect from '@/components/IconSelect/index.vue'
 
@@ -352,7 +352,7 @@ const handleList = async () => {
 // 查询菜单树
 const getMenuTree = async () => {
   const menuTrees: any[] = []
-  const res: any = await selectMenuTree()
+  const res: any = await listMenuTree()
   const menuTree = { value: 0, label: '顶级菜单', children: res.data }
   menuTrees.push(menuTree)
   state.menuTree = menuTrees
