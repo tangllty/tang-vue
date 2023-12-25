@@ -82,6 +82,15 @@
                 />
               </el-form-item>
             </el-col>
+            <el-col :span="12">
+              <el-form-item label="上级菜单" prop="parentMenuId">
+                <el-tree-select
+                  v-model="editTableForm.parentMenuId"
+                  :data="menuTree"
+                  check-strictly
+                />
+              </el-form-item>
+            </el-col>
             <el-col :span="24">
               <el-form-item label="备注" prop="remark">
                 <el-input
@@ -322,6 +331,8 @@ import { FormInstance, FormRules } from 'element-plus'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { getGenTable, editGenTable } from '@/api/tool/generator'
 import { GenTableForm, GenTableColumn } from '@/api/tool/generator/types'
+import { listMenuTree } from '@/api/system/menu'
+import { SysMenuQuery } from '@/api/system/menu/types'
 
 const proxy = getProxy()
 
@@ -330,6 +341,8 @@ const state = reactive({
   activeName: 'tableInfo',
   // 字段数据
   tableColumnList: [] as GenTableColumn[],
+  // 菜单树数据
+  menuTree: [] as TreeSelect[],
   // 对话框
   editTableDialog: {
     title: '',
@@ -344,6 +357,7 @@ const {
   loading,
   activeName,
   tableColumnList,
+  menuTree,
   editTableDialog,
   editTableForm
 } = toRefs(state)
@@ -374,6 +388,9 @@ const editTableRules = reactive<FormRules>({
   author: [
     { required: true, message: '作者不能为空', trigger: 'blur' },
   ],
+  parentMenuId: [
+    { required: true, message: '上级菜单不能为空', trigger: 'blur' },
+  ],
 })
 
 // 查询代码生成列表
@@ -383,6 +400,15 @@ const handleEditTable = async (tableId: number) => {
   state.editTableDialog.title = '编辑[' + res.data.table.tableName + ']表代码生成信息'
   state.editTableForm = res.data.table
   state.tableColumnList = res.data.tableColumn
+}
+
+// 查询菜单树
+const getMenuTree = async () => {
+  const menuTrees: any[] = []
+  const res: any = await listMenuTree({menuType: 'D'} as SysMenuQuery)
+  const menuTree = { value: 0, label: '顶级菜单', children: res.data }
+  menuTrees.push(menuTree)
+  state.menuTree = menuTrees
 }
 
 // 显示对话框
@@ -395,6 +421,7 @@ const handleShow = async (tableId: number) => {
   state.tableColumnList = []
 
   await handleEditTable(tableId)
+  await getMenuTree()
 }
 
 // 关闭对话框

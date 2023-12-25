@@ -2,7 +2,7 @@
  * 代码生成对象
  */
 export interface GenTable {
-  tableId: string
+  tableId: number
   tableName: string
   tableComment: string
   className: string
@@ -11,6 +11,7 @@ export interface GenTable {
   businessName: string
   classComment: string
   author: string
+  parentMenuId: number
   createTime: Date
   updateTime: Date
 }
@@ -19,8 +20,8 @@ export interface GenTable {
  * 代码生成字段对象
  */
 export interface GenTableColumn {
-  columnId: string
-  tableId: string
+  columnId: number
+  tableId: number
   columnName: string
   columnComment: string
   columnType: string
@@ -45,7 +46,7 @@ export interface GenTableColumn {
  * 代码生成表单对象
  */
 export interface GenTableForm {
-  tableId: string
+  tableId: number
   tableName: string
   tableComment: string
   className: string
@@ -54,6 +55,7 @@ export interface GenTableForm {
   businessName: string
   classComment: string
   author: string
+  parentMenuId: number
   remark: string
   tableColumnList: GenTableColumn[]
 }
@@ -62,7 +64,7 @@ export interface GenTableForm {
  * 代码生成查询参数
  */
 export interface GenTableQuery extends PageQuery {
-  tableId: string
+  tableId: number
   tableName: string
   tableComment: string
   className: string

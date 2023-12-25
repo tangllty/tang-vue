@@ -47,7 +47,7 @@
           <el-button
             type="primary"
             :icon="Download"
-            v-hasPermission="'tool:generator:list'"
+            v-hasPermission="'tool:generator:export'"
             @click="handleDownloads"
           >下载</el-button>
           <el-button
@@ -147,9 +147,17 @@
               link
               :icon="Download"
               size="small"
-              v-hasPermission="'tool:generator:list'"
+              v-hasPermission="'tool:generator:export'"
               @click="handleDownload(scope.row)"
             >下载</el-button>
+            <el-button
+              type="primary"
+              link
+              :icon="Download"
+              size="small"
+              v-hasPermission="'tool:generator:execute'"
+              @click="handleExecute(scope.row)"
+            >执行菜单 SQL</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -175,7 +183,7 @@ import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance } from 'element-plus'
 import { Edit, Delete, Search, Refresh, Upload, View, Download } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes } from '@/api/tool/generator'
+import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes, execute, executes } from '@/api/tool/generator'
 import { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
 import ImportTable from './ImportTable.vue'
 import PreviewCode from './PreviewCode.vue'
@@ -249,7 +257,7 @@ const handleEdit = (row: any) => {
 // 删除代码生成信息
 const handleDelete = async (row: any) => {
   try {
-    await proxy.$confirm('确认要删除"' + row.tableNames + '"代码生成信息吗？', '提示', {
+    await proxy.$confirm('确认要删除"' + row.tableName + '"代码生成信息吗？', '提示', {
       type: 'warning'
     })
     await deleteGenTable(row.tableId)
@@ -285,6 +293,19 @@ const handleDownloads = async () => {
   const tableNames: string = state.tableNames.toString()
   const res: any = await downloadCodes({ tableNames })
   proxy.$download(res)
+}
+
+// 执行 SQL
+const handleExecute = async (row: any) => {
+  try {
+    await proxy.$confirm(`确认要执行[${row.tableName}]菜单 SQL 吗？`, '提示', {
+      type: 'warning'
+    })
+    await execute(row.tableName)
+    proxy.$message.success('执行SQL成功')
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 重置表单

@@ -88,3 +88,20 @@ export const downloadCodes = (tableNames: any) => {
     responseType: 'blob'
   })
 }
+
+// 执行 SQL
+export const execute = (tableName: string) => {
+  return request({
+    url: '/tool/generator/execute/' + tableName,
+    method: 'get'
+  })
+}
+
+// 批量执行 SQL
+export const executes = (tableNames: any) => {
+  return request({
+    url: '/tool/generator/executes',
+    method: 'get',
+    params: tableNames
+  })
+}
