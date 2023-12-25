@@ -11,10 +11,11 @@ export const listMenu = (queryParams: SysMenuQuery) => {
 }
 
 // 查询菜单树
-export const listMenuTree = () => {
+export const listMenuTree = (queryParams = {} as SysMenuQuery) => {
   return request({
     url: '/system/menu/menuTree',
-    method: 'get'
+    method: 'get',
+    params: queryParams
   })
 }
 // 查询菜单信息

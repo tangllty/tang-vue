@@ -42,6 +42,7 @@ export interface SysMenuQuery extends PageQuery {
   menuId: number
   parentId: number
   menuName: string
+  menuType: string
   status: string
   createTime: Date
 }
