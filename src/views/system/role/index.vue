@@ -244,7 +244,7 @@ import { ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listRole, getRole, addRole, editRole, changeStatus, deleteRole, deleteRoles } from '@/api/system/role'
-import { menuTree as selectMenuTree } from '@/api/system/menu'
+import { listMenuTree } from '@/api/system/menu'
 import { listDictTree } from '@/api/system/dict'
 import { SysRole , SysRoleForm, SysRoleQuery } from '@/api/system/role/types'
 
@@ -335,7 +335,7 @@ const handleAdd = async () => {
 
 // 查询菜单树
 const getMenuTree = async () => {
-  const res: any = await selectMenuTree()
+  const res: any = await listMenuTree()
   state.menuTree = res.data
 }
 
