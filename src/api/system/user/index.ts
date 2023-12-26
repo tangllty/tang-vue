@@ -99,3 +99,12 @@ export const exportUser = (queryParams: SysUserQuery) => {
     responseType: 'arraybuffer'
   })
 }
+
+// 导出用户信息模板
+export const exportUserTemplate = () => {
+  return request({
+    url: '/system/user/export-template',
+    method: 'get',
+    responseType: 'arraybuffer'
+  })
+}

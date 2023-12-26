@@ -111,6 +111,20 @@
                 :icon="Upload"
                 @click="handleImport"
               >导入</el-button>
+              <el-dropdown
+                type="info"
+                :icon="Upload"
+                split-button
+                @click="handleImport"
+                class="ml-12 mr-12"
+              >
+                <el-icon><Upload /></el-icon>导入
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="handleExportTemplate">下载模板</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
               <el-button
                 type="warning"
                 :icon="Download"
@@ -370,7 +384,7 @@ import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listUser, addUser, getUser, getRoleSelect as selectRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, exportUser } from '@/api/system/user'
+import { listUser, addUser, getUser, getRoleSelect as selectRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, exportUser, exportUserTemplate } from '@/api/system/user'
 import { deptTree as selectDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 import DeptTree from './DeptTree.vue'
@@ -522,6 +536,12 @@ const handleImport = async () => {
 // 导出用户信息
 const handleExport = async () => {
   const res: any = await exportUser(state.queryParams)
+  proxy.$download(res)
+}
+
+// 导出用户信息模板
+const handleExportTemplate = async () => {
+  const res: any = await exportUserTemplate()
   proxy.$download(res)
 }
 
