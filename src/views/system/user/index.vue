@@ -106,11 +106,6 @@
                 v-hasPermission="'system:user:delete'"
                 @click="handleDeletes"
               >删除</el-button>
-              <el-button
-                type="info"
-                :icon="Upload"
-                @click="handleImport"
-              >导入</el-button>
               <el-dropdown
                 type="info"
                 :icon="Upload"
@@ -118,7 +113,7 @@
                 @click="handleImport"
                 class="ml-12 mr-12"
               >
-                <el-icon><Upload /></el-icon>导入
+                <el-icon><Upload /></el-icon><span class="ml-6">导入</span>
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item @click="handleExportTemplate">下载模板</el-dropdown-item>
