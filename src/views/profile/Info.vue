@@ -150,9 +150,9 @@ import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { editUserInfo, editUserPassword } from '@/api/profile'
-import { getRoleSelect as selectRoleSelect } from '@/api/system/user'
+import { listRoleSelect } from '@/api/system/user'
 import type { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
-import { deptTree as selectDeptTree } from '@/api/system/dept'
+import { listDeptTree } from '@/api/system/dept'
 
 const proxy = getProxy()
 const { sys_user_gender } = proxy.$dict('sys_user_gender')
@@ -219,13 +219,13 @@ const handleUserInfo = () => {
 
 // 查询部门树
 const getDeptTree = async () => {
-  const res: any = await selectDeptTree()
+  const res: any = await listDeptTree()
   state.deptTree = res.data
 }
 
 // 查询角色下拉框
 const getRoleSelect = async () => {
-  const res: any = await selectRoleSelect()
+  const res: any = await listRoleSelect()
   state.roleSelect = res.data
 }
 

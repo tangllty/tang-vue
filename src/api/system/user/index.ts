@@ -20,7 +20,7 @@ export const getUser = (userId: number) => {
 }
 
 // 获取角色下拉框数据
-export const getRoleSelect = () => {
+export const listRoleSelect = () => {
   return request({
     url: '/system/user/getRoleSelect',
     method: 'get'

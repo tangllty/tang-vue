@@ -11,7 +11,7 @@ export const listDept = (queryParams: SysDeptQuery) => {
 }
 
 // 查询部门树
-export const deptTree = () => {
+export const listDeptTree = () => {
   return request({
     url: '/system/dept/deptTree',
     method: 'get'

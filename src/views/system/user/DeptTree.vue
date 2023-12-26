@@ -25,7 +25,7 @@ import { ElInput, ElTree } from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
 import { TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { deptTree as selectDeptTree } from '@/api/system/dept'
+import { listDeptTree } from '@/api/system/dept'
 
 const proxy = getProxy()
 
@@ -62,7 +62,7 @@ const filterNode = (value: string, data: TreeNodeData) => {
 
 // 查询部门树
 const getDeptTree = async () => {
-  const res: any = await selectDeptTree()
+  const res: any = await listDeptTree()
   state.deptTree = res.data
 }
 

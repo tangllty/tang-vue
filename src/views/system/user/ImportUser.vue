@@ -79,8 +79,8 @@ import { reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules, UploadFile } from 'element-plus'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { getRoleSelect as selectRoleSelect, importUser } from '@/api/system/user'
-import { deptTree as selectDeptTree } from '@/api/system/dept'
+import { listRoleSelect, importUser } from '@/api/system/user'
+import { listDeptTree } from '@/api/system/dept'
 import { ImportForm } from '@/api/system/user/types'
 
 const proxy = getProxy()
@@ -129,13 +129,13 @@ const handleImport = async () => {
 
 // 查询部门树
 const getDeptTree = async () => {
-  const res: any = await selectDeptTree()
+  const res: any = await listDeptTree()
   state.deptTree = res.data
 }
 
 // 查询角色下拉框
 const getRoleSelect = async () => {
-  const res: any = await selectRoleSelect()
+  const res: any = await listRoleSelect()
   state.roleSelect = res.data
 }
 

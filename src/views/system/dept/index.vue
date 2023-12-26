@@ -204,7 +204,7 @@ import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listDept, deptTree as selectDeptTree, getDept, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
+import { listDept, listDeptTree, getDept, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
 import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
 
 const proxy = getProxy()
@@ -263,7 +263,7 @@ const handleList = async () => {
 
 // 查询部门树
 const getDeptTree = async () => {
-  const res: any = await selectDeptTree()
+  const res: any = await listDeptTree()
   state.deptTree = res.data
 }
 

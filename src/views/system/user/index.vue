@@ -384,8 +384,8 @@ import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listUser, addUser, getUser, getRoleSelect as selectRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, exportUser, exportUserTemplate } from '@/api/system/user'
-import { deptTree as selectDeptTree } from '@/api/system/dept'
+import { listUser, addUser, getUser, listRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, exportUser, exportUserTemplate } from '@/api/system/user'
+import { listDeptTree } from '@/api/system/dept'
 import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 import DeptTree from './DeptTree.vue'
 import ImportUser from './ImportUser.vue'
@@ -547,13 +547,13 @@ const handleExportTemplate = async () => {
 
 // 查询部门树
 const getDeptTree = async () => {
-  const res: any = await selectDeptTree()
+  const res: any = await listDeptTree()
   state.deptTree = res.data
 }
 
 // 查询角色下拉框
 const getRoleSelect = async () => {
-  const res: any = await selectRoleSelect()
+  const res: any = await listRoleSelect()
   state.roleSelect = res.data
 }
 
