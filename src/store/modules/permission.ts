@@ -23,7 +23,15 @@ export const usePermissionStore = defineStore('permission', () => {
   const filterAsyncRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
     return routes.map((route) => {
       const tempRoute: any = { ...route }
-      if (tempRoute.component === 'Layout') {
+      if (tempRoute.root) {
+        if (tempRoute.type === 'MENU') {
+          const children = {
+            path: tempRoute.path,
+            meta: tempRoute.meta,
+            component: tempRoute.component,
+          }
+          tempRoute.children = [children]
+        }
         tempRoute.component = Layout
       } else {
         tempRoute.component = modules[`../../views/${route.component}.vue`] as any

@@ -1,6 +1,6 @@
 <template>
   <div v-if="!item.meta || !item.meta.hidden">
-    <el-sub-menu v-if="item.children" :index="resolvePath(item.path)">
+    <el-sub-menu v-if="item.children && item.type === 'DIRECTORY'" :index="resolvePath(item.path)">
       <template #title>
         <el-icon>
           <svg-icon
@@ -20,6 +20,20 @@
         :base-path="resolvePath(children.path)"
       />
     </el-sub-menu>
+
+    <el-menu-item v-else-if="item.root && item.type === 'MENU'" :index="resolvePath(item.path)">
+      <template #title>
+        <el-icon>
+          <svg-icon
+            v-if="item.meta && item.meta.icon"
+            :name="item.meta.icon"
+          />
+        </el-icon>
+        <span>
+          {{ item.meta.title }}
+        </span>
+      </template>
+    </el-menu-item>
 
     <el-menu-item v-else :index="resolvePath('')">
       <template #title>
