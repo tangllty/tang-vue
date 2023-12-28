@@ -242,7 +242,7 @@ const handleDeletes = async () => {
 
 // 重置表单
 const resetQuery = async () => {
-  logLoginQueryFormRef.value?.resetFields()
+  proxy.$resetForm(logLoginQueryFormRef.value)
   await handleList()
 }
 

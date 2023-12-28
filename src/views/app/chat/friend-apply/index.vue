@@ -488,15 +488,14 @@ const handleDeletes = async () => {
 
 // 重置表单
 const resetQuery = async () => {
-  appFriendApplyQueryFormRef.value?.resetFields()
+  proxy.$resetForm(appFriendApplyQueryFormRef.value)
   await handleList()
 }
 
 // 关闭对话框
 const closeAppFriendApplyDialog = () => {
   state.appFriendApplyDialog.visible = false
-  appFriendApplyRuleFormRef.value?.clearValidate()
-  appFriendApplyRuleFormRef.value?.resetFields()
+  proxy.$resetForm(appFriendApplyRuleFormRef.value)
 }
 
 // 多选框

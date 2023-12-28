@@ -143,8 +143,7 @@ const getRoleSelect = async () => {
 const closeImportDialog = () => {
   state.importDialog.visible = false
   importFile.value = undefined
-  importRuleFormRef.value?.resetFields()
-  importRuleFormRef.value?.clearValidate()
+  proxy.$resetForm(importRuleFormRef.value)
 }
 
 // 提交表单

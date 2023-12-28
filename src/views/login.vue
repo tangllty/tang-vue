@@ -61,7 +61,7 @@
                 @click="submitForm(loginRuleFormRef)"
               >{{ $t('login.submit') }}</el-button>
               <el-button
-                @click="resetForm(loginRuleFormRef)"
+                @click="resetForm"
               >{{ $t('login.reset') }}</el-button>
             </el-form-item>
           </el-form>
@@ -120,7 +120,7 @@
                 @click="submitForm(loginRuleFormRef)"
               >{{ $t('login.submit') }}</el-button>
               <el-button
-                @click="resetForm(loginRuleFormRef)"
+                @click="resetForm"
               >{{ $t('login.reset') }}</el-button>
             </el-form-item>
           </el-form>
@@ -245,9 +245,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   }
 }
 
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.resetFields()
+const resetForm = () => {
+  proxy.$resetForm(loginRuleFormRef.value)
 }
 
 onMounted(() => {

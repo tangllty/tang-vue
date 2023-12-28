@@ -271,7 +271,7 @@ const handleDelete = async (row: any) => {
 
 // 重置表单
 const resetQuery = async () => {
-  onlineUserQueryFormRef.value?.resetFields()
+  proxy.$resetForm(onlineUserQueryFormRef.value)
   await handleList()
 }
 

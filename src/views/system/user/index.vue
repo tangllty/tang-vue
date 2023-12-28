@@ -554,7 +554,7 @@ const getRoleSelect = async () => {
 
 // 重置表单
 const resetQuery = async () => {
-  userQueryFormRef.value?.resetFields()
+  proxy.$resetForm(userQueryFormRef.value)
   await handleList()
 }
 
@@ -562,8 +562,7 @@ const resetQuery = async () => {
 const closeUserDialog = () => {
   state.userForm.password = '123456'
   state.userDialog.visible = false
-  userRuleFormRef.value?.resetFields()
-  userRuleFormRef.value?.clearValidate()
+  proxy.$resetForm(userRuleFormRef.value)
 }
 
 // 修改用户状态

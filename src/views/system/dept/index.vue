@@ -311,15 +311,14 @@ const handleDelete = async (row: any) => {
 
 // 重置表单
 const resetQuery = async () => {
-  deptQueryFormRef.value?.resetFields()
+  proxy.$resetForm(deptQueryFormRef.value)
   await handleList()
 }
 
 // 关闭对话框
 const closeDeptDialog = () => {
   state.deptDialog.visible = false
-  deptRuleFormRef.value?.clearValidate()
-  deptRuleFormRef.value?.resetFields()
+  proxy.$resetForm(deptRuleFormRef.value)
 }
 
 // 修改部门状态

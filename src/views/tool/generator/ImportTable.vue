@@ -174,15 +174,14 @@ const handleShow = async () => {
 
 // 重置表单
 const resetQuery = async () => {
-  genTableQueryFormRef.value?.resetFields()
+  proxy.$resetForm(genTableQueryFormRef.value)
   await handleList()
 }
 
 // 关闭对话框
 const closeImportTableDialog = () => {
   state.importTableDialog.visible = false
-  genTableRuleFormRef.value?.clearValidate()
-  genTableRuleFormRef.value?.resetFields()
+  proxy.$resetForm(genTableRuleFormRef.value)
 }
 
 // 多选框

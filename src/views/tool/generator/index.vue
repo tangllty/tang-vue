@@ -310,7 +310,7 @@ const handleExecute = async (row: any) => {
 
 // 重置表单
 const resetQuery = async () => {
-  genTableQueryFormRef.value?.resetFields()
+  proxy.$resetForm(genTableQueryFormRef.value)
   await handleList()
 }
 

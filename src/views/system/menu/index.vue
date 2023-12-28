@@ -420,15 +420,14 @@ const handleDelete = async (row: any) => {
 
 // 重置表单
 const resetQuery = async () => {
-  menuQueryFormRef.value?.resetFields()
+  proxy.$resetForm(menuQueryFormRef.value)
   await handleList()
 }
 
 // 关闭对话框
 const closeMenuDialog = () => {
   state.menuDialog.visible = false
-  menuRuleFormRef.value?.clearValidate()
-  menuRuleFormRef.value?.resetFields()
+  proxy.$resetForm(menuRuleFormRef.value)
 }
 
 // 选择图标后事件

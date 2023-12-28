@@ -43,12 +43,14 @@ import { download } from '@/utils/download'
 import { getFullPath } from '@/utils/path'
 import webSocketService from '@/utils/websocket'
 import contextMenu from '@/components/ContextMenu'
+import { resetForm } from '@/utils/form'
 
 app.config.globalProperties.$dict = getDicts
 app.config.globalProperties.$download = download
 app.config.globalProperties.$path = getFullPath
 app.config.globalProperties.$socket = webSocketService
 app.config.globalProperties.$contextMenu = contextMenu
+app.config.globalProperties.$resetForm = resetForm
 
 setupStore(app)
 setupDirective(app)

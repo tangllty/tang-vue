@@ -190,8 +190,7 @@ const handleRequest = async (row: any) => {
 // 关闭对话框
 const closeAppFriendApplyDialog = () => {
   state.appFriendApplyDialog.visible = false
-  appFriendApplyRuleFormRef.value?.clearValidate()
-  appFriendApplyRuleFormRef.value?.resetFields()
+  proxy.$resetForm(appFriendApplyRuleFormRef.value)
 }
 
 // 提交表单

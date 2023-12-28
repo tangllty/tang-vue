@@ -412,15 +412,14 @@ const handleDeletes = async () => {
 
 // 重置表单
 const resetQuery = async () => {
-  roleQueryFormRef.value?.resetFields()
+  proxy.$resetForm(roleQueryFormRef.value)
   await handleList()
 }
 
 // 关闭对话框
 const closeRoleDialog = () => {
   state.roleDialog.visible = false
-  roleRuleFormRef.value?.clearValidate()
-  roleRuleFormRef.value?.resetFields()
+  proxy.$resetForm(roleRuleFormRef.value)
 }
 
 // 多选框

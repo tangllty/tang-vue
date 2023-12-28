@@ -395,15 +395,14 @@ const handleDeletes = async () => {
 
 // 重置表单
 const resetQuery = async () => {
-  dictDataQueryFormRef.value?.resetFields()
+  proxy.$resetForm(dictDataQueryFormRef.value)
   await handleList()
 }
 
 // 关闭对话框
 const closeDictDataDialog = () => {
   state.dictDataDialog.visible = false
-  dictDataRuleFormRef.value?.clearValidate()
-  dictDataRuleFormRef.value?.resetFields()
+  proxy.$resetForm(dictDataRuleFormRef.value)
 }
 
 // 多选框

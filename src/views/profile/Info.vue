@@ -232,8 +232,7 @@ const getRoleSelect = async () => {
 // 关闭对话框
 const close = () => {
   proxy.$router.back()
-  userRuleFormRef.value?.resetFields()
-  userRuleFormRef.value?.clearValidate()
+  proxy.$resetForm(userRuleFormRef.value)
 }
 
 const submitForm = async (formEl: FormInstance | undefined, type: string) => {
@@ -243,23 +242,18 @@ const submitForm = async (formEl: FormInstance | undefined, type: string) => {
     if (type == 'userForm') {
       await editUserInfo(state.userForm)
       proxy.$message.success('修改个人资料成功')
-      resetForm(userRuleFormRef.value)
+      proxy.$resetForm(userRuleFormRef.value)
       handleUserInfo()
     }
     if (type == 'passwordForm') {
       state.passwordForm.userId = userStore.user.userId
       await editUserPassword(state.passwordForm)
       proxy.$message.success('修改密码成功')
-      resetForm(passwordRuleFormRef.value)
+      proxy.$resetForm(passwordRuleFormRef.value)
     }
   } catch (error) {
     console.log('error submit!', error)
   }
-}
-
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.resetFields()
 }
 
 onMounted(async () => {

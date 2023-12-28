@@ -427,8 +427,7 @@ const handleShow = async (tableId: number) => {
 // 关闭对话框
 const closeEditTableDialog = () => {
   state.editTableDialog.visible = false
-  editTableRuleFormRef.value?.clearValidate()
-  editTableRuleFormRef.value?.resetFields()
+  proxy.$resetForm(editTableRuleFormRef.value)
 }
 
 // 提交表单
