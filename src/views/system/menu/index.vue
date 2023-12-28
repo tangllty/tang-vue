@@ -181,8 +181,7 @@
         <el-form-item label="菜单类型" prop="menuType">
           <el-radio-group v-model="menuForm.menuType">
             <el-radio label="D">目录</el-radio>
-            <el-radio label="M" :disabled="menuForm.parentId === 0"
-            >菜单</el-radio>
+            <el-radio label="M">菜单</el-radio>
             <el-radio label="B" :disabled="menuForm.parentId === 0"
             >按钮</el-radio>
           </el-radio-group>
