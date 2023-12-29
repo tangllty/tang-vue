@@ -133,6 +133,15 @@
         >GitHub 授权码</el-button>
       </el-tabs>
     </el-card>
+
+    <div class="background-source">
+      <el-text>背景图片来源：</el-text>
+      <el-link
+        type="primary"
+        href="https://wallhaven.cc/w/d62ge3"
+        target="_blank"
+      >Wallhaven</el-link>
+    </div>
   </div>
 </template>
 
@@ -258,10 +267,13 @@ onMounted(() => {
 .login-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-image: url('../assets/login-background.png');
+    background-size: cover;
 
   .login {
     width: 520px;
-    margin-top: 150px;
 
     .login-header {
       text-align: center;
@@ -273,6 +285,19 @@ onMounted(() => {
       .el-input {
         width: 80%;
       }
+    }
+  }
+
+  .background-source {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+
+    .el-text {
+      color: #fff;
+      font-size: 12px;
     }
   }
 }
