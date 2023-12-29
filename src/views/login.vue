@@ -142,6 +142,8 @@
         target="_blank"
       >Wallhaven</el-link>
     </div>
+
+    <Snowflake />
   </div>
 </template>
 
@@ -155,6 +157,7 @@ import { LoginType } from '@/enums'
 import { getCaptcha } from '@/api/auth'
 import { LoginForm, CaptchaForm } from '@/api/auth/types'
 import settings from '@/settings'
+import Snowflake from '@/components/Background/Snowflake/index.vue'
 
 const proxy = getProxy()
 
@@ -274,6 +277,7 @@ onMounted(() => {
 
   .login {
     width: 520px;
+    z-index: 999;
 
     .login-header {
       text-align: center;
@@ -294,6 +298,7 @@ onMounted(() => {
     right: 0;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.3);
+    z-index: 999;
 
     .el-text {
       color: #fff;
