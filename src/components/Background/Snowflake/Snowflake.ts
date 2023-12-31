@@ -17,7 +17,9 @@ export default class Snowflake {
     this.y += this.speed
     this.x += Math.sin(this.angle) * 0.5
     if (this.y > window.innerHeight) {
-      this.y = -this.radius
+      this.x = Math.random() * window.innerWidth
+      this.y = -10
+      this.speed += Math.random() / 1000
     }
   }
 

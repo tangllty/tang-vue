@@ -24,8 +24,6 @@ let generateChance = 0.05
 let maxSnowflakes = 1000
 
 const animate = () => {
-  console.log(snowflakes.value.length)
-
   ctx.value.clearRect(0, 0, window.innerWidth, window.innerHeight)
   if (Math.random() < generateChance && snowflakes.value.length < maxSnowflakes) {
     snowflakes.value.push(new Snowflake())
