@@ -12,6 +12,7 @@ export interface GenTable {
   classComment: string
   author: string
   parentMenuId: number
+  ormType: string
   createTime: Date
   updateTime: Date
 }
@@ -56,6 +57,7 @@ export interface GenTableForm {
   classComment: string
   author: string
   parentMenuId: number
+  ormType: string
   remark: string
   tableColumnList: GenTableColumn[]
 }

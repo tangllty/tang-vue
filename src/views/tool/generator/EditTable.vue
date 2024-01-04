@@ -91,6 +91,17 @@
                 />
               </el-form-item>
             </el-col>
+            <el-col :span="12">
+              <el-form-item label="ORM 类型" prop="ormType">
+                <el-select
+                  v-model="editTableForm.ormType"
+                  placeholder="请选择 ORM 类型"
+                >
+                  <el-option label="MyBatis" value="MyBatis" />
+                  <el-option label="MyBatis-Plus" value="MyBatis-Plus" />
+                </el-select>
+              </el-form-item>
+            </el-col>
             <el-col :span="24">
               <el-form-item label="备注" prop="remark">
                 <el-input
@@ -390,6 +401,9 @@ const editTableRules = reactive<FormRules>({
   ],
   parentMenuId: [
     { required: true, message: '上级菜单不能为空', trigger: 'blur' },
+  ],
+  ormType: [
+    { required: true, message: 'ORM 类型不能为空', trigger: 'blur' },
   ],
 })
 
