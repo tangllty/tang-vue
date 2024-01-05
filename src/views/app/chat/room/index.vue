@@ -144,12 +144,12 @@ onMounted(() => {
           flex: 1;
           overflow-y: auto;
           padding: 15px;
-          background-color: #f5f5f5;
+          background-color: var(--chat-message-box-background);
         }
       }
 
       .chat-input {
-        background-color: #f5f5f5;
+        background-color: var(--chat-message-input-box-background);
       }
     }
   }

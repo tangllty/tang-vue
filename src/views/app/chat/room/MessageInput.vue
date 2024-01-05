@@ -319,7 +319,7 @@ defineExpose({
   .reply-message-box {
     width: 80%;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.5);
+    background: var(--chat-message-input-background);
     border-radius: 16px;
     padding: 10px;
     display: flex;
@@ -337,7 +337,7 @@ defineExpose({
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: white;
+  background-color: var(--chat-message-input-background);
 
   .toolbar {
     display: flex;
@@ -363,7 +363,8 @@ defineExpose({
     .input-message {
       width: 100%;
       height: 100px;
-      border: 1px solid grey;
+      border: 1px solid #808080;
+      background-color: var(--chat-message-input-background);
     }
 
     .at-list {

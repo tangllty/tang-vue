@@ -291,7 +291,7 @@ defineExpose({
           align-items: flex-start;
           padding: 2px;
           border-radius: 10px;
-          background-color: #c9e7ff;
+          background-color: var(--chat-message-box-self-background);
 
           .message {
             display: flex;
@@ -309,7 +309,7 @@ defineExpose({
           height: 0;
           border-style: solid;
           border-width: 5px 0 5px 5px;
-          border-color: transparent transparent transparent #c9e7ff;
+          border-color: transparent transparent transparent var(--chat-message-box-self-background);
         }
 
         .reply-message {
@@ -317,7 +317,7 @@ defineExpose({
           padding: 8px;
           border-radius: 10px;
           margin-top: 5px;
-          background-color: #ffffff88;
+          background-color: var(--chat-message-box-reply-background);
         }
       }
     }
@@ -354,7 +354,7 @@ defineExpose({
           align-items: flex-start;
           padding: 2px;
           border-radius: 10px;
-          background-color: #ffffff;
+          background-color: var(--chat-message-box-other-background);
 
           .message {
             display: flex;
@@ -372,7 +372,7 @@ defineExpose({
           height: 0;
           border-style: solid;
           border-width: 5px 5px 5px 0;
-          border-color: transparent #ffffff transparent transparent;
+          border-color: transparent var(--chat-message-box-other-background) transparent transparent;
         }
 
         .reply-message {
@@ -380,7 +380,7 @@ defineExpose({
           padding: 8px;
           border-radius: 10px;
           margin-top: 5px;
-          background-color: #ffffff88;
+          background-color: var(--chat-message-box-reply-background);
         }
       }
     }

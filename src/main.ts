@@ -16,6 +16,7 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 
 // 自定义样式
 import '@/styles/index.scss'
+import '@/styles/dark/css-vars.scss'
 
 // 注册 svg
 import 'virtual:svg-icons-register'
