@@ -1,38 +1,27 @@
 <template>
   <div class="chat-item">
-    <el-dropdown
-      trigger="contextmenu"
+    <div
       v-for="item in chatList"
       :key="item.nickname"
-      class="flex"
+      @click="handleItemClick(item)"
+      @click.right.native="showContextMenu($event, item)"
+      :class="{ 'active': selectedItem === item, 'stick': item.stickFlag === '1' }"
+      class="chat-item-wrapper"
     >
-      <div
-        @click="handleItemClick(item)"
-        class="chat-item-wrapper"
-        :class="{ 'active': selectedItem === item, 'stick': item.stickFlag === '1' }"
-      >
-        <div class="chat-item-wrapper__avatar-wrapper">
-          <el-avatar :src="proxy.$path(item.avatar)" />
+      <div class="chat-item-wrapper__avatar-wrapper">
+        <el-avatar :src="proxy.$path(item.avatar)" />
+      </div>
+      <div class="chat-item-wrapper__content-wrapper">
+        <div class="content-header">
+          <el-text truncated>{{ item.nickname }}</el-text>
+          <span class="time">{{ item.time }}</span>
         </div>
-        <div class="chat-item-wrapper__content-wrapper">
-          <div class="content-header">
-            <el-text truncated>{{ item.nickname }}</el-text>
-            <span class="time">{{ item.time }}</span>
-          </div>
-          <div class="content-body">
-            <div truncated v-html="item.message" />
-            <el-badge v-if="item.unreadCount > 0" :value="item.unreadCount" />
-          </div>
+        <div class="content-body">
+          <div truncated v-html="item.message" />
+          <el-badge v-if="item.unreadCount > 0" :value="item.unreadCount" />
         </div>
       </div>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item @click="handleStick(item)">{{ item.stickFlag === '0' ? '置顶' : '取消置顶' }}</el-dropdown-item>
-          <el-dropdown-item>{{ true ? '隐藏' : '取消隐藏'}}</el-dropdown-item>
-          <el-dropdown-item>{{ false ? '静音' : '取消静音'}}</el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+    </div>
   </div>
 </template>
 
@@ -41,6 +30,7 @@ import { reactive, toRefs } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatListAll, stickAppChatList, unstickAppChatList } from '@/api/app/chat/chat-list'
 import { AppChatList } from '@/api/app/chat/chat-list/types'
+import { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
 
 const proxy = getProxy()
 
@@ -66,17 +56,44 @@ const handleChatList = async () => {
 }
 
 // 点击聊天列表
-const handleItemClick = (item: AppChatList): void => {
-  if (selectedItem.value === item) return
-  selectedItem.value = item
+const handleItemClick = (appChatList: AppChatList): void => {
+  if (selectedItem.value === appChatList) return
+  selectedItem.value = appChatList
 
   proxy.$router.push({
     query: {
-      friendId: item.friendId
+      friendId: appChatList.friendId
     }
   })
 
   proxy.$emit('clicked', selectedItem.value)
+}
+
+const showContextMenu = (e: MouseEvent, appChatList: AppChatList) => {
+  const items: MenuItem[] = [
+    {
+      label: appChatList.stickFlag === '0' ? '置顶' : '取消置顶',
+      onClick: () => {
+        handleStick(appChatList)
+      }
+    },
+    {
+      label: appChatList ? '隐藏' : '取消隐藏',
+      onClick: () => {
+        console.log('隐藏')
+      }
+    },
+    {
+      label: appChatList ? '静音' : '取消静音',
+      onClick: () => {
+        console.log('静音')
+      }
+    }
+  ]
+  const options: ContextMenuOptions = {
+    items
+  }
+  proxy.$contextMenu(e, options)
 }
 
 // 置顶
