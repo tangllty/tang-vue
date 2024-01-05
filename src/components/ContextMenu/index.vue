@@ -46,12 +46,12 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .context-menu {
   position: fixed;
-  background-color: #f9f9fb;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: var(--context-menu-background);
+  box-shadow: 0 0 5px var(--context-menu-box-shadow);
   min-width: 120px;
   padding-left: 0;
   border-radius: 5px;
-  border: 1px solid  #c5c5c5;
+  border: 1px solid  var(--context-menu-border);
 
   &:focus {
     outline: none;

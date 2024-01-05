@@ -97,9 +97,9 @@ const handleItemClick = computed(() => {
     margin-top: 2px;
     padding: 0;
     border-radius: 5px;
-    background-color: #f9f9fb;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-    border: 1px solid  #c5c5c5;
+    background-color: var(--context-menu-background);
+    box-shadow: 0 0 4px var(--context-menu-box-shadow);
+    border: 1px solid  var(--context-menu-border);
     width: fit-content;
     display: none;
   }
@@ -110,8 +110,8 @@ const handleItemClick = computed(() => {
     }
 
     & > .menu-item > .menu-item__container > .menu-item__container__content {
-      color: #68b3ff;
-      background-color: #dfedfd;
+      color: var(--context-menu-hover-color);
+      background-color: var(--context-menu-hover-background);
       border-radius: 5px;
     }
   }
@@ -148,8 +148,8 @@ const handleItemClick = computed(() => {
     }
 
     &:hover {
-      color: #68b3ff;
-      background-color: #dfedfd;
+      color: var(--context-menu-hover-color);
+      background-color: var(--context-menu-hover-background);
       border-radius: 5px;
     }
   }
@@ -157,7 +157,7 @@ const handleItemClick = computed(() => {
   &__divider {
     height: 1px;
     margin: 4px 0;
-    border-bottom: 1px solid #c5c5c5;
+    border-bottom: 1px solid var(--context-menu-border);
     width: calc(100% - 20px);
     margin-left: 10px;
   }
@@ -175,15 +175,19 @@ ul > li {
 
 .disabled {
   cursor: not-allowed;
-  color: #c5c5c5;
+  color: var(--context-menu-border);
 
   &__container {
     .title {
       &:hover {
-        color: #c5c5c5;
+        color: var(--context-menu-border);
         background-color: transparent;
       }
     }
   }
+}
+
+.title {
+  font-size: 14px;
 }
 </style>

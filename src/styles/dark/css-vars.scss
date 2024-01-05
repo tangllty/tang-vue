@@ -1,0 +1,15 @@
+:root {
+  --context-menu-box-shadow: rgba(0, 0, 0, 0.2);
+  --context-menu-border: #c5c5c5;
+  --context-menu-background: #f9f9fb;
+  --context-menu-hover-color: var(--el-color-primary);
+  --context-menu-hover-background: #dfedfd;
+}
+
+html.dark {
+  --context-menu-box-shadow: rgba(255, 255, 255, 0.2);
+  --context-menu-border: #353535;
+  --context-menu-background: #1c1b22;
+  --context-menu-hover-color: var(--el-color-primary);
+  --context-menu-hover-background: #252525;
+}
