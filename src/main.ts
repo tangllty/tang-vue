@@ -36,6 +36,9 @@ import 'highlight.js/lib/common'
 import 'highlight.js/styles/github.css'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 
+// 图片上传
+import ImageUpload from '@/components/ImageUpload/index.vue'
+
 const app = createApp(App)
 
 import { getDicts } from '@/utils/dict'
@@ -63,4 +66,5 @@ app
   .component('Pagination', Pagination)
   .component('DictSpan', DictSpan)
   .component('DictTag', DictTag)
+  .component('ImageUpload', ImageUpload)
   .mount('#app')
