@@ -2,7 +2,7 @@
   <ul
     class="context-menu"
     ref="contextMenuRef"
-    @blur="handleBlur"
+    @blur.native.capture="handleBlur"
     tabindex="-1"
   >
     <MenuItem
@@ -38,6 +38,8 @@ const handleBlur = () => {
 
 onMounted(async () => {
   await nextTick()
+  const contextMenu = contextMenuRef.value as HTMLDivElement
+  contextMenu.focus()
 })
 </script>
 
@@ -50,5 +52,9 @@ onMounted(async () => {
   padding-left: 0;
   border-radius: 5px;
   border: 1px solid  #c5c5c5;
+
+  &:focus {
+    outline: none;
+  }
 }
 </style>
