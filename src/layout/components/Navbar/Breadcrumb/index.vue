@@ -1,5 +1,5 @@
 <template>
-  <el-breadcrumb separator="/">
+  <el-breadcrumb :separator-icon="ArrowRight">
     <el-breadcrumb-item :to="{ path: '/index' }">
       首页
     </el-breadcrumb-item>
@@ -14,6 +14,7 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute, RouteLocationMatched } from 'vue-router'
+import { ArrowRight } from '@element-plus/icons-vue'
 
 const currentRoute = useRoute()
 
