@@ -4,6 +4,11 @@
   --context-menu-background: #f9f9fb;
   --context-menu-hover-color: var(--el-color-primary);
   --context-menu-hover-background: #dfedfd;
+
+  --chat-list-text-color: #999999;
+  --chat-list-hover-background: #d5d3d2;
+  --chat-list-active-background: #c9c8c6;
+  --chat-list-sticky-background: #e1dedd;
 }
 
 html.dark {
@@ -12,4 +17,9 @@ html.dark {
   --context-menu-background: #1c1b22;
   --context-menu-hover-color: var(--el-color-primary);
   --context-menu-hover-background: #252525;
+
+  --chat-list-text-color: #bbbbbb;
+  --chat-list-hover-background: #2a2c2d;
+  --chat-list-active-background: #363739;
+  --chat-list-sticky-background: rgb(30, 33, 34);
 }

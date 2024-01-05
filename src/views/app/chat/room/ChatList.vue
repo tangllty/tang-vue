@@ -130,7 +130,7 @@ defineExpose({
     width: 100%;
 
     &:hover {
-      background-color: #d5d3d2 !important;
+      background-color: var(--chat-list-hover-background) !important;
     }
 
     &__avatar-wrapper {
@@ -158,7 +158,7 @@ defineExpose({
 
         .time {
           font-size: 12px;
-          color: #999;
+          color: var(--chat-list-text-color);
           text-align: right;
           min-width: 100px;
           width: 35%;
@@ -172,7 +172,7 @@ defineExpose({
 
         .el-text {
           font-size: 13px;
-          color: #999;
+          color: var(--chat-list-text-color);
         }
 
         .el-badge {
@@ -183,11 +183,11 @@ defineExpose({
   }
 
   &-wrapper.active {
-    background-color: #c9c8c6 !important;
+    background-color: var(--chat-list-active-background) !important;
   }
 
   &-wrapper.stick {
-    background-color: #e1dedd;
+    background-color: var(--chat-list-sticky-background);
   }
 }
 </style>
