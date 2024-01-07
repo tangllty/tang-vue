@@ -161,7 +161,7 @@
               label="邮箱"
               prop="email"
               align="center"
-              width="160"
+              width="180"
               show-overflow-tooltip
             />
             <el-table-column
@@ -216,13 +216,13 @@
             <el-table-column
               label="最后登录时间"
               prop="loginDate"
-              width="160"
+              width="180"
               align="center"
             />
             <el-table-column
               label="创建时间"
               prop="createTime"
-              width="160"
+              width="180"
               align="center"
             />
             <el-table-column

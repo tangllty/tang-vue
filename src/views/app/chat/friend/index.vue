@@ -111,11 +111,13 @@
           prop="createTime"
           label="创建时间"
           align="center"
+          width="180"
         />
         <el-table-column
           prop="updateTime"
           label="更新时间"
           align="center"
+          width="180"
         />
         <el-table-column
           label="操作"

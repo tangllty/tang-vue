@@ -105,6 +105,8 @@
         <el-table-column
           prop="ip"
           label="IP地址"
+          width="130"
+          show-overflow-tooltip
           align="center"
         />
         <el-table-column
@@ -117,7 +119,7 @@
           prop="loginTime"
           label="登录时间"
           align="center"
-          width="160"
+          width="180"
         />
         <el-table-column
           prop="success"

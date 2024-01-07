@@ -23,10 +23,18 @@
           </div>
         </template>
         <el-table :data="[java]">
-          <el-table-column prop="javaHome" label="Java 路径" />
+          <el-table-column
+            prop="javaHome"
+            label="Java 路径"
+            show-overflow-tooltip
+          />
           <el-table-column prop="javaVersion" label="Java 版本" />
           <el-table-column prop="jvmName" label="Jvm 名称" />
-          <el-table-column prop="projectHome" label="项目路径" />
+          <el-table-column
+            prop="projectHome"
+            label="项目路径"
+            show-overflow-tooltip
+          />
         </el-table>
       </el-card>
     </el-col>

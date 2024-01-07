@@ -96,7 +96,7 @@
         <el-table-column
           prop="loginTime"
           label="登陆时间"
-          width="160"
+          width="180"
           align="center"
         />
         <el-table-column

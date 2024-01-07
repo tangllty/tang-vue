@@ -32,7 +32,7 @@
           label="邮箱"
           prop="email"
           align="center"
-          width="160"
+          width="180"
           show-overflow-tooltip
         />
         <el-table-column
