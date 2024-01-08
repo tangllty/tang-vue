@@ -93,7 +93,7 @@ export const downloadCodes = (tableNames: any) => {
 export const execute = (tableName: string) => {
   return request({
     url: '/tool/generator/execute/' + tableName,
-    method: 'get'
+    method: 'put'
   })
 }
 
@@ -101,7 +101,7 @@ export const execute = (tableName: string) => {
 export const executes = (tableNames: any) => {
   return request({
     url: '/tool/generator/executes',
-    method: 'get',
+    method: 'put',
     params: tableNames
   })
 }
