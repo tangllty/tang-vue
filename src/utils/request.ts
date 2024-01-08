@@ -62,7 +62,10 @@ service.interceptors.response.use(async (response: AxiosResponse) => {
     }
     return Promise.reject(msg)
   }
-  ElMessage.error(msg)
+  ElMessage.error({
+    dangerouslyUseHTMLString: true,
+    message: msg
+  })
   return Promise.reject(new Error(msg))
 }, (error: any) => {
   ElMessage.error(error)
