@@ -49,7 +49,7 @@
               />
               <div style="width: 24%; margin-left: 20px; height: 31px">
                 <el-image
-                  v-loading="loading"
+                  v-loading="captchaLoading"
                   :src="captchaUrl"
                   @click="handleCaptcha"
                 />
@@ -58,6 +58,7 @@
             <el-form-item>
               <el-button
                 type="primary"
+                :loading="loading"
                 @click="submitForm(loginRuleFormRef)"
               >{{ $t('login.submit') }}</el-button>
               <el-button
@@ -108,7 +109,7 @@
               />
               <div style="width: 24%; margin-left: 20px; height: 31px">
                 <el-image
-                  v-loading="loading"
+                  v-loading="captchaLoading"
                   :src="captchaUrl"
                   @click="handleCaptcha"
                 />
@@ -117,6 +118,7 @@
             <el-form-item>
               <el-button
                 type="primary"
+                :loading="loading"
                 @click="submitForm(loginRuleFormRef)"
               >{{ $t('login.submit') }}</el-button>
               <el-button
@@ -164,6 +166,7 @@ const proxy = getProxy()
 const userStore = useUserStore()
 
 const state = reactive({
+  loading: false,
   loginForm: {
     username: 'admin',
     email: 'admin@163.com',
@@ -175,14 +178,15 @@ const state = reactive({
     } as CaptchaForm
   } as LoginForm,
   activeName: LoginType.USERNAME,
-  loading: false,
+  captchaLoading: false,
   captchaUrl: ''
 })
 
 const {
+  loading,
   loginForm,
   activeName,
-  loading,
+  captchaLoading,
   captchaUrl
 } = toRefs(state)
 
@@ -211,11 +215,11 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 // 获取验证码
 const handleCaptcha = async () => {
-  state.loading = true
+  state.captchaLoading = true
   const res = await getCaptcha()
   state.loginForm.captcha.id = res.data.id
   state.captchaUrl = `data:image/png;base64,${res.data.text}`
-  state.loading = false
+  state.captchaLoading = false
 }
 
 // GitHub 登录
@@ -231,6 +235,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   try {
     await formEl.validate()
+    state.loading = true
     await userStore.login(state.loginForm)
     const redirectUrl = proxy.$route.query.redirect as string
     if (redirectUrl) {
@@ -250,8 +255,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     }
     await proxy.$router.push({ path: '/' })
   } catch (error: any) {
+    state.loading = false
     if (error.message === '验证码错误' || error.message === '验证码已过期') {
       handleCaptcha()
+      state.loginForm.captcha.id = 0
+      state.loginForm.captcha.text = ''
     }
     console.log('error submit!')
   }
