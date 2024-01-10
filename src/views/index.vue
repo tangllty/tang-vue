@@ -51,7 +51,13 @@
               <span>糖猫猫权限管理系统</span>
             </div>
           </template>
-          <!-- <el-skeleton :rows="6" animated /> -->
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero ipsam officiis asperiores aut mollitia aspernatur nostrum ab blanditiis amet perspiciatis. Molestiae adipisci error commodi sapiente dolorum exercitationem ab similique quisquam.
+          Quod saepe obcaecati rem libero dicta voluptatibus modi velit. Odit cum quasi modi quisquam recusandae odio, rem corporis laboriosam consequatur! Quos veniam itaque odio nulla sunt libero accusamus ad animi.
+          Iure ratione suscipit repellendus possimus dolore incidunt blanditiis animi pariatur maxime ab alias id placeat dolorem est corrupti, deleniti, praesentium explicabo! Praesentium ea odio nulla nihil sunt ratione voluptates! Enim?
+          Soluta dolores, optio saepe iste, eos quasi laudantium repellat expedita dolorum quo placeat ullam eum a officia rem vitae, tempore porro. Maxime, quo. Totam nemo qui quasi distinctio laudantium blanditiis.
+          Velit consequatur ea accusantium. Id, quia velit? Vero quos error eligendi asperiores recusandae neque soluta porro omnis consequuntur sint officia in nam placeat voluptas eveniet adipisci minus, cupiditate incidunt. Repudiandae.
+          Sapiente consectetur quos vitae nesciunt quod soluta, earum inventore ipsum facere voluptatum nobis eius. Qui repellat, alias porro accusantium officiis libero, aliquid ipsam velit debitis numquam et tempora suscipit recusandae.
+          Consequuntur, eius. Laudantium, necessitatibus ut. Sunt distinctio impedit ab expedita, quasi dolor minima repellat officiis asperiores cum! Incidunt deleniti autem laborum officiis reprehenderit explicabo ipsam, molestias tempore. Ullam, saepe dolor.
         </el-card>
       </el-col>
     </el-row>
