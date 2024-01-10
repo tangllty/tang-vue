@@ -1,4 +1,5 @@
 import { UploadFile } from 'element-plus'
+import { SysDept } from '@/api/system/dept/types'
 
 // 用户对象
 export interface SysUser {
@@ -19,6 +20,7 @@ export interface SysUser {
   updateBy: string
   updateTime: Date
   remark: string
+  dept: SysDept
   roleIds: number[]
 }
 
@@ -26,6 +28,7 @@ export interface SysUser {
 export interface UserInfo {
   user: SysUser
   roles: string[]
+  roleNames: string[]
   permissions: string[]
 }
 
