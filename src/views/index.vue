@@ -39,7 +39,7 @@
               <span>用户访问量</span>
             </div>
           </template>
-          <div id="user" class="user" />
+          <div id="userVisit" class="user-visit" />
         </el-card>
       </el-col>
     </el-row>
@@ -49,6 +49,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import * as echarts from 'echarts'
+import { listUserVisit } from '@/api/index'
 
 import userAvatar from '@/assets/logo.png'
 
@@ -59,18 +60,21 @@ const options = {
   },
   yAxis: {
     type: 'value'
-  },
-  series: [
-    {
-      data: [150, 230, 224, 218, 135, 147, 260],
-      type: 'line'
-    }
-  ]
+  }
 }
 
-onMounted(() => {
-  const chart = echarts.init(document.getElementById('user') as HTMLDivElement)
-  chart.setOption(options)
+onMounted(async () => {
+  const res = await listUserVisit()
+  const chart = echarts.init(document.getElementById('userVisit') as HTMLDivElement)
+  chart.setOption({
+    ...options,
+    series: [
+      {
+        data: res.data,
+        type: 'line'
+      }
+    ]
+  })
   window.addEventListener('resize', () => chart.resize())
 })
 </script>
@@ -91,7 +95,7 @@ onMounted(() => {
   }
 }
 
-.user {
+.user-visit {
   height: 450px;
 }
 </style>
