@@ -16,6 +16,8 @@ export const useUserStore = defineStore('user', () => {
   const token: Ref<UnwrapRef<string>> = ref<string>(getToken() ?? '')
   // 角色集合
   const roles: Ref<string[]> = ref<Array<string>>([])
+  // 角色名称集合
+  const roleNames: Ref<string[]> = ref<Array<string>>([])
   // 权限集合
   const permissions: Ref<string[]> = ref<Array<string>>([])
 
@@ -57,6 +59,7 @@ export const useUserStore = defineStore('user', () => {
       user.value = data.user
       user.value.avatar = user.value.avatar ? import.meta.env.VITE_APP_BASE_API + data.user.avatar : defaultAvatar
       roles.value = data.roles
+      roleNames.value = data.roleNames
       permissions.value = data.permissions
       return data
     } catch (error) {
@@ -70,6 +73,7 @@ export const useUserStore = defineStore('user', () => {
     removeToken()
     token.value = ''
     roles.value = []
+    roleNames.value = []
     permissions.value = []
   }
 
@@ -77,6 +81,7 @@ export const useUserStore = defineStore('user', () => {
     user,
     token,
     roles,
+    roleNames,
     permissions,
     login,
     logout,
