@@ -3,31 +3,55 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card>
+          <template #header>
+            <el-row :gutter="20">
+              <el-col :span="3">
+                <el-image :src="userAvatar" class="user-avatar" />
+              </el-col>
+              <el-col :span="21">
+                <span class="user-info">
+                  <span class="mr-10">
+                    {{ userStore.user.nickname }}
+                  </span>
+                  <span class="mr-10">
+                    {{ userStore.roleNames.toLocaleString() }}
+                  </span>
+                  <span>
+                    {{ userStore.user.dept.deptName }}
+                  </span>
+                </span>
+              </el-col>
+            </el-row>
+          </template>
           <el-row :gutter="20">
-            <el-col :span="3">
-              <el-image :src="userAvatar" class="user-avatar" />
-            </el-col>
-            <el-col :span="21">
-              <span class="user-info">
-                <span class="mr-10">
-                  糖猫猫
-                </span>
-                <span class="mr-10">
-                  系统管理员
-                </span>
-                <span>
-                  研发一组
-                </span>
-              </span>
+            <el-col :span="24">
+              微信群：
+              <el-alert
+                title="考虑到网络原因，提供 Gitee 和 Github 两个平台的微信群二维码。"
+                type="warning"
+                show-icon
+                class="mt-10 mb-10"
+              />
             </el-col>
           </el-row>
-          <br />
-          <el-skeleton :rows="4" animated />
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-image :src="weChatGroupGitee" />
+            </el-col>
+            <el-col :span="12">
+              <el-image :src="weChatGroupGithub" />
+            </el-col>
+          </el-row>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card>
-          <el-skeleton :rows="6" animated />
+          <template #header>
+            <div class="card-header">
+              <span>糖猫猫权限管理系统</span>
+            </div>
+          </template>
+          <!-- <el-skeleton :rows="6" animated /> -->
         </el-card>
       </el-col>
     </el-row>
@@ -47,13 +71,26 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, reactive, toRefs } from 'vue'
 import * as echarts from 'echarts'
-import { listUserVisit } from '@/api/index'
+import { useUserStore } from '@/store/modules/user'
+import { listUserVisit, getWechatGitee, getWechatGithub } from '@/api/index'
 
 import userAvatar from '@/assets/logo.png'
 
-const options = {
+const userStore = useUserStore()
+
+const state = reactive({
+  weChatGroupGitee: '',
+  weChatGroupGithub: '',
+})
+
+const {
+  weChatGroupGitee,
+  weChatGroupGithub,
+} = toRefs(state)
+
+const userVisitOptions = {
   xAxis: {
     type: 'category',
     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -63,11 +100,14 @@ const options = {
   }
 }
 
-onMounted(async () => {
+/**
+ * 用户访问量
+ */
+const handleUserVisit = async () => {
   const res = await listUserVisit()
   const chart = echarts.init(document.getElementById('userVisit') as HTMLDivElement)
   chart.setOption({
-    ...options,
+    ...userVisitOptions,
     series: [
       {
         data: res.data,
@@ -76,6 +116,30 @@ onMounted(async () => {
     ]
   })
   window.addEventListener('resize', () => chart.resize())
+}
+
+/**
+ * 请求微信群二维码(Gitee)
+ */
+const handleRequestGitee = async () => {
+  const res: any = await getWechatGitee()
+  const blob = new Blob([res.data], { type: 'image/png' })
+  state.weChatGroupGitee = URL.createObjectURL(blob)
+}
+
+/**
+ * 请求微信群二维码(Github)
+ */
+const handleRequestGithub = async () => {
+  const res: any = await getWechatGithub()
+  const blob = new Blob([res.data], { type: 'image/png' })
+  state.weChatGroupGithub = URL.createObjectURL(blob)
+}
+
+onMounted(async () => {
+  await handleUserVisit()
+  await handleRequestGitee()
+  await handleRequestGithub()
 })
 </script>
 
