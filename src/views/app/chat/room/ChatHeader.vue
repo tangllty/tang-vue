@@ -38,6 +38,7 @@ const {
 } = toRefs(state)
 
 const toggleDrawer = (): void => {
+  proxy.$notImplemented()
   state.showDrawer = !state.showDrawer
   proxy.$emit('showSetting', state.showDrawer)
 }

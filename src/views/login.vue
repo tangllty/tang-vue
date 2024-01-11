@@ -224,6 +224,7 @@ const handleCaptcha = async () => {
 
 // GitHub 登录
 const handleGitHubLogin = () => {
+  proxy.$notImplemented()
   const clientID = 'Iv1.49e0be67d53b2007'
   const authorize_uri = 'https://github.com/login/oauth/authorize'
   const redirect_uri = 'http://localhost:8080/third-party/oauth/github/redirect'

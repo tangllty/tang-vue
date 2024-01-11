@@ -1,11 +1,16 @@
 <template>
   <div class="search-bar">
-    <el-button :icon="Operation" circle></el-button>
+    <el-button
+      :icon="Operation"
+      circle
+      @click="proxy.$notImplemented"
+    />
     <el-input
       v-model="keyword"
       :prefix-icon="Search"
       placeholder="请输入搜索内容"
       clearable
+      @focus="proxy.$notImplemented"
     />
   </div>
 </template>

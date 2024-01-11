@@ -80,13 +80,13 @@ const showContextMenu = (e: MouseEvent, appChatList: AppChatList) => {
     {
       label: appChatList ? '隐藏' : '取消隐藏',
       onClick: () => {
-        console.log('隐藏')
+        proxy.$notImplemented()
       }
     },
     {
       label: appChatList ? '静音' : '取消静音',
       onClick: () => {
-        console.log('静音')
+        proxy.$notImplemented()
       }
     }
   ]

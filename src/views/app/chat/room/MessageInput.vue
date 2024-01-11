@@ -6,7 +6,8 @@
         size="small"
         plain
         text
-      >定位(未实装)</el-button>
+        @click="proxy.$notImplemented"
+      >定位</el-button>
       <div
         class="reply-message"
         v-html="replyMessage?.content"
@@ -22,8 +23,16 @@
   </div>
   <div class="input-container">
     <div class="toolbar">
-      <el-button :icon="Picture" circle />
-      <el-button :icon="Files" circle />
+      <el-button
+        :icon="Picture"
+        circle
+        @click="$notImplemented"
+      />
+      <el-button
+        :icon="Files"
+        circle
+        @click="$notImplemented"
+      />
     </div>
     <div class="input-wrapper">
       <div
