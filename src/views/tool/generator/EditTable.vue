@@ -92,6 +92,17 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
+              <el-form-item label="语言类型" prop="languageType">
+                <el-select
+                  v-model="editTableForm.languageType"
+                  placeholder="请选择语言类型"
+                >
+                  <el-option label="Java" value="Java" />
+                  <el-option label="Kotlin" value="Kotlin" />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
               <el-form-item label="ORM 类型" prop="ormType">
                 <el-select
                   v-model="editTableForm.ormType"
@@ -401,6 +412,9 @@ const editTableRules = reactive<FormRules>({
   ],
   parentMenuId: [
     { required: true, message: '上级菜单不能为空', trigger: 'blur' },
+  ],
+  languageType: [
+    { required: true, message: '语言类型不能为空', trigger: 'blur' },
   ],
   ormType: [
     { required: true, message: 'ORM 类型不能为空', trigger: 'blur' },
