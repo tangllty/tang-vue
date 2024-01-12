@@ -62,6 +62,7 @@ const handlePreviewCode = async (tableId: number) => {
 // 显示对话框
 const handleShow = async (tableId: number) => {
   await handlePreviewCode(tableId)
+  await handleActiveName()
   state.previewCodeDialog = {
     title: '代码预览',
     type: 'list',
@@ -74,6 +75,13 @@ const getKey = (key: string): string => {
   return key.substring(key.lastIndexOf('/') + 1, key.indexOf('.vm'))
 }
 
+// 设置 activeName
+const handleActiveName = async () => {
+  const firstKey = Object.keys(state.code)[0]
+  const postfix = firstKey.substring(firstKey.lastIndexOf('/') + 1, firstKey.indexOf('.vm'))
+  state.activeName = postfix
+}
+
 // 代码复制
 const handleCopy = async (code: string) => {
   await navigator.clipboard.writeText(code)
@@ -83,7 +91,7 @@ const handleCopy = async (code: string) => {
 // 关闭对话框
 const closePreviewCodeDialog = () => {
   state.previewCodeDialog.visible = false
-  state.activeName = 'entity.java'
+  state.activeName = ''
   state.code = {}
 }
 
