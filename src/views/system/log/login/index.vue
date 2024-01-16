@@ -83,6 +83,7 @@
           label="登陆账号"
           align="center"
           width="100"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="loginType"
@@ -136,6 +137,7 @@
           label="返回消息"
           align="center"
           width="100"
+          show-overflow-tooltip
         />
         <el-table-column
           label="操作"
