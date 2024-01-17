@@ -144,7 +144,7 @@ onMounted(() => {
           overflow-y: auto;
           padding: 15px;
           background-color: var(--chat-message-box-background);
-          box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0px 0px 4px 0px var(--chat-message-box-shadow);
         }
       }
 

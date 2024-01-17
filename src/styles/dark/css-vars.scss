@@ -6,11 +6,12 @@
   --context-menu-hover-background: #dfedfd;
 
   --chat-list-text-color: #999999;
-  --chat-list-hover-background: #d5d3d2;
-  --chat-list-active-background: #c9c8c6;
+  --chat-list-hover-background: #eff0f1;
+  --chat-list-active-background: #eff0f1;
   --chat-list-sticky-background: #e1dedd;
 
   --chat-message-box-background: #ffffff;
+  --chat-message-box-shadow: rgba(0, 0, 0, 0.1);
   --chat-message-box-self-background: #c9e7ff;
   --chat-message-box-other-background: #ccf7ff;
   --chat-message-box-reply-background: rgba(215, 228, 233, 0.533);
@@ -27,13 +28,14 @@ html.dark {
 
   --chat-list-text-color: #bbbbbb;
   --chat-list-hover-background: #2a2c2d;
-  --chat-list-active-background: #363739;
+  --chat-list-active-background: #2a2c2d;
   --chat-list-sticky-background: #1e2122;
 
-  --chat-message-box-background: #121212;
-  --chat-message-box-self-background: #361810;
+  --chat-message-box-background: #1d1e1f;
+  --chat-message-box-shadow: rgba(0, 0, 0, 0.9);
+  --chat-message-box-self-background: rgb(24, 24, 0)
   --chat-message-box-other-background: #000000;
   --chat-message-box-reply-background: rgba(0, 0, 0, 0.533);
-  --chat-message-input-box-background: #0a0a01;
-  --chat-message-input-background: #000000;
+  --chat-message-input-box-background: #1d1e1f;
+  --chat-message-input-background: #1d1e1f;
 }
