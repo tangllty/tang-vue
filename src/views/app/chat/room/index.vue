@@ -137,7 +137,6 @@ onMounted(() => {
           align-items: center;
           justify-content: space-between;
           padding: 0 15px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .chat-content {
@@ -145,6 +144,7 @@ onMounted(() => {
           overflow-y: auto;
           padding: 15px;
           background-color: var(--chat-message-box-background);
+          box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
         }
       }
 
