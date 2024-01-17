@@ -38,13 +38,17 @@
                 <div class="message" v-html="item.replyMessage.content" />
               </div>
             </div>
-            <el-avatar :src="proxy.$path(item.avatar)" />
+            <div class="message-avatar">
+              <el-avatar :src="proxy.$path(item.avatar)" />
+            </div>
           </div>
         </div>
         <!-- 对方 -->
         <div v-else class="other-container">
           <div class="other-message">
-            <el-avatar :src="proxy.$path(item.avatar)" />
+            <div class="message-avatar">
+              <el-avatar :src="proxy.$path(item.avatar)" />
+            </div>
             <div class="message-container">
               <div class="message-time">
                 <el-icon>
@@ -267,7 +271,10 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+
 .message-container {
+  --message-margin: 50px;
+
   display: flex;
   align-items: center;
 
@@ -280,8 +287,9 @@ defineExpose({
     .self-message {
       display: flex;
       margin-right: 10px;
+      margin-left: var(--message-margin);
 
-      .el-avatar {
+      .message-avatar {
         margin-left: 10px;
         margin-top: 10px;
       }
@@ -291,36 +299,12 @@ defineExpose({
         flex-direction: column;
         align-items: flex-end;
 
-        .message-time {
-          font-size: 10px;
-          margin-bottom: 2px;
-          visibility: hidden;
-        }
-
         .message-box {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 2px;
-          border-radius: 10px;
           background-color: var(--chat-message-box-self-background);
-
-          .message {
-            display: flex;
-            align-items: center;
-          }
         }
 
         .message-box::before {
-          content: '';
-          position: absolute;
-          top: 17px;
           right: -5px;
-          transform: translateY(-50%);
-          width: 0;
-          height: 0;
-          border-style: solid;
           border-width: 5px 0 5px 5px;
           border-color: transparent transparent transparent var(--chat-message-box-self-background);
         }
@@ -344,8 +328,9 @@ defineExpose({
 
     .other-message {
       display: flex;
+      margin-right: var(--message-margin);
 
-      .el-avatar {
+      .message-avatar {
         margin-right: 10px;
         margin-top: 10px;
       }
@@ -355,36 +340,12 @@ defineExpose({
         flex-direction: column;
         align-items: flex-start;
 
-        .message-time {
-          font-size: 10px;
-          margin-bottom: 2px;
-          visibility: hidden;
-        }
-
         .message-box {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 2px;
-          border-radius: 10px;
           background-color: var(--chat-message-box-other-background);
-
-          .message {
-            display: flex;
-            align-items: center;
-          }
         }
 
         .message-box::before {
-          content: '';
-          position: absolute;
-          top: 17px;
           left: -5px;
-          transform: translateY(-50%);
-          width: 0;
-          height: 0;
-          border-style: solid;
           border-width: 5px 5px 5px 0;
           border-color: transparent var(--chat-message-box-other-background) transparent transparent;
         }
@@ -400,8 +361,23 @@ defineExpose({
     }
   }
 
+  .message-time {
+    font-size: 10px;
+    margin-bottom: 2px;
+    visibility: hidden;
+  }
+
   .message-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2px;
+    border-radius: 10px;
+
     .message {
+      display: flex;
+      align-items: center;
       padding: 6px;
       border-radius: 10px;
 
@@ -409,6 +385,16 @@ defineExpose({
         background-color: #cfcfcf75;
       }
     }
+  }
+
+  .message-box::before {
+    content: '';
+    position: absolute;
+    top: 17px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
   }
 }
 </style>
