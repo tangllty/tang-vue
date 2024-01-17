@@ -382,7 +382,7 @@ defineExpose({
       border-radius: 10px;
 
       &:hover {
-        background-color: #cfcfcf75;
+        background-color: var(--chat-message-hover-background);
       }
     }
   }

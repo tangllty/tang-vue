@@ -12,9 +12,10 @@
 
   --chat-message-box-background: #ffffff;
   --chat-message-box-shadow: rgba(0, 0, 0, 0.1);
+  --chat-message-hover-background: rgba(224, 224, 224, 0.5);
   --chat-message-box-self-background: #c9e7ff;
   --chat-message-box-other-background: #ccf7ff;
-  --chat-message-box-reply-background: rgba(215, 228, 233, 0.533);
+  --chat-message-box-reply-background: rgba(215, 228, 233, 0.5);
   --chat-message-input-box-background: #f5f5f5;
   --chat-message-input-background: #ffffff;
 }
@@ -33,9 +34,10 @@ html.dark {
 
   --chat-message-box-background: #1d1e1f;
   --chat-message-box-shadow: rgba(0, 0, 0, 0.9);
-  --chat-message-box-self-background: rgb(24, 24, 0)
-  --chat-message-box-other-background: #000000;
-  --chat-message-box-reply-background: rgba(0, 0, 0, 0.533);
+  --chat-message-hover-background: rgba(28, 28, 28, 0.5);
+  --chat-message-box-self-background: #242b32;
+  --chat-message-box-other-background: #243231;
+  --chat-message-box-reply-background: #252b2c;
   --chat-message-input-box-background: #1d1e1f;
   --chat-message-input-background: #1d1e1f;
 }
