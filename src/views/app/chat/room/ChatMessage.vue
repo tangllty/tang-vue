@@ -219,14 +219,14 @@ const handleMouseOver = (event: MouseEvent) => {
   const target = event.target as HTMLElement
 
   if (target.nodeName === 'DIV') {
-    // const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
-    // targetElement.style.visibility = 'visible'
+    const targetElement = target.parentElement?.parentElement?.children[0] as HTMLElement
+    targetElement.style.visibility = 'visible'
     return
   }
 
   if (target.nodeName === 'SPAN') {
-    // const targetElement = target.parentElement?.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
-    // targetElement.style.visibility = 'visible'
+    const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
+    targetElement.style.visibility = 'visible'
     return
   }
 }
@@ -236,14 +236,14 @@ const handleMouseOut = (event: MouseEvent) => {
   const target = event.target as HTMLElement
 
   if (target.nodeName === 'DIV') {
-    // const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
-    // targetElement.style.visibility = 'hidden'
+    const targetElement = target.parentElement?.parentElement?.children[0] as HTMLElement
+    targetElement.style.visibility = 'hidden'
     return
   }
 
   if (target.nodeName === 'SPAN') {
-    // const targetElement = target.parentElement?.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
-    // targetElement.style.visibility = 'hidden'
+    const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
+    targetElement.style.visibility = 'hidden'
     return
   }
 }
