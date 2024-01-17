@@ -17,7 +17,7 @@
           <span class="time">{{ item.time }}</span>
         </div>
         <div class="content-body">
-          <div truncated v-html="item.message" />
+          <div class="text-truncate" v-html="item.message" />
           <el-badge v-if="item.unreadCount > 0" :value="item.unreadCount" />
         </div>
       </div>
@@ -170,7 +170,7 @@ defineExpose({
         justify-content: space-between;
         align-items: center;
 
-        .el-text {
+        div {
           font-size: 13px;
           color: var(--chat-list-text-color);
         }
