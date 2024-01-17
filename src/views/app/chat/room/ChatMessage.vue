@@ -86,7 +86,7 @@ import InfiniteLoading from 'v3-infinite-loading'
 import 'v3-infinite-loading/lib/style.css'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listAppChatMessage } from '@/api/app/chat/message'
+import { listAppChatMessage, deleteAppChatMessage } from '@/api/app/chat/message'
 import { AppChatMessage, AppChatMessageQuery } from '@/api/app/chat/message/types'
 import { MessageType } from '@/enums'
 import { ChatMessage } from '@/types'
@@ -115,7 +115,9 @@ const {
 const innerRef = ref<HTMLDivElement>()
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 
-// 加载更多
+/**
+ * 加载更多
+ */
 const loadMore = async () => {
   if (!innerRef.value) return
   state.queryParams.pageNum = ++state.pageNum
@@ -132,7 +134,12 @@ const loadMore = async () => {
   state.showInfiniteLoading = res.rows.length === state.queryParams.pageSize
 }
 
-// 获取聊天消息列表
+/**
+ * 获取聊天消息列表
+ *
+ * @param chatListId 当前聊天列表id
+ * @param scroll 是否滚动到底部
+ */
 const handleList = async (chatListId: number, scroll: boolean = false) => {
   state.queryParams.chatListId = chatListId
   state.queryParams.pageNum = 1
@@ -144,13 +151,19 @@ const handleList = async (chatListId: number, scroll: boolean = false) => {
   state.showInfiniteLoading = res.rows.length === state.queryParams.pageSize
 }
 
-// 处理发送的消息
+/**
+ * 处理发送的消息
+ */
 const handleSentMessage = (message: AppChatMessage) => {
   state.chatMessageList.push(message)
   scrollToBottom()
 }
 
-// 将滚动条滚动到底部
+/**
+ * 将滚动条滚动到底部
+ *
+ * @param animation 是否使用动画
+ */
 const scrollToBottom = (animation: boolean = true) => {
   nextTick(() => {
     if (!scrollbarRef.value || !innerRef.value) return
@@ -165,6 +178,9 @@ const scrollToBottom = (animation: boolean = true) => {
   })
 }
 
+/**
+ * 消息右键菜单
+ */
 const handleContextMenu = (e: MouseEvent, appChatMessage: AppChatMessage) => {
   const items: MenuItem[] = [
     {
@@ -194,7 +210,7 @@ const handleContextMenu = (e: MouseEvent, appChatMessage: AppChatMessage) => {
     {
       label: '删除',
       onClick: () => {
-        proxy.$notImplemented()
+        handleDelete(appChatMessage)
       }
     }
   ]
@@ -204,17 +220,31 @@ const handleContextMenu = (e: MouseEvent, appChatMessage: AppChatMessage) => {
   proxy.$contextMenu(e, options)
 }
 
-// 复制
+/**
+ * 复制
+ */
 const handleCopy = async (content: string) => {
   await navigator.clipboard.writeText(content)
 }
 
-// 回复
+/**
+ * 回复
+ */
 const handleReply = (replyMessage: AppChatMessage) => {
   proxy.$emit('replyMessage', replyMessage)
 }
 
-// 鼠标移入
+/**
+ * 删除
+ */
+const handleDelete = async (appChatMessage: AppChatMessage) => {
+  await deleteAppChatMessage(appChatMessage.messageId)
+  state.chatMessageList = state.chatMessageList.filter(item => item.messageId !== appChatMessage.messageId)
+}
+
+/**
+ * 鼠标移入消息展示时间
+ */
 const handleMouseOver = (event: MouseEvent) => {
   const target = event.target as HTMLElement
 
@@ -231,7 +261,9 @@ const handleMouseOver = (event: MouseEvent) => {
   }
 }
 
-// 鼠标移出
+/**
+ * 鼠标移出消息隐藏时间
+ */
 const handleMouseOut = (event: MouseEvent) => {
   const target = event.target as HTMLElement
 
