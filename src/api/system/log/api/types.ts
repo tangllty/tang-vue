@@ -9,7 +9,6 @@ export interface SysLogApi {
   requestUri: string
   requestType: string
   requestParam: string
-  requestBody: string
   responseBody: string
   loginType: string
   ip: string
@@ -37,7 +36,6 @@ export interface SysLogApiForm {
   requestUri: string
   requestType: string
   requestParam: string
-  requestBody: string
   responseBody: string
   loginType: string
   ip: string
@@ -65,7 +63,6 @@ export interface SysLogApiQuery extends PageQuery {
   requestUri: string
   requestType: string
   requestParam: string
-  requestBody: string
   responseBody: string
   loginType: string
   ip: string
