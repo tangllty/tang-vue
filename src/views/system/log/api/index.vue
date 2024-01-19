@@ -55,22 +55,6 @@
             clearable
           />
         </el-form-item>
-        <el-form-item label="请求体" prop="requestParam">
-          <el-input
-            v-model="queryParams.requestParam"
-            placeholder="请输入请求体"
-            @keyup.enter="handleList"
-            clearable
-          />
-        </el-form-item>
-        <el-form-item label="响应体" prop="responseBody">
-          <el-input
-            v-model="queryParams.responseBody"
-            placeholder="请输入响应体"
-            @keyup.enter="handleList"
-            clearable
-          />
-        </el-form-item>
         <el-form-item label="登陆类型" prop="loginType">
           <el-input
             v-model="queryParams.loginType"
@@ -119,24 +103,6 @@
             clearable
           />
         </el-form-item>
-        <el-form-item label="更新者" prop="updateBy">
-          <el-date-picker
-            v-model="queryParams.updateBy"
-            type="date"
-            placeholder="选择更新者日期"
-            value-format="YYYY-MM-DD"
-            @change="handleList"
-            clearable
-          />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input
-            v-model="queryParams.remark"
-            placeholder="请输入备注"
-            @keyup.enter="handleList"
-            clearable
-          />
-        </el-form-item>
 
         <el-form-item>
           <el-button
@@ -163,6 +129,7 @@
             :icon="Plus"
             v-hasPermission="'system:log:api:add'"
             @click="handleAdd"
+            v-if="false"
           >新增</el-button>
           <el-button
             type="success"
@@ -170,6 +137,7 @@
             :disabled="apiIds.length !== 1"
             v-hasPermission="'system:dict:edit'"
             @click="handleEdit"
+            v-if="false"
           >修改</el-button>
           <el-button
             type="danger"
@@ -299,22 +267,6 @@
           width="180"
         />
         <el-table-column
-          prop="updateBy"
-          label="更新者"
-          align="center"
-        />
-        <el-table-column
-          prop="updateTime"
-          label="更新时间"
-          align="center"
-          width="180"
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          align="center"
-        />
-        <el-table-column
           label="操作"
           width="190"
           align="center"
@@ -327,6 +279,7 @@
               size="small"
               v-hasPermission="'system:log:api:edit'"
               @click="handleEdit(scope.row)"
+              v-if="false"
             >修改</el-button>
             <el-button
               type="primary"
