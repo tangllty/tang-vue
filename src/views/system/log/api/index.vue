@@ -55,26 +55,18 @@
             clearable
           />
         </el-form-item>
-        <el-form-item label="请求参数" prop="requestParam">
+        <el-form-item label="请求体" prop="requestParam">
           <el-input
             v-model="queryParams.requestParam"
-            placeholder="请输入请求参数"
+            placeholder="请输入请求体"
             @keyup.enter="handleList"
             clearable
           />
         </el-form-item>
-        <el-form-item label="请求Body" prop="requestBody">
-          <el-input
-            v-model="queryParams.requestBody"
-            placeholder="请输入请求Body"
-            @keyup.enter="handleList"
-            clearable
-          />
-        </el-form-item>
-        <el-form-item label="返回Body" prop="responseBody">
+        <el-form-item label="响应体" prop="responseBody">
           <el-input
             v-model="queryParams.responseBody"
-            placeholder="请输入返回Body"
+            placeholder="请输入响应体"
             @keyup.enter="handleList"
             clearable
           />
@@ -211,52 +203,58 @@
           prop="className"
           label="类名称"
           align="center"
+          width="160"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="methodName"
           label="方法名称"
-          align="center"
+          width="100"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="requestUri"
           label="请求URI"
           width="180"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="requestType"
           label="请求类型"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="requestParam"
-          label="请求参数"
+          label="请求体"
           align="center"
+          width="100"
           show-overflow-tooltip
         />
         <el-table-column
-          prop="requestBody"
-          label="请求Body"
-          align="center"
-        />
-        <el-table-column
           prop="responseBody"
-          label="返回Body"
+          label="响应体"
           align="center"
+          width="100"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="loginType"
           label="登陆类型"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="ip"
           label="登录IP地址"
           align="center"
+          width="130"
         />
         <el-table-column
           prop="location"
           label="登录地点"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="startTime"
@@ -274,7 +272,11 @@
           prop="costTime"
           label="耗时"
           align="center"
-        />
+        >
+          <template #default="scope">
+            {{ formatTime(scope.row.costTime) }}
+          </template>
+        </el-table-column>
         <el-table-column
           prop="statusCode"
           label="状态码"
@@ -391,22 +393,16 @@
             placeholder="请输入请求类型"
           />
         </el-form-item>
-        <el-form-item label="请求参数" prop="requestParam">
+        <el-form-item label="请求体" prop="requestParam">
           <el-input
             v-model="sysLogApiForm.requestParam"
-            placeholder="请输入请求参数"
+            placeholder="请输入请求体"
           />
         </el-form-item>
-        <el-form-item label="请求Body" prop="requestBody">
-          <el-input
-            v-model="sysLogApiForm.requestBody"
-            placeholder="请输入请求Body"
-          />
-        </el-form-item>
-        <el-form-item label="返回Body" prop="responseBody">
+        <el-form-item label="响应体" prop="responseBody">
           <el-input
             v-model="sysLogApiForm.responseBody"
-            placeholder="请输入返回Body"
+            placeholder="请输入响应体"
           />
         </el-form-item>
         <el-form-item label="登陆类型" prop="loginType">
@@ -580,13 +576,10 @@ const sysLogApiRules = reactive<FormRules>({
     { required: true, message: '请求类型不能为空', trigger: 'blur' },
   ],
   requestParam: [
-    { required: true, message: '请求参数不能为空', trigger: 'blur' },
-  ],
-  requestBody: [
-    { required: true, message: '请求Body不能为空', trigger: 'blur' },
+    { required: true, message: '请求体不能为空', trigger: 'blur' },
   ],
   responseBody: [
-    { required: true, message: '返回Body不能为空', trigger: 'blur' },
+    { required: true, message: '响应体不能为空', trigger: 'blur' },
   ],
   loginType: [
     { required: true, message: '登陆类型不能为空', trigger: 'blur' },
@@ -638,6 +631,35 @@ const handleList = async () => {
   state.sysLogApiList = res.rows
   state.total = res.total
   state.loading = false
+}
+
+/**
+ * 格式化时间
+ */
+const formatTime = (timestamp: number): string => {
+  if (timestamp <= 0) {
+    return '0ms'
+  }
+
+  const unitValueMap = {
+    'y': 52 * 7 * 24 * 60 * 60 * 1000,
+    'w': 7 * 24 * 60 * 60 * 1000,
+    'd': 24 * 60 * 60 * 1000,
+    'h': 60 * 60 * 1000,
+    'm': 60 * 1000,
+    's': 1000,
+    'ms': 1
+  }
+  let result = ''
+  let remainingTime = timestamp
+  for (const [timeUnit, unitValue] of Object.entries(unitValueMap)) {
+    if (remainingTime >= unitValue) {
+      const unitCount = Math.floor(remainingTime / unitValue)
+      result += unitCount + timeUnit
+      remainingTime %= unitValue
+    }
+  }
+  return result
 }
 
 /**
