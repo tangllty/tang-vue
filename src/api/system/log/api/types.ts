@@ -9,6 +9,7 @@ export interface SysLogApi {
   requestUri: string
   requestType: string
   requestParam: string
+  requestQuery: string
   responseBody: string
   loginType: string
   ip: string
@@ -26,6 +27,21 @@ export interface SysLogApi {
 }
 
 /**
+ * 分析接口日志对象
+ */
+export interface SysLogApiAnalysis extends PageQuery {
+  className: string
+  methodName: string
+  requestUri: string
+  requestType: string
+  count: number
+  totalTime: number
+  averageTime: number
+  minTime: number
+  maxTime: number
+}
+
+/**
  * 接口日志表单对象
  */
 export interface SysLogApiForm {
@@ -36,6 +52,7 @@ export interface SysLogApiForm {
   requestUri: string
   requestType: string
   requestParam: string
+  requestQuery: string
   responseBody: string
   loginType: string
   ip: string
@@ -63,6 +80,7 @@ export interface SysLogApiQuery extends PageQuery {
   requestUri: string
   requestType: string
   requestParam: string
+  requestQuery: string
   responseBody: string
   loginType: string
   ip: string

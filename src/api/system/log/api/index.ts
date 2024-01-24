@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { SysLogApiQuery, SysLogApiForm } from './types'
+import { SysLogApiQuery, SysLogApiForm, SysLogApiAnalysis } from './types'
 
 /**
  * 查询接口日志列表
@@ -9,6 +9,17 @@ import { SysLogApiQuery, SysLogApiForm } from './types'
 export const listSysLogApi = (queryParams: SysLogApiQuery) => {
   return request({
     url: '/system/log/api/list',
+    method: 'get',
+    params: queryParams
+  })
+}
+
+/**
+ * 查询分析接口日志列表
+ */
+export const listSysLogApiAnalysis = (queryParams: SysLogApiAnalysis) => {
+  return request({
+    url: '/system/log/api/list-analysis',
     method: 'get',
     params: queryParams
   })

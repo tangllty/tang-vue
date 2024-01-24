@@ -200,6 +200,13 @@
           show-overflow-tooltip
         />
         <el-table-column
+          prop="requestQuery"
+          label="请求参数"
+          align="center"
+          width="100"
+          show-overflow-tooltip
+        />
+        <el-table-column
           prop="responseBody"
           label="响应体"
           align="center"
@@ -742,3 +749,5 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 </style>
+@/api/system/log/api/data
+@/api/system/log/api/data/types
