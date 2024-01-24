@@ -3,7 +3,7 @@
     <!-- 信息检索 -->
     <el-card class="mb-10">
       <el-form
-        ref="sysLogApiQueryFormRef"
+        ref="sysLogApiAnalysisQueryFormRef"
         :model="queryParams"
         inline
       >
@@ -56,19 +56,6 @@
 
     <!-- 接口日志数据 -->
     <el-card>
-
-      <!-- 接口日志操作 -->
-      <template #header>
-        <el-row>
-          <el-button
-            type="danger"
-            :icon="Delete"
-            :disabled="apiIds.length === 0"
-            v-hasPermission="'system:log:api:delete'"
-            @click="handleDeletes"
-          >删除</el-button>
-        </el-row>
-      </template>
 
       <!-- 接口日志表格 -->
       <el-table
@@ -142,22 +129,6 @@
             {{ formatTime(scope.row.maxTime) }}
           </template>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          width="190"
-          align="center"
-        >
-          <template #default="scope">
-            <el-button
-              type="primary"
-              link
-              :icon="Delete"
-              size="small"
-              v-hasPermission="'system:log:api:delete'"
-              @click="handleDelete(scope.row)"
-            >删除</el-button>
-          </template>
-        </el-table-column>
       </el-table>
 
       <!-- 分页 -->
@@ -175,10 +146,10 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance } from 'element-plus'
-import { Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listSysLogApiAnalysis, deleteSysLogApi, deleteSysLogApis } from '@/api/system/log/api'
-import { SysLogApiAnalysis, SysLogApiForm, SysLogApiQuery } from '@/api/system/log/api/types'
+import { listSysLogApiAnalysis } from '@/api/system/log/api'
+import { SysLogApiAnalysis, SysLogApiAnalysisQuery } from '@/api/system/log/api/types'
 
 const proxy = getProxy()
 
@@ -187,8 +158,6 @@ const state = reactive({
   loading: false as boolean,
   /** 选中数据 */
   apiId: 0 as number,
-  /** 选中数据数组 */
-  apiIds: [] as number[],
   /** 总条数 */
   total: 0 as number,
   /** 接口日志数据 */
@@ -197,28 +166,17 @@ const state = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 10
-  } as SysLogApiAnalysis,
-  /** 接口日志对话框 */
-  sysLogApiDialog: {
-    title: '',
-    type: '',
-    visible: false
-  } as Dialog,
-  /** 接口日志表单 */
-  sysLogApiForm: {} as SysLogApiForm
+  } as SysLogApiAnalysisQuery
 })
 
 const {
   loading,
-  apiIds,
   total,
   sysLogApiAnalysisList,
-  queryParams,
-  sysLogApiDialog,
-  sysLogApiForm
+  queryParams
 } = toRefs(state)
 
-const sysLogApiQueryFormRef = ref<FormInstance>()
+const sysLogApiAnalysisQueryFormRef = ref<FormInstance>()
 
 /**
  * 查询接口日志列表
@@ -264,7 +222,7 @@ const formatTime = (timestamp: number): string => {
  * 重置表单
  */
 const resetQuery = async () => {
-  proxy.$resetForm(sysLogApiQueryFormRef.value)
+  proxy.$resetForm(sysLogApiAnalysisQueryFormRef.value)
   await handleList()
 }
 

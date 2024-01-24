@@ -29,7 +29,22 @@ export interface SysLogApi {
 /**
  * 分析接口日志对象
  */
-export interface SysLogApiAnalysis extends PageQuery {
+export interface SysLogApiAnalysis {
+  className: string
+  methodName: string
+  requestUri: string
+  requestType: string
+  count: number
+  totalTime: number
+  averageTime: number
+  minTime: number
+  maxTime: number
+}
+
+/**
+ * 分析接口日志查询参数
+ */
+export interface SysLogApiAnalysisQuery extends PageQuery {
   className: string
   methodName: string
   requestUri: string
