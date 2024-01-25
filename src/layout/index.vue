@@ -2,13 +2,13 @@
   <el-container :class="appWrapper" class="app-wrapper">
     <el-aside class="sidebar-container">
       <SidebarHeader v-if="fixedHeader" />
-      <el-scrollbar v-if="fixedHeader">
-        <Sidebar class="sidebar" />
+      <el-scrollbar class="sidebar" v-if="fixedHeader">
+        <Sidebar />
       </el-scrollbar>
 
       <el-scrollbar v-else>
         <SidebarHeader />
-        <Sidebar class="sidebar" />
+        <Sidebar />
       </el-scrollbar>
     </el-aside>
     <el-container class="app-container">
@@ -50,6 +50,10 @@ const fixedHeader = computed(() => appStore.fixedHeader)
     box-shadow: 2px 0 6px 2px rgba(0, 0, 0, .18);
     z-index: 1001;
     overflow: hidden;
+
+    .sidebar {
+      height: calc(100% - #{$headerHeight});
+    }
   }
 
   .app-container {
