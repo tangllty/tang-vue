@@ -32,20 +32,24 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
 
   if (to.path === '/login') {
     const redirectUrl: string = to.query.redirect as string
-    if (redirectUrl) {
-      const redirectUrlArr: string[] = redirectUrl.split('?')
-      if (redirectUrlArr.length > 1) {
-        const redirectUrlParams: string[] = redirectUrlArr[1].split('&')
-        const redirectUrlParamsObj: any = {}
-        redirectUrlParams.forEach((item: string) => {
-          const itemArr: string[] = item.split('=')
-          redirectUrlParamsObj[itemArr[0]] = itemArr[1]
-        })
-        return next({ path: redirectUrlArr[0], query: redirectUrlParamsObj })
-      }
+
+    if (!redirectUrl) {
+      return next({ path: '/' })
+    }
+
+    const redirectUrlArr: string[] = redirectUrl.split('?')
+
+    if (redirectUrlArr.length === 1) {
       return next({ path: redirectUrl })
     }
-    return next({ path: '/' })
+
+    const redirectUrlParams: string[] = redirectUrlArr[1].split('&')
+    const redirectUrlParamsObj: { [key: string]: string } = {}
+    redirectUrlParams.forEach((item: string) => {
+      const itemArr: string[] = item.split('=')
+      redirectUrlParamsObj[itemArr[0]] = itemArr[1]
+    })
+    return next({ path: redirectUrlArr[0], query: redirectUrlParamsObj })
   }
 
   if (userStore.user.userId) {
@@ -55,10 +59,10 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
   const gotUserInfo: boolean = userStore.roles.length > 0
 
   if (gotUserInfo) {
-    if (to.matched.length === 0) {
-      return next(from.path ? { path: from.path } : '/401')
+    if (to.matched.length > 0) {
+      return next()
     }
-    return next()
+    return next(from.path ? { path: from.path } : '/401')
   }
 
   try {
