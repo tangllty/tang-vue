@@ -18,6 +18,13 @@ export interface AppChatMessage {
 }
 
 /**
+ * 聊天消息数据对象
+ */
+export interface AppChatMessageData extends AppChatMessage {
+  timeVisible: boolean
+}
+
+/**
  * 聊天消息表单对象
  */
 export interface AppChatMessageForm {

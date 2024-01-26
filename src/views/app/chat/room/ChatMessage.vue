@@ -17,7 +17,10 @@
         <div v-if="item.senderId === userStore.user.userId" class="self-container">
           <div class="self-message">
             <div class="message-container">
-              <div class="message-time">
+              <div
+                class="message-time"
+                :style="{ visibility: item.timeVisible ? 'visible' : 'hidden' }"
+              >
                 <el-icon>
                   <Clock />
                 </el-icon>
@@ -25,14 +28,11 @@
               </div>
               <div
                 class="message-box"
+                @mouseover="item.timeVisible = true"
+                @mouseout="item.timeVisible = false"
                 @click.right.native="handleContextMenu($event, item)"
               >
-                <div
-                  class="message"
-                  v-html="item.content"
-                  @mouseover="handleMouseOver"
-                  @mouseout="handleMouseOut"
-                />
+                <MessageContent :item="item" />
               </div>
               <div v-if="item.replyMessage" class="reply-message">
                 <div class="message" v-html="item.replyMessage.content" />
@@ -50,7 +50,10 @@
               <el-avatar :src="proxy.$path(item.avatar)" />
             </div>
             <div class="message-container">
-              <div class="message-time">
+              <div
+                class="message-time"
+                :style="{ visibility: item.timeVisible ? 'visible' : 'hidden' }"
+              >
                 <el-icon>
                   <Clock />
                 </el-icon>
@@ -58,14 +61,11 @@
               </div>
               <div
                 class="message-box"
+                @mouseover="item.timeVisible = true"
+                @mouseout="item.timeVisible = false"
                 @click.right.native="handleContextMenu($event, item)"
               >
-                <div
-                  class="message"
-                  v-html="item.content"
-                  @mouseover="handleMouseOver"
-                  @mouseout="handleMouseOut"
-                />
+                <MessageContent :item="item" />
               </div>
               <div v-if="item.replyMessage" class="reply-message">
                 <div class="message" v-html="item.replyMessage.content" />
@@ -84,13 +84,14 @@ import { ElScrollbar } from 'element-plus'
 import { Clock } from '@element-plus/icons-vue'
 import InfiniteLoading from 'v3-infinite-loading'
 import 'v3-infinite-loading/lib/style.css'
-import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listAppChatMessage, deleteAppChatMessage } from '@/api/app/chat/message'
-import { AppChatMessage, AppChatMessageQuery } from '@/api/app/chat/message/types'
+import { useUserStore } from '@/store/modules/user'
 import { MessageType } from '@/enums'
 import { ChatMessage } from '@/types'
 import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import { listAppChatMessage, deleteAppChatMessage } from '@/api/app/chat/message'
+import { AppChatMessage, AppChatMessageData, AppChatMessageQuery } from '@/api/app/chat/message/types'
+import MessageContent from './MessageContent.vue'
 
 const proxy = getProxy()
 
@@ -104,7 +105,7 @@ const state = reactive({
     pageSize: 10,
     reasonable: false
   } as AppChatMessageQuery,
-  chatMessageList: [] as AppChatMessage[]
+  chatMessageList: [] as AppChatMessageData[]
 })
 
 const {
@@ -122,7 +123,8 @@ const loadMore = async () => {
   if (!innerRef.value) return
   state.queryParams.pageNum = ++state.pageNum
   const res: any = await listAppChatMessage(state.queryParams)
-  state.chatMessageList = [...res.rows, ...state.chatMessageList]
+  const rows = res.rows.map((item: AppChatMessageData) => item.timeVisible = false)
+  state.chatMessageList = [...rows, ...state.chatMessageList]
 
   // 滚动条滚动到原来的位置
   const currentHeight = innerRef.value.clientHeight
@@ -155,7 +157,7 @@ const handleList = async (chatListId: number, scroll: boolean = false) => {
  * 处理发送的消息
  */
 const handleSentMessage = (message: AppChatMessage) => {
-  state.chatMessageList.push(message)
+  state.chatMessageList.push({ ...message, timeVisible: false })
   scrollToBottom()
 }
 
@@ -242,44 +244,6 @@ const handleDelete = async (appChatMessage: AppChatMessage) => {
   state.chatMessageList = state.chatMessageList.filter(item => item.messageId !== appChatMessage.messageId)
 }
 
-/**
- * 鼠标移入消息展示时间
- */
-const handleMouseOver = (event: MouseEvent) => {
-  const target = event.target as HTMLElement
-
-  if (target.nodeName === 'DIV') {
-    const targetElement = target.parentElement?.parentElement?.children[0] as HTMLElement
-    targetElement.style.visibility = 'visible'
-    return
-  }
-
-  if (target.nodeName === 'SPAN') {
-    const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
-    targetElement.style.visibility = 'visible'
-    return
-  }
-}
-
-/**
- * 鼠标移出消息隐藏时间
- */
-const handleMouseOut = (event: MouseEvent) => {
-  const target = event.target as HTMLElement
-
-  if (target.nodeName === 'DIV') {
-    const targetElement = target.parentElement?.parentElement?.children[0] as HTMLElement
-    targetElement.style.visibility = 'hidden'
-    return
-  }
-
-  if (target.nodeName === 'SPAN') {
-    const targetElement = target.parentElement?.parentElement?.parentElement?.children[0] as HTMLElement
-    targetElement.style.visibility = 'hidden'
-    return
-  }
-}
-
 onMounted(() => {
   proxy.$socket.subscribe(MessageType.CHAT_MESSAGE, (chatMessage: string) => {
     const { chatListId, senderId, replyMessageId, replyMessage, avatar, content } = JSON.parse(chatMessage) as ChatMessage
@@ -303,7 +267,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-
 .message-container {
   --message-margin: 50px;
 
@@ -406,17 +369,6 @@ defineExpose({
     align-items: flex-start;
     padding: 2px;
     border-radius: 10px;
-
-    .message {
-      display: flex;
-      align-items: center;
-      padding: 6px;
-      border-radius: 10px;
-
-      &:hover {
-        background-color: var(--chat-message-hover-background);
-      }
-    }
   }
 
   .message-box::before {

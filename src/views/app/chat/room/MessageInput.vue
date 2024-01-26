@@ -26,7 +26,7 @@
       <el-button
         :icon="Picture"
         circle
-        @click="$notImplemented"
+        @click="handleImage"
       />
       <el-button
         :icon="Files"
@@ -34,6 +34,24 @@
         @click="$notImplemented"
       />
     </div>
+    <input
+      ref="imageRef"
+      type="file"
+      accept="image/*"
+      class="hidden"
+      @change="handleImageChange"
+    />
+    <el-dialog
+      v-model="imagePreviewDialogVisible"
+      title="图片预览"
+      width="30%"
+    >
+      <el-image style="width: 100px; height: 100px" :src="imagePreviewUrl" />
+      <template #footer>
+        <el-button type="primary" @click="handleImageMessage">确 定</el-button>
+        <el-button @click="imagePreviewDialogVisible = false">取 消</el-button>
+      </template>
+    </el-dialog>
     <div class="input-wrapper">
       <div
         ref="inputMessageRef"
@@ -71,6 +89,7 @@ import { addAppChatMessage } from '@/api/app/chat/message'
 import { AppChatMessage, AppChatMessageForm } from '@/api/app/chat/message/types'
 import { AppChatList } from '@/api/app/chat/chat-list/types'
 import { MessageType } from '@/enums'
+import { uploadFile } from '@/api/file'
 
 const proxy = getProxy()
 
@@ -104,7 +123,10 @@ const state = reactive({
   },
   cursorRange: undefined as Range | undefined,
   atListVisible: false,
-  activeIndex: 0
+  activeIndex: 0,
+  imagePreviewDialogVisible: false,
+  imagePreviewUrl: '' as string,
+  imagePreviewFile: {} as File
 })
 
 const {
@@ -112,9 +134,13 @@ const {
   cursorPosition,
   cursorRange,
   atListVisible,
-  activeIndex
+  activeIndex,
+  imagePreviewDialogVisible,
+  imagePreviewUrl,
+  imagePreviewFile
 } = toRefs(state)
 
+const imageRef = ref<HTMLInputElement>()
 const inputMessageRef = ref<HTMLInputElement | null>(null)
 
 const handleInputMessage = async () => {
@@ -136,6 +162,25 @@ const handleInputMessage = async () => {
   state.replyMessage = null
 }
 
+const handleImageMessage = async () => {
+  if (!props.selectedItem) return
+  state.appChatMessageForm.chatListId = props.selectedItem.chatListId
+  state.appChatMessageForm.senderId = userStore.user.userId
+  if (state.replyMessage) {
+    state.appChatMessageForm.replyMessageId = state.replyMessage.messageId
+    state.appChatMessageForm.replyMessage = state.replyMessage
+  }
+  const uploadRes = await uploadFile(state.imagePreviewFile)
+  state.appChatMessageForm.content = `<img src="${uploadRes.data.filePath}" />`
+  const res = await addAppChatMessage(state.appChatMessageForm)
+  proxy.$emit('sendMessage', res.data)
+  res.data.userId = props.selectedItem.friendId
+  proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
+  state.appChatMessageForm = {} as AppChatMessageForm
+  state.replyMessage = null
+  imagePreviewDialogVisible.value = false
+}
+
 // 消息回复
 const handleReply = (item: AppChatMessage): void => {
   state.replyMessage = item
@@ -144,6 +189,20 @@ const handleReply = (item: AppChatMessage): void => {
 // 取消回复
 const handleCancelReply = (): void => {
   state.replyMessage = null
+}
+
+const handleImage = () => {
+  const image = imageRef.value
+  if (!image) return
+  image.click()
+}
+
+const handleImageChange = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  state.imagePreviewFile = input.files?.[0] as File
+  if (!imagePreviewFile.value) return
+  state.imagePreviewUrl = URL.createObjectURL(imagePreviewFile.value)
+  state.imagePreviewDialogVisible = true
 }
 
 // 获取光标的位置(x, y)
