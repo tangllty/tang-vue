@@ -22,8 +22,7 @@ defineProps<{
 
 <style lang="scss" scoped>
 .message-image {
-  width: 200px;
-  height: 200px;
+  width: 250px;
   border-radius: 10px;
 }
 
