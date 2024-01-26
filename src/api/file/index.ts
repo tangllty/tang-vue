@@ -7,9 +7,14 @@ import type { UploadFile } from 'element-plus'
  * @param file 文件
  * @returns 上传地址
  */
-export const uploadFile = (file: UploadFile) => {
+export const uploadFile = (file: File | UploadFile) => {
   const formData = new FormData()
-  formData.append('file', file.raw as Blob)
+  if ('raw' in file) {
+    formData.append('file', (file as UploadFile).raw as Blob)
+  } else {
+    formData.append('file', file as Blob)
+  }
+
   return request({
     url: '/file/upload',
     method: 'post',
