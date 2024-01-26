@@ -25,7 +25,7 @@
           </template>
           <el-row :gutter="20">
             <el-col :span="24">
-              微信群：
+              糖猫猫权限管理系统交流群：
               <el-alert
                 title="考虑到网络原因，提供 Gitee 和 Github 两个平台的微信群二维码。"
                 type="warning"
@@ -35,11 +35,14 @@
             </el-col>
           </el-row>
           <el-row :gutter="20">
-            <el-col :span="12">
+            <el-col :span="8">
               <el-image :src="weChatGroupGitee" />
             </el-col>
-            <el-col :span="12">
+            <el-col :span="8">
               <el-image :src="weChatGroupGithub" />
+            </el-col>
+            <el-col :span="8">
+              <el-image :src="qq" />
             </el-col>
           </el-row>
         </el-card>
@@ -83,6 +86,7 @@ import { useUserStore } from '@/store/modules/user'
 import { listUserVisit, getWechatGitee, getWechatGithub } from '@/api/index'
 
 import userAvatar from '@/assets/logo.png'
+import qq from '@/assets/qq.png'
 
 const userStore = useUserStore()
 
