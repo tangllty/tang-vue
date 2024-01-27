@@ -61,6 +61,8 @@ tang-vue 使用 MIT 许可证。更多详情请查阅 [LICENSE](https://gitee.co
 
   - ![WeChat](https://gitee.com/tangllty/tang-docs/raw/master/docs/public/wechat.png)
 - Telegram
+
+  - ![Telegram](https://gitee.com/tangllty/tang-docs/raw/master/docs/public/telegram.png)
 - QQ
 
   - ![QQ](https://gitee.com/tangllty/tang-docs/raw/master/docs/public/qq.png)
