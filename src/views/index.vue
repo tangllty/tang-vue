@@ -5,44 +5,44 @@
         <el-card>
           <template #header>
             <el-row :gutter="20">
-              <el-col :span="3">
-                <el-image :src="userAvatar" class="user-avatar" />
-              </el-col>
-              <el-col :span="21">
-                <span class="user-info">
-                  <span class="mr-10">
-                    {{ userStore.user.nickname }}
-                  </span>
-                  <span class="mr-10">
-                    {{ userStore.roleNames.toLocaleString() }}
-                  </span>
-                  <span>
-                    {{ userStore.user.dept.deptName }}
-                  </span>
+              <el-image
+                :src="userStore.user.avatar"
+                class="user-avatar mr-10"
+              />
+              <span class="user-info">
+                <span class="mr-10">
+                  欢迎您：{{ userStore.user.nickname }}
                 </span>
-              </el-col>
+                <span class="mr-10">
+                  角色：{{ userStore.roleNames.toLocaleString() }}
+                </span>
+                <span>
+                  部门：{{ userStore.user.dept.deptName }}
+                </span>
+              </span>
             </el-row>
           </template>
           <el-row :gutter="20">
             <el-col :span="24">
-              糖猫猫权限管理系统交流群：
-              <el-alert
-                title="考虑到网络原因，提供 Gitee 和 Github 两个平台的微信群二维码。"
-                type="warning"
-                show-icon
-                class="mt-10 mb-10"
-              />
+              糖猫猫权限管理系统交流群(点击可放大)：
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-image :src="weChatGroupGitee" />
+              <el-image :src="wechat" :preview-src-list="groupList" />
             </el-col>
             <el-col :span="8">
-              <el-image :src="weChatGroupGithub" />
+              <el-button
+                type="primary"
+                tag="a"
+                href="https://t.me/+xmuCI7eHW902Mzk1"
+                target="_blank"
+                class="mb-20"
+              >点我加入 Telegram</el-button>
+              <el-image :src="telegram" :preview-src-list="groupList" />
             </el-col>
             <el-col :span="8">
-              <el-image :src="qq" />
+              <el-image :src="qq" :preview-src-list="groupList" />
             </el-col>
           </el-row>
         </el-card>
@@ -57,10 +57,6 @@
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero ipsam officiis asperiores aut mollitia aspernatur nostrum ab blanditiis amet perspiciatis. Molestiae adipisci error commodi sapiente dolorum exercitationem ab similique quisquam.
           Quod saepe obcaecati rem libero dicta voluptatibus modi velit. Odit cum quasi modi quisquam recusandae odio, rem corporis laboriosam consequatur! Quos veniam itaque odio nulla sunt libero accusamus ad animi.
           Iure ratione suscipit repellendus possimus dolore incidunt blanditiis animi pariatur maxime ab alias id placeat dolorem est corrupti, deleniti, praesentium explicabo! Praesentium ea odio nulla nihil sunt ratione voluptates! Enim?
-          Soluta dolores, optio saepe iste, eos quasi laudantium repellat expedita dolorum quo placeat ullam eum a officia rem vitae, tempore porro. Maxime, quo. Totam nemo qui quasi distinctio laudantium blanditiis.
-          Velit consequatur ea accusantium. Id, quia velit? Vero quos error eligendi asperiores recusandae neque soluta porro omnis consequuntur sint officia in nam placeat voluptas eveniet adipisci minus, cupiditate incidunt. Repudiandae.
-          Sapiente consectetur quos vitae nesciunt quod soluta, earum inventore ipsum facere voluptatum nobis eius. Qui repellat, alias porro accusantium officiis libero, aliquid ipsam velit debitis numquam et tempora suscipit recusandae.
-          Consequuntur, eius. Laudantium, necessitatibus ut. Sunt distinctio impedit ab expedita, quasi dolor minima repellat officiis asperiores cum! Incidunt deleniti autem laborum officiis reprehenderit explicabo ipsam, molestias tempore. Ullam, saepe dolor.
         </el-card>
       </el-col>
     </el-row>
@@ -83,21 +79,21 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import * as echarts from 'echarts'
 import { useUserStore } from '@/store/modules/user'
-import { listUserVisit, getWechatGitee, getWechatGithub } from '@/api/index'
+import { listUserVisit, getWeChat } from '@/api/index'
 
-import userAvatar from '@/assets/logo.png'
+import telegram from '@/assets/telegram.png'
 import qq from '@/assets/qq.png'
 
 const userStore = useUserStore()
 
 const state = reactive({
-  weChatGroupGitee: '',
-  weChatGroupGithub: '',
+  wechat: '',
+  groupList: [telegram, qq]
 })
 
 const {
-  weChatGroupGitee,
-  weChatGroupGithub,
+  wechat,
+  groupList
 } = toRefs(state)
 
 const userVisitOptions = {
@@ -129,27 +125,18 @@ const handleUserVisit = async () => {
 }
 
 /**
- * 请求微信群二维码(Gitee)
+ * 请求微信群二维码
  */
-const handleRequestGitee = async () => {
-  const res: any = await getWechatGitee()
+const handleRequestWeChat = async () => {
+  const res: any = await getWeChat()
   const blob = new Blob([res.data], { type: 'image/png' })
-  state.weChatGroupGitee = URL.createObjectURL(blob)
-}
-
-/**
- * 请求微信群二维码(Github)
- */
-const handleRequestGithub = async () => {
-  const res: any = await getWechatGithub()
-  const blob = new Blob([res.data], { type: 'image/png' })
-  state.weChatGroupGithub = URL.createObjectURL(blob)
+  state.wechat = URL.createObjectURL(blob)
+  state.groupList.unshift(state.wechat)
 }
 
 onMounted(async () => {
   await handleUserVisit()
-  await handleRequestGitee()
-  await handleRequestGithub()
+  await handleRequestWeChat()
 })
 </script>
 
