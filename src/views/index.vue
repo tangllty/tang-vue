@@ -54,9 +54,9 @@
               <span>糖猫猫权限管理系统</span>
             </div>
           </template>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero ipsam officiis asperiores aut mollitia aspernatur nostrum ab blanditiis amet perspiciatis. Molestiae adipisci error commodi sapiente dolorum exercitationem ab similique quisquam.
-          Quod saepe obcaecati rem libero dicta voluptatibus modi velit. Odit cum quasi modi quisquam recusandae odio, rem corporis laboriosam consequatur! Quos veniam itaque odio nulla sunt libero accusamus ad animi.
-          Iure ratione suscipit repellendus possimus dolore incidunt blanditiis animi pariatur maxime ab alias id placeat dolorem est corrupti, deleniti, praesentium explicabo! Praesentium ea odio nulla nihil sunt ratione voluptates! Enim?
+          <p>后端：Spring Boot 3 + Spring Security + MyBatis + Redis + Jwt</p>
+          <p>前端：Vue 3 + Vite 5 + Vue Router 4 + TypeScript + Pinia + Element Plus</p>
+          <p>文档：VitePress + TypeScript</p>
         </el-card>
       </el-col>
     </el-row>
