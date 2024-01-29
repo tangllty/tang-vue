@@ -43,10 +43,20 @@
     />
     <el-dialog
       v-model="imagePreviewDialogVisible"
-      title="图片预览"
+      title="发送图片"
       width="30%"
     >
-      <el-image style="width: 100px; height: 100px" :src="imagePreviewUrl" />
+      <div class="flex flex-col items-center">
+        <el-image
+          :src="imagePreviewUrl"
+          style="width: 280px; height: 280px"
+        />
+        <div class="flex flex-col items-center mt-10" style="color: #8d8787;">
+          <span>文件名：{{ imagePreviewFile.name }}</span>
+          <span>类型：{{ imagePreviewFile.type }}</span>
+          <span>大小{{ getSize(imagePreviewFile.size) }}</span>
+        </div>
+      </div>
       <template #footer>
         <el-button type="primary" @click="handleImageMessage">确 定</el-button>
         <el-button @click="imagePreviewDialogVisible = false">取 消</el-button>
@@ -90,6 +100,7 @@ import { AppChatMessage, AppChatMessageForm } from '@/api/app/chat/message/types
 import { AppChatList } from '@/api/app/chat/chat-list/types'
 import { MessageType } from '@/enums'
 import { uploadFile } from '@/api/file'
+import { getSize } from '@/utils/byte'
 
 const proxy = getProxy()
 
