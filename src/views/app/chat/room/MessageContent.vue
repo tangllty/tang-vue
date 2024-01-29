@@ -1,8 +1,8 @@
 <template>
   <el-image
-    v-if="item.content.indexOf('src') !== -1"
+    v-if="item.content.match(regex.image)"
     class="message-image"
-    :src="$path(item.content.substring(item.content.indexOf('src') + 5, item.content.length - 4))"
+    :src="$path(item.content.match(regex.image)?.[1] || '')"
     fit="cover"
   />
   <div
@@ -18,6 +18,10 @@ import { AppChatMessage } from '@/api/app/chat/message/types'
 defineProps<{
   item: AppChatMessage
 }>()
+
+const regex = {
+  image: /<img\s+src="([^"]+)"/,
+}
 </script>
 
 <style lang="scss" scoped>
