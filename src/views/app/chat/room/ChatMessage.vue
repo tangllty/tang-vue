@@ -122,8 +122,8 @@ const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 const loadMore = async () => {
   if (!innerRef.value) return
   state.queryParams.pageNum = ++state.pageNum
-  const res: any = await listAppChatMessage(state.queryParams)
-  const rows = res.rows.map((item: AppChatMessageData) => item.timeVisible = false)
+  const { rows }: any = await listAppChatMessage(state.queryParams)
+  rows.forEach((item: AppChatMessageData) => item.timeVisible = false)
   state.chatMessageList = [...rows, ...state.chatMessageList]
 
   // 滚动条滚动到原来的位置
@@ -133,7 +133,7 @@ const loadMore = async () => {
     const newHeight = innerRef.value.clientHeight
     scrollbarRef.value?.scrollTo(0, newHeight - currentHeight)
   })
-  state.showInfiniteLoading = res.rows.length === state.queryParams.pageSize
+  state.showInfiniteLoading = rows.length === state.queryParams.pageSize
 }
 
 /**
