@@ -37,6 +37,7 @@
     <input
       ref="imageRef"
       type="file"
+      multiple
       accept="image/*"
       class="hidden"
       @change="handleImageChange"
@@ -44,22 +45,36 @@
     <el-dialog
       v-model="imagePreviewDialogVisible"
       title="发送图片"
-      width="30%"
+      :width="imagePreviewFiles.length > 1 ? '50%' : '30%'"
     >
-      <div class="flex flex-col items-center">
-        <el-image
-          :src="imagePreviewUrl"
-          style="width: 280px; height: 280px"
-        />
+      <div v-if="imagePreviewFiles.length === 1" class="flex flex-col items-center">
+        <el-image :src="imagePreviewUrls[0]" style="width: 280px; height: 280px" />
         <div class="flex flex-col items-center mt-10" style="color: #8d8787;">
-          <span>文件名：{{ imagePreviewFile.name }}</span>
-          <span>类型：{{ imagePreviewFile.type }}</span>
-          <span>大小{{ getSize(imagePreviewFile.size) }}</span>
+          <span>文件名：{{ imagePreviewFiles[0].name }}</span>
+          <span>类型：{{ imagePreviewFiles[0].type }}</span>
+          <span>大小{{ getSize(imagePreviewFiles[0].size) }}</span>
         </div>
       </div>
+      <div v-else class="flex flex-col items-center">
+        <el-carousel
+          type="card"
+          height="362px"
+          style="width: 500px;"
+        >
+          <el-carousel-item v-for="(item, index) in imagePreviewFiles" :key="item">
+            <el-image :src="imagePreviewUrls[index]" style="width: 280px; height: 280px" />
+            <div class="flex flex-col items-center mt-10" style="color: #8d8787;">
+              <span>文件名：{{ item.name }}</span>
+              <span>类型：{{ item.type }}</span>
+              <span>大小{{ getSize(item.size) }}</span>
+            </div>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
       <template #footer>
+        <span v-if="imagePreviewFiles.length > 1" class="mr-12">总大小：{{ getSize(imagePreviewFiles.reduce((total, item) => total + item.size, 0)) }}</span>
         <el-button type="primary" @click="handleImageMessage">确 定</el-button>
-        <el-button @click="imagePreviewDialogVisible = false">取 消</el-button>
+        <el-button @click="closeImageMessage">取 消</el-button>
       </template>
     </el-dialog>
     <div class="input-wrapper">
@@ -136,8 +151,8 @@ const state = reactive({
   atListVisible: false,
   activeIndex: 0,
   imagePreviewDialogVisible: false,
-  imagePreviewUrl: '' as string,
-  imagePreviewFile: {} as File
+  imagePreviewUrls: [] as string[],
+  imagePreviewFiles: [] as File[]
 })
 
 const {
@@ -147,8 +162,8 @@ const {
   atListVisible,
   activeIndex,
   imagePreviewDialogVisible,
-  imagePreviewUrl,
-  imagePreviewFile
+  imagePreviewUrls,
+  imagePreviewFiles
 } = toRefs(state)
 
 const imageRef = ref<HTMLInputElement>()
@@ -174,22 +189,30 @@ const handleInputMessage = async () => {
 }
 
 const handleImageMessage = async () => {
-  if (!props.selectedItem) return
-  state.appChatMessageForm.chatListId = props.selectedItem.chatListId
-  state.appChatMessageForm.senderId = userStore.user.userId
-  if (state.replyMessage) {
-    state.appChatMessageForm.replyMessageId = state.replyMessage.messageId
-    state.appChatMessageForm.replyMessage = state.replyMessage
-  }
-  const uploadRes = await uploadFile(state.imagePreviewFile)
-  state.appChatMessageForm.content = `<img src="${uploadRes.data.filePath}" />`
-  const res = await addAppChatMessage(state.appChatMessageForm)
-  proxy.$emit('sendMessage', res.data)
-  res.data.userId = props.selectedItem.friendId
-  proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
-  state.appChatMessageForm = {} as AppChatMessageForm
-  state.replyMessage = null
+  imagePreviewFiles.value.forEach(async (file: File) => {
+    if (!props.selectedItem) return
+    state.appChatMessageForm.chatListId = props.selectedItem.chatListId
+    state.appChatMessageForm.senderId = userStore.user.userId
+    if (state.replyMessage) {
+      state.appChatMessageForm.replyMessageId = state.replyMessage.messageId
+      state.appChatMessageForm.replyMessage = state.replyMessage
+    }
+    const uploadRes = await uploadFile(file)
+    state.appChatMessageForm.content = `<img src="${uploadRes.data.filePath}" />`
+    const res = await addAppChatMessage(state.appChatMessageForm)
+    proxy.$emit('sendMessage', res.data)
+    res.data.userId = props.selectedItem.friendId
+    proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
+    state.appChatMessageForm = {} as AppChatMessageForm
+    state.replyMessage = null
+    imagePreviewDialogVisible.value = false
+  })
+}
+
+const closeImageMessage = () => {
   imagePreviewDialogVisible.value = false
+  imagePreviewFiles.value = []
+  imagePreviewUrls.value = []
 }
 
 // 消息回复
@@ -210,9 +233,13 @@ const handleImage = () => {
 
 const handleImageChange = (event: Event) => {
   const input = event.target as HTMLInputElement
-  state.imagePreviewFile = input.files?.[0] as File
-  if (!imagePreviewFile.value) return
-  state.imagePreviewUrl = URL.createObjectURL(imagePreviewFile.value)
+  if (!input.files) return
+  for (let index = 0; index < input.files.length; index++) {
+    const element = input.files.item(index)
+    imagePreviewFiles.value.push(element as File)
+  }
+  if (!imagePreviewFiles.value) return
+  state.imagePreviewUrls = imagePreviewFiles.value.map(item => URL.createObjectURL(item))
   state.imagePreviewDialogVisible = true
 }
 
@@ -392,6 +419,15 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
+.el-carousel__item:nth-child(2n) {
+  background-color: #d6e2f3;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #dde2e9;
+}
+
+
 .reply-message-container {
   margin-bottom: 5px;
 
