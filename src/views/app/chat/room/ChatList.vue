@@ -6,9 +6,9 @@
       @click="handleItemClick(item)"
       @click.right.native="showContextMenu($event, item)"
       :class="{ 'active': selectedItem === item, 'stick': item.stickFlag === '1' }"
-      class="chat-item-wrapper"
+      class="chat-item-wrapper flex items-center"
     >
-      <div class="chat-item-wrapper__avatar-wrapper">
+      <div class="chat-item-wrapper__avatar-wrapper flex items-center ml-8">
         <el-avatar :src="proxy.$path(item.avatar)" />
       </div>
       <div class="chat-item-wrapper__content-wrapper">
@@ -27,7 +27,11 @@
             class="text-truncate"
             v-html="item.message"
           />
-          <el-badge v-if="item.unreadCount > 0" :value="item.unreadCount" />
+          <el-badge
+            v-if="item.unreadCount > 0"
+            :value="item.unreadCount"
+            class="ml-10"
+          />
         </div>
       </div>
     </div>
@@ -132,8 +136,6 @@ defineExpose({
   }
 
   &-wrapper {
-    display: flex;
-    align-items: center;
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
@@ -144,9 +146,6 @@ defineExpose({
 
     &__avatar-wrapper {
       height: 55px;
-      display: flex;
-      align-items: center;
-      margin-left: 8px;
     }
 
     &__content-wrapper {
@@ -182,10 +181,6 @@ defineExpose({
         div {
           font-size: 13px;
           color: var(--chat-list-text-color);
-        }
-
-        .el-badge {
-          margin-left: 10px;
         }
       }
     }

@@ -11,12 +11,12 @@
       <div
         v-for="item in chatMessageList"
         :key="item.messageId"
-        class="message-container mb-10"
+        class="message-container flex items-center mb-10"
       >
         <!-- 自己 -->
-        <div v-if="item.senderId === userStore.user.userId" class="self-container">
-          <div class="self-message">
-            <div class="message-container">
+        <div v-if="item.senderId === userStore.user.userId" class="self-container flex flex-col items-end">
+          <div class="self-message flex">
+            <div class="message-container flex flex-col items-end">
               <div
                 class="message-time"
                 :style="{ visibility: item.timeVisible ? 'visible' : 'hidden' }"
@@ -44,12 +44,12 @@
           </div>
         </div>
         <!-- 对方 -->
-        <div v-else class="other-container">
-          <div class="other-message">
+        <div v-else class="other-container flex flex-col items-start">
+          <div class="other-message flex">
             <div class="message-avatar">
               <el-avatar :src="proxy.$path(item.avatar)" />
             </div>
-            <div class="message-container">
+            <div class="message-container flex flex-col items-start">
               <div
                 class="message-time"
                 :style="{ visibility: item.timeVisible ? 'visible' : 'hidden' }"
@@ -270,17 +270,10 @@ defineExpose({
 .message-container {
   --message-margin: 50px;
 
-  display: flex;
-  align-items: center;
-
   .self-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     width: 100%;
 
     .self-message {
-      display: flex;
       margin-right: 10px;
       margin-left: var(--message-margin);
 
@@ -289,40 +282,22 @@ defineExpose({
         margin-top: 10px;
       }
 
-      .message-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
+      .message-box {
+        background-color: var(--chat-message-box-self-background);
+      }
 
-        .message-box {
-          background-color: var(--chat-message-box-self-background);
-        }
-
-        .message-box::before {
-          right: -5px;
-          border-width: 5px 0 5px 5px;
-          border-color: transparent transparent transparent var(--chat-message-box-self-background);
-        }
-
-        .reply-message {
-          display: flex;
-          padding: 8px;
-          border-radius: 10px;
-          margin-top: 5px;
-          background-color: var(--chat-message-box-reply-background);
-        }
+      .message-box::before {
+        right: -5px;
+        border-width: 5px 0 5px 5px;
+        border-color: transparent transparent transparent var(--chat-message-box-self-background);
       }
     }
   }
 
   .other-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     width: 100%;
 
     .other-message {
-      display: flex;
       margin-right: var(--message-margin);
 
       .message-avatar {
@@ -330,28 +305,14 @@ defineExpose({
         margin-top: 10px;
       }
 
-      .message-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+      .message-box {
+        background-color: var(--chat-message-box-other-background);
+      }
 
-        .message-box {
-          background-color: var(--chat-message-box-other-background);
-        }
-
-        .message-box::before {
-          left: -5px;
-          border-width: 5px 5px 5px 0;
-          border-color: transparent var(--chat-message-box-other-background) transparent transparent;
-        }
-
-        .reply-message {
-          display: flex;
-          padding: 8px;
-          border-radius: 10px;
-          margin-top: 5px;
-          background-color: var(--chat-message-box-reply-background);
-        }
+      .message-box::before {
+        left: -5px;
+        border-width: 5px 5px 5px 0;
+        border-color: transparent var(--chat-message-box-other-background) transparent transparent;
       }
     }
   }
@@ -379,6 +340,14 @@ defineExpose({
     width: 0;
     height: 0;
     border-style: solid;
+  }
+
+  .reply-message {
+    display: flex;
+    padding: 8px;
+    border-radius: 10px;
+    margin-top: 5px;
+    background-color: var(--chat-message-box-reply-background);
   }
 }
 </style>
