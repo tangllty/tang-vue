@@ -43,6 +43,7 @@ const content = isObjectString(props.item.content) ? JSON.parse(props.item.conte
 <style lang="scss" scoped>
 .message-image {
   height: 120px;
+  display: block;
   border-radius: 10px;
 }
 
