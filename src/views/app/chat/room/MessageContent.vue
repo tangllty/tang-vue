@@ -1,18 +1,24 @@
 <template>
-  <el-image
-    v-if="item.content.match(regex.image)"
-    class="message-image"
-    :src="$path(item.content.match(regex.image)?.[1] || '')"
-    fit="cover"
-  />
-  <el-link
-    v-else-if="item.content.match(regex.file)"
-    :href="$path(item.content.match(regex.file)?.[1] || '')"
-    target="_blank"
-  >
-    <svg-icon :name="getIconForFile(item.content.match(regex.file)?.[1].split('/uploads/')[1] || '')?.split('.')[0]" />
-    <span>{{ item.content.match(regex.file)?.[1] || '' }}</span>
-  </el-link>
+  <div v-if="isObjectString(item.content)">
+    <el-image
+      v-if="content.type.startsWith('image/')"
+      class="message-image"
+      :src="$path(content.filePath)"
+      fit="cover"
+    />
+    <el-link
+      v-else
+      :href="$path(content.filePath)"
+      target="_blank"
+      style="width: 200px; height: 60px;"
+    >
+      <svg-icon :name="getIconForFile(content.name)?.split('.')[0]" size="3em" />
+      <div class="ml-5">
+        <span class="block">{{ content.name }}</span>
+        <span class="block" style="font-size: 12px; color: #a1a1a1">{{ getSize(content.size) }}</span>
+      </div>
+    </el-link>
+  </div>
   <div
     v-else
     class="message"
@@ -23,15 +29,15 @@
 <script lang="ts" setup>
 import { getIconForFile } from 'vscode-icons-ts'
 import { AppChatMessage } from '@/api/app/chat/message/types'
+import { FileMessageContent } from '@/types'
+import { getSize } from '@/utils/byte'
+import { isObjectString } from '@/utils/object'
 
-defineProps<{
-  item: AppChatMessage
+const props = defineProps<{
+  item: AppChatMessage,
 }>()
 
-const regex = {
-  image: /<img\s+src="([^"]+)"/,
-  file: /<file\s+src="([^"]+)"/,
-}
+const content = isObjectString(props.item.content) ? JSON.parse(props.item.content) as FileMessageContent : {} as FileMessageContent
 </script>
 
 <style lang="scss" scoped>
@@ -49,5 +55,9 @@ const regex = {
   &:hover {
     background-color: var(--chat-message-hover-background);
   }
+}
+
+.el-link {
+  justify-content: start;
 }
 </style>

@@ -21,3 +21,13 @@ export type ChatMessage = {
   avatar: string
   content: string
 }
+
+/**
+ * 消息内容
+ */
+export type FileMessageContent = {
+  name: string
+  type: string
+  size: number
+  filePath: string
+}

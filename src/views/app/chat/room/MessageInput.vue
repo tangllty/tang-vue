@@ -247,24 +247,9 @@ const handleInputMessage = async () => {
 }
 
 const handleImageMessage = async () => {
-  imagePreviewFiles.value.forEach(async (file: File) => {
-    if (!props.selectedItem) return
-    state.appChatMessageForm.chatListId = props.selectedItem.chatListId
-    state.appChatMessageForm.senderId = userStore.user.userId
-    if (state.replyMessage) {
-      state.appChatMessageForm.replyMessageId = state.replyMessage.messageId
-      state.appChatMessageForm.replyMessage = state.replyMessage
-    }
-    const uploadRes = await uploadFile(file)
-    state.appChatMessageForm.content = `<img src="${uploadRes.data.filePath}" />`
-    const res = await addAppChatMessage(state.appChatMessageForm)
-    proxy.$emit('sendMessage', res.data)
-    res.data.userId = props.selectedItem.friendId
-    proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
-    state.appChatMessageForm = {} as AppChatMessageForm
-    state.replyMessage = null
-    imagePreviewDialogVisible.value = false
-  })
+  state.previewFiles = imagePreviewFiles.value
+  await handleFileMessage()
+  closeImageMessage()
 }
 
 const handleFileMessage = async () => {
@@ -277,15 +262,21 @@ const handleFileMessage = async () => {
       state.appChatMessageForm.replyMessage = state.replyMessage
     }
     const uploadRes = await uploadFile(file)
-    state.appChatMessageForm.content = `<file src="${uploadRes.data.filePath}" />`
+    const content = {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      filePath: uploadRes.data.filePath
+    }
+    state.appChatMessageForm.content = JSON.stringify(content)
     const res = await addAppChatMessage(state.appChatMessageForm)
     proxy.$emit('sendMessage', res.data)
     res.data.userId = props.selectedItem.friendId
     proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
     state.appChatMessageForm = {} as AppChatMessageForm
     state.replyMessage = null
-    filePreviewDialogVisible.value = false
   })
+  closeFileMessage()
 }
 
 const closeImageMessage = () => {
@@ -322,25 +313,27 @@ const handleFile = () => {
 }
 
 const handleImageChange = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  if (!input.files) return
-  for (let index = 0; index < input.files.length; index++) {
-    const element = input.files.item(index)
-    imagePreviewFiles.value.push(element as File)
-  }
-  if (!imagePreviewFiles.value) return
-  state.imagePreviewUrls = imagePreviewFiles.value.map(item => URL.createObjectURL(item))
-  state.imagePreviewDialogVisible = true
+  const files = getFiles(event)
+  imagePreviewFiles.value = files
+  imagePreviewUrls.value = imagePreviewFiles.value.map(item => URL.createObjectURL(item))
+  imagePreviewDialogVisible.value = true
 }
 
 const handleFileChange = (event: Event) => {
+  const files = getFiles(event)
+  previewFiles.value = files
+  filePreviewDialogVisible.value = true
+}
+
+const getFiles = (event: Event): File[] => {
   const input = event.target as HTMLInputElement
-  if (!input.files) return
+  if (!input.files) return []
+  const files = []
   for (let index = 0; index < input.files.length; index++) {
     const element = input.files.item(index)
-    previewFiles.value.push(element as File)
+    files.push(element as File)
   }
-  state.filePreviewDialogVisible = true
+  return files
 }
 
 // 获取光标的位置(x, y)
@@ -519,14 +512,15 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.el-carousel__item:nth-child(2n) {
-  background-color: #d6e2f3;
-}
+el-carousel__item {
+  &:nth-child(2n) {
+    background-color: #d6e2f3;
+  }
 
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #dde2e9;
+  &:nth-child(2n + 1) {
+    background-color: #dde2e9;
+  }
 }
-
 
 .reply-message-container {
   margin-bottom: 5px;
