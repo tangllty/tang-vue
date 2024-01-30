@@ -10,7 +10,7 @@
       v-else
       :href="$path(content.filePath)"
       target="_blank"
-      style="width: 200px; height: 60px;"
+      style="width: 200px; height: 50px;"
     >
       <svg-icon :name="getIconForFile(content.name)?.split('.')[0]" size="3em" />
       <div class="ml-5">
