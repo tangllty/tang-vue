@@ -14,7 +14,10 @@ export default ({ mode }: ConfigEnv) => {
     plugins: [
       vue(),
       createSvgIconsPlugin({
-        iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+        iconDirs: [
+          path.resolve(process.cwd(), 'src/assets/icons'),
+          path.resolve(process.cwd(), 'node_modules/vscode-icons-ts/build/icons')
+        ],
         symbolId: 'icon-[dir]-[name]'
       }),
       topLevelAwait({

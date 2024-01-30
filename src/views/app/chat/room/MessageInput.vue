@@ -31,7 +31,7 @@
       <el-button
         :icon="Files"
         circle
-        @click="$notImplemented"
+        @click="handleFile"
       />
     </div>
     <input
@@ -41,6 +41,14 @@
       accept="image/*"
       class="hidden"
       @change="handleImageChange"
+    />
+    <input
+      ref="fileRef"
+      type="file"
+      multiple
+      accept="*/*"
+      class="hidden"
+      @change="handleFileChange"
     />
     <el-dialog
       v-model="imagePreviewDialogVisible"
@@ -77,6 +85,50 @@
         <el-button @click="closeImageMessage">取 消</el-button>
       </template>
     </el-dialog>
+    <el-dialog
+      v-model="filePreviewDialogVisible"
+      title="发送文件"
+      width="50%"
+    >
+      <el-table :data="previewFiles" style="width: 100%">
+      <el-table-column
+        prop="name"
+        label="图标"
+        width="60"
+        align="center"
+      >
+        <template #default="scope">
+          <svg-icon :name="getIconForFile(scope.row.name)?.split('.')[0]" size="2em" />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="文件名"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="type"
+        label="类型"
+        width="200"
+        show-overflow-tooltip
+      />
+      <el-table-column
+        prop="size"
+        label="大小"
+        width="100"
+        align="center"
+      >
+        <template #default="scope">
+          <span>{{ getSize(scope.row.size) }}</span>
+        </template>
+      </el-table-column>
+    </el-table>
+      <template #footer>
+        <span v-if="previewFiles.length > 1" class="mr-12">总大小：{{ getSize(previewFiles.reduce((total, item) => total + item.size, 0)) }}</span>
+        <el-button type="primary" @click="handleFileMessage">确 定</el-button>
+        <el-button @click="closeFileMessage">取 消</el-button>
+      </template>
+    </el-dialog>
     <div class="input-wrapper">
       <div
         ref="inputMessageRef"
@@ -108,6 +160,7 @@
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
 import { Files, Picture } from '@element-plus/icons-vue'
+import { getIconForFile } from 'vscode-icons-ts'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { addAppChatMessage } from '@/api/app/chat/message'
@@ -150,9 +203,11 @@ const state = reactive({
   cursorRange: undefined as Range | undefined,
   atListVisible: false,
   activeIndex: 0,
-  imagePreviewDialogVisible: false,
+  imagePreviewFiles: [] as File[],
+  previewFiles: [] as File[],
   imagePreviewUrls: [] as string[],
-  imagePreviewFiles: [] as File[]
+  imagePreviewDialogVisible: false,
+  filePreviewDialogVisible: false
 })
 
 const {
@@ -161,12 +216,15 @@ const {
   cursorRange,
   atListVisible,
   activeIndex,
-  imagePreviewDialogVisible,
+  imagePreviewFiles,
+  previewFiles,
   imagePreviewUrls,
-  imagePreviewFiles
+  imagePreviewDialogVisible,
+  filePreviewDialogVisible
 } = toRefs(state)
 
 const imageRef = ref<HTMLInputElement>()
+const fileRef = ref<HTMLInputElement>()
 const inputMessageRef = ref<HTMLInputElement | null>(null)
 
 const handleInputMessage = async () => {
@@ -209,10 +267,36 @@ const handleImageMessage = async () => {
   })
 }
 
+const handleFileMessage = async () => {
+  previewFiles.value.forEach(async (file: File) => {
+    if (!props.selectedItem) return
+    state.appChatMessageForm.chatListId = props.selectedItem.chatListId
+    state.appChatMessageForm.senderId = userStore.user.userId
+    if (state.replyMessage) {
+      state.appChatMessageForm.replyMessageId = state.replyMessage.messageId
+      state.appChatMessageForm.replyMessage = state.replyMessage
+    }
+    const uploadRes = await uploadFile(file)
+    state.appChatMessageForm.content = `<file src="${uploadRes.data.filePath}" />`
+    const res = await addAppChatMessage(state.appChatMessageForm)
+    proxy.$emit('sendMessage', res.data)
+    res.data.userId = props.selectedItem.friendId
+    proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
+    state.appChatMessageForm = {} as AppChatMessageForm
+    state.replyMessage = null
+    filePreviewDialogVisible.value = false
+  })
+}
+
 const closeImageMessage = () => {
   imagePreviewDialogVisible.value = false
   imagePreviewFiles.value = []
   imagePreviewUrls.value = []
+}
+
+const closeFileMessage = () => {
+  filePreviewDialogVisible.value = false
+  previewFiles.value = []
 }
 
 // 消息回复
@@ -231,6 +315,12 @@ const handleImage = () => {
   image.click()
 }
 
+const handleFile = () => {
+  const file = fileRef.value
+  if (!file) return
+  file.click()
+}
+
 const handleImageChange = (event: Event) => {
   const input = event.target as HTMLInputElement
   if (!input.files) return
@@ -241,6 +331,16 @@ const handleImageChange = (event: Event) => {
   if (!imagePreviewFiles.value) return
   state.imagePreviewUrls = imagePreviewFiles.value.map(item => URL.createObjectURL(item))
   state.imagePreviewDialogVisible = true
+}
+
+const handleFileChange = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  if (!input.files) return
+  for (let index = 0; index < input.files.length; index++) {
+    const element = input.files.item(index)
+    previewFiles.value.push(element as File)
+  }
+  state.filePreviewDialogVisible = true
 }
 
 // 获取光标的位置(x, y)
