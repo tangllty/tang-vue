@@ -27,12 +27,12 @@
         placement="top-start"
         trigger="click"
         width="auto"
-        :visible="popoverVisible"
         :popper-style="{ padding: '0px', borderRadius: '10px' }"
         @before-enter="getInputMessage().focus()"
+        hide-after="0"
       >
         <template #reference>
-          <el-button circle @click="handleEmoji">
+          <el-button ref="emojiButtonRef" circle>
             <svg-icon name="表情" size="1.2em" />
           </el-button>
         </template>
@@ -175,6 +175,7 @@
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
 import { Files, Picture } from '@element-plus/icons-vue'
+import { ElButton } from 'element-plus'
 import { getIconForFile } from 'vscode-icons-ts'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
@@ -222,8 +223,7 @@ const state = reactive({
   previewFiles: [] as File[],
   imagePreviewUrls: [] as string[],
   imagePreviewDialogVisible: false,
-  filePreviewDialogVisible: false,
-  popoverVisible: false
+  filePreviewDialogVisible: false
 })
 
 const {
@@ -236,13 +236,13 @@ const {
   previewFiles,
   imagePreviewUrls,
   imagePreviewDialogVisible,
-  filePreviewDialogVisible,
-  popoverVisible
+  filePreviewDialogVisible
 } = toRefs(state)
 
 const imageRef = ref<HTMLInputElement>()
 const fileRef = ref<HTMLInputElement>()
 const inputMessageRef = ref<HTMLInputElement | null>(null)
+const emojiButtonRef = ref<InstanceType<typeof ElButton>>()
 
 const handleInputMessage = async () => {
   if (!props.selectedItem) return
@@ -353,10 +353,6 @@ const getFiles = (event: Event): File[] => {
   return files
 }
 
-const handleEmoji = () => {
-  popoverVisible.value = !popoverVisible.value
-}
-
 /**
  * 设置光标位置
  *
@@ -386,8 +382,8 @@ const handleEmojiSelect = (emoji: { [key: string]: string }, event: Event) => {
   const emojiNode = document.createTextNode(emoji.native)
   const innerHTML = inputMessage.innerHTML
   inputMessage.innerHTML = innerHTML.substring(0, startOffset) + emojiNode.textContent + innerHTML.substring(startOffset, innerHTML.length)
-  popoverVisible.value = false
   setCursorPosition(inputMessage.firstChild as Node, startOffset + 2)
+  emojiButtonRef.value?.$el.click()
 }
 
 const handleCursor = () => {
@@ -467,7 +463,6 @@ const handleKeyDownLeft = (event: KeyboardEvent) => {
   const range = selection.getRangeAt(0)
   const focusNode = selection.focusNode
   if (!focusNode) return false
-  console.log(range)
 
   if (range.startContainer.nodeValue?.includes('@') && range.startOffset !== 0) {
     range.setStart(range.startContainer, 1)
