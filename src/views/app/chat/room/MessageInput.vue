@@ -373,8 +373,8 @@ const setCursorPosition = (node: Node, offset: number) => {
  * emoji 选择
  */
 const handleEmojiSelect = (emoji: { [key: string]: string }, event: Event) => {
+  emojiButtonRef.value?.$el.click()
   const inputMessage = getInputMessage()
-  inputMessage.focus()
   const selection = window.getSelection()
   if (!selection) return
   const range = selection.getRangeAt(0)
@@ -383,7 +383,6 @@ const handleEmojiSelect = (emoji: { [key: string]: string }, event: Event) => {
   const innerHTML = inputMessage.innerHTML
   inputMessage.innerHTML = innerHTML.substring(0, startOffset) + emojiNode.textContent + innerHTML.substring(startOffset, innerHTML.length)
   setCursorPosition(inputMessage.firstChild as Node, startOffset + 2)
-  emojiButtonRef.value?.$el.click()
 }
 
 const handleCursor = () => {
