@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
+    "@emoji-mart/data": "^1.1.2",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@types/js-cookie": "^3.0.2",
     "@vueuse/core": "^10.3.0",
@@ -24,6 +25,7 @@
     "crypto-js": "^4.2.0",
     "echarts": "^5.4.2",
     "element-plus": "^2.2.27",
+    "emoji-mart": "^5.5.2",
     "file-saver": "^2.0.5",
     "highlight.js": "^11.8.0",
     "js-cookie": "^3.0.1",

@@ -23,6 +23,20 @@
   </div>
   <div class="input-container">
     <div class="toolbar">
+      <el-popover
+        placement="top-start"
+        trigger="click"
+        width="auto"
+        :visible="popoverVisible"
+        :popper-style="{ padding: '0px', borderRadius: '10px' }"
+      >
+        <template #reference>
+          <el-button circle @click="handleEmoji">
+            <svg-icon name="表情" size="1.2em" />
+          </el-button>
+        </template>
+        <EmojiPicker @select="handleEmojiSelect" />
+      </el-popover>
       <el-button
         :icon="Picture"
         circle
@@ -207,7 +221,8 @@ const state = reactive({
   previewFiles: [] as File[],
   imagePreviewUrls: [] as string[],
   imagePreviewDialogVisible: false,
-  filePreviewDialogVisible: false
+  filePreviewDialogVisible: false,
+  popoverVisible: false
 })
 
 const {
@@ -220,7 +235,8 @@ const {
   previewFiles,
   imagePreviewUrls,
   imagePreviewDialogVisible,
-  filePreviewDialogVisible
+  filePreviewDialogVisible,
+  popoverVisible
 } = toRefs(state)
 
 const imageRef = ref<HTMLInputElement>()
@@ -336,6 +352,33 @@ const getFiles = (event: Event): File[] => {
   return files
 }
 
+const handleEmoji = () => {
+  popoverVisible.value = !popoverVisible.value
+}
+
+const handleEmojiSelect = (emoji: { [key: string]: string }, event: Event) => {
+  const inputMessage = getInputMessage()
+  const range = window.getSelection()?.getRangeAt(0)
+  const emojiNode = document.createTextNode(emoji.native)
+  const innerHTML = inputMessage.innerHTML
+  const startOffset = range?.startOffset || 0
+  inputMessage.innerHTML = innerHTML.substring(0, startOffset) + emojiNode.textContent + innerHTML.substring(startOffset, innerHTML.length)
+  popoverVisible.value = false
+  const node = inputMessage.firstChild
+  if (!node) return
+  range?.setStart(node, startOffset + 1)
+  range?.setEnd(node, startOffset + 2)
+}
+
+const handleCursor = () => {
+  const cursorPosition = getCursorPosition()
+  state.cursorPosition.x = cursorPosition.x
+  state.cursorPosition.y = cursorPosition.y
+
+  const range = window.getSelection()?.getRangeAt(0)
+  state.cursorRange = range
+}
+
 // 获取光标的位置(x, y)
 const getCursorPosition = (): { x: number, y: number } => {
   const selection = window.getSelection()
@@ -352,12 +395,7 @@ const getCursorPosition = (): { x: number, y: number } => {
 
 // @功能
 const handleAt = () => {
-  const cursorPosition = getCursorPosition()
-  state.cursorPosition.x = cursorPosition.x
-  state.cursorPosition.y = cursorPosition.y
-
-  const range = window.getSelection()?.getRangeAt(0)
-  state.cursorRange = range
+  handleCursor()
   state.atListVisible = true
 }
 
@@ -512,7 +550,7 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-el-carousel__item {
+.el-carousel__item {
   &:nth-child(2n) {
     background-color: #d6e2f3;
   }

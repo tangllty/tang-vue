@@ -40,6 +40,9 @@ import hljsVuePlugin from '@highlightjs/vue-plugin'
 // 图片上传
 import ImageUpload from '@/components/ImageUpload/index.vue'
 
+// Emoji
+import EmojiPicker from '@/components/EmojiPicker/index.vue'
+
 const app = createApp(App)
 
 import { getDicts } from '@/utils/dict'
@@ -70,4 +73,5 @@ app
   .component('DictSpan', DictSpan)
   .component('DictTag', DictTag)
   .component('ImageUpload', ImageUpload)
+  .component('EmojiPicker', EmojiPicker)
   .mount('#app')
