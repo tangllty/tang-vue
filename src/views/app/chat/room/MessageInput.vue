@@ -29,6 +29,7 @@
         width="auto"
         :visible="popoverVisible"
         :popper-style="{ padding: '0px', borderRadius: '10px' }"
+        @before-enter="getInputMessage().focus()"
       >
         <template #reference>
           <el-button circle @click="handleEmoji">
@@ -356,18 +357,37 @@ const handleEmoji = () => {
   popoverVisible.value = !popoverVisible.value
 }
 
+/**
+ * 设置光标位置
+ *
+ * @param node   节点
+ * @param offset 偏移量
+ */
+const setCursorPosition = (node: Node, offset: number) => {
+  const range = document.createRange()
+  const selection = window.getSelection()
+  range.setStart(node, offset)
+  range.collapse(true)
+  if (!selection) return
+  selection.removeAllRanges()
+  selection.addRange(range)
+}
+
+/**
+ * emoji 选择
+ */
 const handleEmojiSelect = (emoji: { [key: string]: string }, event: Event) => {
   const inputMessage = getInputMessage()
-  const range = window.getSelection()?.getRangeAt(0)
+  inputMessage.focus()
+  const selection = window.getSelection()
+  if (!selection) return
+  const range = selection.getRangeAt(0)
+  const startOffset = range.startOffset || 0
   const emojiNode = document.createTextNode(emoji.native)
   const innerHTML = inputMessage.innerHTML
-  const startOffset = range?.startOffset || 0
   inputMessage.innerHTML = innerHTML.substring(0, startOffset) + emojiNode.textContent + innerHTML.substring(startOffset, innerHTML.length)
   popoverVisible.value = false
-  const node = inputMessage.firstChild
-  if (!node) return
-  range?.setStart(node, startOffset + 1)
-  range?.setEnd(node, startOffset + 2)
+  setCursorPosition(inputMessage.firstChild as Node, startOffset + 2)
 }
 
 const handleCursor = () => {
@@ -541,7 +561,7 @@ const handleAtClick = () => {
 }
 
 const getInputMessage = (): HTMLElement => {
-  return proxy.$refs.inputMessageRef as HTMLElement
+  return inputMessageRef.value as HTMLElement
 }
 
 defineExpose({
