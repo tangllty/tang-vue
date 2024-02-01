@@ -4,7 +4,8 @@
 export interface AppChatList {
   chatListId: number
   userId: number
-  friendId: number
+  chatId: number
+  chatType: string
   username: string
   nickname: string
   name: string
@@ -26,7 +27,8 @@ export interface AppChatList {
 export interface AppChatListForm {
   chatListId: number
   userId: number
-  friendId: number
+  chatId: number
+  chatType: string
   stickFlag: string
   displayFlag: string
   muteFlag: string
@@ -41,7 +43,8 @@ export interface AppChatListForm {
 export interface AppChatListQuery extends PageQuery {
   chatListId: number
   userId: number
-  friendId: number
+  chatId: number
+  chatType: string
   stickFlag: string
   displayFlag: string
   muteFlag: string
