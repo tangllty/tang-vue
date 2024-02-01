@@ -84,14 +84,14 @@ import { ElScrollbar } from 'element-plus'
 import { Clock } from '@element-plus/icons-vue'
 import InfiniteLoading from 'v3-infinite-loading'
 import 'v3-infinite-loading/lib/style.css'
+import MessageContent from './MessageContent.vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { useUserStore } from '@/store/modules/user'
 import { MessageType } from '@/enums'
 import { ChatMessage } from '@/types'
-import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
 import { listAppChatMessage, deleteAppChatMessage } from '@/api/app/chat/message'
-import { AppChatMessage, AppChatMessageData, AppChatMessageQuery } from '@/api/app/chat/message/types'
-import MessageContent from './MessageContent.vue'
+import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import type { AppChatMessage, AppChatMessageData, AppChatMessageQuery } from '@/api/app/chat/message/types'
 
 const proxy = getProxy()
 
@@ -145,12 +145,13 @@ const loadMore = async () => {
 const handleList = async (chatListId: number, scroll: boolean = false) => {
   state.queryParams.chatListId = chatListId
   state.queryParams.pageNum = 1
-  const res: any = await listAppChatMessage(state.queryParams)
-  state.chatMessageList = res.rows
+  const { rows }: any = await listAppChatMessage(state.queryParams)
+  rows.forEach((item: AppChatMessageData) => item.timeVisible = false)
+  state.chatMessageList = rows
   if (scroll) {
     scrollToBottom(false)
   }
-  state.showInfiniteLoading = res.rows.length === state.queryParams.pageSize
+  state.showInfiniteLoading = rows.length === state.queryParams.pageSize
 }
 
 /**
