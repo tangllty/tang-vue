@@ -18,9 +18,9 @@
         </div>
         <div class="content-body">
           <div
-            v-if="item.message.indexOf('src') !== -1"
+            v-if="isObjectString(item.message)"
             class="text-truncate"
-            v-html="'[图片消息]'"
+            v-html="(JSON.parse(item.message) as FileMessageContent ).name"
           />
           <div
             v-else
@@ -44,6 +44,8 @@ import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatListAll, stickAppChatList, unstickAppChatList } from '@/api/app/chat/chat-list'
 import { AppChatList } from '@/api/app/chat/chat-list/types'
 import { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import { isObjectString } from '@/utils/object'
+import { FileMessageContent } from '@/types'
 
 const proxy = getProxy()
 
@@ -62,8 +64,8 @@ const handleChatList = async () => {
   const res: any = await listAppChatListAll()
   state.chatList = res.data
 
-  const friendId: number = Number(proxy.$route.query.friendId)
-  const item: AppChatList | undefined = state.chatList.find((item) => item.friendId === friendId)
+  const chatId: number = Number(proxy.$route.query.chatId)
+  const item: AppChatList | undefined = state.chatList.find((item) => item.chatId === chatId)
   if (!item) return
   handleItemClick(item)
 }
@@ -75,7 +77,7 @@ const handleItemClick = (appChatList: AppChatList): void => {
 
   proxy.$router.push({
     query: {
-      friendId: appChatList.friendId
+      chatId: appChatList.chatId
     }
   })
 
