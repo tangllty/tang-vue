@@ -5,7 +5,7 @@ export interface AppFriend {
   userFriendId: number
   userId: number
   friendId: number
-  unionId: string
+  uniqueId: number
   username: string
   nickname: string
   createBy: string
@@ -20,7 +20,7 @@ export interface AppFriendForm {
   userFriendId: number
   userId: number
   friendId: number
-  unionId: string
+  uniqueId: number
   createBy: string
   updateBy: string
   remark: string
@@ -33,7 +33,7 @@ export interface AppFriendQuery extends PageQuery {
   userFriendId: number
   userId: number
   friendId: number
-  unionId: string
+  uniqueId: number
   createBy: string
   updateBy: string
   remark: string

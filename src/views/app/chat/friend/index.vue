@@ -220,7 +220,7 @@ import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppFriend, getAppFriend, editAppFriend, deleteAppFriend, deleteAppFriends } from '@/api/app/chat/friend'
 import { AppFriend, AppFriendForm, AppFriendQuery } from '@/api/app/chat/friend/types'
 import { listAppChatListAll, addAppChatList } from '@/api/app/chat/chat-list'
-import { AppChatListForm } from '@/api/app/chat/chat-list/types'
+import { AppChatList, AppChatListForm } from '@/api/app/chat/chat-list/types'
 
 const proxy = getProxy()
 
@@ -302,17 +302,17 @@ const handleList = async () => {
 }
 
 // 发起聊天
-const handleInitChat= async (row: any) => {
+const handleInitChat= async (row: AppFriend) => {
   const res: any = await listAppChatListAll()
   const chatList = res.data
-  const existed = chatList.some((item: any) => item.friendId === row.friendId)
+  const existed = chatList.some((item: AppChatList) => item.chatId === row.friendId)
   if (existed) {
     handleGoChatRoom(row)
   } else {
     const appChatListForm = {
       chatListId: row.uniqueId,
       userId: row.userId,
-      friendId: row.friendId
+      chatId: row.friendId
     } as AppChatListForm
     await addAppChatList(appChatListForm)
     handleGoChatRoom(row)
@@ -320,17 +320,17 @@ const handleInitChat= async (row: any) => {
 }
 
 // 前往聊天室
-const handleGoChatRoom = async (row: any) => {
+const handleGoChatRoom = async (row: AppFriend) => {
   proxy.$router.push({
     path: '/app/chat/room',
     query: {
-      friendId: row.friendId
+      chatId: row.friendId
     }
   })
 }
 
 // 修改用户好友信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: AppFriend) => {
   let userFriendId = state.userFriendId
   if (row.userFriendId) {
     userFriendId = row.userFriendId
@@ -346,7 +346,7 @@ const handleEdit = async (row: any) => {
 }
 
 // 删除用户好友信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: AppFriend) => {
   try {
     await proxy.$confirm('确认删除"' + row.userFriendId + '"用户好友信息吗？', '提示', {
       type: 'warning'
