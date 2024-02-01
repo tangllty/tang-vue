@@ -4,6 +4,7 @@
       v-if="content.type.startsWith('image/')"
       class="message-image"
       :src="$path(content.filePath)"
+      :preview-src-list="[$path(content.filePath)]"
       fit="cover"
     />
     <el-link
