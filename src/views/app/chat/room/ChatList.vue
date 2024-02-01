@@ -88,6 +88,7 @@ const showContextMenu = (e: MouseEvent, appChatList: AppChatList) => {
   const items: MenuItem[] = [
     {
       label: appChatList.stickFlag === '0' ? '置顶' : '取消置顶',
+      icon: appChatList.stickFlag === '0' ? '置顶' : '取消置顶',
       onClick: () => {
         handleStick(appChatList)
       }
