@@ -256,7 +256,7 @@ const handleInputMessage = async () => {
   state.appChatMessageForm.content = inputMessage.innerHTML
   const res = await addAppChatMessage(state.appChatMessageForm)
   proxy.$emit('sendMessage', res.data)
-  res.data.userId = props.selectedItem.friendId
+  res.data.userId = props.selectedItem.chatId
   proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
   inputMessage.innerHTML = ''
   state.appChatMessageForm = {} as AppChatMessageForm
@@ -288,7 +288,7 @@ const handleFileMessage = async () => {
     state.appChatMessageForm.content = JSON.stringify(content)
     const res = await addAppChatMessage(state.appChatMessageForm)
     proxy.$emit('sendMessage', res.data)
-    res.data.userId = props.selectedItem.friendId
+    res.data.userId = props.selectedItem.chatId
     proxy.$socket.sendMessage({ messageType: MessageType.CHAT_MESSAGE, data: res.data })
     state.appChatMessageForm = {} as AppChatMessageForm
     state.replyMessage = null
