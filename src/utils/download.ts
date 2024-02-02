@@ -14,3 +14,16 @@ export const download = (res: any, fileName: string = ''): void => {
   }
   saveAs(blob, fileName)
 }
+
+/**
+ * 下载文件
+ *
+ * @param url 文件地址
+ * @param fileName 文件名
+ */
+export const downloadUrl = (url: string, fileName: string = ''): void => {
+  const a = document.createElement('a')
+  a.href = url
+  a.download = fileName
+  a.click()
+}
