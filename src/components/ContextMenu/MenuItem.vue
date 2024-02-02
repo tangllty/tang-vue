@@ -25,9 +25,11 @@
   </li>
 
   <li
-    v-else
+    v-else-if="item.visible || item.visible === undefined"
     class="menu-item"
-    :class="item.disabled ? 'disabled' : ''"
+    :class="{
+      disabled: item.disabled,
+    }"
     @click="handleItemClick"
   >
     <div v-if="!item.divided" class="menu-item__container">

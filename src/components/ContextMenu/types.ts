@@ -18,6 +18,7 @@ export interface MenuItem {
   label?: string
   icon?: string
   disabled?: boolean
+  visible?: boolean
   divided?: boolean
   children?: MenuItem[]
   onClick?: () => void
