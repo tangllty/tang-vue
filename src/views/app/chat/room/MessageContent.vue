@@ -7,10 +7,11 @@
       :preview-src-list="[$path(content.filePath)]"
       fit="cover"
     />
-    <el-link
+    <div
       v-else
       :href="$path(content.filePath)"
       target="_blank"
+      class="inline-flex"
       style="width: 200px; height: 50px;"
     >
       <svg-icon :name="getIconForFile(content.name)?.split('.')[0]" size="3em" />
@@ -18,7 +19,7 @@
         <span class="block">{{ content.name }}</span>
         <span class="block" style="font-size: 12px; color: #a1a1a1">{{ getSize(content.size) }}</span>
       </div>
-    </el-link>
+    </div>
   </div>
   <div
     v-else

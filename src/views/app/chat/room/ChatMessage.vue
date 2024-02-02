@@ -86,9 +86,11 @@ import InfiniteLoading from 'v3-infinite-loading'
 import 'v3-infinite-loading/lib/style.css'
 import MessageContent from './MessageContent.vue'
 import { getProxy } from '@/utils/getCurrentInstance'
+import { isObjectString } from '@/utils/object'
+import { downloadUrl } from '@/utils/download'
 import { useUserStore } from '@/store/modules/user'
 import { MessageType } from '@/enums'
-import { ChatMessage } from '@/types'
+import { ChatMessage, FileMessageContent } from '@/types'
 import { listAppChatMessage, deleteAppChatMessage } from '@/api/app/chat/message'
 import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
 import type { AppChatMessage, AppChatMessageData, AppChatMessageQuery } from '@/api/app/chat/message/types'
@@ -185,7 +187,14 @@ const scrollToBottom = (animation: boolean = true) => {
  * 消息右键菜单
  */
 const handleContextMenu = (e: MouseEvent, appChatMessage: AppChatMessage) => {
+  const content = isObjectString(appChatMessage.content) ? JSON.parse(appChatMessage.content) as FileMessageContent : {} as FileMessageContent
+
   const items: MenuItem[] = [
+    {
+      label: '下载',
+      visible: !!content.type,
+      onClick: () => downloadUrl(content.filePath, content.name)
+    },
     {
       label: '复制',
       onClick: () => {
