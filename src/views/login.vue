@@ -215,11 +215,16 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 // 获取验证码
 const handleCaptcha = async () => {
-  state.captchaLoading = true
-  const res = await getCaptcha()
-  state.loginForm.captcha.id = res.data.id
-  state.captchaUrl = `data:image/png;base64,${res.data.text}`
-  state.captchaLoading = false
+  try {
+    state.captchaLoading = true
+    const res = await getCaptcha()
+    state.loginForm.captcha.id = res.data.id
+    state.captchaUrl = `data:image/png;base64,${res.data.text}`
+    state.captchaLoading = false
+  } catch (error: any) {
+    state.captchaLoading = false
+    console.log('error get captcha!', error)
+  }
 }
 
 // GitHub 登录
