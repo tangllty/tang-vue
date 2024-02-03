@@ -151,11 +151,15 @@
               label="用户名"
               prop="username"
               align="center"
+              width="120"
+              show-overflow-tooltip
             />
             <el-table-column
               label="昵称"
               prop="nickname"
               align="center"
+              width="120"
+              show-overflow-tooltip
             />
             <el-table-column
               label="邮箱"
