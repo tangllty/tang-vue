@@ -22,6 +22,12 @@
     </el-sub-menu>
 
     <el-menu-item v-else-if="item.root && item.type === 'MENU'" :index="resolvePath(item.path)">
+      <el-icon v-if="appStore.sidebar">
+        <svg-icon
+          v-if="item.meta && item.meta.icon"
+          :name="item.meta.icon"
+        />
+      </el-icon>
       <template #title>
         <el-icon>
           <svg-icon
@@ -53,7 +59,10 @@
 
 <script lang="ts" setup>
 import path from 'path-browserify'
+import { useAppStore } from '@/store/modules/app'
 import { ElSubMenu, ElMenuItem } from 'element-plus'
+
+const appStore = useAppStore()
 
 const props = defineProps({
   item: {
