@@ -11,4 +11,5 @@ export interface Component {
   field: string
   defaultValue?: string
   placeholder?: string
+  [key: string]: any
 }

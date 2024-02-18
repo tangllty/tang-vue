@@ -18,6 +18,12 @@
     <el-form-item label="占位符">
       <el-input v-model="element.placeholder" placeholder="请输入占位符" />
     </el-form-item>
+    <el-form-item v-if="['el-input'].includes(element.element)" label="前缀">
+      <el-input v-model="element.prepend" placeholder="请输入前缀" />
+    </el-form-item>
+    <el-form-item v-if="['el-input'].includes(element.element)" label="后缀">
+      <el-input v-model="element.append" placeholder="请输入后缀" />
+    </el-form-item>
   </el-form>
 </template>
 

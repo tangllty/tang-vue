@@ -9,6 +9,8 @@ export const componentGroupList = [
         icon: '代码生成',
         label: '单行文本',
         placeholder: '请输入单行文本',
+        prepend: '',
+        append: '',
       },
       {
         element: 'el-input-textarea',
