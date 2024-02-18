@@ -19,8 +19,8 @@ export const componentGroupList = [
       {
         element: 'el-input-number',
         icon: '代码生成',
-        label: '计数器',
-        placeholder: '请输入计数器',
+        label: '数字输入框',
+        placeholder: '请输入数字输入框',
       },
     ] as Component[]
   },

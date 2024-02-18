@@ -20,8 +20,18 @@
             <span class="text-truncate">{{ item.label }}</span>
           </template>
           <el-input
-            v-if="item.element.startsWith('el-input')"
-            :type="item.element === 'el-input' ? 'text' : 'textarea'"
+            v-if="item.element === 'el-input'"
+            v-model="item.vModel"
+            :placeholder="item.placeholder"
+          />
+          <el-input
+            v-else-if="item.element === 'el-input-textarea'"
+            type="textarea"
+            v-model="item.vModel"
+            :placeholder="item.placeholder"
+          />
+          <el-input-number
+            v-else-if="item.element === 'el-input-number'"
             v-model="item.vModel"
             :placeholder="item.placeholder"
           />
