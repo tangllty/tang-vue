@@ -40,6 +40,14 @@
           />
         </el-form-item>
       </div>
+      <div
+        v-if="!fromComponentList.length"
+        ref="emptyInfoRef"
+        class="empty-info"
+        :style="emptyInfoStyle"
+      >
+        <el-empty description="请从左侧点击组件或拖拽组件到此处" />
+      </div>
     </div>
   </el-form>
 </template>
@@ -55,15 +63,18 @@ const proxy = getProxy()
 
 const state = reactive({
   activeItem: {} as Component,
-  fromComponentList: [] as Component[]
+  fromComponentList: [] as Component[],
+  emptyInfoStyle: {}
 })
 
 const {
   activeItem,
-  fromComponentList
+  fromComponentList,
+  emptyInfoStyle
 } = toRefs(state)
 
 const fromRef = ref<HTMLDivElement>()
+const emptyInfoRef = ref<HTMLDivElement>()
 
 useDraggable(fromRef, fromComponentList, {
   animation: 350,
@@ -75,7 +86,8 @@ useDraggable(fromRef, fromComponentList, {
     if (newIndex === undefined) return
     const component = fromComponentList.value[newIndex]
     handleActiveItem(component)
-  }
+  },
+  filter: '.empty-info'
 })
 
 const handleComponentClick = (component: Component) => {
@@ -89,7 +101,17 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
   proxy.$emit('update:activeItem', item)
 }
 
+const computeEmptyInfoStyle = async () => {
+  await proxy.$nextTick()
+  if (!fromRef.value || !emptyInfoRef.value) return
+  emptyInfoStyle.value = {
+    top: fromRef.value.clientHeight / 2 - emptyInfoRef.value.clientHeight / 2 + 'px',
+    left: fromRef.value.clientWidth / 2 - emptyInfoRef.value.clientWidth / 2 + 'px'
+  }
+}
+
 onMounted(async () => {
+  await computeEmptyInfoStyle()
 })
 
 defineExpose({
@@ -133,6 +155,10 @@ defineExpose({
     &:last-child > .component > .el-form-item {
       margin-bottom: 0;
     }
+  }
+
+  .empty-info {
+    position: absolute;
   }
 }
 </style>
