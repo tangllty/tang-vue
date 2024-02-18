@@ -1,6 +1,6 @@
 <template>
   <el-form
-    label-width="60px"
+    label-width="80px"
     class="pr-8 pl-8"
   >
     <el-form-item label="元素">
@@ -24,6 +24,38 @@
     <el-form-item v-if="['el-input'].includes(element.element)" label="后缀">
       <el-input v-model="element.append" placeholder="请输入后缀" />
     </el-form-item>
+    <el-form-item v-if="['el-input'].includes(element.element)" label="前置图标">
+      <el-popover
+        trigger="click"
+        placement="bottom-start"
+        width="520"
+      >
+        <template #reference>
+          <el-input v-model="element.prefix" placeholder="请输入前置图标">
+            <template #suffix>
+              <el-icon><SvgIcon :name="element.prefix" /></el-icon>
+            </template>
+          </el-input>
+        </template>
+        <IconSelect @selected="icon => element.prefix = icon" />
+      </el-popover>
+    </el-form-item>
+    <el-form-item v-if="['el-input'].includes(element.element)" label="后置图标">
+      <el-popover
+        trigger="click"
+        placement="bottom-start"
+        width="520"
+      >
+        <template #reference>
+          <el-input v-model="element.suffix" placeholder="请输入后置图标">
+            <template #suffix>
+              <el-icon><SvgIcon :name="element.suffix" /></el-icon>
+            </template>
+          </el-input>
+        </template>
+        <IconSelect @selected="icon => element.suffix = icon" />
+      </el-popover>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -31,6 +63,7 @@
 import { PropType, computed } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
+import IconSelect from '@/components/IconSelect/index.vue'
 
 const proxy = getProxy()
 

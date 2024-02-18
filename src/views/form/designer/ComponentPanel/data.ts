@@ -12,6 +12,8 @@ export const componentGroupList = [
         placeholder: '请输入单行文本',
         prepend: '',
         append: '',
+        prefix: '',
+        suffix: '',
       },
       {
         element: 'el-input-textarea',

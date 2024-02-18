@@ -26,6 +26,16 @@
           >
             <template v-if="item.prepend" #prepend>{{ item.prepend }}</template>
             <template v-if="item.append" #append>{{ item.append }}</template>
+            <template v-if="item.prefix" #prefix>
+              <el-icon>
+                <SvgIcon :name="item.prefix" />
+              </el-icon>
+            </template>
+            <template v-if="item.suffix" #suffix>
+              <el-icon>
+                <SvgIcon :name="item.suffix" />
+              </el-icon>
+            </template>
           </el-input>
           <el-input
             v-else-if="item.element === 'el-input-textarea'"
