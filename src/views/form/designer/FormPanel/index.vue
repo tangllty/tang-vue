@@ -3,7 +3,7 @@
     <div
       ref="fromRef"
       class="components-container"
-      :style="{ minHeight: $el.clientHeight + 'px' }"
+      :style="{ minHeight: $el ? $el.clientHeight + 'px' : '100%' }"
     >
       <div
         v-for="item in fromComponentList"
