@@ -1,5 +1,6 @@
 export interface ComponentGroup {
   name: string
+  icon: string
   list: Component[]
 }
 

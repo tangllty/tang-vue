@@ -7,7 +7,12 @@
       :name="group.name"
     >
       <template #title>
-        <span class="ml-8 font-bold">{{ group.name }}</span>
+        <span class="ml-8 font-bold">
+          <el-icon class="mr-4">
+            <SvgIcon :name="group.icon" />
+          </el-icon>
+          {{ group.name }}
+        </span>
       </template>
       <ComponentList
         :componentList="group.list"

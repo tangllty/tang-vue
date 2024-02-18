@@ -3,10 +3,11 @@ import type { Component, ComponentGroup } from '../types'
 export const componentGroupList = [
   {
     name: '基础组件',
+    icon: '基础组件',
     list: [
       {
         element: 'el-input',
-        icon: '代码生成',
+        icon: '单行文本',
         label: '单行文本',
         placeholder: '请输入单行文本',
         prepend: '',
@@ -14,15 +15,15 @@ export const componentGroupList = [
       },
       {
         element: 'el-input-textarea',
-        icon: '代码生成',
+        icon: '多行文本',
         label: '多行文本',
         placeholder: '请输入多行文本',
       },
       {
         element: 'el-input-number',
-        icon: '代码生成',
-        label: '数字输入框',
-        placeholder: '请输入数字输入框',
+        icon: '数字框',
+        label: '数字框',
+        placeholder: '请输入数字',
       },
     ] as Component[]
   },
