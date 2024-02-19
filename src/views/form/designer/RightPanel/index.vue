@@ -37,7 +37,7 @@
             </template>
           </el-input>
         </template>
-        <IconSelect @selected="icon => element.prefix = icon" />
+        <IconSelect @selected="(icon: string) => element.prefix = icon" />
       </el-popover>
     </el-form-item>
     <el-form-item v-if="hasOwnProperty(element, 'suffix')" label="后置图标">
@@ -53,7 +53,7 @@
             </template>
           </el-input>
         </template>
-        <IconSelect @selected="icon => element.suffix = icon" />
+        <IconSelect @selected="(icon: string) => element.suffix = icon" />
       </el-popover>
     </el-form-item>
   </el-form>
@@ -63,7 +63,6 @@
 import { PropType, computed } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
-import IconSelect from '@/components/IconSelect/index.vue'
 
 const proxy = getProxy()
 

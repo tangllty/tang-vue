@@ -224,14 +224,13 @@
                 v-model="menuForm.icon"
                 placeholder="请选择图标"
                 readonly
-                @click="iconSelectVisible = true"
               >
                 <template #prepend>
-                  <svg-icon :name="menuForm.icon" />
+                  <SvgIcon :name="menuForm.icon" />
                 </template>
               </el-input>
             </template>
-            <icon-select @selected="selected" />
+            <IconSelect @selected="selected" />
           </el-popover>
         </el-form-item>
         <el-form-item
@@ -275,7 +274,6 @@ import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listMenu, listMenuTree, getMenu, addMenu, editMenu, changeStatus, deleteMenu } from '@/api/system/menu'
 import { SysMenu, SysMenuForm, SysMenuQuery } from '@/api/system/menu/types'
-import IconSelect from '@/components/IconSelect/index.vue'
 
 const proxy = getProxy()
 const { sys_status } = proxy.$dict('sys_status')
@@ -291,8 +289,6 @@ const state = reactive({
   menuList: [] as SysMenu[],
   // 菜单树数据
   menuTree: [] as TreeSelect[],
-  // Icon选择器显示状态
-  iconSelectVisible: false,
   // 查询参数
   queryParams: {
     pageNum: 1,
@@ -313,7 +309,6 @@ const {
   menuIds,
   menuList,
   menuTree,
-  iconSelectVisible,
   queryParams,
   menuDialog,
   menuForm
@@ -432,7 +427,6 @@ const closeMenuDialog = () => {
 // 选择图标后事件
 const selected = (name: string) => {
   state.menuForm.icon = name
-  state.iconSelectVisible = false
 }
 
 

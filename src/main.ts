@@ -22,6 +22,9 @@ import '@/styles/dark/css-vars.scss'
 import 'virtual:svg-icons-register'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 
+// 图标选择
+import IconSelect from '@/components/IconSelect/index.vue'
+
 // 国际化
 import { setupI18n, setupElementPlusI18n } from '@/locales'
 
@@ -69,6 +72,7 @@ app
   .use(router)
   .use(hljsVuePlugin)
   .component('SvgIcon', SvgIcon)
+  .component('IconSelect', IconSelect)
   .component('Pagination', Pagination)
   .component('DictSpan', DictSpan)
   .component('DictTag', DictTag)
