@@ -18,6 +18,9 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 import '@/styles/index.scss'
 import '@/styles/dark/css-vars.scss'
 
+// element-plus 图标
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 // 注册 svg
 import 'virtual:svg-icons-register'
 import SvgIcon from '@/components/SvgIcon/index.vue'
@@ -47,6 +50,10 @@ import ImageUpload from '@/components/ImageUpload/index.vue'
 import EmojiPicker from '@/components/EmojiPicker/index.vue'
 
 const app = createApp(App)
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 
 import { getDicts } from '@/utils/dict'
 import { download } from '@/utils/download'
