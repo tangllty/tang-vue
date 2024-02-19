@@ -29,7 +29,7 @@
         width="auto"
         :popper-style="{ padding: '0px', borderRadius: '10px' }"
         @before-enter="getInputMessage().focus()"
-        hide-after="0"
+        :hide-after="0"
       >
         <template #reference>
           <el-button ref="emojiButtonRef" circle>
@@ -84,7 +84,7 @@
           height="362px"
           style="width: 500px;"
         >
-          <el-carousel-item v-for="(item, index) in imagePreviewFiles" :key="item">
+          <el-carousel-item v-for="(item, index) in imagePreviewFiles" :key="item.name">
             <el-image :src="imagePreviewUrls[index]" style="width: 280px; height: 280px" />
             <div class="flex flex-col items-center mt-10" style="color: #8d8787;">
               <span>文件名：{{ item.name }}</span>

@@ -330,7 +330,7 @@ const handleGoChatRoom = async (row: AppFriend) => {
 }
 
 // 修改用户好友信息
-const handleEdit = async (row: AppFriend) => {
+const handleEdit = async (row: any) => {
   let userFriendId = state.userFriendId
   if (row.userFriendId) {
     userFriendId = row.userFriendId

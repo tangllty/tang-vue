@@ -638,7 +638,7 @@ const handleAdd = () => {
  *
  * @param row 接口日志信息
  */
-const handleEdit = async (row: SysLogApi) => {
+const handleEdit = async (row: any) => {
   let apiId = state.apiId
   if (row.apiId) {
     apiId = row.apiId

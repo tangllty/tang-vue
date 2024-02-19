@@ -8,7 +8,7 @@ export interface Component {
   element: string
   icon: string
   label: string
-  vModel: string
+  vModel: any
   field: string
   defaultValue?: string
   placeholder?: string
