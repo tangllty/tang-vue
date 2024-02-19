@@ -2,6 +2,9 @@ import { ConfigEnv, defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import topLevelAwait from 'vite-plugin-top-level-await'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import path from 'path'
 import UnoCSS from 'unocss/vite'
 import autoprefixer from 'autoprefixer'
@@ -24,7 +27,15 @@ export default ({ mode }: ConfigEnv) => {
         promiseExportName: '__tla',
         promiseImportName: i => `__tla_${i}`
       }),
-      UnoCSS()
+      UnoCSS(),
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+        dts: './src/types/auto-imports.d.ts'
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+        dts: './src/types/components.d.ts'
+      }),
     ],
     resolve: {
       alias: {
