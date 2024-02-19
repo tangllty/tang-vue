@@ -18,13 +18,13 @@
     <el-form-item label="占位符">
       <el-input v-model="element.placeholder" placeholder="请输入占位符" />
     </el-form-item>
-    <el-form-item v-if="['el-input'].includes(element.element)" label="前缀">
+    <el-form-item v-if="hasOwnProperty(element, 'prepend')" label="前缀">
       <el-input v-model="element.prepend" placeholder="请输入前缀" />
     </el-form-item>
-    <el-form-item v-if="['el-input'].includes(element.element)" label="后缀">
+    <el-form-item v-if="hasOwnProperty(element, 'append')" label="后缀">
       <el-input v-model="element.append" placeholder="请输入后缀" />
     </el-form-item>
-    <el-form-item v-if="['el-input'].includes(element.element)" label="前置图标">
+    <el-form-item v-if="hasOwnProperty(element, 'prefix')" label="前置图标">
       <el-popover
         trigger="click"
         placement="bottom-start"
@@ -40,7 +40,7 @@
         <IconSelect @selected="icon => element.prefix = icon" />
       </el-popover>
     </el-form-item>
-    <el-form-item v-if="['el-input'].includes(element.element)" label="后置图标">
+    <el-form-item v-if="hasOwnProperty(element, 'suffix')" label="后置图标">
       <el-popover
         trigger="click"
         placement="bottom-start"
@@ -73,6 +73,8 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+const hasOwnProperty = (obj: Component, key: string) => Object.hasOwnProperty.call(obj, key)
 
 const element = computed({
   get: () => props.activeItem,
