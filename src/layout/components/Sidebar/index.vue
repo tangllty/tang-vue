@@ -1,25 +1,23 @@
 <template>
-  <el-scroller always>
-    <el-menu
-      :default-active="activeMenu"
-      router
-      unique-opened
-      :collapse="isCollapse"
-      :collapse-transition="false"
-    >
-      <el-menu-item index="/index">
-        <el-icon><svg-icon name="首页" /></el-icon>
-        <span>首页</span>
-      </el-menu-item>
+  <el-menu
+    :default-active="activeMenu"
+    router
+    unique-opened
+    :collapse="isCollapse"
+    :collapse-transition="false"
+  >
+    <el-menu-item index="/index">
+      <el-icon><svg-icon name="首页" /></el-icon>
+      <span>首页</span>
+    </el-menu-item>
 
-      <SidebarItem
-        v-for="route in permissionStore.routes"
-        :item="route"
-        :key="route.path"
-        :base-path="route.path"
-      />
-    </el-menu>
-  </el-scroller>
+    <SidebarItem
+      v-for="route in permissionStore.routes"
+      :item="route"
+      :key="route.path"
+      :base-path="route.path"
+    />
+  </el-menu>
 </template>
 
 <script lang="ts" setup>
