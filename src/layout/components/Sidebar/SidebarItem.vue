@@ -60,7 +60,6 @@
 <script lang="ts" setup>
 import path from 'path-browserify'
 import { useAppStore } from '@/store/modules/app'
-import { ElSubMenu, ElMenuItem } from 'element-plus'
 
 const appStore = useAppStore()
 

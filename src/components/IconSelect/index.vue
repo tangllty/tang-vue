@@ -13,7 +13,7 @@
         :key="index"
         @click="selectedIcon(item)"
       >
-        <svg-icon
+        <SvgIcon
           color="#999"
           :name="item"
           class="mr-5"
@@ -26,7 +26,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const icons = [] as string[]
 const modules = import.meta.glob('../../assets/icons/*.svg')

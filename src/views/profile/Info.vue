@@ -146,7 +146,6 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { editUserInfo, editUserPassword } from '@/api/profile'

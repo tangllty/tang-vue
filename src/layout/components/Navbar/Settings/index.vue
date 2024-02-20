@@ -38,7 +38,6 @@
 <script lang="ts" setup>
 import { reactive, toRefs } from 'vue'
 import { useAppStore } from '@/store/modules/app'
-import ThemePicker from '@/components/ThemePicker/index.vue'
 
 const appStore = useAppStore()
 

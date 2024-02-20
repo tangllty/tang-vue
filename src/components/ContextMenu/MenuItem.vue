@@ -50,7 +50,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { MenuItem as ContextMenuItem } from './types'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const props = defineProps({
   item: {

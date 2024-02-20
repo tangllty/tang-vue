@@ -151,15 +151,14 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue'
-import { ElButton, ElForm, ElFormItem, ElInput, ElTabPane, ElTabs, FormInstance, FormRules, TabsPaneContext } from 'element-plus'
+import { FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
+import settings from '@/settings'
 import { LoginType } from '@/enums'
 import { getCaptcha } from '@/api/auth'
-import { LoginForm, CaptchaForm } from '@/api/auth/types'
-import settings from '@/settings'
-import Snowflake from '@/components/Background/Snowflake/index.vue'
+import type { LoginForm, CaptchaForm } from '@/api/auth/types'
 
 const proxy = getProxy()
 
