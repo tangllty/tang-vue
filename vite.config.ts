@@ -5,6 +5,7 @@ import topLevelAwait from 'vite-plugin-top-level-await'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { visualizer } from 'rollup-plugin-visualizer'
 import path from 'path'
 import UnoCSS from 'unocss/vite'
 import autoprefixer from 'autoprefixer'
@@ -36,7 +37,32 @@ export default ({ mode }: ConfigEnv) => {
         resolvers: [ElementPlusResolver()],
         dts: './src/types/components.d.ts'
       }),
+      visualizer({
+        open: false
+      }),
     ],
+    build: {
+      emptyOutDir: true,
+      chunkSizeWarningLimit: 500,
+      rollupOptions: {
+        output: {
+          manualChunks: (id: string) => {
+            if (id.includes('node_modules')) {
+              const separator = id.includes('.pnpm') ? '.pnpm/' : 'node_modules/'
+              const name = id.split(separator)[1].split('/')[0]
+              return `dependencies/${name}`
+            }
+            if (id.includes('src/assets/icons')) {
+              const name = id.split('src/assets/icons/')[1].split('/')[0].split('.svg')[0]
+              return `icons/${name}`
+            }
+          },
+          chunkFileNames: 'chunks/[name]-[hash].js',
+          entryFileNames: 'entries/[name]-[hash].js',
+          assetFileNames: 'assets/[ext]/[name]-[hash][extname]',
+        }
+      },
+    },
     resolve: {
       alias: {
         '@': path.resolve('src'),
