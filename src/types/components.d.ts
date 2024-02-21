@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ContextMenu: typeof import('./../components/ContextMenu/index.vue')['default']
+    DictSpan: typeof import('./../components/Dict/DictSpan/index.vue')['default']
+    DictTag: typeof import('./../components/Dict/DictTag/index.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
@@ -70,9 +72,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Snowflake: typeof import('./../components/Background/Snowflake/index.vue')['default']
-    Span: typeof import('./../components/Dict/Span/index.vue')['default']
     SvgIcon: typeof import('./../components/SvgIcon/index.vue')['default']
-    Tag: typeof import('./../components/Dict/Tag/index.vue')['default']
     ThemePicker: typeof import('./../components/ThemePicker/index.vue')['default']
   }
   export interface ComponentCustomProperties {
