@@ -1,4 +1,4 @@
-import { ComponentInternalInstance, ComponentPublicInstance, getCurrentInstance } from 'vue'
+import type { ComponentInternalInstance, ComponentPublicInstance } from 'vue'
 
 /**
  * 获取当前组件实例

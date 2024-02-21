@@ -14,7 +14,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 
 const proxy = getProxy()

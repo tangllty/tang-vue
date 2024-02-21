@@ -24,7 +24,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { componentGroupList, groupNames } from './data'
 import type { Component } from '../types'

@@ -30,7 +30,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { House, Menu } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'

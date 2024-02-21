@@ -15,7 +15,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, nextTick } from 'vue'
 import { ContextMenuOptions } from './types'
 import MenuItem from './MenuItem.vue'
 

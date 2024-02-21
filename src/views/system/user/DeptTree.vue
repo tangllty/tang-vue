@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { ElTree } from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
 import { TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'

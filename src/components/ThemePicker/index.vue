@@ -8,7 +8,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
 import { useSettingStore } from '@/store/modules/setting'
 import { removeTheme, saveTheme, setTheme } from '@/utils/theme'
 

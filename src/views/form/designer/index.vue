@@ -24,7 +24,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
 import { ElScrollbar } from 'element-plus'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from './types'

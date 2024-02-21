@@ -1,4 +1,3 @@
-import { h, render } from 'vue'
 import type { ContextMenuInstance, ContextMenuProps, ContextMenuOptions } from './types'
 import MenuContext from './index.vue'
 

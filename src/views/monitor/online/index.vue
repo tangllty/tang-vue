@@ -195,7 +195,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
 import { FormInstance } from 'element-plus'
 import { Delete, Search, Refresh, View } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'

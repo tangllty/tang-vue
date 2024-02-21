@@ -9,8 +9,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-
 const props = defineProps({
   prefix: {
     type: String,

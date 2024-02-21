@@ -79,7 +79,6 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, reactive, ref, toRefs } from 'vue'
 import { ElScrollbar } from 'element-plus'
 import { Clock } from '@element-plus/icons-vue'
 import InfiniteLoading from 'v3-infinite-loading'

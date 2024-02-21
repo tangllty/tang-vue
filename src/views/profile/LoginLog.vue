@@ -35,7 +35,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, toRefs } from 'vue'
 import { listLogLoginByUser } from '@/api/profile'
 import { SysLogLogin, SysLogLoginQuery } from '@/api/system/log/login/types'
 

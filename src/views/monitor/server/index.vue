@@ -112,7 +112,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, toRefs } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { getInfo } from '@/api/monitor/server'
 

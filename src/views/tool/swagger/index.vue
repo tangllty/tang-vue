@@ -8,8 +8,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
-
 const state = reactive({
   url: import.meta.env.VITE_APP_URL + '/api-docs',
 })

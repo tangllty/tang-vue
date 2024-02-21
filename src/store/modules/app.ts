@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Ref, ref, watch } from 'vue'
+import type { Ref } from 'vue'
 import { store } from '@/store'
 import settings from '@/settings'
 

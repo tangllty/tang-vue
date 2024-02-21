@@ -25,7 +25,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import logo from '@/assets/logo.png'
 import settings from '@/settings'

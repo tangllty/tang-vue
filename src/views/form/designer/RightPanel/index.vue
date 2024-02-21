@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed } from 'vue'
+import type { PropType } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
 

@@ -59,7 +59,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
 import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { useAppStore } from '@/store/modules/app'

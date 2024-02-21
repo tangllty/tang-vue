@@ -76,7 +76,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, toRefs } from 'vue'
 import * as echarts from 'echarts'
 import { useUserStore } from '@/store/modules/user'
 import { listUserVisit, getWeChat } from '@/api/index'

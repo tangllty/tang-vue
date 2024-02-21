@@ -23,7 +23,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import SidebarHeader from '@/layout/components/SidebarHeader/index.vue'
 import Sidebar from '@/layout/components/Sidebar/index.vue'

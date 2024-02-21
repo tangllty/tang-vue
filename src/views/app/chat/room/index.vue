@@ -48,7 +48,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
 import { Close } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { AppChatList } from '@/api/app/chat/chat-list/types'

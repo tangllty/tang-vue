@@ -29,7 +29,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
 import { DocumentCopy } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { previewCode } from '@/api/tool/generator'

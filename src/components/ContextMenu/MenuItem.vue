@@ -48,7 +48,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { MenuItem as ContextMenuItem } from './types'
 
 const props = defineProps({

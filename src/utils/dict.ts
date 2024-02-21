@@ -1,4 +1,4 @@
-import { ref, ToRefs, toRefs } from 'vue'
+import type { ToRefs } from 'vue'
 import { useDictStore } from '@/store/modules/dict'
 import { selectDictDataListByDictType as getDictData } from '@/api/system/dict/data'
 

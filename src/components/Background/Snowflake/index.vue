@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue'
 import Snowflake from './Snowflake'
 
 const state = reactive({

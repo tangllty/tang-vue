@@ -36,7 +36,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 
 const appStore = useAppStore()

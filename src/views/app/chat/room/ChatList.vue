@@ -39,7 +39,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from 'vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatListAll, stickAppChatList, unstickAppChatList } from '@/api/app/chat/chat-list'
 import { AppChatList } from '@/api/app/chat/chat-list/types'

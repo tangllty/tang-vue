@@ -173,7 +173,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue'
 import { Files, Picture } from '@element-plus/icons-vue'
 import { ElButton } from 'element-plus'
 import { getIconForFile } from 'vscode-icons-ts'

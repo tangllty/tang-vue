@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute, RouteLocationMatched } from 'vue-router'
 import { ArrowRight } from '@element-plus/icons-vue'
 

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Ref, ref } from 'vue'
+import type { Ref } from 'vue'
 import { useCssVar, useDark } from '@vueuse/core'
 import { store } from '@/store'
 import { getTheme, saveTheme, setTheme } from '@/utils/theme'

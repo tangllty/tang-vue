@@ -75,7 +75,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules, UploadFile } from 'element-plus'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'

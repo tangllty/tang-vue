@@ -90,7 +90,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue'
 import type { UploadProps, UploadFile, UploadInstance, UploadRawFile } from 'element-plus'
 import { Minus, Plus, Upload } from '@element-plus/icons-vue'
 import { Cropper, CropperResult, Preview } from 'vue-advanced-cropper'

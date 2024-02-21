@@ -25,8 +25,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-
 const icons = [] as string[]
 const modules = import.meta.glob('../../assets/icons/*.svg')
 

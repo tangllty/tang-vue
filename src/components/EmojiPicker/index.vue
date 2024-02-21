@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
 import { Picker } from 'emoji-mart'
 import data from '@emoji-mart/data'
 import { getProxy } from '@/utils/getCurrentInstance'

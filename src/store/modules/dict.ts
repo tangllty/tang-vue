@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Ref, ref } from 'vue'
+import type { Ref } from 'vue'
 import { store } from '@/store'
 import type { SysDictData } from '@/api/system/dict/data/types'
 

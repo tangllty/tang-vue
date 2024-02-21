@@ -1,4 +1,4 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import hasRole from '@/directives/auth/hasRole'
 import hasPermission from '@/directives/auth/hasPermission'
 

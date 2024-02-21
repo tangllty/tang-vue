@@ -348,7 +348,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { getGenTable, editGenTable } from '@/api/tool/generator'

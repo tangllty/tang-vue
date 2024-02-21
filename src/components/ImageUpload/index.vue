@@ -17,7 +17,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, toRefs, watch } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import type { UploadProps } from 'element-plus'
 import { getProxy } from '@/utils/getCurrentInstance'

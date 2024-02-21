@@ -74,7 +74,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue'
 import { Edit } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listUserFuzzy } from '@/api/app/chat/friend-apply'

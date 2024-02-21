@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Ref, ref, UnwrapRef } from 'vue'
+import type { Ref, UnwrapRef } from 'vue'
 import { store } from '@/store'
 import { resetRouter } from '@/router'
 import { AxiosResponse } from 'axios'
