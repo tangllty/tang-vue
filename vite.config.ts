@@ -30,9 +30,7 @@ export default ({ mode }: ConfigEnv) => {
       }),
       UnoCSS(),
       AutoImport({
-        imports: [{
-          'vue': ['render']
-        }],
+        imports: ['vue', { 'vue': ['render'] }],
         resolvers: [ElementPlusResolver()],
         dts: './src/types/auto-imports.d.ts'
       }),
