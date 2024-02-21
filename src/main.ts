@@ -22,31 +22,14 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 // 注册 svg
 import 'virtual:svg-icons-register'
-import SvgIcon from '@/components/SvgIcon/index.vue'
-
-// 图标选择
-import IconSelect from '@/components/IconSelect/index.vue'
 
 // 国际化
 import { setupI18n, setupElementPlusI18n } from '@/locales'
-
-// 分页
-import Pagination from '@/components/Pagination/index.vue'
-
-// 字典
-import DictSpan from '@/components/Dict/Span/index.vue'
-import DictTag from '@/components/Dict/Tag/index.vue'
 
 // 代码高亮
 import 'highlight.js/lib/common'
 import 'highlight.js/styles/github.css'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
-
-// 图片上传
-import ImageUpload from '@/components/ImageUpload/index.vue'
-
-// Emoji
-import EmojiPicker from '@/components/EmojiPicker/index.vue'
 
 const app = createApp(App)
 
@@ -77,11 +60,4 @@ setupElementPlusI18n(app)
 app
   .use(router)
   .use(hljsVuePlugin)
-  .component('SvgIcon', SvgIcon)
-  .component('IconSelect', IconSelect)
-  .component('Pagination', Pagination)
-  .component('DictSpan', DictSpan)
-  .component('DictTag', DictTag)
-  .component('ImageUpload', ImageUpload)
-  .component('EmojiPicker', EmojiPicker)
   .mount('#app')
