@@ -14,6 +14,21 @@ import autoprefixer from 'autoprefixer'
 export default ({ mode }: ConfigEnv) => {
   const env: Record<string, string> = loadEnv(mode, process.cwd())
 
+  const optimizeElementPlusComponentsInclude = () => {
+    const components = [
+      'aside', 'base', 'breadcrumb', 'breadcrumb-item', 'radio-group', 'scrollbar',
+      'container', 'divider', 'drawer', 'row', 'color-picker', 'menu-item', 'tabs',
+      'dropdown', 'icon', 'link', 'main', 'dropdown-item', 'dropdown-menu', 'menu',
+      'input', 'upload', 'pagination', 'tag', 'form-item', 'input-number', 'radio',
+      'popover', 'collapse', 'date-picker', 'tree-select', 'collapse-item', 'card',
+      'tab-pane', 'checkbox', 'avatar', 'loading', 'table-column', 'timeline-item',
+      'timeline', 'carousel', 'text', 'table', 'button', 'carousel-item', 'select',
+      'dialog', 'option', 'empty', 'header', 'badge', 'form', 'sub-menu', 'switch',
+      'col', 'image'
+    ]
+    return components.map(component => `element-plus/es/components/${component}/style/css`)
+  }
+
   return defineConfig({
     plugins: [
       vue(),
@@ -70,6 +85,11 @@ export default ({ mode }: ConfigEnv) => {
           assetFileNames: 'assets/[ext]/[name]-[hash][extname]',
         }
       },
+    },
+    optimizeDeps: {
+      include: [
+        'vue', 'emoji-mart', 'element-plus/es'
+      ].concat(optimizeElementPlusComponentsInclude())
     },
     resolve: {
       alias: {
