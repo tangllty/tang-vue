@@ -45,6 +45,13 @@ export default ({ mode }: ConfigEnv) => {
     build: {
       emptyOutDir: true,
       chunkSizeWarningLimit: 500,
+      terserOptions: {
+        compress: {
+          arguments: true,
+          keep_infinity: true,
+          passes: 2
+        }
+      },
       rollupOptions: {
         output: {
           manualChunks: (id: string) => {
