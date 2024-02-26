@@ -58,8 +58,8 @@
 </template>
 
 <script lang="ts" setup>
-import path from 'path-browserify'
 import { useAppStore } from '@/store/modules/app'
+import { resolve } from '@/utils/path'
 
 const appStore = useAppStore()
 
@@ -80,7 +80,7 @@ const props = defineProps({
  * @param routePath 路由路径
  */
 const resolvePath = (routePath: string) => {
-  return path.resolve(props.basePath, routePath)
+  return resolve(props.basePath, routePath)
 }
 </script>
 
