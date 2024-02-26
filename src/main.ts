@@ -20,9 +20,6 @@ import '@/styles/dark/css-vars.scss'
 // element-plus 图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-// 注册 svg
-import 'virtual:svg-icons-register'
-
 // 国际化
 import { setupI18n, setupElementPlusI18n } from '@/locales'
 
