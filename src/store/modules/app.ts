@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Ref } from 'vue'
+import type { Language } from 'element-plus/es/locale'
 import { store } from '@/store'
 import settings from '@/settings'
 
@@ -28,6 +29,7 @@ export const useAppStore = defineStore('app', () => {
   const sidebar: Ref<boolean> = ref(getValue('sidebar') ?? settings.sidebar)
   /** 语言 */
   const language: Ref<string> = ref(localStorage.getItem('language') ?? settings.language)
+  const elementPlusLocale: Ref<Language> = ref({} as Language)
   /** 组件大小 */
   const size: Ref<string> = ref(localStorage.getItem('size') ?? settings.size)
 
@@ -40,12 +42,24 @@ export const useAppStore = defineStore('app', () => {
     localStorage.setItem('size', size.value)
   }, { deep: true })
 
+  watch(language, async (val: string) => setElementPlusLocale(val))
+
+  const setElementPlusLocale = async (val: string) => {
+    const langModule = import(`../../../node_modules/element-plus/dist/locale/${val}.mjs`)
+    const { default: Language } = await langModule
+    elementPlusLocale.value = Language
+  }
+
+  import(`../../../node_modules/element-plus/dist/locale/${language.value}.mjs`)
+    .then(({ default: Language }) => elementPlusLocale.value = Language)
+
   return {
     sidebarHeader,
     sidebarHeaderLogo,
     fixedHeader,
     sidebar,
     language,
+    elementPlusLocale,
     size
   }
 })

@@ -20,7 +20,7 @@ import '@/styles/dark/css-vars.scss'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 // 国际化
-import { setupI18n, setupElementPlusI18n } from '@/locales'
+import { setupI18n } from '@/locales'
 
 // 代码高亮
 import 'highlight.js/lib/common'
@@ -52,7 +52,6 @@ app.config.globalProperties.$notImplemented = notImplemented
 setupStore(app)
 setupDirective(app)
 setupI18n(app)
-setupElementPlusI18n(app)
 app
   .use(router)
   .use(hljsVuePlugin)

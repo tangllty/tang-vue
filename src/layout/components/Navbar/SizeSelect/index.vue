@@ -27,7 +27,6 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/store/modules/app'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { flashSize } from '@/locales'
 
 const proxy = getProxy()
 
@@ -55,7 +54,6 @@ const sizes = [
  */
 const handleSize = (key: string): void => {
   appStore.size = key
-  flashSize()
 }
 
 const disabled = (key: any): boolean => {
