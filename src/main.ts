@@ -9,8 +9,7 @@ import '@/permission'
 // uno.css
 import 'virtual:uno.css'
 
-// element-plus 样式
-import 'element-plus/dist/index.css'
+// element-plus 暗黑主题
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 // 自定义样式
