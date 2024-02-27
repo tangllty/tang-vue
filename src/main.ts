@@ -27,31 +27,18 @@ import 'highlight.js/lib/common'
 import 'highlight.js/styles/github.css'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 
+import { setupGlobalProperties } from '@/global-properties'
+
 const app = createApp(App)
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
-import { getDicts } from '@/utils/dict'
-import { download } from '@/utils/download'
-import { getFullPath } from '@/utils/path'
-import webSocketService from '@/utils/websocket'
-import contextMenu from '@/components/ContextMenu'
-import { resetForm } from '@/utils/form'
-import { notImplemented } from '@/utils/notImplemented'
-
-app.config.globalProperties.$dict = getDicts
-app.config.globalProperties.$download = download
-app.config.globalProperties.$path = getFullPath
-app.config.globalProperties.$socket = webSocketService
-app.config.globalProperties.$contextMenu = contextMenu
-app.config.globalProperties.$resetForm = resetForm
-app.config.globalProperties.$notImplemented = notImplemented
-
 setupStore(app)
 setupDirective(app)
 setupI18n(app)
+setupGlobalProperties(app)
 app
   .use(router)
   .use(hljsVuePlugin)
