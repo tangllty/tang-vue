@@ -114,7 +114,7 @@ const computeEmptyInfoStyle = async () => {
   await proxy.$nextTick()
   if (!fromRef.value || !emptyInfoRef.value) return
   emptyInfoStyle.value = {
-    top: fromRef.value.clientHeight / 2 - emptyInfoRef.value.clientHeight / 2 + 'px',
+    top: -(fromRef.value.clientHeight / 2 - emptyInfoRef.value.clientHeight / 2) + 'px',
     left: fromRef.value.clientWidth / 2 - emptyInfoRef.value.clientWidth / 2 + 'px'
   }
 }
