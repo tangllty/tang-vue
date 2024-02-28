@@ -8,10 +8,13 @@
       <div
         v-for="item in fromComponentList"
         :key="item.element"
-        class="component-container cursor-move"
+        class="component-container"
         :class="{ 'active-item': activeItem === item }"
         @click="handleActiveItem(item, $event)"
       >
+        <el-icon v-if="activeItem === item" class="drag-handler">
+          <Rank />
+        </el-icon>
         <el-form-item
           :label="item.label"
           class="component"
@@ -64,6 +67,7 @@
 
 <script lang="ts" setup>
 import { useDraggable } from 'vue-draggable-plus'
+import { Rank } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
 import { SortableEvent } from 'sortablejs'
@@ -96,7 +100,8 @@ useDraggable(fromRef, fromComponentList, {
     const component = fromComponentList.value[newIndex]
     handleActiveItem(component)
   },
-  filter: '.empty-info'
+  filter: '.empty-info',
+  handle: '.drag-handler'
 })
 
 const handleComponentClick = (component: Component) => {
@@ -148,6 +153,12 @@ defineExpose({
 
   .component-container {
     height: 100%;
+    position: relative;
+
+    .drag-handler {
+      cursor: move;
+      position: absolute;
+    }
 
     .component {
       cursor: move;
