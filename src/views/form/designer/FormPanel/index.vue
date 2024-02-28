@@ -16,7 +16,13 @@
         <el-icon v-if="activeItem === item" class="drag-handler">
           <Rank />
         </el-icon>
+        <el-row v-if="item.element === 'el-row'" class="container">
+          <div ref="fromRef" class="height: 100%">
+
+          </div>
+        </el-row>
         <el-form-item
+          v-else
           :label="item.label"
           class="component"
         >
@@ -172,10 +178,17 @@ defineExpose({
   .component-container {
     height: 100%;
     position: relative;
+    margin: 4px 0;
 
     .drag-handler {
       cursor: move;
       position: absolute;
+      z-index: 1;
+    }
+
+    .container {
+      height: 55px;
+      border: 1px dashed #336699;
     }
 
     .component {

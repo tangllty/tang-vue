@@ -29,19 +29,15 @@ export const componentGroupList = [
       },
     ] as Component[]
   },
-  // {
-  //   name: '布局组件',
-  //   list: [
-  //     {
-  //       element: 'el-row',
-  //       label: '行',
-  //     },
-  //     {
-  //       element: 'el-col',
-  //       label: '列',
-  //     },
-  //   ] as Component[]
-  // },
+  {
+    name: '布局容器',
+    list: [
+      {
+        element: 'el-row',
+        label: '行',
+      },
+    ] as Component[]
+  },
 ] as ComponentGroup[]
 
 export const groupNames = componentGroupList.map(item => item.name)
