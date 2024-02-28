@@ -11,6 +11,7 @@
         class="component-container"
         :class="{ 'active-item': activeItem === item }"
         @click="handleActiveItem(item, $event)"
+        @click.right.native="showContextMenu($event, item)"
       >
         <el-icon v-if="activeItem === item" class="drag-handler">
           <Rank />
@@ -71,6 +72,7 @@ import { Rank } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
 import { SortableEvent } from 'sortablejs'
+import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
 
 const proxy = getProxy()
 
@@ -113,6 +115,22 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
   if (event) event.preventDefault()
   activeItem.value = item
   proxy.$emit('update:activeItem', item)
+}
+
+const showContextMenu = (e: MouseEvent, component: Component) => {
+  const items: MenuItem[] = [
+    {
+      label: '删除',
+      icon: '删除',
+      onClick: () => {
+        fromComponentList.value = fromComponentList.value.filter((item) => item !== component)
+      }
+    }
+  ]
+  const options: ContextMenuOptions = {
+    items
+  }
+  proxy.$contextMenu(e, options)
 }
 
 const computeEmptyInfoStyle = async () => {
