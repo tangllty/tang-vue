@@ -6,7 +6,7 @@
       :style="{ minHeight: $el ? $el.clientHeight + 'px' : '100%' }"
     >
       <div
-        v-for="item in fromComponentList"
+        v-for="(item, index) in fromComponentList"
         :key="item.element"
         class="component-container"
         :class="{ 'active-item': activeItem === item }"
@@ -21,44 +21,11 @@
 
           </div>
         </el-row>
-        <el-form-item
+        <RenderForm
           v-else
-          :label="item.label"
+          v-model="fromComponentList[index]"
           class="component"
-        >
-          <template #label>
-            <span class="text-truncate">{{ item.label }}</span>
-          </template>
-          <el-input
-            v-if="item.element === 'el-input'"
-            v-model="item.vModel"
-            :placeholder="item.placeholder"
-          >
-            <template v-if="item.prepend" #prepend>{{ item.prepend }}</template>
-            <template v-if="item.append" #append>{{ item.append }}</template>
-            <template v-if="item.prefix" #prefix>
-              <el-icon>
-                <SvgIcon :name="item.prefix" />
-              </el-icon>
-            </template>
-            <template v-if="item.suffix" #suffix>
-              <el-icon>
-                <SvgIcon :name="item.suffix" />
-              </el-icon>
-            </template>
-          </el-input>
-          <el-input
-            v-else-if="item.element === 'el-input-textarea'"
-            type="textarea"
-            v-model="item.vModel"
-            :placeholder="item.placeholder"
-          />
-          <el-input-number
-            v-else-if="item.element === 'el-input-number'"
-            v-model="item.vModel"
-            :placeholder="item.placeholder"
-          />
-        </el-form-item>
+        />
       </div>
       <div
         v-if="!fromComponentList.length"
@@ -79,6 +46,7 @@ import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
 import { SortableEvent } from 'sortablejs'
 import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import RenderForm from './RenderForm.vue'
 
 const proxy = getProxy()
 
