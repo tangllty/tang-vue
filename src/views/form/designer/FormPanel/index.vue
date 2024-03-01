@@ -169,7 +169,6 @@ defineExpose({
 
     .container {
       min-height: 55px;
-      border: 1px dashed #336699;
     }
 
     .el-form-item {

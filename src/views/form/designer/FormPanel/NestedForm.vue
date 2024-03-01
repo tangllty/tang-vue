@@ -1,13 +1,18 @@
 <template>
-  <div ref="nestedFromRef">
+  <div ref="nestedFromRef" class="nested-container">
     <div
       v-for="(component, index) in components"
       :key="component.element"
-      class="nested-container"
+      class="components-container"
       :class="{ 'active-item': activeItem === component }"
       @click="handleActiveItem(component, $event)"
     >
       <RenderForm v-model="components[index]" />
+      <!-- <NestedForm
+        v-if="component.element === 'el-row' && component.children?.length > 0"
+        v-model="components[index].children"
+        v-model:activeItem="activeItem"
+      /> -->
     </div>
   </div>
 </template>
@@ -60,22 +65,27 @@ useDraggable(nestedFromRef, components, {
 <style lang="scss" scoped>
 .active-item {
   outline: 2px solid var(--el-color-primary);
+  margin: 2px;
 }
 
 .nested-container {
-  margin: 4px 0;
+  border: 1px dashed #336699;
 
-  .el-form-item {
-    padding: 4px 0;
-    margin: 8px 0;
-  }
+  .components-container {
+    margin: 4px 0;
 
-  &:first-child > .component > .el-form-item {
-    margin-top: 0;
-  }
+    .el-form-item {
+      padding: 4px 0;
+      margin: 8px 0;
+    }
 
-  &:last-child > .component > .el-form-item {
-    margin-bottom: 0;
+    &:first-child > .component > .el-form-item {
+      margin-top: 0;
+    }
+
+    &:last-child > .component > .el-form-item {
+      margin-bottom: 0;
+    }
   }
 }
 </style>
