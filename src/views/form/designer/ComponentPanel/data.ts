@@ -35,6 +35,7 @@ export const componentGroupList = [
       {
         element: 'el-row',
         label: '行',
+        children: [] as Component[],
       },
     ] as Component[]
   },

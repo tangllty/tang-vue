@@ -12,5 +12,6 @@ export interface Component {
   field: string
   defaultValue?: string
   placeholder?: string
+  children?: Component[]
   [key: string]: any
 }
