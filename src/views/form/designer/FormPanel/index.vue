@@ -19,6 +19,7 @@
         <NestedForm
           v-if="item.element === 'el-row'"
           v-model="fromComponentList[index].children"
+          v-model:activeItem="activeItem"
           class="container"
         />
         <RenderForm

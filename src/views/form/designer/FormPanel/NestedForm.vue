@@ -3,6 +3,9 @@
     <div
       v-for="(component, index) in components"
       :key="component.element"
+      class="nested-container"
+      :class="{ 'active-item': activeItem === component }"
+      @click="handleActiveItem(component, $event)"
     >
       <RenderForm v-model="components[index]" />
     </div>
@@ -38,6 +41,13 @@ const activeItem = computed<Component>({
   set: val => proxy.$emit('update:activeItem', val)
 })
 
+const handleActiveItem = (component: Component, event: MouseEvent | null = null) => {
+  if (!event) return
+  event.preventDefault()
+  event.stopPropagation()
+  activeItem.value = component
+}
+
 const nestedFromRef = ref<HTMLDivElement>()
 
 useDraggable(nestedFromRef, components, {
@@ -48,4 +58,24 @@ useDraggable(nestedFromRef, components, {
 </script>
 
 <style lang="scss" scoped>
+.active-item {
+  outline: 2px solid var(--el-color-primary);
+}
+
+.nested-container {
+  margin: 4px 0;
+
+  .el-form-item {
+    padding: 4px 0;
+    margin: 8px 0;
+  }
+
+  &:first-child > .component > .el-form-item {
+    margin-top: 0;
+  }
+
+  &:last-child > .component > .el-form-item {
+    margin-bottom: 0;
+  }
+}
 </style>
