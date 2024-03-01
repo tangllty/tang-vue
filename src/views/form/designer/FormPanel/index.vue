@@ -80,11 +80,6 @@ useDraggable(fromRef, fromComponentList, {
   handle: '.drag-handler'
 })
 
-const handleComponentClick = (component: Component) => {
-  fromComponentList.value.push(component)
-  activeItem.value = component
-}
-
 const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
   if (event) event.preventDefault()
   activeItem.value = item
@@ -98,6 +93,13 @@ const showContextMenu = (e: MouseEvent, component: Component) => {
       icon: '删除',
       onClick: () => {
         fromComponentList.value = fromComponentList.value.filter((item) => item !== component)
+      }
+    },
+    {
+      label: '复制',
+      icon: '复制',
+      onClick: () => {
+        fromComponentList.value.push({ ...component })
       }
     }
   ]
@@ -157,10 +159,6 @@ defineExpose({
     .container {
       height: 55px;
       border: 1px dashed #336699;
-    }
-
-    .component {
-      cursor: move;
     }
 
     .el-form-item {
