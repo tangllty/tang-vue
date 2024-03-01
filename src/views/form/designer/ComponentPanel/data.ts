@@ -31,9 +31,11 @@ export const componentGroupList = [
   },
   {
     name: '布局容器',
+    icon: '布局容器',
     list: [
       {
         element: 'el-row',
+        icon: '行',
         label: '行',
         children: [] as Component[],
       },
