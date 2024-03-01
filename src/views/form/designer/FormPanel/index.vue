@@ -50,14 +50,19 @@ import RenderForm from './RenderForm.vue'
 
 const proxy = getProxy()
 
+const props = defineProps({
+  activeItem: {
+    type: Object as PropType<Component>,
+    default: null
+  }
+})
+
 const state = reactive({
-  activeItem: {} as Component,
   fromComponentList: [] as Component[],
   emptyInfoStyle: {}
 })
 
 const {
-  activeItem,
   fromComponentList,
   emptyInfoStyle
 } = toRefs(state)
@@ -80,10 +85,14 @@ useDraggable(fromRef, fromComponentList, {
   handle: '.drag-handler'
 })
 
+const activeItem = computed<Component>({
+  get: () => props.activeItem,
+  set: val => proxy.$emit('update:activeItem', val)
+})
+
 const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
   if (event) event.preventDefault()
   activeItem.value = item
-  proxy.$emit('update:activeItem', item)
 }
 
 const showContextMenu = (e: MouseEvent, component: Component) => {
