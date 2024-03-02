@@ -45,10 +45,12 @@ const {
 const componentRef = ref<HTMLDivElement>()
 
 const cloneComponent = (component: Component) => {
+  const newChildren = [];  
   proxy.$emit('update:fieldId', props.fieldId + 1)
   return {
     ...component,
-    field: `field_${props.fieldId}`
+    field: `field_${props.fieldId}`,
+    children: newChildren
   }
 }
 
