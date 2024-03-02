@@ -45,12 +45,12 @@ const {
 const componentRef = ref<HTMLDivElement>()
 
 const cloneComponent = (component: Component) => {
-  const newChildren = [];  
   proxy.$emit('update:fieldId', props.fieldId + 1)
   return {
     ...component,
     field: `field_${props.fieldId}`,
-    children: newChildren
+    // 消除子组件数据共享的问题，使得每个组件都独立初始化创建 https://github.com/tangllty/tang-vue/pull/8
+    children: []
   }
 }
 
