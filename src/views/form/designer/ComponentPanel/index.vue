@@ -16,6 +16,7 @@
       </template>
       <ComponentList
         :componentList="group.list"
+        v-model:id="id"
         v-model:fieldId="fieldId"
         @componentClick="handleComponentClick"
       />
@@ -33,11 +34,13 @@ const proxy = getProxy()
 
 const state = reactive({
   activeNames: groupNames,
+  id: 1,
   fieldId: 1
 })
 
 const {
   activeNames,
+  id,
   fieldId
 } = toRefs(state)
 

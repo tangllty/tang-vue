@@ -10,7 +10,7 @@
         <el-icon class="icon">
           <SvgIcon :name="item.icon" />
         </el-icon>
-        {{ item.label }}
+        {{ item.name }}
       </span>
     </div>
   </div>
@@ -27,6 +27,10 @@ const props = defineProps({
   componentList: {
     type: Array<Component>,
     default: []
+  },
+  id: {
+    type: Number,
+    default: 0
   },
   fieldId: {
     type: Number,
@@ -45,12 +49,24 @@ const {
 const componentRef = ref<HTMLDivElement>()
 
 const cloneComponent = (component: Component) => {
+  proxy.$emit('update:id', props.id + 1)
+  let clonedComponent = {
+    ...component,
+    id: `key${props.id}`
+  }
+
+  if (component.element === 'el-row') {
+    return {
+      ...clonedComponent,
+      // 消除子组件数据共享的问题，使得每个组件都独立初始化创建 https://github.com/tangllty/tang-vue/pull/8
+      children: []
+    }
+  }
+
   proxy.$emit('update:fieldId', props.fieldId + 1)
   return {
-    ...component,
-    field: `field_${props.fieldId}`,
-    // 消除子组件数据共享的问题，使得每个组件都独立初始化创建 https://github.com/tangllty/tang-vue/pull/8
-    children: []
+    ...clonedComponent,
+    field: `field${props.fieldId}`
   }
 }
 

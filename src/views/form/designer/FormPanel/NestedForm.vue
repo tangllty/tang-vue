@@ -6,13 +6,18 @@
       class="components-container"
       :class="{ 'active-item': activeItem === component }"
       @click="handleActiveItem(component, $event)"
+      @click.right.native="showContextMenu($event, component)"
     >
-      <RenderForm v-model="components[index]" />
-      <!-- <NestedForm
-        v-if="component.element === 'el-row' && component.children?.length > 0"
+      <el-icon v-if="activeItem === component" class="drag-handler">
+        <Rank />
+      </el-icon>
+      <NestedForm
+        v-if="component.element === 'el-row' && component.children"
         v-model="components[index].children"
         v-model:activeItem="activeItem"
-      /> -->
+        class="container"
+      />
+      <RenderForm v-else v-model="components[index]" />
     </div>
   </div>
 </template>
@@ -21,6 +26,7 @@
 import { useDraggable } from 'vue-draggable-plus'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
+import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
 import RenderForm from './RenderForm.vue'
 
 const proxy = getProxy()
@@ -53,12 +59,36 @@ const handleActiveItem = (component: Component, event: MouseEvent | null = null)
   activeItem.value = component
 }
 
+const showContextMenu = (e: MouseEvent, component: Component) => {
+  const items: MenuItem[] = [
+    {
+      label: '删除',
+      icon: '删除',
+      onClick: () => {
+        components.value = components.value.filter(item => item !== component)
+      }
+    },
+    {
+      label: '复制',
+      icon: '复制',
+      onClick: () => {
+        components.value.push({ ...component })
+      }
+    }
+  ]
+  const options: ContextMenuOptions = {
+    items
+  }
+  proxy.$contextMenu(e, options)
+}
+
 const nestedFromRef = ref<HTMLDivElement>()
 
 useDraggable(nestedFromRef, components, {
   animation: 350,
   ghostClass: 'dragging',
-  group: 'components'
+  group: 'components',
+  handle: '.drag-handler'
 })
 </script>
 
@@ -68,11 +98,22 @@ useDraggable(nestedFromRef, components, {
   margin: 2px;
 }
 
+.dragging {
+  outline: 2px solid var(--el-color-primary);
+}
+
 .nested-container {
   border: 1px dashed #336699;
 
   .components-container {
     margin: 4px 0;
+    position: relative;
+
+    .drag-handler {
+      cursor: move;
+      position: absolute;
+      z-index: 1;
+    }
 
     .el-form-item {
       padding: 4px 0;
@@ -85,6 +126,10 @@ useDraggable(nestedFromRef, components, {
 
     &:last-child > .component > .el-form-item {
       margin-bottom: 0;
+    }
+
+    .container {
+      min-height: 55px;
     }
   }
 }

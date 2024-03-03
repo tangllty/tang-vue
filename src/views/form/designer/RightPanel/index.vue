@@ -4,19 +4,22 @@
       label-width="80px"
       class="pr-8 pl-8"
     >
-      <el-form-item label="元素">
-        <el-input v-model="element.element" placeholder="请输入元素" />
+      <el-form-item v-if="hasOwnProperty(element, 'id')" label="唯一标识">
+        <el-input v-model="element.id" readonly />
       </el-form-item>
-      <el-form-item label="标题">
+      <el-form-item v-if="hasOwnProperty(element, 'element')" label="元素">
+        <el-input v-model="element.element" readonly />
+      </el-form-item>
+      <el-form-item v-if="hasOwnProperty(element, 'label')" label="标题">
         <el-input v-model="element.label" placeholder="请输入标题" />
       </el-form-item>
-      <el-form-item label="字段">
+      <el-form-item v-if="hasOwnProperty(element, 'field')" label="字段">
         <el-input v-model="element.field" placeholder="请输入字段" />
       </el-form-item>
-      <el-form-item label="默认值">
+      <el-form-item v-if="hasOwnProperty(element, 'defaultValue')" label="默认值">
         <el-input v-model="element.defaultValue" placeholder="请输入默认值" />
       </el-form-item>
-      <el-form-item label="占位符">
+      <el-form-item v-if="hasOwnProperty(element, 'placeholder')" label="占位符">
         <el-input v-model="element.placeholder" placeholder="请输入占位符" />
       </el-form-item>
       <el-form-item v-if="hasOwnProperty(element, 'prepend')" label="前缀">

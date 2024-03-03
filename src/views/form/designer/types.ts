@@ -5,11 +5,13 @@ export interface ComponentGroup {
 }
 
 export interface Component {
+  id: string
   element: string
+  name: string
   icon: string
-  label: string
-  vModel: any
-  field: string
+  label?: string
+  vModel?: any
+  field?: string
   defaultValue?: string
   placeholder?: string
   children?: Component[]

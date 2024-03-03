@@ -7,6 +7,7 @@ export const componentGroupList = [
     list: [
       {
         element: 'el-input',
+        name: '单行文本',
         icon: '单行文本',
         label: '单行文本',
         placeholder: '请输入单行文本',
@@ -17,12 +18,14 @@ export const componentGroupList = [
       },
       {
         element: 'el-input-textarea',
+        name: '多行文本',
         icon: '多行文本',
         label: '多行文本',
         placeholder: '请输入多行文本',
       },
       {
         element: 'el-input-number',
+        name: '数字框',
         icon: '数字框',
         label: '数字框',
         placeholder: '请输入数字',
@@ -35,8 +38,8 @@ export const componentGroupList = [
     list: [
       {
         element: 'el-row',
+        name: '行',
         icon: '行',
-        label: '行',
         children: [] as Component[],
       },
     ] as Component[]
