@@ -1,5 +1,5 @@
 <template>
-  <el-form-item :label="component.label">
+  <el-form-item v-if="component.type === 'component'" :label="component.label">
     <template #label>
       <span class="text-truncate">{{ component.label }}</span>
     </template>
@@ -33,17 +33,36 @@
       :placeholder="component.placeholder"
     />
   </el-form-item>
+
+  <template v-else-if="component.type === 'container' && component.children">
+    <el-row v-if="component.element === 'el-row'">
+      <el-col
+        v-for="(item, index) in component.children"
+        :key="index"
+        :span="12"
+        :class="{ 'active-item': activeItem === item }"
+        @click="handleActiveItem(item, $event)"
+      >
+        <NestedForm v-model="item.children" v-model:activeItem="activeItem" />
+      </el-col>
+    </el-row>
+  </template>
 </template>
 
 <script lang="ts" setup>
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
+import NestedForm from './NestedForm.vue'
 
 const proxy = getProxy()
 
 const props = defineProps({
   modelValue: {
     type: Object as () => Component,
+    default: null
+  },
+  activeItem: {
+    type: Object as PropType<Component>,
     default: null
   }
 })
@@ -52,7 +71,21 @@ const component = computed({
   get: () => props.modelValue,
   set: val => proxy.$emit('update:modelValue', val)
 })
+
+const activeItem = computed<Component>({
+  get: () => props.activeItem,
+  set: val => proxy.$emit('update:activeItem', val)
+})
+
+const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
+  if (event) event.preventDefault()
+  activeItem.value = item
+}
 </script>
 
 <style lang="scss" scoped>
+.el-row, .el-col {
+  min-height: 50px;
+  border: 1px dashed #336699;
+}
 </style>

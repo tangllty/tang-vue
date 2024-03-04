@@ -1,6 +1,6 @@
 import type { Component, ComponentGroup } from '../types'
 
-export const componentGroupList = [
+export const componentGroupList = ([
   {
     name: '基础组件',
     icon: '基础组件',
@@ -44,6 +44,19 @@ export const componentGroupList = [
       },
     ] as Component[]
   },
-] as ComponentGroup[]
+] as ComponentGroup[]).map(componentGroup => {
+  const componentType = ['基础组件']
+  const containerType = ['布局容器']
+
+  componentGroup.list.forEach(component => {
+    if (componentType.includes(componentGroup.name)) {
+      component.type = 'component'
+    } else if (containerType.includes(componentGroup.name)) {
+      component.type = 'container'
+    }
+  })
+
+  return componentGroup
+})
 
 export const groupNames = componentGroupList.map(item => item.name)

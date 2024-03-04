@@ -16,15 +16,9 @@
         <el-icon v-if="activeItem === item" class="drag-handler">
           <Rank />
         </el-icon>
-        <NestedForm
-          v-if="item.element === 'el-row'"
-          v-model="fromComponentList[index].children"
-          v-model:activeItem="activeItem"
-          class="container"
-        />
         <RenderForm
-          v-else
           v-model="fromComponentList[index]"
+          v-model:activeItem="activeItem"
           class="component"
         />
       </div>
@@ -48,7 +42,6 @@ import type { Component } from '../types'
 import { SortableEvent } from 'sortablejs'
 import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
 import RenderForm from './RenderForm.vue'
-import NestedForm from './NestedForm.vue'
 
 const proxy = getProxy()
 
@@ -165,10 +158,6 @@ defineExpose({
       cursor: move;
       position: absolute;
       z-index: 1;
-    }
-
-    .container {
-      min-height: 55px;
     }
 
     .el-form-item {

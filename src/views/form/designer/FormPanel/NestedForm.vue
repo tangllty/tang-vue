@@ -103,7 +103,7 @@ useDraggable(nestedFromRef, components, {
 }
 
 .nested-container {
-  border: 1px dashed #336699;
+  height: 100%;
 
   .components-container {
     margin: 4px 0;

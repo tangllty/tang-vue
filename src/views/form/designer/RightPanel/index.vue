@@ -60,6 +60,9 @@
           <IconSelect @selected="(icon: string) => element.suffix = icon" />
         </el-popover>
       </el-form-item>
+      <el-button v-if="element.element === 'el-row'" @click="handleAddCol">
+        添加列
+      </el-button>
     </el-form>
   </el-scrollbar>
 </template>
@@ -84,6 +87,26 @@ const element = computed({
   get: () => props.activeItem,
   set: (val) => proxy.$emit('update:activeItem', val)
 })
+
+const handleAddCol = () => {
+  if (element.value.element === 'el-row') {
+    if (!element.value.children) {
+      element.value.children = []
+    }
+
+    const newCol = {
+      id: '',
+      element: 'el-col',
+      icon: '',
+      name: '',
+      type: 'container',
+      span: 12,
+      children: [],
+    } as Component
+
+    element.value.children.push(newCol)
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -9,6 +9,7 @@ export interface Component {
   element: string
   name: string
   icon: string
+  type: 'component' | 'container'
   label?: string
   vModel?: any
   field?: string
