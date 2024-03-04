@@ -16,9 +16,7 @@
         <Navbar />
       </el-header>
       <el-main class="main-container">
-        <div class="app-main">
-          <AppMain />
-        </div>
+        <AppMain />
       </el-main>
     </el-container>
   </el-container>
