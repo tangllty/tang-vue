@@ -16,11 +16,9 @@
         <Navbar />
       </el-header>
       <el-main class="main-container">
-        <el-scrollbar>
-          <div class="app-main">
-            <AppMain />
-          </div>
-        </el-scrollbar>
+        <div class="app-main">
+          <AppMain />
+        </div>
       </el-main>
     </el-container>
   </el-container>
@@ -63,14 +61,6 @@ const fixedHeader = computed(() => appStore.fixedHeader)
     .header-container {
       height: $headerHeight;
       box-shadow: 0 2px 6px 2px rgba(0, 0, 0, .08);
-    }
-
-    .main-container {
-      padding: 0;
-
-      .app-main {
-        padding: var(--el-main-padding)
-      }
     }
   }
 }
