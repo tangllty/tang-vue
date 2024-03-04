@@ -38,8 +38,8 @@ export const componentGroupList = [
     list: [
       {
         element: 'el-row',
-        name: '行',
-        icon: '行',
+        name: '行容器',
+        icon: '行容器',
         children: [] as Component[],
       },
     ] as Component[]
