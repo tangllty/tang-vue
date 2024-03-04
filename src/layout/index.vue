@@ -17,6 +17,12 @@
       </el-header>
       <el-main class="main-container">
         <AppMain />
+        <el-backtop
+          target=".main-container"
+          :visibility-height="200"
+          :right="50"
+          :bottom="50"
+        />
       </el-main>
     </el-container>
   </el-container>
