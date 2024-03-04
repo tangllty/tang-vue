@@ -60,6 +60,14 @@
           <IconSelect @selected="(icon: string) => element.suffix = icon" />
         </el-popover>
       </el-form-item>
+      <el-form-item v-if="hasOwnProperty(element, 'span')" label="栅格">
+        <el-slider
+          v-model="element.span"
+          :min="1"
+          :max="24"
+          :marks="{ 6: '', 12: '', 18: '' }"
+        />
+      </el-form-item>
       <el-button v-if="element.element === 'el-row'" @click="handleAddCol">
         添加列
       </el-button>

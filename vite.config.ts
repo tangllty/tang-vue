@@ -24,7 +24,7 @@ export default ({ mode }: ConfigEnv) => {
       'tab-pane', 'checkbox', 'avatar', 'loading', 'table-column', 'timeline-item',
       'timeline', 'carousel', 'text', 'table', 'button', 'carousel-item', 'select',
       'dialog', 'option', 'empty', 'header', 'badge', 'form', 'sub-menu', 'switch',
-      'col', 'image', 'backtop'
+      'col', 'image', 'backtop', 'slider'
     ]
     return components.map(component => `element-plus/es/components/${component}/style/css`)
   }

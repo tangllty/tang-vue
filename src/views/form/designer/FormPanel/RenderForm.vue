@@ -39,7 +39,7 @@
       <el-col
         v-for="(item, index) in component.children"
         :key="index"
-        :span="12"
+        :span="item.span"
         :class="{ 'active-item': activeItem === item }"
         @click="handleActiveItem(item, $event)"
       >
@@ -78,14 +78,26 @@ const activeItem = computed<Component>({
 })
 
 const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
-  if (event) event.preventDefault()
+  if (!event) return
+  event.preventDefault()
+  event.stopPropagation()
   activeItem.value = item
 }
 </script>
 
 <style lang="scss" scoped>
-.el-row, .el-col {
+.active-item {
+  outline: 2px solid var(--el-color-primary);
+}
+
+.el-row {
   min-height: 50px;
+  border: 1px dashed #336699;
+}
+
+.el-col {
+  min-height: 50px;
+  padding: 2px;
   border: 1px dashed #336699;
 }
 </style>
