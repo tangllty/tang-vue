@@ -17,7 +17,9 @@
       </el-header>
       <el-main class="main-container">
         <el-scrollbar>
-          <AppMain class="app-main" />
+          <div class="app-main">
+            <AppMain />
+          </div>
         </el-scrollbar>
       </el-main>
     </el-container>
