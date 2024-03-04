@@ -1,5 +1,9 @@
 <template>
-  <el-form-item v-if="component.type === 'component'" :label="component.label">
+  <el-form-item
+    v-if="component.type === 'component'"
+    :label="component.label"
+    :labelWidth="component.labelWidth"
+  >
     <template #label>
       <span class="text-truncate">{{ component.label }}</span>
     </template>

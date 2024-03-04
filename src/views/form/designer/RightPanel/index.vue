@@ -13,6 +13,13 @@
       <el-form-item v-if="hasOwnProperty(element, 'label')" label="标题">
         <el-input v-model="element.label" placeholder="请输入标题" />
       </el-form-item>
+      <el-form-item v-if="hasOwnProperty(element, 'labelWidth')" label="标题宽度">
+        <el-input-number
+          v-model="element.labelWidth"
+          :min="20"
+          :max="200"
+        />
+      </el-form-item>
       <el-form-item v-if="hasOwnProperty(element, 'field')" label="字段">
         <el-input v-model="element.field" placeholder="请输入字段" />
       </el-form-item>

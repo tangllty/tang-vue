@@ -11,6 +11,7 @@ export interface Component {
   icon: string
   type: 'component' | 'container'
   label?: string
+  labelWidth?: number
   vModel?: any
   field?: string
   defaultValue?: string

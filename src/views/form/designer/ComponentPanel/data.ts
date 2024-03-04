@@ -51,6 +51,7 @@ export const componentGroupList = ([
   componentGroup.list.forEach(component => {
     if (componentType.includes(componentGroup.name)) {
       component.type = 'component'
+      component.labelWidth = 100
     } else if (containerType.includes(componentGroup.name)) {
       component.type = 'container'
     }
