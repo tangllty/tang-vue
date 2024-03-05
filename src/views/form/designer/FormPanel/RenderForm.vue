@@ -36,6 +36,18 @@
       v-model="component.vModel"
       :placeholder="component.placeholder"
     />
+    <el-select
+      v-else-if="component.element === 'el-select'"
+      v-model="component.vModel"
+      :placeholder="component.placeholder"
+    >
+      <el-option
+        v-for="(item, index) in component.options"
+        :key="index"
+        :label="item.label"
+        :value="item.value"
+      />
+    </el-select>
   </el-form-item>
 
   <template v-else-if="component.type === 'container' && component.children">

@@ -85,6 +85,24 @@ const cloneComponent = (component: Component) => {
     }
   }
 
+  if (component.element === 'el-select') {
+    const initOptions = [
+      {
+        label: '选项1',
+        value: '1'
+      },
+      {
+        label: '选项2',
+        value: '2'
+      }
+    ]
+
+    clonedComponent = {
+      ...clonedComponent,
+      options: [...initOptions]
+    }
+  }
+
   proxy.$emit('update:fieldId', props.fieldId + 1)
   return {
     ...clonedComponent,

@@ -30,6 +30,14 @@ export const componentGroupList = ([
         label: '数字框',
         placeholder: '请输入数字',
       },
+      {
+        element: 'el-select',
+        name: '选择器',
+        icon: '选择器',
+        label: '选择器',
+        placeholder: '请选择选项',
+        options: [],
+      }
     ] as Component[]
   },
   {

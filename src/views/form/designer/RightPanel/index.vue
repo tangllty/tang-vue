@@ -78,12 +78,52 @@
       <el-button v-if="element.element === 'el-row'" @click="handleAddCol">
         添加列
       </el-button>
+      <div v-if="hasOwnProperty(element, 'options')">
+        <el-divider>选项</el-divider>
+        <div v-for="(option, index) in element.options" :key="index">
+          <el-button
+            :icon="Operation"
+            circle
+            class="mr-6"
+            @click="proxy.$notImplemented"
+          />
+          <div class="inline-block mr-6" style="width: 80px;">
+            <el-input
+              v-model="option.label"
+              placeholder="请输入选项"
+            />
+          </div>
+          <div class="inline-block mb-2" style="width: 80px;">
+            <el-input
+            v-model="option.value"
+            placeholder="请输入值"
+          />
+          </div>
+          <el-button
+            v-if="element.options"
+            type="danger"
+            :icon="Delete"
+            circle
+            class="ml-6"
+            @click="element.options.splice(index, 1)"
+          />
+        </div>
+
+        <el-button
+          v-if="element.options"
+          type="primary"
+          @click="element.options.push({ label: '', value: '' })"
+        >
+          添加选项
+        </el-button>
+      </div>
     </el-form>
   </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
 import type { PropType } from 'vue'
+import { Delete, Operation } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
 
