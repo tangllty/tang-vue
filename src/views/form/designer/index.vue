@@ -3,7 +3,10 @@
     <el-aside class="left-container">
       <ComponentPanel @componentClick="handleComponentClick" />
     </el-aside>
-    <el-main class="main-container">
+    <el-container class="main-container">
+      <el-header class="header">
+        Main Header
+      </el-header>
       <el-scrollbar ref="scrollerRef" :view-style="{
         minHeight: 'calc(100% - 40px)',
         padding: '20px'
@@ -16,9 +19,12 @@
           }"
         />
       </el-scrollbar>
-    </el-main>
+    </el-container>
     <el-aside class="right-container">
-      <RightPanel v-model:activeItem="activeItem" />
+      <el-header class="header">
+        Right Header
+      </el-header>
+      <RightPanel v-model:activeItem="activeItem" class="right-panel" />
     </el-aside>
   </el-container>
 </template>
@@ -57,6 +63,11 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+.header {
+  height: 50px;
+  border-bottom: 1px solid #f1e8e8;
+}
+
 .form-container {
   height: 100%;
   border: 1px solid #f1e8e8;
@@ -72,12 +83,14 @@ onMounted(async () => {
   .main-container {
     border-left: 1px solid #f1e8e8;
     border-right: 1px solid #f1e8e8;
-    height: 100%;
-    padding: 0;
   }
 
   .right-container {
     width: 260px;
+
+    .right-panel {
+      height: calc(100% - 50px);
+    }
   }
 }
 </style>
