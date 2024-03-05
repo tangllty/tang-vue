@@ -60,6 +60,7 @@ onMounted(async () => {
 .form-container {
   height: 100%;
   border: 1px solid #f1e8e8;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 
   .left-container {
     $leftWidth: 250px;

@@ -93,14 +93,7 @@ useDraggable(nestedFromRef, components, {
 </script>
 
 <style lang="scss" scoped>
-.active-item {
-  outline: 2px solid var(--el-color-primary);
-  margin: 2px;
-}
-
-.dragging {
-  outline: 2px solid var(--el-color-primary);
-}
+@import './index.scss';
 
 .nested-container {
   height: 100%;

@@ -1,0 +1,13 @@
+.active-item {
+  outline: 2px solid var(--el-color-primary);
+}
+
+.dragging {
+  outline: 2px solid var(--el-color-primary);
+}
+
+.drag-handler {
+  cursor: move;
+  position: absolute;
+  z-index: 1;
+}

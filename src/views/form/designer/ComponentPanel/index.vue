@@ -1,27 +1,29 @@
 <template>
-  <el-collapse v-model="activeNames">
-    <el-collapse-item
-      v-for="group in componentGroupList"
-      :key="group.name"
-      :title="group.name"
-      :name="group.name"
-    >
-      <template #title>
-        <span class="ml-8 font-bold">
-          <el-icon class="mr-4">
-            <SvgIcon :name="group.icon" />
-          </el-icon>
-          {{ group.name }}
-        </span>
-      </template>
-      <ComponentList
-        :componentList="group.list"
-        v-model:id="id"
-        v-model:fieldId="fieldId"
-        @componentClick="handleComponentClick"
-      />
-    </el-collapse-item>
-  </el-collapse>
+  <el-scrollbar class="component-panel">
+    <el-collapse v-model="activeNames">
+      <el-collapse-item
+        v-for="group in componentGroupList"
+        :key="group.name"
+        :title="group.name"
+        :name="group.name"
+      >
+        <template #title>
+          <span class="ml-8 font-bold">
+            <el-icon class="mr-4">
+              <SvgIcon :name="group.icon" />
+            </el-icon>
+            {{ group.name }}
+          </span>
+        </template>
+        <ComponentList
+          :componentList="group.list"
+          v-model:id="id"
+          v-model:fieldId="fieldId"
+          @componentClick="handleComponentClick"
+        />
+      </el-collapse-item>
+    </el-collapse>
+  </el-scrollbar>
 </template>
 
 <script lang="ts" setup>

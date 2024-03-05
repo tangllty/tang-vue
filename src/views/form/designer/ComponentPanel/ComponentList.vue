@@ -56,10 +56,32 @@ const cloneComponent = (component: Component) => {
   }
 
   if (component.element === 'el-row') {
+    const initCols: Component[] = [
+      {
+        id: `key${props.id + 1}`,
+        element: 'el-col',
+        icon: '',
+        name: '',
+        type: 'container',
+        span: 12,
+        children: [],
+      },
+      {
+        id: `key${props.id + 2}`,
+        element: 'el-col',
+        icon: '',
+        name: '',
+        type: 'container',
+        span: 12,
+        children: [],
+      }
+    ]
+
+    proxy.$emit('update:id', props.id + 2)
     return {
       ...clonedComponent,
       // 消除子组件数据共享的问题，使得每个组件都独立初始化创建 https://github.com/tangllty/tang-vue/pull/8
-      children: []
+      children: [...initCols]
     }
   }
 

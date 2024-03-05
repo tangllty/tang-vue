@@ -47,6 +47,9 @@
         :class="{ 'active-item': activeItem === item }"
         @click="handleActiveItem(item, $event)"
       >
+        <el-icon v-if="activeItem === item" class="drag-handler">
+          <Rank />
+        </el-icon>
         <NestedForm v-model="item.children" v-model:activeItem="activeItem" />
       </el-col>
     </el-row>
@@ -90,18 +93,23 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
 </script>
 
 <style lang="scss" scoped>
-.active-item {
-  outline: 2px solid var(--el-color-primary);
+@import './index.scss';
+
+.el-row, .el-col {
+  min-height: 50px;
+  border: 1px dashed #336699;
 }
 
 .el-row {
-  min-height: 50px;
-  border: 1px dashed #336699;
+  padding: 2px;
 }
 
 .el-col {
-  min-height: 50px;
-  padding: 2px;
-  border: 1px dashed #336699;
+  padding: 0 8px;
+  position: relative;
+
+  .drag-handler {
+    left: -2px;
+  }
 }
 </style>

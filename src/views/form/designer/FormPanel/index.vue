@@ -133,15 +133,7 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.active-item {
-  outline: 2px solid var(--el-color-primary);
-}
-
-.dragging {
-  outline: 2px solid var(--el-color-primary);
-  // font-size: 0;
-  // opacity: 0.5;
-}
+@import './index.scss';
 
 .components-container {
   height: 100%;
@@ -153,12 +145,6 @@ defineExpose({
     height: 100%;
     position: relative;
     margin: 4px 0;
-
-    .drag-handler {
-      cursor: move;
-      position: absolute;
-      z-index: 1;
-    }
 
     .el-form-item {
       margin: 8px 0;
