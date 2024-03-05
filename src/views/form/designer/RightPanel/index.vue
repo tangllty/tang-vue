@@ -21,7 +21,7 @@
         />
       </el-form-item>
       <el-form-item v-if="hasOwnProperty(element, 'field')" label="字段">
-        <el-input v-model="element.field" placeholder="请输入字段" />
+        <el-input v-model="element.field" readonly />
       </el-form-item>
       <el-form-item v-if="hasOwnProperty(element, 'defaultValue')" label="默认值">
         <el-input v-model="element.defaultValue" placeholder="请输入默认值" />
