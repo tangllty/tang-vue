@@ -110,7 +110,8 @@ onMounted(async () => {
     .right-panel {
       --right-panel-padding: 18px;
       height: calc(100% - 50px - 2 * var(--right-panel-padding));
-      padding: var(--right-panel-padding) 0;
+      margin-top: var(--right-panel-padding);
+      margin-bottom: var(--right-panel-padding);
     }
   }
 }
