@@ -90,6 +90,11 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
   activeItem.value = item
 }
 
+const handleReset = () => {
+  fromComponentList.value = []
+  activeItem.value = {} as Component
+}
+
 const showContextMenu = (e: MouseEvent, component: Component) => {
   const items: MenuItem[] = [
     {
@@ -128,7 +133,8 @@ onMounted(async () => {
 
 defineExpose({
   fromComponentList,
-  handleActiveItem
+  handleActiveItem,
+  handleReset
 })
 </script>
 

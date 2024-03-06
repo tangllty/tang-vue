@@ -5,7 +5,12 @@
     </el-aside>
     <el-container class="main-container">
       <el-header class="header">
-        Main Header
+        <el-button
+          type="danger"
+          :icon="Delete"
+          text
+          @click="handleReset"
+        >清空</el-button>
       </el-header>
       <el-scrollbar ref="scrollerRef" :view-style="{
         minHeight: 'calc(100% - 40px)',
@@ -31,6 +36,7 @@
 
 <script lang="ts" setup>
 import { ElScrollbar } from 'element-plus'
+import { Delete } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from './types'
 import ComponentPanel from './ComponentPanel/index.vue'
@@ -51,11 +57,22 @@ const scrollerRef = ref<InstanceType<typeof ElScrollbar>>()
 const fromPanelRef = ref<InstanceType<typeof FromPanel>>()
 
 const handleComponentClick = async (component: Component) => {
-  fromPanelRef.value?.fromComponentList.push(component)
-  fromPanelRef.value?.handleActiveItem(component)
+  if (!fromPanelRef.value) return
+  fromPanelRef.value.fromComponentList.push(component)
+  fromPanelRef.value.handleActiveItem(component)
   if (!scrollerRef.value) return
   console.log('scrollerRef.value')
   // TODO 如果添加的元素超出了可视区域，滚动到该元素的位置
+}
+
+const handleReset = async () => {
+  try {
+    await proxy.$confirm('确定清空表单吗？', '提示', {
+      type: 'warning'
+    })
+    if (!fromPanelRef.value) return
+    fromPanelRef.value.handleReset()
+  } catch (error) { /* empty */ }
 }
 
 onMounted(async () => {
@@ -66,6 +83,8 @@ onMounted(async () => {
 .header {
   height: 50px;
   border-bottom: 1px solid #f1e8e8;
+  display: flex;
+  align-items: center;
 }
 
 .form-container {
