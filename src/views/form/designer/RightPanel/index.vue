@@ -2,7 +2,7 @@
   <el-scrollbar>
     <el-form
       label-width="80px"
-      class="pr-8 pl-8"
+      class="pr-12 pl-12"
     >
       <el-form-item v-if="hasOwnProperty(element, 'id')" label="唯一标识">
         <el-input v-model="element.id" readonly />
@@ -80,42 +80,47 @@
       </el-button>
       <div v-if="hasOwnProperty(element, 'options')">
         <el-divider>选项</el-divider>
-        <div v-for="(option, index) in element.options" :key="index">
-          <el-button
+        <div
+          v-for="(option, index) in element.options"
+          :key="index"
+          class="flex"
+        >
+          <el-link
             :icon="Operation"
-            circle
+            :underline="false"
             class="mr-6"
             @click="proxy.$notImplemented"
           />
-          <div class="inline-block mr-6" style="width: 80px;">
+          <div class="mr-6">
             <el-input
               v-model="option.label"
               placeholder="请输入选项"
             />
           </div>
-          <div class="inline-block mb-2" style="width: 80px;">
+          <div class="mb-4">
             <el-input
             v-model="option.value"
             placeholder="请输入值"
           />
           </div>
-          <el-button
+          <el-link
             v-if="element.options"
             type="danger"
             :icon="Delete"
-            circle
+            :underline="false"
             class="ml-6"
             @click="element.options.splice(index, 1)"
           />
         </div>
 
-        <el-button
+        <el-link
           v-if="element.options"
           type="primary"
+          :icon="CirclePlus"
+          :underline="false"
+          class="mt-6"
           @click="element.options.push({ label: '', value: '' })"
-        >
-          添加选项
-        </el-button>
+        >添加一级选项</el-link>
       </div>
       <div v-if="hasOwnProperty(element, 'cascaderOptions')">
         <el-divider>级联选项</el-divider>
@@ -127,7 +132,7 @@
           :expand-on-click-node="false"
         >
           <template #default="{ node, data }">
-            <span class="flex flex-items-center flex-justify-between flex-1 pr-8">
+            <span class="flex flex-items-center flex-justify-between flex-1">
               <el-popover placement="top-start">
                 <template #reference>
                   <span
@@ -162,13 +167,13 @@
             </span>
           </template>
         </el-tree>
-        <el-button
+        <el-link
           type="primary"
+          :icon="CirclePlus"
+          :underline="false"
           class="mt-8"
           @click="handleCascaderAddParent"
-        >
-          添加一级选项
-        </el-button>
+        >添加一级选项</el-link>
       </div>
     </el-form>
   </el-scrollbar>
@@ -176,7 +181,7 @@
 
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { Delete, Operation, Plus } from '@element-plus/icons-vue'
+import { CirclePlus, Delete, Operation, Plus } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
 
