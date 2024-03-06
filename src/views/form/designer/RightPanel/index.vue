@@ -117,13 +117,66 @@
           添加选项
         </el-button>
       </div>
+      <div v-if="hasOwnProperty(element, 'cascaderOptions')">
+        <el-divider>级联选项</el-divider>
+        <el-tree
+          style="max-width: 600px"
+          :data="element.cascaderOptions"
+          node-key="id"
+          default-expand-all
+          :expand-on-click-node="false"
+        >
+          <template #default="{ node, data }">
+            <span class="flex flex-items-center flex-justify-between flex-1 pr-8">
+              <el-popover placement="top-start">
+                <template #reference>
+                  <span
+                    :class="{ 'c-red': !data.label || !data.value }"
+                  >{{ data.label && data.value ? data.label : '悬浮编辑' }}</span>
+                </template>
+                <el-input
+                  v-model="data.label"
+                  placeholder="请输入选项"
+                  class="mb-2"
+                />
+                <el-input
+                  v-model="data.value"
+                  placeholder="请输入值"
+                />
+              </el-popover>
+              <span>
+                <el-link
+                  type="primary"
+                  :icon="Plus"
+                  :underline="false"
+                  class="mr-4"
+                  @click="handleCascaderAdd(data)"
+                />
+                <el-link
+                  type="danger"
+                  :icon="Delete"
+                  :underline="false"
+                  @click="handleCascaderDelete(node, data)"
+                />
+              </span>
+            </span>
+          </template>
+        </el-tree>
+        <el-button
+          type="primary"
+          class="mt-8"
+          @click="handleCascaderAddParent"
+        >
+          添加一级选项
+        </el-button>
+      </div>
     </el-form>
   </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { Delete, Operation } from '@element-plus/icons-vue'
+import { Delete, Operation, Plus } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
 
@@ -161,6 +214,33 @@ const handleAddCol = () => {
 
     element.value.children.push(newCol)
   }
+}
+
+const handleCascaderAdd = (data: any) => {
+  data.children = data.children || []
+  data.children.push({
+    label: '',
+    value: '',
+    children: []
+  })
+}
+
+const handleCascaderDelete = (node: any, data: any) => {
+  const parent = node.parent.data
+  if (parent.children) {
+    parent.children = parent.children.filter((item: any) => item !== data)
+  } else if (element.value.cascaderOptions) {
+    element.value.cascaderOptions = element.value.cascaderOptions.filter((item: any) => item !== data)
+  }
+}
+
+const handleCascaderAddParent = () => {
+  element.value.cascaderOptions = element.value.cascaderOptions || []
+  element.value.cascaderOptions.push({
+    label: '',
+    value: '',
+    children: []
+  })
 }
 </script>
 

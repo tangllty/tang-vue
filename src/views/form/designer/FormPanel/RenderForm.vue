@@ -48,6 +48,12 @@
         :value="item.value"
       />
     </el-select>
+    <el-cascader
+      v-else-if="component.element === 'el-cascader'"
+      v-model="component.vModel"
+      :options="component.cascaderOptions"
+      :placeholder="component.placeholder"
+    />
   </el-form-item>
 
   <template v-else-if="component.type === 'container' && component.children">

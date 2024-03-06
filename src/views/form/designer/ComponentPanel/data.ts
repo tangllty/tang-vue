@@ -37,6 +37,14 @@ export const componentGroupList = ([
         label: '选择器',
         placeholder: '请选择选项',
         options: [],
+      },
+      {
+        element: 'el-cascader',
+        name: '级联选择',
+        icon: '级联选择',
+        label: '级联选择',
+        placeholder: '请选择选项',
+        cascaderOptions: [],
       }
     ] as Component[]
   },

@@ -48,6 +48,8 @@ const {
 
 const componentRef = ref<HTMLDivElement>()
 
+const getArray = (length: number) => [...Array(length).keys()]
+
 const cloneComponent = (component: Component) => {
   proxy.$emit('update:id', props.id + 1)
   let clonedComponent = {
@@ -56,26 +58,15 @@ const cloneComponent = (component: Component) => {
   }
 
   if (component.element === 'el-row') {
-    const initCols: Component[] = [
-      {
-        id: `key${props.id + 1}`,
-        element: 'el-col',
-        icon: '',
-        name: '',
-        type: 'container',
-        span: 12,
-        children: [],
-      },
-      {
-        id: `key${props.id + 2}`,
-        element: 'el-col',
-        icon: '',
-        name: '',
-        type: 'container',
-        span: 12,
-        children: [],
-      }
-    ]
+    const initCols: Component[] = getArray(2).map(i => ({
+      id: `key${props.id + i + 1}`,
+      element: 'el-col',
+      icon: '',
+      name: '',
+      type: 'container',
+      span: 12,
+      children: [],
+    }))
 
     proxy.$emit('update:id', props.id + 2)
     return {
@@ -86,20 +77,30 @@ const cloneComponent = (component: Component) => {
   }
 
   if (component.element === 'el-select') {
-    const initOptions = [
-      {
-        label: '选项1',
-        value: '1'
-      },
-      {
-        label: '选项2',
-        value: '2'
-      }
-    ]
+    const initOptions = getArray(3).map(i => ({
+      value: i,
+      label: `选项${i + 1}`
+    }))
 
     clonedComponent = {
       ...clonedComponent,
       options: [...initOptions]
+    }
+  }
+
+  if (component.element === 'el-cascader') {
+    const initOptions = getArray(3).map(i => ({
+      value: `值${i + 1}`,
+      label: `选项${i + 1}`,
+      children: getArray(2).map(j => ({
+        value: `值${i + 1}-${j + 1}`,
+        label: `选项${i + 1}-${j + 1}`
+      }))
+    }))
+
+    clonedComponent = {
+      ...clonedComponent,
+      cascaderOptions: [...initOptions]
     }
   }
 
