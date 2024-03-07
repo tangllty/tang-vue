@@ -6,14 +6,14 @@
     @close="closePreviewJsonDialog"
     append-to-body
   >
-      <el-button
-        type="primary"
-        link
-        :icon="DocumentCopy"
-        size="small"
-        class="fr"
-        @click="handleCopy(previewCode)"
-      >复制</el-button>
+    <el-button
+      type="primary"
+      link
+      :icon="DocumentCopy"
+      size="small"
+      class="fr"
+      @click="handleCopy(previewCode)"
+    >复制</el-button>
     <highlightjs :code="previewCode" />
   </el-dialog>
 </template>
