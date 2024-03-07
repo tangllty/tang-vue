@@ -11,6 +11,12 @@
           text
           @click="handleReset"
         >清空</el-button>
+        <el-button
+          type="primary"
+          :icon="View"
+          text
+          @click="handlePreviewJson"
+        >预览 JSON</el-button>
       </el-header>
       <el-scrollbar ref="scrollerRef" :view-style="{
         minHeight: 'calc(100% - 40px)',
@@ -31,17 +37,20 @@
       </el-header>
       <RightPanel v-model:activeItem="activeItem" class="right-panel" />
     </el-aside>
+
+    <PreviewJson ref="previewJsonRef" />
   </el-container>
 </template>
 
 <script lang="ts" setup>
 import { ElScrollbar } from 'element-plus'
-import { Delete } from '@element-plus/icons-vue'
+import { Delete, View } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from './types'
 import ComponentPanel from './ComponentPanel/index.vue'
 import FromPanel from './FormPanel/index.vue'
 import RightPanel from './RightPanel/index.vue'
+import PreviewJson from './Toolbar/PreviewJson.vue'
 
 const proxy = getProxy()
 
@@ -55,6 +64,7 @@ const {
 
 const scrollerRef = ref<InstanceType<typeof ElScrollbar>>()
 const fromPanelRef = ref<InstanceType<typeof FromPanel>>()
+const previewJsonRef = ref<InstanceType<typeof PreviewJson>>()
 
 const handleComponentClick = async (component: Component) => {
   if (!fromPanelRef.value) return
@@ -73,6 +83,11 @@ const handleReset = async () => {
     if (!fromPanelRef.value) return
     fromPanelRef.value.handleReset()
   } catch (error) { /* empty */ }
+}
+
+const handlePreviewJson = async () => {
+  if (!previewJsonRef.value || !formPanelRef.value) return
+  previewJsonRef.value.handleShow(formPanelRef.value.formComponentList)
 }
 
 onMounted(async () => {
