@@ -9,3 +9,10 @@ export const isObjectString = (str: string): boolean => {
     return false
   }
 }
+
+/**
+ * 深拷贝
+ */
+export const deepClone = <T>(obj: T): T => {
+  return JSON.parse(JSON.stringify(obj))
+}

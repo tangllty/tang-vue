@@ -4,7 +4,7 @@
       <ComponentPanel @componentClick="handleComponentClick" />
     </el-aside>
     <el-container class="main-container">
-      <el-header class="header">
+      <el-header class="header flex flex-justify-end">
         <el-button
           type="danger"
           :icon="Delete"
@@ -17,6 +17,12 @@
           text
           @click="handlePreviewJson"
         >预览 JSON</el-button>
+        <el-button
+          type="primary"
+          :icon="View"
+          text
+          @click="handlePreview"
+        >预览</el-button>
       </el-header>
       <el-scrollbar ref="scrollerRef" :view-style="{
         minHeight: 'calc(100% - 40px)',
@@ -39,6 +45,7 @@
     </el-aside>
 
     <PreviewJson ref="previewJsonRef" />
+    <Preview ref="previewRef" />
   </el-container>
 </template>
 
@@ -51,6 +58,7 @@ import ComponentPanel from './ComponentPanel/index.vue'
 import FormPanel from './FormPanel/index.vue'
 import RightPanel from './RightPanel/index.vue'
 import PreviewJson from './Toolbar/PreviewJson.vue'
+import Preview from './Toolbar/Preview.vue'
 
 const proxy = getProxy()
 
@@ -65,6 +73,7 @@ const {
 const scrollerRef = ref<InstanceType<typeof ElScrollbar>>()
 const formPanelRef = ref<InstanceType<typeof FormPanel>>()
 const previewJsonRef = ref<InstanceType<typeof PreviewJson>>()
+const previewRef = ref<InstanceType<typeof Preview>>()
 
 const handleComponentClick = async (component: Component) => {
   if (!formPanelRef.value) return
@@ -88,6 +97,11 @@ const handleReset = async () => {
 const handlePreviewJson = async () => {
   if (!previewJsonRef.value || !formPanelRef.value) return
   previewJsonRef.value.handleShow(formPanelRef.value.formComponentList)
+}
+
+const handlePreview = async () => {
+  if (!previewRef.value || !formPanelRef.value) return
+  previewRef.value.handleShow(formPanelRef.value.formComponentList)
 }
 
 onMounted(async () => {
@@ -117,6 +131,17 @@ onMounted(async () => {
   .main-container {
     border-left: 1px solid #f1e8e8;
     border-right: 1px solid #f1e8e8;
+
+    .header {
+      .el-button {
+        padding: 8px 12px;
+        border-radius: 6px;
+
+        + .el-button {
+          margin-left: 4px;
+        }
+      }
+    }
   }
 
   .right-container {
