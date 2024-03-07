@@ -1,12 +1,12 @@
 <template>
   <el-form label-width="120px">
     <div
-      ref="fromRef"
+      ref="formRef"
       class="components-container"
       :style="{ minHeight: $el ? $el.clientHeight + 'px' : '100%' }"
     >
       <div
-        v-for="(item, index) in fromComponentList"
+        v-for="(item, index) in formComponentList"
         :key="item.element"
         class="component-container"
         :class="{ 'active-item': activeItem === item }"
@@ -17,13 +17,13 @@
           <Rank />
         </el-icon>
         <RenderForm
-          v-model="fromComponentList[index]"
+          v-model="formComponentList[index]"
           v-model:activeItem="activeItem"
           class="component"
         />
       </div>
       <div
-        v-if="!fromComponentList.length"
+        v-if="!formComponentList.length"
         ref="emptyInfoRef"
         class="empty-info"
         :style="emptyInfoStyle"
@@ -53,19 +53,19 @@ const props = defineProps({
 })
 
 const state = reactive({
-  fromComponentList: [] as Component[],
+  formComponentList: [] as Component[],
   emptyInfoStyle: {}
 })
 
 const {
-  fromComponentList,
+  formComponentList,
   emptyInfoStyle
 } = toRefs(state)
 
-const fromRef = ref<HTMLDivElement>()
+const formRef = ref<HTMLDivElement>()
 const emptyInfoRef = ref<HTMLDivElement>()
 
-useDraggable(fromRef, fromComponentList, {
+useDraggable(formRef, formComponentList, {
   animation: 350,
   ghostClass: 'dragging',
   group: 'components',
@@ -73,7 +73,7 @@ useDraggable(fromRef, fromComponentList, {
   onAdd: (event: SortableEvent) => {
     const newIndex = event.newIndex
     if (newIndex === undefined) return
-    const component = fromComponentList.value[newIndex]
+    const component = formComponentList.value[newIndex]
     handleActiveItem(component)
   },
   filter: '.empty-info',
@@ -91,7 +91,7 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
 }
 
 const handleReset = () => {
-  fromComponentList.value = []
+  formComponentList.value = []
   activeItem.value = {} as Component
 }
 
@@ -101,14 +101,14 @@ const showContextMenu = (e: MouseEvent, component: Component) => {
       label: '删除',
       icon: '删除',
       onClick: () => {
-        fromComponentList.value = fromComponentList.value.filter((item) => item !== component)
+        formComponentList.value = formComponentList.value.filter((item) => item !== component)
       }
     },
     {
       label: '复制',
       icon: '复制',
       onClick: () => {
-        fromComponentList.value.push({ ...component })
+        formComponentList.value.push({ ...component })
       }
     }
   ]
@@ -120,10 +120,10 @@ const showContextMenu = (e: MouseEvent, component: Component) => {
 
 const computeEmptyInfoStyle = async () => {
   await proxy.$nextTick()
-  if (!fromRef.value || !emptyInfoRef.value) return
+  if (!formRef.value || !emptyInfoRef.value) return
   emptyInfoStyle.value = {
-    top: -(fromRef.value.clientHeight / 2 - emptyInfoRef.value.clientHeight / 2) + 'px',
-    left: fromRef.value.clientWidth / 2 - emptyInfoRef.value.clientWidth / 2 + 'px'
+    top: -(formRef.value.clientHeight / 2 - emptyInfoRef.value.clientHeight / 2) + 'px',
+    left: formRef.value.clientWidth / 2 - emptyInfoRef.value.clientWidth / 2 + 'px'
   }
 }
 
@@ -132,7 +132,7 @@ onMounted(async () => {
 })
 
 defineExpose({
-  fromComponentList,
+  formComponentList,
   handleActiveItem,
   handleReset
 })

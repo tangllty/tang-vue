@@ -22,8 +22,8 @@
         minHeight: 'calc(100% - 40px)',
         padding: '20px'
       }">
-        <FromPanel
-          ref="fromPanelRef"
+        <FormPanel
+          ref="formPanelRef"
           v-model:activeItem="activeItem"
           :style="{
             minHeight: scrollerRef ? scrollerRef.$el.clientHeight - 40 + 'px' : '100%'
@@ -48,7 +48,7 @@ import { Delete, View } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from './types'
 import ComponentPanel from './ComponentPanel/index.vue'
-import FromPanel from './FormPanel/index.vue'
+import FormPanel from './FormPanel/index.vue'
 import RightPanel from './RightPanel/index.vue'
 import PreviewJson from './Toolbar/PreviewJson.vue'
 
@@ -63,13 +63,13 @@ const {
 } = toRefs(state)
 
 const scrollerRef = ref<InstanceType<typeof ElScrollbar>>()
-const fromPanelRef = ref<InstanceType<typeof FromPanel>>()
+const formPanelRef = ref<InstanceType<typeof FormPanel>>()
 const previewJsonRef = ref<InstanceType<typeof PreviewJson>>()
 
 const handleComponentClick = async (component: Component) => {
-  if (!fromPanelRef.value) return
-  fromPanelRef.value.fromComponentList.push(component)
-  fromPanelRef.value.handleActiveItem(component)
+  if (!formPanelRef.value) return
+  formPanelRef.value.formComponentList.push(component)
+  formPanelRef.value.handleActiveItem(component)
   if (!scrollerRef.value) return
   console.log('scrollerRef.value')
   // TODO 如果添加的元素超出了可视区域，滚动到该元素的位置
@@ -80,8 +80,8 @@ const handleReset = async () => {
     await proxy.$confirm('确定清空表单吗？', '提示', {
       type: 'warning'
     })
-    if (!fromPanelRef.value) return
-    fromPanelRef.value.handleReset()
+    if (!formPanelRef.value) return
+    formPanelRef.value.handleReset()
   } catch (error) { /* empty */ }
 }
 
