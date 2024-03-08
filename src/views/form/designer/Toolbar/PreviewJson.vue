@@ -4,7 +4,6 @@
     v-model="previewJsonDialog.visible"
     width="65%"
     @close="closePreviewJsonDialog"
-    append-to-body
   >
     <el-button
       type="primary"

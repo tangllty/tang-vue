@@ -5,7 +5,6 @@
     v-model="previewCodeDialog.visible"
     width="65%"
     @close="closePreviewCodeDialog"
-    append-to-body
   >
     <el-tabs v-model="activeName">
       <el-tab-pane

@@ -5,7 +5,6 @@
     v-model="importTableDialog.visible"
     width="65%"
     @close="closeImportTableDialog"
-    append-to-body
   >
     <el-form
       ref="genTableRuleFormRef"

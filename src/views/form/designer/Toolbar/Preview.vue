@@ -4,7 +4,6 @@
     v-model="previewDialog.visible"
     width="65%"
     @close="closePreviewDialog"
-    append-to-body
   >
     <RenderForm ref="renderFormRef" />
   </el-dialog>

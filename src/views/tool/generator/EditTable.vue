@@ -5,7 +5,6 @@
     v-model="editTableDialog.visible"
     width="85%"
     @close="closeEditTableDialog"
-    append-to-body
   >
     <el-tabs v-model="activeName">
       <el-tab-pane label="基本信息" name="tableInfo" >
