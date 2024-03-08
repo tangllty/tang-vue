@@ -6,6 +6,7 @@ import i18n from '@/locales'
 import contextMenu from '@/components/ContextMenu'
 import { resetForm } from '@/utils/form'
 import { notImplemented } from '@/utils/notImplemented'
+import { copy } from '@/utils/clipboard'
 
 // 在 Vue 实例上扩展自定义属性 https://vuejs.org/guide/typescript/options-api.html#augmenting-global-properties
 declare module 'vue' {
@@ -29,6 +30,7 @@ declare module 'vue' {
     $contextMenu: typeof contextMenu
     $resetForm: typeof resetForm
     $notImplemented: typeof notImplemented
+    $copy: typeof copy
   }
 }
 

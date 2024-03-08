@@ -6,6 +6,7 @@ import webSocketService from '@/utils/websocket'
 import contextMenu from '@/components/ContextMenu'
 import { resetForm } from '@/utils/form'
 import { notImplemented } from '@/utils/notImplemented'
+import { copy } from '@/utils/clipboard'
 
 export const setupTangVue = (app: App) => {
   app.config.globalProperties.$dict = getDicts
@@ -15,4 +16,5 @@ export const setupTangVue = (app: App) => {
   app.config.globalProperties.$contextMenu = contextMenu
   app.config.globalProperties.$resetForm = resetForm
   app.config.globalProperties.$notImplemented = notImplemented
+  app.config.globalProperties.$copy = copy
 }
