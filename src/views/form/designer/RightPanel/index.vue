@@ -207,8 +207,12 @@ const handleAddCol = () => {
       element.value.children = []
     }
 
+    // 获取唯一标识
+    let id: number = 0
+    proxy.$emit('getId', (val: number) => id = val)
+
     const newCol = {
-      id: '',
+      id: `key${id}`,
       element: 'el-col',
       icon: '',
       name: '',

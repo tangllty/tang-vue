@@ -49,6 +49,10 @@ const {
 const handleComponentClick = (item: Component) => {
   proxy.$emit('componentClick', item)
 }
+
+defineExpose({
+  id
+})
 </script>
 
 <style lang="scss" scoped>

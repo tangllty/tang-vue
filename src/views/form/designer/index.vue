@@ -1,7 +1,7 @@
 <template>
   <el-container class="form-container">
     <el-aside class="left-container">
-      <ComponentPanel @componentClick="handleComponentClick" />
+      <ComponentPanel ref="componentPanelRef" @componentClick="handleComponentClick" />
     </el-aside>
     <el-container class="main-container">
       <el-header class="header flex flex-justify-end">
@@ -41,7 +41,11 @@
       <el-header class="header">
         Right Header
       </el-header>
-      <RightPanel v-model:activeItem="activeItem" class="right-panel" />
+      <RightPanel
+        v-model:activeItem="activeItem"
+        @getId="getId"
+        class="right-panel"
+      />
     </el-aside>
 
     <PreviewJson ref="previewJsonRef" />
@@ -70,10 +74,17 @@ const {
   activeItem
 } = toRefs(state)
 
+const componentPanelRef = ref<InstanceType<typeof ComponentPanel>>()
 const scrollerRef = ref<InstanceType<typeof ElScrollbar>>()
 const formPanelRef = ref<InstanceType<typeof FormPanel>>()
 const previewJsonRef = ref<InstanceType<typeof PreviewJson>>()
 const previewRef = ref<InstanceType<typeof Preview>>()
+
+const getId = (callback: (id: number) => void) => {
+  if (!componentPanelRef.value) return
+  componentPanelRef.value.id++
+  callback(componentPanelRef.value.id)
+}
 
 const handleComponentClick = async (component: Component) => {
   if (!formPanelRef.value) return
