@@ -70,6 +70,7 @@ declare module 'vue' {
     ElTreeSelect: typeof import('element-plus/es')['ElTreeSelect']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     EmojiPicker: typeof import('./../components/EmojiPicker/index.vue')['default']
+    Highlight: typeof import('./../components/Highlight/index.vue')['default']
     IconSelect: typeof import('./../components/IconSelect/index.vue')['default']
     ImageUpload: typeof import('./../components/ImageUpload/index.vue')['default']
     MenuItem: typeof import('./../components/ContextMenu/MenuItem.vue')['default']

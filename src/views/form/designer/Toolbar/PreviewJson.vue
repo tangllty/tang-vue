@@ -14,7 +14,7 @@
       class="fr"
       @click="handleCopy(previewCode)"
     >复制</el-button>
-    <highlightjs :code="previewCode" />
+    <Highlight :code="previewCode" />
   </el-dialog>
 </template>
 
