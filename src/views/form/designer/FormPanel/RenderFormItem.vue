@@ -52,6 +52,7 @@
       v-model="component.vModel"
       :options="component.cascaderOptions"
       :placeholder="component.placeholder"
+      style="width: 100%"
     />
   </el-form-item>
 </template>
