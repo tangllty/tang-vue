@@ -189,11 +189,7 @@
               align="center"
             >
               <template #default="scope">
-                <el-image
-                  :src="proxy.$path(scope.row.avatar)"
-                  class="user-avatar"
-                  fit="cover"
-                />
+                <ImagePreview :src="proxy.$path(scope.row.avatar)" />
               </template>
             </el-table-column>
             <el-table-column
@@ -621,8 +617,4 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.user-avatar {
-  width: 50px;
-  height: 50px;
-}
 </style>
