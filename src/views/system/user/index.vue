@@ -443,6 +443,7 @@ const userRules = reactive<FormRules>({
     { min: 2, max: 32, message: '昵称长度应在 4 到 32 之间', trigger: 'blur' },
   ],
   email: [
+    { required: true, message: '邮箱不能为空', trigger: 'blur' },
     { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] },
   ],
   phone: [
