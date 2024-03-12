@@ -2,7 +2,9 @@
   <el-image
     :src="src"
     fit="cover"
-    :preview-src-list="[src]"
+    :preview-src-list="preview ? [src] : []"
+    :preview-teleported="preview"
+    :hide-on-click-modal="hideOnClickModal"
   >
     <template #error>
       <div class="image-slot">
@@ -35,6 +37,14 @@ defineProps({
   scale: {
     type: Number,
     default: 1.1
+  },
+  preview: {
+    type: Boolean,
+    default: true
+  },
+  hideOnClickModal: {
+    type: Boolean,
+    default: true
   }
 })
 </script>
