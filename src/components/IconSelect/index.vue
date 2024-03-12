@@ -79,7 +79,7 @@ defineExpose({
       float: left;
 
       .svg-icon {
-        height: 25px !important;
+        height: 25px;
       }
     }
 

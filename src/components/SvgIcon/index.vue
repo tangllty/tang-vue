@@ -1,9 +1,5 @@
 <template>
-  <svg
-    aria-hidden="true"
-    class="svg-icon"
-    :style="`width: ${size}; height: ${size};`"
-  >
+  <svg class="svg-icon" aria-hidden="true">
     <use :href="symbolId" :fill="color" />
   </svg>
 </template>
@@ -32,6 +28,8 @@ const symbolId = computed(() => `#${props.prefix}-${props.name}`)
 
 <style lang="scss" scoped>
 .svg-icon {
+  width: v-bind(size);
+  height: v-bind(size);
   overflow: hidden;
   fill: currentColor;
 }
