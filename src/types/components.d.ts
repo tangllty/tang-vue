@@ -72,6 +72,7 @@ declare module 'vue' {
     EmojiPicker: typeof import('./../components/EmojiPicker/index.vue')['default']
     Highlight: typeof import('./../components/Highlight/index.vue')['default']
     IconSelect: typeof import('./../components/IconSelect/index.vue')['default']
+    ImagePreview: typeof import('./../components/ImagePreview/index.vue')['default']
     ImageUpload: typeof import('./../components/ImageUpload/index.vue')['default']
     MenuItem: typeof import('./../components/ContextMenu/MenuItem.vue')['default']
     Pagination: typeof import('./../components/Pagination/index.vue')['default']
