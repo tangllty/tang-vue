@@ -22,7 +22,7 @@
               </span>
             </el-row>
           </template>
-          <el-row :gutter="20">
+          <el-row :gutter="20" class="mb-6">
             <el-col :span="24">
               糖猫猫权限管理系统交流群(点击可放大)：
             </el-col>
@@ -50,8 +50,32 @@
       <el-col :span="12">
         <el-card>
           <template #header>
-            <div class="card-header">
+            <div class="card-header flex flex-justify-between items-center">
               <span>糖猫猫权限管理系统</span>
+              <div>
+                <el-button
+                  tag="a"
+                  href="https://github.com/tangllty/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <template #icon>
+                    <SvgIcon name="github" />
+                  </template>
+                  项目源码主页
+                </el-button>
+                <el-button
+                  tag="a"
+                  href="https://gitee.com/tangllty/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <template #icon>
+                    <SvgIcon name="gitee" />
+                  </template>
+                  项目源码主页
+                </el-button>
+              </div>
             </div>
           </template>
           <p>后端：Spring Boot 3 + Spring Security + MyBatis + Redis + Jwt</p>
