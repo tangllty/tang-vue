@@ -11,6 +11,7 @@ tang-vue 是基于 Vue 3 的权限管理系统
 您可以阅读[文档](https://tangllty.eu.org/)获取更多信息
 
 * 采用 Vue 3 + Vite 5 + Vue Router 4 + TypeScript + Pinia + Element Plus
+* 基于 RBAC 的权限管理
 * 自定义多种登录认证方式
 * 动态权限菜单
 * 动态字典数据权限
