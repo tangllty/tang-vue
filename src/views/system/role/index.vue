@@ -85,6 +85,12 @@
       >
         <el-table-column type="selection" width="55" />
         <el-table-column
+          prop="roleId"
+          label="角色编号"
+          align="center"
+          width="100"
+        />
+        <el-table-column
           prop="roleName"
           label="角色名称"
           align="center"
@@ -97,14 +103,14 @@
         <el-table-column
           prop="sort"
           label="显示顺序"
-          width="100"
           align="center"
+          width="100"
         />
         <el-table-column
-          label="状态"
-          width="80"
-          align="center"
           prop="status"
+          label="状态"
+          align="center"
+          width="80"
         >
           <template #default="scope">
             <el-switch
@@ -118,19 +124,19 @@
         <el-table-column
           prop="createTime"
           label="创建时间"
-          width="180"
           align="center"
+          width="180"
         />
         <el-table-column
           prop="updateTime"
           label="更新时间"
-          width="180"
           align="center"
+          width="180"
         />
         <el-table-column
           label="操作"
-          width="190"
           align="center"
+          width="190"
         >
           <template #default="scope">
             <el-button

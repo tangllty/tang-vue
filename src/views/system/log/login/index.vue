@@ -70,13 +70,15 @@
         <el-table-column type="selection" width="55" />
         <el-table-column
           prop="loginId"
-          label="日志ID"
+          label="日志编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="userId"
-          label="用户ID"
+          label="用户编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="account"
@@ -95,7 +97,7 @@
           prop="os"
           label="操作系统"
           align="center"
-          width="120"
+          min-width="120"
           show-overflow-tooltip
         />
         <el-table-column
@@ -106,9 +108,9 @@
         <el-table-column
           prop="ip"
           label="IP地址"
-          width="130"
-          show-overflow-tooltip
           align="center"
+          min-width="130"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="location"
@@ -141,8 +143,8 @@
         />
         <el-table-column
           label="操作"
-          width="90"
           align="center"
+          width="90"
         >
           <template #default="scope">
             <el-button

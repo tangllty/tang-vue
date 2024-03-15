@@ -7,18 +7,18 @@
         :model="queryParams"
         inline
       >
-        <el-form-item label="日志ID" prop="apiId">
+        <el-form-item label="日志编号" prop="apiId">
           <el-input
             v-model="queryParams.apiId"
-            placeholder="请输入日志ID"
+            placeholder="请输入日志编号"
             @keyup.enter="handleList"
             clearable
           />
         </el-form-item>
-        <el-form-item label="用户ID" prop="userId">
+        <el-form-item label="用户编号" prop="userId">
           <el-input
             v-model="queryParams.userId"
-            placeholder="请输入用户ID"
+            placeholder="请输入用户编号"
             @keyup.enter="handleList"
             clearable
           />
@@ -159,13 +159,15 @@
         <el-table-column type="selection" width="55" />
         <el-table-column
           prop="apiId"
-          label="日志ID"
+          label="日志编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="userId"
-          label="用户ID"
+          label="用户编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="className"
@@ -275,8 +277,8 @@
         />
         <el-table-column
           label="操作"
-          width="190"
           align="center"
+          width="90"
         >
           <template #default="scope">
             <el-button

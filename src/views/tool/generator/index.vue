@@ -84,6 +84,7 @@
           prop="tableId"
           label="字典编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="tableName"

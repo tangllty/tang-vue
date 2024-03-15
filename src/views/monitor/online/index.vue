@@ -53,33 +53,39 @@
         <el-table-column
           prop="token"
           label="会话编号"
+          min-width="100"
           align="center"
           show-overflow-tooltip
         />
         <el-table-column
           prop="username"
           label="用户名称"
+          min-width="100"
           align="center"
         />
         <el-table-column
           prop="nickname"
           label="用户昵称"
+          min-width="100"
           align="center"
         />
         <el-table-column
           prop="deptName"
           label="所在部门"
+          min-width="100"
           align="center"
         />
         <el-table-column
           prop="ip"
           label="IP地址"
+          min-width="100"
           align="center"
           show-overflow-tooltip
         />
         <el-table-column
           prop="location"
           label="登陆地址"
+          min-width="100"
           align="center"
         />
         <el-table-column

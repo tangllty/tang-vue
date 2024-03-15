@@ -79,33 +79,40 @@
         <el-table-column type="selection" width="55" />
         <el-table-column
           prop="userFriendId"
-          label="用户好友ID"
+          label="用户好友编号"
           align="center"
+          width="120"
         />
         <el-table-column
           prop="userId"
-          label="用户ID"
+          label="用户编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="friendId"
-          label="好友ID"
+          label="好友编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="username"
           label="用户名"
           align="center"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="nickname"
           label="好友昵称"
           align="center"
+          min-width="100"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="remark"
           label="备注"
           align="center"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="createTime"
@@ -121,7 +128,7 @@
         />
         <el-table-column
           label="操作"
-          width="190"
+          width="260"
           align="center"
         >
           <template #default="scope">

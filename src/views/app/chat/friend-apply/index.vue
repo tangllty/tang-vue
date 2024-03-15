@@ -109,13 +109,15 @@
         <el-table-column type="selection" width="55" />
         <el-table-column
           prop="applyId"
-          label="申请ID"
+          label="申请编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="friendId"
-          label="好友ID"
+          label="好友编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="username"

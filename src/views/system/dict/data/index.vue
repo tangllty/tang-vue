@@ -94,6 +94,7 @@
           prop="dataId"
           label="数据编号"
           align="center"
+          width="100"
         />
         <el-table-column
           prop="dataLabel"
@@ -106,10 +107,10 @@
           align="center"
         />
         <el-table-column
-          label="状态"
-          width="80"
-          align="center"
           prop="status"
+          label="状态"
+          align="center"
+          width="80"
         >
           <template #default="scope">
             <dict-tag :data="sys_status" :value="scope.row.status" />
@@ -118,19 +119,19 @@
         <el-table-column
           prop="createTime"
           label="创建时间"
-          width="180"
           align="center"
+          width="180"
         />
         <el-table-column
           prop="updateTime"
           label="更新时间"
-          width="180"
           align="center"
+          width="180"
         />
         <el-table-column
           label="操作"
-          width="190"
           align="center"
+          width="190"
         >
           <template #default="scope">
             <el-button
