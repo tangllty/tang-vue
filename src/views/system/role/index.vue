@@ -94,11 +94,13 @@
           prop="roleName"
           label="角色名称"
           align="center"
+          min-width="100"
         />
         <el-table-column
           prop="roleKey"
           label="权限字符"
           align="center"
+          min-width="100"
         />
         <el-table-column
           prop="sort"
