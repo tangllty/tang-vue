@@ -102,22 +102,14 @@
 <script lang="ts" setup>
 import * as echarts from 'echarts'
 import { useUserStore } from '@/store/modules/user'
-import { listUserVisit, getWeChat } from '@/api/index'
+import { listUserVisit } from '@/api/index'
 
+import wechat from '@/assets/wechat.png'
 import telegram from '@/assets/telegram.png'
 import qq from '@/assets/qq.png'
+const groupList = [wechat, telegram, qq]
 
 const userStore = useUserStore()
-
-const state = reactive({
-  wechat: '',
-  groupList: [telegram, qq]
-})
-
-const {
-  wechat,
-  groupList
-} = toRefs(state)
 
 const userVisitOptions = {
   xAxis: {
@@ -147,19 +139,8 @@ const handleUserVisit = async () => {
   window.addEventListener('resize', () => chart.resize())
 }
 
-/**
- * 请求微信群二维码
- */
-const handleRequestWeChat = async () => {
-  const res: any = await getWeChat()
-  const blob = new Blob([res.data], { type: 'image/png' })
-  state.wechat = URL.createObjectURL(blob)
-  state.groupList.unshift(state.wechat)
-}
-
 onMounted(async () => {
   await handleUserVisit()
-  await handleRequestWeChat()
 })
 </script>
 

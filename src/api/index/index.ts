@@ -7,12 +7,3 @@ export const listUserVisit = () => {
     method: 'get'
   })
 }
-
-// 获取微信群二维码
-export const getWeChat = () => {
-  return request({
-    url: '/index/get-wechat',
-    method: 'get',
-    responseType: 'arraybuffer'
-  })
-}
