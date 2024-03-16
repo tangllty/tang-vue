@@ -246,7 +246,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       const redirectUrlArr: string[] = redirectUrl.split('?')
       if (redirectUrlArr.length > 1) {
         const redirectUrlParams: string[] = redirectUrlArr[1].split('&')
-        const redirectUrlParamsObj: any = {}
+        const redirectUrlParamsObj: { [key: string]: string } = {}
         redirectUrlParams.forEach((item: string) => {
           const itemArr: string[] = item.split('=')
           redirectUrlParamsObj[itemArr[0]] = itemArr[1]

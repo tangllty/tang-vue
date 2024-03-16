@@ -57,7 +57,7 @@
             :icon="Edit"
             :disabled="userFriendIds.length !== 1"
             v-hasPermission="'system:dict:edit'"
-            @click="handleEdit"
+            @click="handleEdit(null)"
           >修改</el-button>
           <el-button
             type="danger"
@@ -336,9 +336,9 @@ const handleGoChatRoom = async (row: AppFriend) => {
 }
 
 // 修改用户好友信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: AppFriend | null) => {
   let userFriendId = state.userFriendId
-  if (row.userFriendId) {
+  if (row) {
     userFriendId = row.userFriendId
   }
   const res: any = await getAppFriend(userFriendId)
@@ -392,8 +392,8 @@ const closeAppFriendDialog = () => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.userFriendIds = selection.map((item: any) => item.userFriendId)
+const handleSelectionChange = (selection: AppFriend[]) => {
+  state.userFriendIds = selection.map((item: AppFriend) => item.userFriendId)
   if (selection.length === 1) {
     state.userFriendId = userFriendIds.value[0]
   }

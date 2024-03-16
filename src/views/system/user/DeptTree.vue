@@ -61,7 +61,7 @@ const filterNode = (value: string, data: TreeNodeData) => {
 
 // 查询部门树
 const getDeptTree = async () => {
-  const res: any = await listDeptTree()
+  const res = await listDeptTree()
   state.deptTree = res.data
 }
 
@@ -71,8 +71,8 @@ const currentNodeKey = computed<number>({
 })
 
 // 部门树节点
-const handleDeptNodeClick = async (data: any) => {
-  currentNodeKey.value = data.value
+const handleDeptNodeClick = async (data: TreeSelect) => {
+  currentNodeKey.value = Number(data.value)
   proxy.$emit('nodeClick', { deptId: data.value })
 }
 

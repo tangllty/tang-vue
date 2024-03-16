@@ -106,6 +106,7 @@ import { getProxy } from '@/utils/getCurrentInstance'
 import { addAppFriendApply, editAppFriendApply } from '@/api/app/chat/friend-apply'
 import type { AppFriendApplyForm } from '@/api/app/chat/friend-apply/types'
 import { getUser } from '@/api/system/user'
+import type { SysUser } from '@/api/system/user/types'
 
 const userStore = useUserStore()
 
@@ -166,7 +167,7 @@ const appFriendApplyRules = reactive<FormRules>({
 })
 
 // 打开用户好友申请对话框
-const handleRequest = async (row: any) => {
+const handleRequest = async (row: SysUser) => {
   state.appFriendApplyForm.userId = userStore.user.userId
   state.appFriendApplyForm.friendId = row.userId
   state.appFriendApplyForm.applyType = '0'

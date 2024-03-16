@@ -252,7 +252,7 @@ const handleList = async () => {
 }
 
 // 查询在线用户
-const getInfo = async (row: any) => {
+const getInfo = async (row: OnlineUser) => {
   const res: any = await getOnlineUser(row.token)
   state.onlineUserInfo = res.data
 
@@ -261,7 +261,7 @@ const getInfo = async (row: any) => {
 }
 
 // 删除在线用户信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: OnlineUser) => {
   try {
     await proxy.$confirm('确认要强退"' + row.username + '"用户吗?', '警告', {
       type: 'warning'

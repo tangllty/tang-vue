@@ -153,8 +153,8 @@ const handleList = async () => {
 
 // 导入表信息
 const handleImport = async () => {
-  const tableNames = importTableNames.value.toString()
-  await importTable({ tableNames })
+  const tableNames = importTableNames.value
+  await importTable(tableNames)
   proxy.$message.success('添加代码生成信息成功')
   closeImportTableDialog()
   proxy.$emit('submitted')
@@ -183,8 +183,8 @@ const closeImportTableDialog = () => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.importTableNames = selection.map((item: any) => item.tableName)
+const handleSelectionChange = (selection: GenTable[]) => {
+  state.importTableNames = selection.map((item: GenTable) => item.tableName)
 }
 
 // 提交表单

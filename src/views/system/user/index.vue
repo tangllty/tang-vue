@@ -97,7 +97,7 @@
                 :icon="Edit"
                 :disabled="userIds.length !== 1"
                 v-hasPermission="'system:user:edit'"
-                @click="handleEdit"
+                @click="handleEdit(null)"
               >修改</el-button>
               <el-button
                 type="danger"
@@ -479,12 +479,12 @@ const handleAdd = async () => {
 }
 
 // 修改用户信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: SysUser | null) => {
   let userId = state.userId
-  if (row.userId) {
+  if (row) {
     userId = row.userId
   }
-  const res: any = await getUser(userId)
+  const res = await getUser(userId)
   state.userForm = res.data
   await getRoleSelect()
 
@@ -496,7 +496,7 @@ const handleEdit = async (row: any) => {
 }
 
 // 删除用户信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: SysUser) => {
   try {
     await proxy.$confirm('确认要删除"' + row.username + '"用户信息吗?', '警告', {
       type: 'warning'
@@ -530,25 +530,25 @@ const handleImport = async () => {
 
 // 导出用户信息
 const handleExport = async () => {
-  const res: any = await exportUser(state.queryParams)
+  const res = await exportUser(state.queryParams)
   proxy.$download(res)
 }
 
 // 导出用户信息模板
 const handleExportTemplate = async () => {
-  const res: any = await exportUserTemplate()
+  const res = await exportUserTemplate()
   proxy.$download(res)
 }
 
 // 查询部门树
 const getDeptTree = async () => {
-  const res: any = await listDeptTree()
+  const res = await listDeptTree()
   state.deptTree = res.data
 }
 
 // 查询角色下拉框
 const getRoleSelect = async () => {
-  const res: any = await listRoleSelect()
+  const res = await listRoleSelect()
   state.roleSelect = res.data
 }
 
@@ -581,8 +581,8 @@ const handleChangeStatus = async (row: SysUser) => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.userIds = selection.map((item: any) => item.userId)
+const handleSelectionChange = (selection: SysUser[]) => {
+  state.userIds = selection.map((user: SysUser) => user.userId)
   if (selection.length === 1) {
     state.userId = userIds.value[0]
   }

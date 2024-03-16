@@ -67,7 +67,7 @@
             :icon="Edit"
             :disabled="dictDataIds.length !== 1"
             v-hasPermission="'system:dict:edit'"
-            @click="handleEdit"
+            @click="handleEdit(null)"
           >修改</el-button>
           <el-button
             type="danger"
@@ -350,9 +350,9 @@ const handleAdd = async () => {
 }
 
 // 修改字典数据信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: SysDictData | null) => {
   let dataId = state.dictDataId
-  if (row.dataId) {
+  if (row) {
     dataId = row.dataId
   }
   const res: any = await getDictData(dataId)
@@ -366,7 +366,7 @@ const handleEdit = async (row: any) => {
 }
 
 // 删除字典数据信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: SysDictData) => {
   try {
     await proxy.$confirm('确认要删除"' + row.dataLabel + '"字典数据信息吗?', '警告', {
       type: 'warning'
@@ -406,8 +406,8 @@ const closeDictDataDialog = () => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.dictDataIds = selection.map((item: any) => item.dataId)
+const handleSelectionChange = (selection: SysDictData[]) => {
+  state.dictDataIds = selection.map((item: SysDictData) => item.dataId)
   if (selection.length === 1) {
     state.dictDataId = dictDataIds.value[0]
   }

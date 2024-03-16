@@ -87,7 +87,7 @@
             :icon="Edit"
             :disabled="applyIds.length !== 1"
             v-hasPermission="'system:dict:edit'"
-            @click="handleEdit"
+            @click="handleEdit(null)"
           >修改</el-button>
           <el-button
             type="danger"
@@ -416,9 +416,9 @@ const handleSearch = () => {
 }
 
 // 修改用户好友申请信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: AppFriendApply | null) => {
   let applyId = state.applyId
-  if (row.applyId) {
+  if (row) {
     applyId = row.applyId
   }
   const res: any = await getAppFriendApply(applyId)
@@ -432,7 +432,7 @@ const handleEdit = async (row: any) => {
 }
 
 // 同意好友申请
-const handleAccept = async (row: any) => {
+const handleAccept = async (row: AppFriendApply) => {
   try {
     await proxy.$confirm('确认同意"' + row.uniqueId + '"用户好友申请信息吗？', '提示', {
       type: 'warning'
@@ -446,7 +446,7 @@ const handleAccept = async (row: any) => {
 }
 
 // 拒绝好友申请
-const handleDecline = async (row: any) => {
+const handleDecline = async (row: AppFriendApply) => {
   try {
     await proxy.$confirm('确认拒绝"' + row.uniqueId + '"用户好友申请信息吗？', '提示', {
       type: 'warning'
@@ -460,7 +460,7 @@ const handleDecline = async (row: any) => {
 }
 
 // 删除用户好友申请信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: AppFriendApply) => {
   try {
     await proxy.$confirm('确认删除"' + row.applyId + '"用户好友申请信息吗？', '提示', {
       type: 'warning'
@@ -500,8 +500,8 @@ const closeAppFriendApplyDialog = () => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.applyIds = selection.map((item: any) => item.applyId)
+const handleSelectionChange = (selection: AppFriendApply[]) => {
+  state.applyIds = selection.map((item: AppFriendApply) => item.applyId)
   if (selection.length === 1) {
     state.applyId = applyIds.value[0]
   }

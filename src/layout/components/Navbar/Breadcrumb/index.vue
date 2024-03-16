@@ -17,7 +17,7 @@ import { ArrowRight } from '@element-plus/icons-vue'
 
 const currentRoute = useRoute()
 
-const breadcrumbs = ref([] as Array<RouteLocationMatched>)
+const breadcrumbs = ref<Array<RouteLocationMatched>>([])
 
 /**
  * 过滤面包屑
@@ -27,7 +27,7 @@ const filterBreadcrumbs = () => {
     breadcrumbs.value = []
   }
   // 过滤没有设置 title 的路由
-  breadcrumbs.value = breadcrumbs.value.filter((item: any) => item.meta.title)
+  breadcrumbs.value = breadcrumbs.value.filter((item: RouteLocationMatched) => item.meta.title)
 }
 
 watch(currentRoute, () => {

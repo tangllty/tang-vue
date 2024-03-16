@@ -218,7 +218,7 @@ const handleList = async () => {
 }
 
 // 删除登陆日志信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: SysLogLogin) => {
   try {
     await proxy.$confirm('确认删除"' + row.loginId + '"登陆日志信息吗？', '提示', {
       type: 'warning'
@@ -252,8 +252,8 @@ const resetQuery = async () => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.loginIds = selection.map((item: any) => item.loginId)
+const handleSelectionChange = (selection: SysLogLogin[]) => {
+  state.loginIds = selection.map((item: SysLogLogin) => item.loginId)
   if (selection.length === 1) {
     state.loginId = loginIds.value[0]
   }

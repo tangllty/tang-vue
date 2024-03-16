@@ -47,7 +47,7 @@ export const editAppFriendApply = (data: AppFriendApplyForm) => {
 }
 
 // 同意好友申请
-export const acceptAppFriendApply = (uniqueId: number) => {
+export const acceptAppFriendApply = (uniqueId: bigint) => {
   return request({
     url: '/app/chat/friend-apply/accept/' + uniqueId,
     method: 'put'
@@ -55,7 +55,7 @@ export const acceptAppFriendApply = (uniqueId: number) => {
 }
 
 // 拒绝好友申请
-export const declineAppFriendApply = (uniqueId: number) => {
+export const declineAppFriendApply = (uniqueId: bigint) => {
   return request({
     url: '/app/chat/friend-apply/decline/' + uniqueId,
     method: 'put'

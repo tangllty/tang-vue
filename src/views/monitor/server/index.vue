@@ -117,20 +117,22 @@ import { getInfo } from '@/api/monitor/server'
 
 const proxy = getProxy()
 
+type Info = { [key: string]: string }
+
 const state = reactive({
   loading: false,
   // 系统信息
-  os: {} as any,
+  os: {} as Info,
   // Java 信息
-  java: {} as any,
+  java: {} as Info,
   // 内存信息
-  memory: {} as any,
+  memory: {} as Info,
   // JVM 内存信息
-  jvmMemory: {} as any,
+  jvmMemory: {} as Info,
   // CPU 信息
-  cpu: {} as any,
+  cpu: {} as Info,
   // 分区信息
-  fileStores: [] as any[]
+  fileStores: [] as Info[]
 })
 
 const {
@@ -146,13 +148,13 @@ const {
 const handleList = async () => {
   proxy.$message.warning('加载时间较长，请耐心等待...')
   state.loading = true
-  const res: any = await getInfo()
-  state.os = res.data.os
-  state.java = res.data.java
-  state.memory = res.data.memory
-  state.jvmMemory = res.data.jvmMemory
-  state.cpu = res.data.cpu
-  state.fileStores = res.data.fileStores
+  const { data } = await getInfo()
+  state.os = data.os
+  state.java = data.java
+  state.memory = data.memory
+  state.jvmMemory = data.jvmMemory
+  state.cpu = data.cpu
+  state.fileStores = data.fileStores
   state.loading = false
 }
 

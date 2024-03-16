@@ -61,7 +61,7 @@
             :icon="Edit"
             :disabled="genTableIds.length !== 1"
             v-hasPermission="'tool:generator:edit'"
-            @click="handleEdit"
+            @click="handleEdit(null)"
           >修改</el-button>
           <el-button
             type="danger"
@@ -221,6 +221,7 @@ const state = reactive({
 const {
   loading,
   genTableIds,
+  tableNames,
   total,
   genTableList,
   queryParams
@@ -246,21 +247,21 @@ const handleImportTable = () => {
 }
 
 // 代码预览
-const handlePreviewCode = (row: any) => {
+const handlePreviewCode = (row: GenTable) => {
   previewCodeRef.value?.handleShow(row.tableId)
 }
 
 // 修改代码生成信息
-const handleEdit = (row: any) => {
+const handleEdit = (row: GenTable | null) => {
   let genTableId = state.genTableId
-  if (row.tableId) {
+  if (row) {
     genTableId = row.tableId
   }
   editTableRef.value?.handleShow(genTableId)
 }
 
 // 删除代码生成信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: GenTable) => {
   try {
     await proxy.$confirm('确认要删除"' + row.tableName + '"代码生成信息吗？', '提示', {
       type: 'warning'
@@ -276,7 +277,7 @@ const handleDelete = async (row: any) => {
 // 批量删除代码生成信息
 const handleDeletes = async () => {
   try {
-    await proxy.$confirm('确认要删除"' + state.tableNames.toString() + '"代码生成信息吗？', '提示', {
+    await proxy.$confirm('确认要删除"' + tableNames.value.toString() + '"代码生成信息吗？', '提示', {
       type: 'warning'
     })
     await deleteGenTables(state.genTableIds)
@@ -288,20 +289,19 @@ const handleDeletes = async () => {
 }
 
 // 代码下载
-const handleDownload = async (row: any) => {
+const handleDownload = async (row: GenTable) => {
   const res: any = await downloadCode(row.tableName)
   proxy.$download(res)
 }
 
 // 批量代码下载
 const handleDownloads = async () => {
-  const tableNames: string = state.tableNames.toString()
-  const res: any = await downloadCodes({ tableNames })
+  const res: any = await downloadCodes(tableNames.value)
   proxy.$download(res)
 }
 
 // 执行 SQL
-const handleExecute = async (row: any) => {
+const handleExecute = async (row: GenTable) => {
   try {
     await proxy.$confirm(`确认要执行[${row.tableName}]菜单 SQL 吗？`, '提示', {
       type: 'warning'
@@ -320,9 +320,9 @@ const resetQuery = async () => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.genTableIds = selection.map((item: any) => item.tableId)
-  state.tableNames = selection.map((item: any) => item.tableName)
+const handleSelectionChange = (selection: GenTable[]) => {
+  state.genTableIds = selection.map((item: GenTable) => item.tableId)
+  state.tableNames = selection.map((item: GenTable) => item.tableName)
   if (selection.length === 1) {
     state.genTableId = genTableIds.value[0]
   }

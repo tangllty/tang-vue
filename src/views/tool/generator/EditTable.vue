@@ -430,9 +430,9 @@ const handleEditTable = async (tableId: number) => {
 
 // 查询菜单树
 const getMenuTree = async () => {
-  const menuTrees: any[] = []
+  const menuTrees: TreeSelect[] = []
   const res: any = await listMenuTree({menuType: 'D'} as SysMenuQuery)
-  const menuTree = { value: 0, label: '顶级菜单', children: res.data }
+  const menuTree = { value: 0, label: '顶级菜单', children: res.data } as TreeSelect
   menuTrees.push(menuTree)
   state.menuTree = menuTrees
 }

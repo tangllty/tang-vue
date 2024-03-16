@@ -128,13 +128,13 @@ const handleImport = async () => {
 
 // 查询部门树
 const getDeptTree = async () => {
-  const res: any = await listDeptTree()
+  const res = await listDeptTree()
   state.deptTree = res.data
 }
 
 // 查询角色下拉框
 const getRoleSelect = async () => {
-  const res: any = await listRoleSelect()
+  const res = await listRoleSelect()
   state.roleSelect = res.data
 }
 

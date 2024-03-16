@@ -54,7 +54,7 @@
             type="primary"
             :icon="Plus"
             v-hasPermission="'system:menu:add'"
-            @click="handleAdd"
+            @click="handleAdd(null)"
           >新增</el-button>
         </el-row>
       </template>
@@ -344,22 +344,22 @@ const handleList = async () => {
 
 // 查询菜单树
 const getMenuTree = async () => {
-  const menuTrees: any[] = []
+  const menuTrees: TreeSelect[] = []
   const res: any = await listMenuTree({menuType: 'D'} as SysMenuQuery)
-  const menuTree = { value: 0, label: '顶级菜单', children: res.data }
+  const menuTree = { value: 0, label: '顶级菜单', children: res.data } as TreeSelect
   menuTrees.push(menuTree)
   state.menuTree = menuTrees
 }
 
 // 添加菜单信息
-const handleAdd = async (row: any) => {
+const handleAdd = async (row: SysMenu | null) => {
   state.menuForm = {
     parentId: 0,
     menuType: 'D',
     sort: 1
   } as SysMenuForm
 
-  if (row.menuId) {
+  if (row) {
     state.menuForm.parentId = row.menuId
   }
   await getMenuTree()
@@ -371,7 +371,7 @@ const handleAdd = async (row: any) => {
 }
 
 // 修改菜单信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: SysMenu) => {
   await getMenuTree()
   const res: any = await getMenu(row.menuId)
   state.menuForm = res.data
@@ -398,7 +398,7 @@ const handleChangeStatus = async (row: SysMenu) => {
 }
 
 // 删除菜单信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: SysMenu) => {
   try {
     await proxy.$confirm('确认要删除"' + row.menuName + '"菜单信息吗?', '警告', {
       type: 'warning'
@@ -430,8 +430,8 @@ const selected = (name: string) => {
 
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.menuIds = selection.map((item: any) => item.menuId)
+const handleSelectionChange = (selection: SysMenu[]) => {
+  state.menuIds = selection.map((item: SysMenu) => item.menuId)
   if (selection.length === 1) {
     state.menuId = menuIds.value[0]
   }

@@ -69,7 +69,7 @@
             :icon="Edit"
             :disabled="dictTypeIds.length !== 1"
             v-hasPermission="'system:dict:edit'"
-            @click="handleEdit"
+            @click="handleEdit(null)"
           >修改</el-button>
           <el-button
             type="danger"
@@ -313,9 +313,9 @@ const handleAdd = () => {
 }
 
 // 修改字典类型信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: SysDictType | null) => {
   let typeId = state.dictTypeId
-  if (row.typeId) {
+  if (row) {
     typeId = row.typeId
   }
   const res: any = await getDictType(typeId)
@@ -329,7 +329,7 @@ const handleEdit = async (row: any) => {
 }
 
 // 删除字典类型信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: SysDictType) => {
   try {
     await proxy.$confirm('确认删除"' + row.dictType + '"字典类型信息吗？', '提示', {
       type: 'warning'
@@ -369,8 +369,8 @@ const closeDictTypeDialog = () => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.dictTypeIds = selection.map((item: any) => item.typeId)
+const handleSelectionChange = (selection: SysDictType[]) => {
+  state.dictTypeIds = selection.map((item: SysDictType) => item.typeId)
   if (selection.length === 1) {
     state.dictTypeId = dictTypeIds.value[0]
   }

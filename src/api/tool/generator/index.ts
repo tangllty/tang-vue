@@ -45,7 +45,7 @@ export const deleteGenTable = (typeId: number) => {
 }
 
 // 批量删除代码生成信息
-export const deleteGenTables = (typeIds: any) => {
+export const deleteGenTables = (typeIds: number[]) => {
   return request({
     url: '/tool/generator',
     method: 'delete',
@@ -54,11 +54,11 @@ export const deleteGenTables = (typeIds: any) => {
 }
 
 // 导入表信息
-export const importTable = (data: any) => {
+export const importTable = (tableNames: string[]) => {
   return request({
     url: '/tool/generator/import',
     method: 'post',
-    params: data
+    data: tableNames
   })
 }
 
@@ -80,11 +80,11 @@ export const downloadCode = (tableName: string) => {
 }
 
 // 批量代码下载
-export const downloadCodes = (tableNames: any) => {
+export const downloadCodes = (tableNames: string[]) => {
   return request({
     url: '/tool/generator/downloads',
     method: 'get',
-    params: tableNames,
+    params: { tableNames },
     responseType: 'blob'
   })
 }
@@ -98,10 +98,10 @@ export const execute = (tableName: string) => {
 }
 
 // 批量执行 SQL
-export const executes = (tableNames: any) => {
+export const executes = (tableNames: string[]) => {
   return request({
     url: '/tool/generator/executes',
     method: 'put',
-    params: tableNames
+    params: { tableNames }
   })
 }

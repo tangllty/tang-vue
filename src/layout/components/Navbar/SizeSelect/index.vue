@@ -56,7 +56,7 @@ const handleSize = (key: string): void => {
   appStore.size = key
 }
 
-const disabled = (key: any): boolean => {
+const disabled = (key: string): boolean => {
   return appStore.size == key
 }
 </script>

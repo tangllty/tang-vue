@@ -136,7 +136,7 @@
             :icon="Edit"
             :disabled="apiIds.length !== 1"
             v-hasPermission="'system:dict:edit'"
-            @click="handleEdit"
+            @click="handleEdit(null)"
             v-if="false"
           >修改</el-button>
           <el-button
@@ -639,9 +639,9 @@ const handleAdd = () => {
  *
  * @param row 接口日志信息
  */
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: SysLogApi | null) => {
   let apiId = state.apiId
-  if (row.apiId) {
+  if (row) {
     apiId = row.apiId
   }
   const res: any = await getSysLogApi(apiId)

@@ -61,7 +61,7 @@
             :icon="Edit"
             :disabled="roleIds.length !== 1"
             v-hasPermission="'system:role:edit'"
-            @click="handleEdit"
+            @click="handleEdit(null)"
           >修改</el-button>
           <el-button
             type="danger"
@@ -353,9 +353,9 @@ const getDictTree = async () => {
 }
 
 // 修改角色信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: SysRole | null) => {
   let roleId = state.roleId
-  if (row.roleId) {
+  if (row) {
     roleId = row.roleId
   }
   await getMenuTree()
@@ -390,7 +390,7 @@ const handleChangeStatus = async (row: SysRole) => {
 }
 
 // 删除角色信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: SysRole) => {
   try {
     await proxy.$confirm('确认要删除"' + row.roleName + '"角色信息吗?', '警告', {
       type: 'warning'
@@ -430,8 +430,8 @@ const closeRoleDialog = () => {
 }
 
 // 多选框
-const handleSelectionChange = (selection: any) => {
-  state.roleIds = selection.map((item: any) => item.roleId)
+const handleSelectionChange = (selection: SysRole[]) => {
+  state.roleIds = selection.map((item: SysRole) => item.roleId)
   if (selection.length === 1) {
     state.roleId = roleIds.value[0]
   }

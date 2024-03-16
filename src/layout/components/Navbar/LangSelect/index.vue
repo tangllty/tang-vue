@@ -42,7 +42,7 @@ const handleLanguage = (key: string): void => {
   appStore.language = key
 }
 
-const disabled = (key: any): boolean => {
+const disabled = (key: string): boolean => {
   return appStore.language == key
 }
 </script>

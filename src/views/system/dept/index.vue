@@ -54,7 +54,7 @@
             type="primary"
             :icon="Plus"
             v-hasPermission="'system:dept:add'"
-            @click="handleAdd"
+            @click="handleAdd(null)"
           >新增</el-button>
         </el-row>
       </template>
@@ -267,14 +267,17 @@ const getDeptTree = async () => {
 }
 
 // 添加部门信息
-const handleAdd = async (row: any) => {
+const handleAdd = async (row: SysDept | null) => {
   state.deptForm = {
     sort: 1
   } as SysDeptForm
 
   await getDeptTree()
 
-  state.deptForm.parentId = row.deptId
+  if (row) {
+    state.deptForm.parentId = row.deptId
+  }
+
   state.deptDialog = {
     title: '新增部门信息',
     type: 'add',
@@ -283,7 +286,7 @@ const handleAdd = async (row: any) => {
 }
 
 // 修改部门信息
-const handleEdit = async (row: any) => {
+const handleEdit = async (row: SysDept) => {
   await getDeptTree()
   const res: any = await getDept(row.deptId)
   state.deptForm = res.data
@@ -295,7 +298,7 @@ const handleEdit = async (row: any) => {
 }
 
 // 删除部门信息
-const handleDelete = async (row: any) => {
+const handleDelete = async (row: SysDept) => {
   try {
     await proxy.$confirm('确认要删除"' + row.deptName + '"部门信息吗?', '警告', {
       type: 'warning'

@@ -133,7 +133,7 @@ const handleSearchFriend = async (refresh: boolean) => {
 }
 
 // 打开发送用户好友申请对话框
-const handleRequest = (row: any) => {
+const handleRequest = (row: SysUser) => {
   sendRequestRef.value?.handleRequest(row)
 }
 

@@ -1,7 +1,7 @@
 import type { ContextMenuInstance, ContextMenuProps, ContextMenuOptions } from './types'
 import MenuContext from './index.vue'
 
-let currentInstance: ContextMenuInstance = null as any
+let currentInstance: ContextMenuInstance | null = null
 let seed = 1
 const contextMenu = (mouseEvent: MouseEvent, options: ContextMenuOptions) => {
   // 阻止默认事件和冒泡
@@ -11,7 +11,7 @@ const contextMenu = (mouseEvent: MouseEvent, options: ContextMenuOptions) => {
   if (currentInstance) {
     currentInstance.destroy()
   }
-  currentInstance = null as any
+  currentInstance = null
   const id = seed++
   // 创建一个临时的 div，用于挂载菜单
   const container = document.createElement('div')
@@ -69,7 +69,7 @@ const contextMenu = (mouseEvent: MouseEvent, options: ContextMenuOptions) => {
   const instance: ContextMenuInstance = {
     id,
     destroy: () => {
-      currentInstance = null as any
+      currentInstance = null
       render(null, container)
     },
   }
