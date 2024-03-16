@@ -21,7 +21,16 @@ declare global {
   }
 
   /**
-   * 树结构参数
+   * 树形结构参数
+   */
+  type Tree = {
+    value: number | string
+    label: string
+    children: Tree[]
+  }
+
+  /**
+   * 树形选择结构参数
    */
   type TreeSelect = {
     value: number | string
