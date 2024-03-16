@@ -78,6 +78,7 @@ import { Edit } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listUserFuzzy } from '@/api/app/chat/friend-apply'
 import type { SysUser, SysUserFuzzyQuery } from '@/api/system/user/types'
+import type { SendRequestInstance } from './instance'
 import SendRequest from './SendRequest.vue'
 
 const proxy = getProxy()
@@ -111,7 +112,7 @@ const {
   searchUserDialog,
 } = toRefs(state)
 
-const sendRequestRef = ref<InstanceType<typeof SendRequest>>()
+const sendRequestRef = ref<SendRequestInstance>()
 
 // 搜索用户好友
 const handleSearch = () => {

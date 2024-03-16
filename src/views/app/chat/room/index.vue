@@ -52,6 +52,7 @@ import { Close } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { AppChatList } from '@/api/app/chat/chat-list/types'
 import type { AppChatMessage } from '@/api/app/chat/message/types'
+import type { ChatListInstance, ChatMessageInstance, MessageInputInstance } from './instance'
 import SearchBar from './SearchBar.vue'
 import ChatList from './ChatList.vue'
 import ChatHeader from './ChatHeader.vue'
@@ -72,9 +73,9 @@ const {
   showDrawer
 } = toRefs(state)
 
-const chatListRef = ref<InstanceType<typeof ChatList>>()
-const chatMessageRef = ref<InstanceType<typeof ChatMessage>>()
-const messageInputRef = ref<InstanceType<typeof MessageInput>>()
+const chatListRef = ref<ChatListInstance>()
+const chatMessageRef = ref<ChatMessageInstance>()
+const messageInputRef = ref<MessageInputInstance>()
 
 const handleItemClick = (item: AppChatList): void => {
   state.selectedItem = item

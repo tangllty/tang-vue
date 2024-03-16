@@ -318,6 +318,7 @@ import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppFriendApply, getAppFriendApply, editAppFriendApply, acceptAppFriendApply, declineAppFriendApply, deleteAppFriendApply, deleteAppFriendApplys } from '@/api/app/chat/friend-apply'
 import type { AppFriendApply, AppFriendApplyForm, AppFriendApplyQuery } from '@/api/app/chat/friend-apply/types'
+import { SearchFriendInstance } from './instance'
 import SearchFriend from './SearchFriend.vue'
 
 const proxy = getProxy()
@@ -361,8 +362,7 @@ const {
   appFriendApplyForm
 } = toRefs(state)
 
-const searchFriendRef = ref<InstanceType<typeof SearchFriend>>()
-
+const searchFriendRef = ref<SearchFriendInstance>()
 const appFriendApplyRuleFormRef = ref<FormInstance>()
 const appFriendApplyQueryFormRef = ref<FormInstance>()
 const appFriendApplyRules = reactive<FormRules>({

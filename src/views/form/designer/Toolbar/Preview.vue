@@ -13,6 +13,7 @@
 import type { Component } from '../types'
 import { deepClone } from '@/utils/object'
 import { getProxy } from '@/utils/getCurrentInstance'
+import type { RenderFormInstance } from './instance'
 import RenderForm from './RenderForm/index.vue'
 
 const proxy = getProxy()
@@ -29,7 +30,7 @@ const {
   previewDialog
 } = toRefs(state)
 
-const renderFormRef = ref<InstanceType<typeof RenderForm>>()
+const renderFormRef = ref<RenderFormInstance>()
 
 const handleShow = async (formComponentList: Component[]) => {
   previewDialog.value = {

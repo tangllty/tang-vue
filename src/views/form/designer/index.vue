@@ -54,10 +54,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ElScrollbar } from 'element-plus'
+import type { ScrollbarInstance } from 'element-plus'
 import { Delete, View } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from './types'
+import type { ComponentPanelInstance, FormPanelInstance, PreviewJsonInstance, PreviewInstance } from './instance'
 import ComponentPanel from './ComponentPanel/index.vue'
 import FormPanel from './FormPanel/index.vue'
 import RightPanel from './RightPanel/index.vue'
@@ -74,11 +75,11 @@ const {
   activeItem
 } = toRefs(state)
 
-const componentPanelRef = ref<InstanceType<typeof ComponentPanel>>()
-const scrollerRef = ref<InstanceType<typeof ElScrollbar>>()
-const formPanelRef = ref<InstanceType<typeof FormPanel>>()
-const previewJsonRef = ref<InstanceType<typeof PreviewJson>>()
-const previewRef = ref<InstanceType<typeof Preview>>()
+const componentPanelRef = ref<ComponentPanelInstance>()
+const scrollerRef = ref<ScrollbarInstance>()
+const formPanelRef = ref<FormPanelInstance>()
+const previewJsonRef = ref<PreviewJsonInstance>()
+const previewRef = ref<PreviewInstance>()
 
 const getId = (callback: (id: number) => void) => {
   if (!componentPanelRef.value) return

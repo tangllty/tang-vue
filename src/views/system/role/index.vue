@@ -247,7 +247,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ElTree, FormInstance, FormRules } from 'element-plus'
+import type { TreeInstance, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listRole, getRole, addRole, editRole, changeStatus, deleteRole, deleteRoles } from '@/api/system/role'
@@ -300,8 +300,8 @@ const {
   roleForm
 } = toRefs(state)
 
-const menuTreeRef = ref<InstanceType<typeof ElTree>>()
-const dictTreeRef = ref<InstanceType<typeof ElTree>>()
+const menuTreeRef = ref<TreeInstance>()
+const dictTreeRef = ref<TreeInstance>()
 const roleRuleFormRef = ref<FormInstance>()
 const roleQueryFormRef = ref<FormInstance>()
 const roleRules = reactive<FormRules>({

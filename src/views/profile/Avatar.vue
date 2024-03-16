@@ -93,6 +93,7 @@
 import type { UploadProps, UploadFile, UploadInstance, UploadRawFile } from 'element-plus'
 import { Minus, Plus, Upload } from '@element-plus/icons-vue'
 import { Cropper, CropperResult, Preview } from 'vue-advanced-cropper'
+import type { CropperInstance } from './instance'
 import 'vue-advanced-cropper/dist/style.css'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
@@ -122,7 +123,7 @@ const {
 } = toRefs(state)
 
 const uploadRef = ref<UploadInstance>()
-const cropperRef = ref<InstanceType<typeof Cropper>>()
+const cropperRef = ref<CropperInstance>()
 
 // 打开用户头像上传对话框
 const openAvatarDialog = () => {

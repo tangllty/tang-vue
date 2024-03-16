@@ -65,6 +65,7 @@ import { useAppStore } from '@/store/modules/app'
 import { useSettingStore } from '@/store/modules/setting'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
+import type { SettingsInstance } from './instance'
 import Breadcrumb from './Breadcrumb/index.vue'
 import Settings from './Settings/index.vue'
 import SizeSelect from './SizeSelect/index.vue'
@@ -77,7 +78,7 @@ const settingStore = useSettingStore()
 const userStore = useUserStore()
 const isDark = useDark()
 
-const settingsRef = ref<InstanceType<typeof Settings>>()
+const settingsRef = ref<SettingsInstance>()
 
 const toggleDark = () => useToggle(isDark)
 

@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElTree } from 'element-plus'
+import type { TreeInstance } from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
 import type { TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'
 import { getProxy } from '@/utils/getCurrentInstance'
@@ -47,7 +47,7 @@ const {
   deptTree
 } = toRefs(state)
 
-const deptTreeRef = ref<InstanceType<typeof ElTree>>()
+const deptTreeRef = ref<TreeInstance>()
 
 // 筛选部门树信息
 watch(deptName, (val) => {

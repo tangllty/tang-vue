@@ -79,7 +79,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElScrollbar } from 'element-plus'
+import type { ScrollbarInstance } from 'element-plus'
 import { Clock } from '@element-plus/icons-vue'
 import InfiniteLoading from 'v3-infinite-loading'
 import 'v3-infinite-loading/lib/style.css'
@@ -115,7 +115,7 @@ const {
 } = toRefs(state)
 
 const innerRef = ref<HTMLDivElement>()
-const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
+const scrollbarRef = ref<ScrollbarInstance>()
 
 /**
  * 加载更多

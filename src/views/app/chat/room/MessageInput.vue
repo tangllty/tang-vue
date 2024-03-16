@@ -173,8 +173,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { ButtonInstance } from 'element-plus'
 import { Files, Picture } from '@element-plus/icons-vue'
-import { ElButton } from 'element-plus'
 import { getIconForFile } from 'vscode-icons-ts'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
@@ -241,7 +241,7 @@ const {
 const imageRef = ref<HTMLInputElement>()
 const fileRef = ref<HTMLInputElement>()
 const inputMessageRef = ref<HTMLInputElement | null>(null)
-const emojiButtonRef = ref<InstanceType<typeof ElButton>>()
+const emojiButtonRef = ref<ButtonInstance>()
 
 const handleInputMessage = async () => {
   if (!props.selectedItem) return

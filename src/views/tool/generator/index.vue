@@ -190,6 +190,7 @@ import { Edit, Delete, Search, Refresh, Upload, View, Download } from '@element-
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes, execute, executes } from '@/api/tool/generator'
 import type { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
+import type { ImportTableInstance, PreviewCodeInstance, EditTableInstance } from './instance'
 import ImportTable from './ImportTable.vue'
 import PreviewCode from './PreviewCode.vue'
 import EditTable from './EditTable.vue'
@@ -227,9 +228,9 @@ const {
   queryParams
 } = toRefs(state)
 
-const importTableRef = ref<InstanceType<typeof ImportTable>>()
-const previewCodeRef = ref<InstanceType<typeof PreviewCode>>()
-const editTableRef = ref<InstanceType<typeof EditTable>>()
+const importTableRef = ref<ImportTableInstance>()
+const previewCodeRef = ref<PreviewCodeInstance>()
+const editTableRef = ref<EditTableInstance>()
 const genTableQueryFormRef = ref<FormInstance>()
 
 // 查询代码生成列表

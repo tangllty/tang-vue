@@ -381,6 +381,7 @@ import { getProxy } from '@/utils/getCurrentInstance'
 import { listUser, addUser, getUser, listRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, exportUser, exportUserTemplate } from '@/api/system/user'
 import { listDeptTree } from '@/api/system/dept'
 import type { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
+import type { ImportUserInstance } from './instance'
 import DeptTree from './DeptTree.vue'
 import ImportUser from './ImportUser.vue'
 
@@ -426,7 +427,7 @@ const {
   userForm
 } = toRefs(state)
 
-const importUserRef = ref<InstanceType<typeof ImportUser>>()
+const importUserRef = ref<ImportUserInstance>()
 const userRuleFormRef = ref<FormInstance>()
 const userQueryFormRef = ref<FormInstance>()
 const userRules = reactive<FormRules>({
