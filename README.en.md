@@ -15,6 +15,7 @@ You can read the [documentation](https://tangllty.eu.org/) for more information
 * Customize multiple login authentication methods
 * Dynamic permissions menu
 * Dynamic dictionary data permissions
+* API call log recording, statistics of API call time consumption
 * Code generator, one click to generate the basic front-end and back-end code
 * Encapsulate WebSocket, support heartbeat detection, reconnection mechanism, custom message type push and subscription
 * Instant messaging, sending and receiving friends and group messages anytime, anywhere, and transferring files to each other
