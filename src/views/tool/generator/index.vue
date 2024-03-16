@@ -185,11 +185,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance } from 'element-plus'
+import type { FormInstance } from 'element-plus'
 import { Edit, Delete, Search, Refresh, Upload, View, Download } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes, execute, executes } from '@/api/tool/generator'
-import { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
+import type { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
 import ImportTable from './ImportTable.vue'
 import PreviewCode from './PreviewCode.vue'
 import EditTable from './EditTable.vue'
