@@ -201,11 +201,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance } from 'element-plus'
+import type { FormInstance } from 'element-plus'
 import { Delete, Search, Refresh, View } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listOnlineUser, getOnlineUser, deleteOnlineUser } from '@/api/monitor/online'
-import { OnlineUser, OnlineUserQuery } from '@/api/monitor/online/types'
+import type { OnlineUser, OnlineUserQuery } from '@/api/monitor/online/types'
 
 const proxy = getProxy()
 

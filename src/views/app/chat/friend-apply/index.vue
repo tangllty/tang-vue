@@ -312,12 +312,12 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh, Check, Close } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppFriendApply, getAppFriendApply, editAppFriendApply, acceptAppFriendApply, declineAppFriendApply, deleteAppFriendApply, deleteAppFriendApplys } from '@/api/app/chat/friend-apply'
-import { AppFriendApply, AppFriendApplyForm, AppFriendApplyQuery } from '@/api/app/chat/friend-apply/types'
+import type { AppFriendApply, AppFriendApplyForm, AppFriendApplyQuery } from '@/api/app/chat/friend-apply/types'
 import SearchFriend from './SearchFriend.vue'
 
 const proxy = getProxy()

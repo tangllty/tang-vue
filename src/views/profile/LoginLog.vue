@@ -36,7 +36,7 @@
 
 <script lang="ts" setup>
 import { listLogLoginByUser } from '@/api/profile'
-import { SysLogLogin, SysLogLoginQuery } from '@/api/system/log/login/types'
+import type { SysLogLogin, SysLogLoginQuery } from '@/api/system/log/login/types'
 
 const state = reactive({
   // 遮罩层

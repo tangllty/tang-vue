@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { SysLogLoginQuery, SysLogLoginForm } from './types'
+import type { SysLogLoginQuery, SysLogLoginForm } from './types'
 
 // 查询登陆日志列表
 export const listSysLogLogin = (queryParams: SysLogLoginQuery) => {

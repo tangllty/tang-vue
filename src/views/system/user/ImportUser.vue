@@ -75,12 +75,12 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules, UploadFile } from 'element-plus'
+import type { FormInstance, FormRules, UploadFile } from 'element-plus'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listRoleSelect, importUser } from '@/api/system/user'
 import { listDeptTree } from '@/api/system/dept'
-import { ImportForm } from '@/api/system/user/types'
+import type { ImportForm } from '@/api/system/user/types'
 
 const proxy = getProxy()
 

@@ -97,11 +97,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance } from 'element-plus'
+import type { FormInstance } from 'element-plus'
 import { Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listDatabaseTable, importTable } from '@/api/tool/generator'
-import { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
+import type { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
 
 const proxy = getProxy()
 

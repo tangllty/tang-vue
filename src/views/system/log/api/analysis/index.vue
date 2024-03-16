@@ -144,11 +144,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance } from 'element-plus'
+import type { FormInstance } from 'element-plus'
 import { Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listSysLogApiAnalysis } from '@/api/system/log/api'
-import { SysLogApiAnalysis, SysLogApiAnalysisQuery } from '@/api/system/log/api/types'
+import type { SysLogApiAnalysis, SysLogApiAnalysisQuery } from '@/api/system/log/api/types'
 
 const proxy = getProxy()
 

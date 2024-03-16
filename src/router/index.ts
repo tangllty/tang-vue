@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory, Router, RouteRecordName, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import type { Router, RouteRecordName, RouteRecordRaw } from 'vue-router'
 import { usePermissionStoreHook } from '@/store/modules/permission'
 
 /**

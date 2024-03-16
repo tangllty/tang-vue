@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { SysDeptQuery, SysDeptForm } from './types'
+import type { SysDeptQuery, SysDeptForm } from './types'
 
 // 查询部门列表
 export const listDept = (queryParams: SysDeptQuery) => {

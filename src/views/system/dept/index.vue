@@ -200,11 +200,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listDept, listDeptTree, getDept, addDept, editDept, changeStatus, deleteDept } from '@/api/system/dept'
-import { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
+import type { SysDept, SysDeptForm, SysDeptQuery } from '@/api/system/dept/types'
 
 const proxy = getProxy()
 const { sys_status } = proxy.$dict('sys_status')

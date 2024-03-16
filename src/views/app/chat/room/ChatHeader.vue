@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { Setting } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { AppChatList } from '@/api/app/chat/chat-list/types'
+import type { AppChatList } from '@/api/app/chat/chat-list/types'
 
 const proxy = getProxy()
 

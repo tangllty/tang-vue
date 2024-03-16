@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 import sha256 from 'crypto-js/sha256'
 import base64 from 'crypto-js/enc-base64'
-import { UploadFile } from 'element-plus'
-import { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
-import { SysLogLoginQuery } from '@/api/system/log/login/types'
+import type { UploadFile } from 'element-plus'
+import type { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
+import type { SysLogLoginQuery } from '@/api/system/log/login/types'
 
 // 修改用户信息并更新缓存
 export const editUserInfo = (data: SysUserForm) => {

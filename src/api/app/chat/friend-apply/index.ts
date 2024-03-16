@@ -1,6 +1,6 @@
 import request from '@/utils/request'
-import { AppFriendApplyQuery, AppFriendApplyForm } from './types'
-import { SysUserFuzzyQuery } from '@/api/system/user/types'
+import type { AppFriendApplyQuery, AppFriendApplyForm } from './types'
+import type { SysUserFuzzyQuery } from '@/api/system/user/types'
 
 // 查询用户好友申请列表
 export const listAppFriendApply = (queryParams: AppFriendApplyQuery) => {

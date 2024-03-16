@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { SysRoleForm, SysRoleQuery } from './types'
+import type { SysRoleForm, SysRoleQuery } from './types'
 
 // 查询角色列表
 export const listRole = (queryParams: SysRoleQuery) => {

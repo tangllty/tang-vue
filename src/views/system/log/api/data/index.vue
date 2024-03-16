@@ -474,11 +474,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listSysLogApi, getSysLogApi, addSysLogApi, editSysLogApi, deleteSysLogApi, deleteSysLogApis } from '@/api/system/log/api'
-import { SysLogApi, SysLogApiForm, SysLogApiQuery } from '@/api/system/log/api/types'
+import type { SysLogApi, SysLogApiForm, SysLogApiQuery } from '@/api/system/log/api/types'
 
 const proxy = getProxy()
 

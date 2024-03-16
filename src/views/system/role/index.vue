@@ -247,13 +247,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ElTree, FormInstance, FormRules } from 'element-plus'
+import type { ElTree, FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listRole, getRole, addRole, editRole, changeStatus, deleteRole, deleteRoles } from '@/api/system/role'
 import { listMenuTree } from '@/api/system/menu'
 import { listDictTree } from '@/api/system/dict'
-import { SysRole , SysRoleForm, SysRoleQuery } from '@/api/system/role/types'
+import type { SysRole , SysRoleForm, SysRoleQuery } from '@/api/system/role/types'
 
 const proxy = getProxy()
 const { sys_status } = proxy.$dict('sys_status')

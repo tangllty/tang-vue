@@ -150,7 +150,7 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules, TabsPaneContext } from 'element-plus'
+import type { FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'

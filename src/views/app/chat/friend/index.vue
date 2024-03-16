@@ -220,13 +220,13 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppFriend, getAppFriend, editAppFriend, deleteAppFriend, deleteAppFriends } from '@/api/app/chat/friend'
-import { AppFriend, AppFriendForm, AppFriendQuery } from '@/api/app/chat/friend/types'
+import type { AppFriend, AppFriendForm, AppFriendQuery } from '@/api/app/chat/friend/types'
 import { listAppChatListAll, addAppChatList } from '@/api/app/chat/chat-list'
-import { AppChatList, AppChatListForm } from '@/api/app/chat/chat-list/types'
+import type { AppChatList, AppChatListForm } from '@/api/app/chat/chat-list/types'
 
 const proxy = getProxy()
 

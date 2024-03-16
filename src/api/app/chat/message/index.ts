@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { AppChatMessageQuery, AppChatMessageForm } from './types'
+import type { AppChatMessageQuery, AppChatMessageForm } from './types'
 
 // 查询聊天消息列表
 export const listAppChatMessage = (queryParams: AppChatMessageQuery) => {

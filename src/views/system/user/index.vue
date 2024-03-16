@@ -375,12 +375,12 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Download, Upload, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listUser, addUser, getUser, listRoleSelect, editUser, changeStatus, deleteUser, deleteUsers, exportUser, exportUserTemplate } from '@/api/system/user'
 import { listDeptTree } from '@/api/system/dept'
-import { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
+import type { SysUser, SysUserForm, SysUserQuery } from '@/api/system/user/types'
 import DeptTree from './DeptTree.vue'
 import ImportUser from './ImportUser.vue'
 

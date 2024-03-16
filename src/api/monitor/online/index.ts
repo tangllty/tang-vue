@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { OnlineUserQuery } from './types'
+import type { OnlineUserQuery } from './types'
 
 // 查询在线用户列表
 export const listOnlineUser = (queryParams: OnlineUserQuery) => {

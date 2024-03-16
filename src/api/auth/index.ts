@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { LoginForm } from './types'
+import type { LoginForm } from './types'
 
 // 登陆
 export const login = (data: LoginForm) => {

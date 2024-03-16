@@ -1,5 +1,5 @@
-import { UploadFile } from 'element-plus'
-import { SysDept } from '@/api/system/dept/types'
+import type { UploadFile } from 'element-plus'
+import type { SysDept } from '@/api/system/dept/types'
 
 // 用户对象
 export interface SysUser {

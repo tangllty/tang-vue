@@ -1,5 +1,6 @@
 import type { App } from 'vue'
-import { createPinia, Pinia } from 'pinia'
+import { createPinia } from 'pinia'
+import type { Pinia } from 'pinia'
 import { useSettingStore } from './modules/setting'
 
 const store: Pinia = createPinia()

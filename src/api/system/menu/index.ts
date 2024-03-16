@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { SysMenuQuery, SysMenuForm } from './types'
+import type { SysMenuQuery, SysMenuForm } from './types'
 
 // 查询菜单列表
 export const listMenu = (queryParams: SysMenuQuery) => {

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import { store } from '@/store'
 import { routes as constantRoutes, dynamicRoutes as allDynamicRoutes } from '@/router'
 import { useUserStore } from '@/store/modules/user'

@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MenuItem as ContextMenuItem } from './types'
+import type { MenuItem as ContextMenuItem } from './types'
 
 const props = defineProps({
   item: {

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { SysDictTypeForm, SysDictTypeQuery } from './types'
+import type { SysDictTypeForm, SysDictTypeQuery } from './types'
 
 // 查询字典类型列表
 export const listDictType = (queryParams: SysDictTypeQuery) => {

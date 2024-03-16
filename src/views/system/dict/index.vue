@@ -232,11 +232,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listDictType, getDictType, addDictType, editDictType, deleteDictType, deleteDictTypes } from '@/api/system/dict'
-import { SysDictType, SysDictTypeForm, SysDictTypeQuery } from '@/api/system/dict/types'
+import type { SysDictType, SysDictTypeForm, SysDictTypeQuery } from '@/api/system/dict/types'
 
 const proxy = getProxy()
 const { sys_status } = proxy.$dict('sys_status')

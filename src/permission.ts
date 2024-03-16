@@ -1,5 +1,5 @@
 import router from '@/router'
-import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
+import type { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 import { useUserStoreHook } from '@/store/modules/user'
 import { usePermissionStoreHook } from '@/store/modules/permission'
 import webSocketService from '@/utils/websocket'

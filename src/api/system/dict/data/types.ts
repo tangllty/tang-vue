@@ -1,4 +1,4 @@
-import { EpPropMergeType } from 'element-plus/es/utils/vue/props/types'
+import type { EpPropMergeType } from 'element-plus/es/utils/vue/props/types'
 
 /**
  * 字典数据对象

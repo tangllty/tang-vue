@@ -172,11 +172,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance } from 'element-plus'
+import type { FormInstance } from 'element-plus'
 import { Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listSysLogLogin, deleteSysLogLogin, deleteSysLogLogins } from '@/api/system/log/login'
-import { SysLogLogin, SysLogLoginQuery } from '@/api/system/log/login/types'
+import type { SysLogLogin, SysLogLoginQuery } from '@/api/system/log/login/types'
 
 const proxy = getProxy()
 

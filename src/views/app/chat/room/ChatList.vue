@@ -41,10 +41,10 @@
 <script lang="ts" setup>
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatListAll, stickAppChatList, unstickAppChatList } from '@/api/app/chat/chat-list'
-import { AppChatList } from '@/api/app/chat/chat-list/types'
-import { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import type { AppChatList } from '@/api/app/chat/chat-list/types'
+import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
 import { isObjectString } from '@/utils/object'
-import { FileMessageContent } from '@/types'
+import type { FileMessageContent } from '@/types'
 
 const proxy = getProxy()
 

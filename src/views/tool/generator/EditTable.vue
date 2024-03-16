@@ -347,12 +347,12 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { getGenTable, editGenTable } from '@/api/tool/generator'
-import { GenTableForm, GenTableColumn } from '@/api/tool/generator/types'
+import type { GenTableForm, GenTableColumn } from '@/api/tool/generator/types'
 import { listMenuTree } from '@/api/system/menu'
-import { SysMenuQuery } from '@/api/system/menu/types'
+import type { SysMenuQuery } from '@/api/system/menu/types'
 
 const proxy = getProxy()
 

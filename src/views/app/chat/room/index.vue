@@ -50,8 +50,8 @@
 <script lang="ts" setup>
 import { Close } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { AppChatList } from '@/api/app/chat/chat-list/types'
-import { AppChatMessage } from '@/api/app/chat/message/types'
+import type { AppChatList } from '@/api/app/chat/chat-list/types'
+import type { AppChatMessage } from '@/api/app/chat/message/types'
 import SearchBar from './SearchBar.vue'
 import ChatList from './ChatList.vue'
 import ChatHeader from './ChatHeader.vue'

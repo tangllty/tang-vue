@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import { ElTree } from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
-import { TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'
+import type { TreeNodeData } from 'element-plus/es/components/tree/src/tree.type'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listDeptTree } from '@/api/system/dept'
 

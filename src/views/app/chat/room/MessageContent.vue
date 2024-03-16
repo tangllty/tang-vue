@@ -30,8 +30,8 @@
 
 <script lang="ts" setup>
 import { getIconForFile } from 'vscode-icons-ts'
-import { AppChatMessage } from '@/api/app/chat/message/types'
-import { FileMessageContent } from '@/types'
+import type { AppChatMessage } from '@/api/app/chat/message/types'
+import type { FileMessageContent } from '@/types'
 import { getSize } from '@/utils/byte'
 import { isObjectString } from '@/utils/object'
 

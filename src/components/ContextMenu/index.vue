@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ContextMenuOptions } from './types'
+import type { ContextMenuOptions } from './types'
 import MenuItem from './MenuItem.vue'
 
 const props = defineProps({

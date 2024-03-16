@@ -1,6 +1,6 @@
 import request from '@/utils/request'
-import { UploadFile } from 'element-plus'
-import { SysUserQuery, SysUserForm } from './types'
+import type { UploadFile } from 'element-plus'
+import type { SysUserQuery, SysUserForm } from './types'
 
 // 查询用户列表
 export const listUser = (queryParams: SysUserQuery) => {

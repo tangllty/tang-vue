@@ -256,11 +256,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance, FormRules } from 'element-plus'
+import type { FormInstance, FormRules } from 'element-plus'
 import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listDictData, getDictData, addDictData, editDictData, deleteDictData, deleteDictDatas } from '@/api/system/dict/data'
-import { SysDictData, SysDictDataForm, SysDictDataQuery } from '@/api/system/dict/data/types'
+import type { SysDictData, SysDictDataForm, SysDictDataQuery } from '@/api/system/dict/data/types'
 import { getDictType } from '@/api/system/dict'
 
 const proxy = getProxy()

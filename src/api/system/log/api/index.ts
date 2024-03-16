@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { SysLogApiQuery, SysLogApiForm, SysLogApiAnalysis } from './types'
+import type { SysLogApiQuery, SysLogApiForm, SysLogApiAnalysis } from './types'
 
 /**
  * 查询接口日志列表

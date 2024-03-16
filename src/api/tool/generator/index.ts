@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { GenTableForm, GenTableQuery } from './types'
+import type { GenTableForm, GenTableQuery } from './types'
 
 // 查询代码生成列表
 export const listGenTable = (queryParams: GenTableQuery) => {

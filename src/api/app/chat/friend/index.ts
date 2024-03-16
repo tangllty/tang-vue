@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { AppFriendQuery, AppFriendForm } from './types'
+import type { AppFriendQuery, AppFriendForm } from './types'
 
 // 查询用户好友列表
 export const listAppFriend = (queryParams: AppFriendQuery) => {
