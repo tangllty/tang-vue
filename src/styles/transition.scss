@@ -1,0 +1,26 @@
+// slide fade transition
+.slide-fade {
+  $duration: .35s;
+  $offset: 20px;
+
+  &-enter-active,
+  &-leave-active {
+    transition: all $duration ease;
+  }
+
+  &-enter-from {
+    transform: translateX(-$offset);
+    opacity: 0;
+  }
+
+  &-leave-to {
+    transform: translateX($offset);
+    opacity: 0;
+  }
+
+  &-enter-to,
+  &-leave-from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
