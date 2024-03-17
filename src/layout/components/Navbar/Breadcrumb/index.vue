@@ -3,11 +3,13 @@
     <el-breadcrumb-item :to="{ path: '/index' }">
       首页
     </el-breadcrumb-item>
-    <el-breadcrumb-item
-      v-for="(item, index) in breadcrumbs"
-      :key="index"
-      :to="{ path: item.path }"
-    >{{ item.meta.title }}</el-breadcrumb-item>
+    <TransitionGroup name="breadcrumbs">
+      <el-breadcrumb-item
+        v-for="item in breadcrumbs"
+        :key="item.path"
+        :to="{ path: item.path }"
+      >{{ item.meta.title }}</el-breadcrumb-item>
+    </TransitionGroup>
   </el-breadcrumb>
 </template>
 
@@ -42,4 +44,21 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss" scoped>
+.breadcrumbs {
+  &-move,
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  &-leave-active {
+    position: absolute;
+  }
+}
 </style>
