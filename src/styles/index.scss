@@ -1,6 +1,6 @@
-@import './variables.scss';
-@import './sidebar.scss';
-@import './element-plus.scss';
+@use './variables.scss' as *;
+@use './sidebar.scss' as *;
+@use './element-plus.scss' as *;
 
 html,
 body {
