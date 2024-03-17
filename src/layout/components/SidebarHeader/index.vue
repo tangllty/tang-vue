@@ -1,26 +1,22 @@
 <template>
   <el-header v-if="sidebarHeader" class="logo">
-    <transition>
-      <router-link
-        class="logo-link"
-        to="/index"
-        v-if="title"
-      >
-        <el-image :src="logo" class="logo-image" />
-      </router-link>
-      <router-link
-        class="logo-link"
-        to="/index"
-        v-else
-      >
-        <el-image
-          v-if="sidebarHeaderLogo"
-          :src="logo"
-          class="logo-image"
-        />
+    <router-link
+      class="logo-link"
+      to="/index"
+      :style="{
+        width: sidebarHeaderLogo ? 'auto' : '100%',
+        justifyContent: sidebarHeaderLogo ? 'flex-start' : 'center'
+      }"
+    >
+      <el-image
+        v-if="sidebarHeaderLogo"
+        :src="logo"
+        class="logo-image"
+      />
+      <Transition>
         <span v-show="!title" class="logo-title">{{ settings.title }}</span>
-      </router-link>
-    </transition>
+      </Transition>
+    </router-link>
   </el-header>
 </template>
 
@@ -50,26 +46,43 @@ const title = computed(() => appStore.sidebar)
     justify-content: center;
     color: black;
     font-weight: 600;
-  }
 
-  .logo-image {
-    width: 30px;
-    height: 30px;
-    border: 1px solid rgb(194, 194, 194);
-  }
+    .logo-image {
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgb(194, 194, 194);
+      flex-shrink: 0;
+    }
 
-  .logo-title {
-    margin-left: .75rem;
-    color: var(--el-menu-text-color);
+    .logo-title {
+      margin: 0 auto;
+      color: var(--el-menu-text-color);
+      text-wrap: nowrap;
+    }
   }
+}
+
+.v-leave-active {
+  transition: opacity 80ms ease;
+}
+
+.v-leave-from {
+  opacity: 1;
+}
+
+.v-leave-to {
+  opacity: 0;
 }
 
 .v-enter-active {
-  transition: opacity 1200ms ease;
+  transition: opacity 180ms ease 180ms;
 }
 
-.v-enter-from,
-.v-leave-to {
+.v-enter-from {
   opacity: 0;
+}
+
+.v-enter-to {
+  opacity: 1;
 }
 </style>
