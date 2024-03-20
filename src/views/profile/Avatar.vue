@@ -42,6 +42,7 @@
       <el-upload
         ref="uploadRef"
         action=""
+        accept="image/*"
         :show-file-list="false"
         :on-change="handleAvatarChange"
         :auto-upload="false"
@@ -144,12 +145,8 @@ const closeAvatarDialog = () => {
 
 // 头像上传 onChange 事件
 const handleAvatarChange: UploadProps['onChange'] = (uploadFile: UploadFile) => {
-  const supportTypes = ['image/png', 'image/jpg', 'image/jpeg']
   if (!uploadFile.raw) return
-  if (!supportTypes.includes(uploadFile.raw.type)) {
-    proxy.$message.error('头像文件只能是 png/jpg/jpeg 格式!')
-    return
-  } else if (uploadFile.raw.size / 1024 / 1024 > 5) {
+  if (uploadFile.raw.size / 1024 / 1024 > 5) {
     proxy.$message.error('头像文件大小不能超过 5MB!')
     return
   }
@@ -187,6 +184,7 @@ const submitUpload = async () => {
   if (!state.imageFile.raw) return
   await editUserAvatar(state.imageFile)
   proxy.$message.success('头像上传成功!')
+  await userStore.getInfo()
   closeAvatarDialog()
 }
 </script>

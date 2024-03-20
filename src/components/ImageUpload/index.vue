@@ -1,6 +1,7 @@
 <template>
   <el-upload
     class="image-uploader"
+    accept="image/*"
     :action="actionUrl"
     :headers="headers"
     :show-file-list="false"
