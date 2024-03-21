@@ -1,4 +1,4 @@
-import type { EpPropMergeType } from 'element-plus/es/utils/vue/props/types'
+import type { TagType } from '@/types'
 
 /**
  * 字典数据对象
@@ -9,7 +9,7 @@ export interface SysDictData {
   dataLabel: string
   dataValue: string
   cssClass: string
-  typeClass: EpPropMergeType<StringConstructor, 'success' | 'warning' | 'info' | 'danger', unknown>
+  typeClass: TagType
   sort: number
   status: string
   createTime: Date

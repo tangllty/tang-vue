@@ -5,15 +5,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { EpPropMergeType } from 'element-plus/es/utils'
 import { useAppStore } from '@/store/modules/app'
+import type { ElementPlusSize } from '@/types'
 
 const appStore = useAppStore()
 
 const locale = computed(() => appStore.elementPlusLocale)
-
-// Element 大小类型
-type ElementPlusSize = EpPropMergeType<StringConstructor, '' | 'default' | 'small' | 'large', never>
 
 const size = computed(() => appStore.size as ElementPlusSize)
 </script>
