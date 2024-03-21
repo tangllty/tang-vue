@@ -2,12 +2,12 @@
   <div class="navbar">
     <div class="left-div">
       <el-radio-group
-        v-model="appStore.sidebar"
+        v-model="settingStore.sidebar"
         class="hamburger-container"
         @click="toggleSidebar"
       >
-        <el-icon v-show="!appStore.sidebar"><Expand /></el-icon>
-        <el-icon v-show="appStore.sidebar"><Fold /></el-icon>
+        <el-icon v-show="!settingStore.sidebar"><Expand /></el-icon>
+        <el-icon v-show="settingStore.sidebar"><Fold /></el-icon>
       </el-radio-group>
 
       <Breadcrumb class="ml-10" />
@@ -61,7 +61,6 @@
 <script lang="ts" setup>
 import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
 import { useDark, useToggle } from '@vueuse/core'
-import { useAppStore } from '@/store/modules/app'
 import { useSettingStore } from '@/store/modules/setting'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
@@ -73,7 +72,6 @@ import LangSelect from './LangSelect/index.vue'
 
 const proxy = getProxy()
 
-const appStore = useAppStore()
 const settingStore = useSettingStore()
 const userStore = useUserStore()
 const isDark = useDark()
@@ -91,7 +89,7 @@ watch(isDark, (value) => {
  * 切换侧边栏
  */
 const toggleSidebar = () => {
-  appStore.sidebar = !appStore.sidebar
+  settingStore.sidebar = !settingStore.sidebar
 }
 
 /**

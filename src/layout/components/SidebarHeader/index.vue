@@ -21,15 +21,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 import logo from '@/assets/logo.png'
 import settings from '@/settings'
 
-const appStore = useAppStore()
+const settingStore = useSettingStore()
 
-const sidebarHeader = computed(() => appStore.sidebarHeader)
-const sidebarHeaderLogo = computed(() => appStore.sidebarHeaderLogo)
-const title = computed(() => appStore.sidebar)
+const sidebarHeader = computed(() => settingStore.sidebarHeader)
+const sidebarHeaderLogo = computed(() => settingStore.sidebarHeaderLogo)
+const title = computed(() => settingStore.sidebar)
 </script>
 
 <style lang="scss" scoped>

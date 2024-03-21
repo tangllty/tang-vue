@@ -1,8 +1,8 @@
 import type { App } from 'vue'
 import { createI18n } from 'vue-i18n'
-import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 
-const appStore = useAppStore()
+const settingStore = useSettingStore()
 
 const modules = import.meta.glob('./lang/*.ts')
 
@@ -22,7 +22,7 @@ await Promise.all(Object.keys(modules).map(async (path) => {
 langs.sort((a, b) => a.sort - b.sort)
 
 const i18n = createI18n({
-  locale: appStore.language,
+  locale: settingStore.language,
   messages,
   globalInjection: true,
   legacy: false

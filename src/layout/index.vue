@@ -29,20 +29,20 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 import SidebarHeader from '@/layout/components/SidebarHeader/index.vue'
 import Sidebar from '@/layout/components/Sidebar/index.vue'
 import Navbar from '@/layout/components/Navbar/index.vue'
 import AppMain from '@/layout/components/AppMain/index.vue'
 
-const appStore = useAppStore()
+const settingStore = useSettingStore()
 
 const appWrapper = computed(() => ({
-  expandSidebar: !appStore.sidebar,
-  foldSidebar: appStore.sidebar
+  expandSidebar: !settingStore.sidebar,
+  foldSidebar: settingStore.sidebar
 }))
 
-const fixedHeader = computed(() => appStore.fixedHeader)
+const fixedHeader = computed(() => settingStore.fixedHeader)
 </script>
 
 <style lang="scss" scoped>

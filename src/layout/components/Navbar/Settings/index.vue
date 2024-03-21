@@ -12,15 +12,15 @@
       <el-divider>{{ $t('settings.sidebar.title') }}</el-divider>
       <div class="item">
         <span>{{ $t('settings.sidebar.showHeader') }}</span>
-        <el-switch v-model="appStore.sidebarHeader" />
+        <el-switch v-model="settingStore.sidebarHeader" />
       </div>
       <div class="item">
         <span>{{ $t('settings.sidebar.showLogo') }}</span>
-        <el-switch v-model="appStore.sidebarHeaderLogo" :disabled="!appStore.sidebarHeader" />
+        <el-switch v-model="settingStore.sidebarHeaderLogo" :disabled="!settingStore.sidebarHeader" />
       </div>
       <div class="item">
         <span>{{ $t('settings.sidebar.fixedHeader') }}</span>
-        <el-switch v-model="appStore.fixedHeader" :disabled="!appStore.sidebarHeader" />
+        <el-switch v-model="settingStore.fixedHeader" :disabled="!settingStore.sidebarHeader" />
       </div>
     </template>
     <template #footer>
@@ -36,9 +36,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 
-const appStore = useAppStore()
+const settingStore = useSettingStore()
 
 const state = reactive({
   drawer: false

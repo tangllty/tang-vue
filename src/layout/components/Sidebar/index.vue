@@ -22,15 +22,15 @@
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
-import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 import { usePermissionStore } from '@/store/modules/permission'
 import SidebarItem from '@/layout/components/Sidebar/SidebarItem.vue'
 
 const route = useRoute()
-const appStore = useAppStore()
+const settingStore = useSettingStore()
 const permissionStore = usePermissionStore()
 
-const isCollapse = computed((): boolean => appStore.sidebar)
+const isCollapse = computed((): boolean => settingStore.sidebar)
 
 /**
  * 通过路由的 meta.activeMenu 属性来判断当前路由是否激活

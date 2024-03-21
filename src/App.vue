@@ -5,14 +5,13 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 import type { ElementPlusSize } from '@/types'
 
-const appStore = useAppStore()
+const settingStore = useSettingStore()
 
-const locale = computed(() => appStore.elementPlusLocale)
-
-const size = computed(() => appStore.size as ElementPlusSize)
+const locale = computed(() => settingStore.elementPlusLocale)
+const size = computed(() => settingStore.size as ElementPlusSize)
 </script>
 
 <style lang="scss" scoped>

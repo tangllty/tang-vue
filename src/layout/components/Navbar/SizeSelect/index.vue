@@ -25,12 +25,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 import { getProxy } from '@/utils/getCurrentInstance'
 
 const proxy = getProxy()
 
-const appStore = useAppStore()
+const settingStore = useSettingStore()
 
 const sizes = [
   {
@@ -53,11 +53,11 @@ const sizes = [
  * @param key 语言 key
  */
 const handleSize = (key: string): void => {
-  appStore.size = key
+  settingStore.size = key
 }
 
 const disabled = (key: string): boolean => {
-  return appStore.size == key
+  return settingStore.size == key
 }
 </script>
 

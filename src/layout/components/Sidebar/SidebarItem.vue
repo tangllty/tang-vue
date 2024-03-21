@@ -22,7 +22,7 @@
     </el-sub-menu>
 
     <el-menu-item v-else-if="item.root && item.type === 'MENU'" :index="resolvePath(item.path)">
-      <el-icon v-if="appStore.sidebar">
+      <el-icon v-if="settingStore.sidebar">
         <svg-icon
           v-if="item.meta && item.meta.icon"
           :name="item.meta.icon"
@@ -58,10 +58,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store/modules/app'
+import { useSettingStore } from '@/store/modules/setting'
 import { resolve } from '@/utils/path'
 
-const appStore = useAppStore()
+const settingStore = useSettingStore()
 
 const props = defineProps({
   item: {
