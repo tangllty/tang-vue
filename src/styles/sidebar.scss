@@ -3,14 +3,9 @@
 .expandSidebar {
   .sidebar-container {
     width: $sidebarExpandWidth;
-    transition: width 280ms;
 
     .logo {
       width: $sidebarExpandWidth;
-      transition: width 280ms;
-    }
-    .sidebar {
-      transition: width 280ms;
     }
   }
 }
@@ -18,11 +13,9 @@
 .foldSidebar {
   .sidebar-container {
     width: $sidebarFoldWidth;
-    transition: width 280ms;
 
     .logo {
       width: $sidebarFoldWidth;
-      transition: width 280ms;
     }
 
     .sidebar {
@@ -35,4 +28,8 @@
       }
     }
   }
+}
+
+.sidebar-container {
+  transition: width 280ms;
 }
