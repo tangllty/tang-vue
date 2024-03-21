@@ -55,19 +55,99 @@
           </el-button>
         </template>
 
-        <el-button
-          :icon="Plus"
-          size="small"
-          circle
-          @click="increaseZoom"
-          class="ml-10"
-        />
-        <el-button
-          :icon="Minus"
-          size="small"
-          circle
-          @click="decreaseZoom"
-        />
+        <el-tooltip content="放大" placement="top">
+          <el-button
+            :icon="Plus"
+            size="small"
+            circle
+            @click="zoomIn"
+            class="ml-10"
+          />
+        </el-tooltip>
+        <el-tooltip content="缩小" placement="top">
+          <el-button
+            :icon="Minus"
+            size="small"
+            circle
+            @click="zoomOut"
+          />
+        </el-tooltip>
+        <el-tooltip content="上移" placement="top">
+          <el-button
+            :icon="Top"
+            size="small"
+            circle
+            @click="moveTop"
+          />
+        </el-tooltip>
+        <el-tooltip content="下移" placement="top">
+          <el-button
+            :icon="Bottom"
+            size="small"
+            circle
+            @click="moveBottom"
+          />
+        </el-tooltip>
+        <el-tooltip content="左移" placement="top">
+          <el-button
+            :icon="Back"
+            size="small"
+            circle
+            @click="moveLeft"
+          />
+        </el-tooltip>
+        <el-tooltip content="右移" placement="top">
+          <el-button
+            :icon="Right"
+            size="small"
+            circle
+            @click="moveRight"
+          />
+        </el-tooltip>
+        <el-tooltip content="水平翻转" placement="top">
+          <el-button
+            size="small"
+            circle
+            @click="flipHorizontal"
+          >
+            <template #icon>
+              <el-icon><SvgIcon name="flip-horizontal" /></el-icon>
+            </template>
+          </el-button>
+        </el-tooltip>
+        <el-tooltip content="垂直翻转" placement="top">
+          <el-button
+            size="small"
+            circle
+            @click="flipVertical"
+          >
+            <template #icon>
+              <el-icon><SvgIcon name="flip-vertical" /></el-icon>
+            </template>
+          </el-button>
+        </el-tooltip>
+        <el-tooltip content="顺时针旋转" placement="top">
+          <el-button
+            size="small"
+            circle
+            @click="rotateClockwise"
+          >
+            <template #icon>
+              <el-icon><SvgIcon name="rotate-clockwise" /></el-icon>
+            </template>
+          </el-button>
+        </el-tooltip>
+        <el-tooltip content="逆时针旋转" placement="top">
+          <el-button
+            size="small"
+            circle
+            @click="rotateCounterClockwise"
+          >
+            <template #icon>
+              <el-icon><SvgIcon name="rotate-counter-clockwise" /></el-icon>
+            </template>
+          </el-button>
+        </el-tooltip>
 
         <template #tip>
           <div class="el-upload__tip">
@@ -92,7 +172,7 @@
 
 <script lang="ts" setup>
 import type { UploadProps, UploadFile, UploadInstance, UploadRawFile } from 'element-plus'
-import { Minus, Plus, Upload } from '@element-plus/icons-vue'
+import { Minus, Plus, Upload, Top, Bottom, Back, Right } from '@element-plus/icons-vue'
 import { Cropper, CropperResult, Preview } from 'vue-advanced-cropper'
 import type { CropperInstance } from './instance'
 import 'vue-advanced-cropper/dist/style.css'
@@ -169,14 +249,50 @@ const handleCropperChange = (cropperResult: CropperResult) => {
   })
 }
 
+const zoom = 0.15
+const move = 30
+const rotate = 90
+
 // 增加缩放比例
-const increaseZoom = () => {
-  cropperRef.value?.zoom( 2)
+const zoomIn = () => {
+  cropperRef.value?.zoom(1 + zoom)
 }
 
 // 减小缩放比例
-const decreaseZoom = () => {
-  cropperRef.value?.zoom(-2)
+const zoomOut = () => {
+  cropperRef.value?.zoom(1 - zoom)
+}
+
+const moveTop = () => {
+  cropperRef.value?.move(0, -move)
+}
+
+const moveBottom = () => {
+  cropperRef.value?.move(0, move)
+}
+
+const moveLeft = () => {
+  cropperRef.value?.move(-move, 0)
+}
+
+const moveRight = () => {
+  cropperRef.value?.move(move, 0)
+}
+
+const flipHorizontal = () => {
+  cropperRef.value?.flip(true)
+}
+
+const flipVertical = () => {
+  cropperRef.value?.flip(false, true)
+}
+
+const rotateClockwise = () => {
+  cropperRef.value?.rotate(rotate)
+}
+
+const rotateCounterClockwise = () => {
+  cropperRef.value?.rotate(-rotate)
 }
 
 // 提交头像上传
@@ -208,11 +324,14 @@ const submitUpload = async () => {
     display: inline-block;
     height: 360px;
     width: 360px;
+    background-color: rgba(204, 204, 204, 0.3);
   }
 
   .preview {
     display: inline-block;
     margin-left: 20px;
+    border: 1px solid rgba(204, 204, 204, 0.7);
+    background-color: rgba(204, 204, 204, 0.3);
   }
 }
 </style>
