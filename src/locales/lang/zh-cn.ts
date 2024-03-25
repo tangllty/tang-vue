@@ -1,5 +1,7 @@
+import { language } from '../types'
+
 // 简体中文
-export default {
+const zhCN: language = {
   title: '简体中文',
   sort: 1,
   lang: {
@@ -49,3 +51,5 @@ export default {
     }
   }
 }
+
+export default zhCN

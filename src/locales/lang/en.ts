@@ -1,5 +1,7 @@
+import { language } from '../types'
+
 // English
-export default {
+const en: language = {
   title: 'English',
   sort: 2,
   lang: {
@@ -49,3 +51,5 @@ export default {
     }
   }
 }
+
+export default en

@@ -1,13 +1,14 @@
 import type { App } from 'vue'
 import { createI18n } from 'vue-i18n'
 import { useSettingStore } from '@/store/modules/setting'
+import { languages } from './types'
 
 const settingStore = useSettingStore()
 
 const modules = import.meta.glob('./lang/*.ts')
 
 const messages: { [key: string]: any } = {}
-export const langs: { key: string, title: string, sort: number }[] = []
+export const langs: languages[] = []
 
 // 动态加载语言包
 await Promise.all(Object.keys(modules).map(async (path) => {
