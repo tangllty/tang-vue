@@ -67,8 +67,6 @@ import { getProxy } from '@/utils/getCurrentInstance'
 import type { SettingsInstance } from './instance'
 import Breadcrumb from './Breadcrumb/index.vue'
 import Settings from './Settings/index.vue'
-import SizeSelect from './SizeSelect/index.vue'
-import LangSelect from './LangSelect/index.vue'
 
 const proxy = getProxy()
 
