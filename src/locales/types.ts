@@ -25,6 +25,11 @@ export type language = {
       emailPlaceholder: string
       captcha: string
       captchaPlaceholder: string
+      otherLogin: {
+        title: string
+        github: string
+      },
+      backgroundSource: string
     },
     layout: {
       profile: string

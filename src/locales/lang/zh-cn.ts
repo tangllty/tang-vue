@@ -22,6 +22,11 @@ const zhCN: language = {
       emailPlaceholder: '请输入邮箱',
       captcha: '验证码',
       captchaPlaceholder: '请输入验证码',
+      otherLogin: {
+        title: '其他登录方式',
+        github: 'Github 授权码'
+      },
+      backgroundSource: '背景图片来源：'
     },
     layout: {
       profile: '个人中心',

@@ -22,6 +22,11 @@ const en: language = {
       emailPlaceholder: 'Please enter email',
       captcha: 'Captcha',
       captchaPlaceholder: 'Please enter captcha',
+      otherLogin: {
+        title: 'Other login methods',
+        github: 'Github Authorization Code'
+      },
+      backgroundSource: 'Background image source: '
     },
     layout: {
       profile: 'Profile',

@@ -128,16 +128,16 @@
           </el-form>
         </el-tab-pane>
 
-        <el-divider>其他登录方式</el-divider>
+        <el-divider>{{ $t('login.otherLogin.title') }}</el-divider>
         <el-button
           type="primary"
           @click="handleGitHubLogin"
-        >GitHub 授权码</el-button>
+        >{{ $t('login.otherLogin.github') }}</el-button>
       </el-tabs>
     </el-card>
 
     <div class="background-source">
-      <el-text>背景图片来源：</el-text>
+      <el-text>{{ $t('login.backgroundSource') }}</el-text>
       <el-link
         type="primary"
         href="https://wallhaven.cc/w/d62ge3"
