@@ -364,14 +364,16 @@ const handleEdit = async (row: SysRole | null) => {
   state.roleForm = res.data
   const menuIds = res.data.menuIds
   const dictIds = res.data.dictIds
-  menuIds.forEach((menuId: number) => menuTreeRef.value?.setChecked(menuId, true, false))
-  dictIds.forEach((dictId: number) => dictTreeRef.value?.setChecked(dictId, true, false))
 
   state.roleDialog = {
     title: '修改角色信息',
     type: 'edit',
     visible: true
   }
+
+  await proxy.$nextTick()
+  menuIds.forEach((menuId: number) => menuTreeRef.value?.setChecked(menuId, true, false))
+  dictIds.forEach((dictId: number) => dictTreeRef.value?.setChecked(dictId, true, false))
 }
 
 // 修改角色状态
