@@ -3,7 +3,7 @@
     <el-card class="login">
       <template #header>
         <div class="login-header">
-          <span>{{ settings.loginTitle }}</span>
+          <span>{{ $t('login.title') }}</span>
         </div>
       </template>
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -154,7 +154,6 @@ import type { FormInstance, FormRules, TabsPaneContext } from 'element-plus'
 import { User, Lock, Message } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
-import settings from '@/settings'
 import { LoginType } from '@/enums'
 import { getCaptcha } from '@/api/auth'
 import type { LoginForm, CaptchaForm } from '@/api/auth/types'

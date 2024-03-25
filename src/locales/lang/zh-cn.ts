@@ -5,7 +5,9 @@ const zhCN: language = {
   title: '简体中文',
   sort: 1,
   lang: {
+    title: '权限管理系统',
     login: {
+      title: '糖猫猫权限管理系统',
       submit: '登录',
       reset: '重置',
       loginType: {

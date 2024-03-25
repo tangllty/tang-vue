@@ -5,7 +5,9 @@ const en: language = {
   title: 'English',
   sort: 2,
   lang: {
+    title: 'Tang System',
     login: {
+      title: 'Tang Permission Management System',
       submit: 'Login',
       reset: 'Reset',
       loginType: {

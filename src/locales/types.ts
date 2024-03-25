@@ -8,7 +8,9 @@ export type language = {
   title: string
   sort: number
   lang: {
+    title: string,
     login: {
+      title: string,
       submit: string
       reset: string
       loginType: {

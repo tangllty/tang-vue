@@ -14,7 +14,7 @@
         class="logo-image"
       />
       <Transition>
-        <span v-show="!title" class="logo-title">{{ settings.title }}</span>
+        <span v-show="!title" class="logo-title">{{ $t('title') }}</span>
       </Transition>
     </router-link>
   </el-header>
@@ -23,7 +23,6 @@
 <script lang="ts" setup>
 import { useSettingStore } from '@/store/modules/setting'
 import logo from '@/assets/logo.png'
-import settings from '@/settings'
 
 const settingStore = useSettingStore()
 
