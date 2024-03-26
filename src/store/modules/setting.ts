@@ -64,16 +64,20 @@ export const useSettingStore = defineStore('setting', () => {
     saveTheme(theme.value)
   }
 
-  return {
+  const config = {
     isDark,
     theme,
     language,
-    elementPlusLocale,
     size,
     sidebarHeader,
     sidebarHeaderLogo,
     fixedHeader,
     sidebar,
+  }
+  return {
+    config,
+    ...config,
+    elementPlusLocale,
     flashTheme
   }
 })
