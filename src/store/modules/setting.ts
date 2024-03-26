@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Ref } from 'vue'
-import { useCssVar, useDark } from '@vueuse/core'
+import { useCssVar } from '@vueuse/core'
 import type { Language } from 'element-plus/es/locale'
 import { store } from '@/store'
 import { getTheme, saveTheme, setTheme } from '@/utils/theme'
@@ -34,7 +34,7 @@ const rootClass = (key: string, value: boolean) => {
 }
 
 export const useSettingStore = defineStore('setting', () => {
-  const isDark: Ref<boolean> = ref(useDark().value ?? false)
+  const isDark: Ref<boolean> = ref(getValue('dark') ?? false)
   const isWeak: Ref<boolean> = ref(getValue('weak') ?? false)
   const theme: Ref<string> = ref(getTheme() ?? useCssVar('--el-color-primary', root))
   /** 语言 */
@@ -51,6 +51,17 @@ export const useSettingStore = defineStore('setting', () => {
   /** 折叠侧边栏 */
   const sidebar: Ref<boolean> = ref(getValue('sidebar') ?? settings.sidebar)
 
+  /**
+   * 刷新主题
+   */
+  const flashTheme = (): void => {
+    setTheme(theme.value)
+    saveTheme(theme.value)
+  }
+  watch(isDark, (val: boolean) => {
+    rootClass('dark', val)
+    flashTheme()
+  })
   watch(isWeak, (val: boolean) => rootClass('weak', val))
   const modules = import.meta.glob('../../../node_modules/element-plus/dist/locale/*.min.mjs')
   const elementPlusLocalePath = (val: string) => `../../../node_modules/element-plus/dist/locale/${val}.min.mjs`
@@ -68,14 +79,6 @@ export const useSettingStore = defineStore('setting', () => {
   watch(sidebarHeaderLogo, (val: boolean) => localStorage.setItem('sidebarHeaderLogo', String(val)))
   watch(fixedHeader, (val: boolean) => localStorage.setItem('fixedHeader', String(val)))
   watch(sidebar, (val: boolean) => localStorage.setItem('sidebar', String(val)))
-
-  /**
-   * 刷新主题
-   */
-  const flashTheme = (): void => {
-    setTheme(theme.value)
-    saveTheme(theme.value)
-  }
 
   const config = {
     isDark,

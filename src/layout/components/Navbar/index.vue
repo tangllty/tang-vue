@@ -15,8 +15,7 @@
 
     <div class="right-div">
       <el-switch
-        v-model="isDark"
-        @change="toggleDark"
+        v-model="settingStore.isDark"
         inline-prompt
         :active-icon="Moon"
         :inactive-icon="Sunny"
@@ -60,7 +59,6 @@
 
 <script lang="ts" setup>
 import { Expand, Fold, ArrowDown, Moon, Sunny } from '@element-plus/icons-vue'
-import { useDark, useToggle } from '@vueuse/core'
 import { useSettingStore } from '@/store/modules/setting'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
@@ -72,16 +70,8 @@ const proxy = getProxy()
 
 const settingStore = useSettingStore()
 const userStore = useUserStore()
-const isDark = useDark()
 
 const settingsRef = ref<SettingsInstance>()
-
-const toggleDark = () => useToggle(isDark)
-
-watch(isDark, (value) => {
-  settingStore.isDark = value
-  settingStore.flashTheme()
-})
 
 /**
  * 切换侧边栏
