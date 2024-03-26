@@ -20,9 +20,23 @@ const getValue = (key: string): boolean | null => {
   return value === 'true'
 }
 
+const root: HTMLElement = document.documentElement
+const setClass = (name: string) => root.classList.add(name)
+const removeClass = (name: string) => root.classList.remove(name)
+
+const rootClass = (key: string, value: boolean) => {
+  if (value) {
+    setClass(key)
+  } else {
+    removeClass(key)
+  }
+  localStorage.setItem(key, String(value))
+}
+
 export const useSettingStore = defineStore('setting', () => {
   const isDark: Ref<boolean> = ref(useDark().value ?? false)
-  const theme: Ref<string> = ref(getTheme() ?? useCssVar('--el-color-primary', document.documentElement))
+  const isWeak: Ref<boolean> = ref(getValue('weak') ?? false)
+  const theme: Ref<string> = ref(getTheme() ?? useCssVar('--el-color-primary', root))
   /** 语言 */
   const language: Ref<string> = ref(localStorage.getItem('language') ?? settings.language)
   const elementPlusLocale: Ref<Language> = ref({} as Language)
@@ -37,15 +51,14 @@ export const useSettingStore = defineStore('setting', () => {
   /** 折叠侧边栏 */
   const sidebar: Ref<boolean> = ref(getValue('sidebar') ?? settings.sidebar)
 
+  watch(isWeak, (val: boolean) => rootClass('weak', val))
   const modules = import.meta.glob('../../../node_modules/element-plus/dist/locale/*.min.mjs')
   const elementPlusLocalePath = (val: string) => `../../../node_modules/element-plus/dist/locale/${val}.min.mjs`
   modules[elementPlusLocalePath(language.value)]().then(({ default: Language }: any) => elementPlusLocale.value = Language)
-
   const setElementPlusLocale = async (val: string) => {
     const { default: Language }: any = await modules[elementPlusLocalePath(val)]()
     elementPlusLocale.value = Language
   }
-
   watch(language, async (val: string) => {
     await setElementPlusLocale(val)
     localStorage.setItem('language', language.value)
@@ -66,6 +79,7 @@ export const useSettingStore = defineStore('setting', () => {
 
   const config = {
     isDark,
+    isWeak,
     theme,
     language,
     size,

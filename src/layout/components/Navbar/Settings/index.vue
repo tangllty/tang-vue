@@ -9,6 +9,10 @@
         <span>{{ $t('settings.basic.theme') }}</span>
         <ThemePicker />
       </div>
+      <div class="item">
+        <span>色弱模式</span>
+        <el-switch v-model="settingStore.isWeak" />
+      </div>
       <el-divider>{{ $t('settings.sidebar.title') }}</el-divider>
       <div class="item">
         <span>{{ $t('settings.sidebar.showHeader') }}</span>
