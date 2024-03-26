@@ -36,6 +36,7 @@ const rootClass = (key: string, value: boolean) => {
 export const useSettingStore = defineStore('setting', () => {
   const isDark: Ref<boolean> = ref(getValue('dark') ?? false)
   const isWeak: Ref<boolean> = ref(getValue('weak') ?? false)
+  const isGray: Ref<boolean> = ref(getValue('gray') ?? false)
   const theme: Ref<string> = ref(getTheme() ?? useCssVar('--el-color-primary', root))
   /** 语言 */
   const language: Ref<string> = ref(localStorage.getItem('language') ?? settings.language)
@@ -63,6 +64,7 @@ export const useSettingStore = defineStore('setting', () => {
     flashTheme()
   })
   watch(isWeak, (val: boolean) => rootClass('weak', val))
+  watch(isGray, (val: boolean) => rootClass('gray', val))
   const modules = import.meta.glob('../../../node_modules/element-plus/dist/locale/*.min.mjs')
   const elementPlusLocalePath = (val: string) => `../../../node_modules/element-plus/dist/locale/${val}.min.mjs`
   modules[elementPlusLocalePath(language.value)]().then(({ default: Language }: any) => elementPlusLocale.value = Language)
@@ -83,6 +85,7 @@ export const useSettingStore = defineStore('setting', () => {
   const config = {
     isDark,
     isWeak,
+    isGray,
     theme,
     language,
     size,

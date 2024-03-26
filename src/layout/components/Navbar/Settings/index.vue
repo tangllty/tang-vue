@@ -13,6 +13,10 @@
         <span>色弱模式</span>
         <el-switch v-model="settingStore.isWeak" />
       </div>
+      <div class="item">
+        <span>灰色模式</span>
+        <el-switch v-model="settingStore.isGray" />
+      </div>
       <el-divider>{{ $t('settings.sidebar.title') }}</el-divider>
       <div class="item">
         <span>{{ $t('settings.sidebar.showHeader') }}</span>
