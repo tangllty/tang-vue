@@ -37,12 +37,12 @@ export const useSettingStore = defineStore('setting', () => {
   /** 折叠侧边栏 */
   const sidebar: Ref<boolean> = ref(getValue('sidebar') ?? settings.sidebar)
 
-  import(`../../../node_modules/element-plus/dist/locale/${language.value}.mjs`)
-    .then(({ default: Language }) => elementPlusLocale.value = Language)
+  const modules = import.meta.glob('../../../node_modules/element-plus/dist/locale/*.min.mjs')
+  const elementPlusLocalePath = (val: string) => `../../../node_modules/element-plus/dist/locale/${val}.min.mjs`
+  modules[elementPlusLocalePath(language.value)]().then(({ default: Language }: any) => elementPlusLocale.value = Language)
 
   const setElementPlusLocale = async (val: string) => {
-    const langModule = import(`../../../node_modules/element-plus/dist/locale/${val}.mjs`)
-    const { default: Language } = await langModule
+    const { default: Language }: any = await modules[elementPlusLocalePath(val)]()
     elementPlusLocale.value = Language
   }
 
