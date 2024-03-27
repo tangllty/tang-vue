@@ -4,6 +4,7 @@ import { useCssVar } from '@vueuse/core'
 import type { Language } from 'element-plus/es/locale'
 import { store } from '@/store'
 import { getTheme, saveTheme, setTheme } from '@/utils/theme'
+import { localStorage } from '@/utils/storage'
 import settings from '@/settings'
 
 /**
@@ -13,7 +14,7 @@ import settings from '@/settings'
  * @returns boolean | null
  */
 const getValue = (key: string): boolean | null => {
-  const value: string | null = localStorage.getItem(key)
+  const value: string | null = localStorage.get(key)
   if (value === null) {
     return null
   }
@@ -30,7 +31,7 @@ const rootClass = (key: string, value: boolean) => {
   } else {
     removeClass(key)
   }
-  localStorage.setItem(key, String(value))
+  localStorage.set(key, String(value))
 }
 
 export const useSettingStore = defineStore('setting', () => {
@@ -39,10 +40,10 @@ export const useSettingStore = defineStore('setting', () => {
   const isGray: Ref<boolean> = ref(getValue('gray') ?? false)
   const theme: Ref<string> = ref(getTheme() ?? useCssVar('--el-color-primary', root))
   /** 语言 */
-  const language: Ref<string> = ref(localStorage.getItem('language') ?? settings.language)
+  const language: Ref<string> = ref(localStorage.get('language') ?? settings.language)
   const elementPlusLocale: Ref<Language> = ref({} as Language)
   /** 组件大小 */
-  const size: Ref<string> = ref(localStorage.getItem('size') ?? settings.size)
+  const size: Ref<string> = ref(localStorage.get('size') ?? settings.size)
   /** 侧边栏头部是否显示 */
   const sidebarHeader: Ref<boolean> = ref(getValue('sidebarHeader') ?? settings.sidebarHeader)
   /** 侧边栏展开时，是否显示logo */
@@ -74,13 +75,13 @@ export const useSettingStore = defineStore('setting', () => {
   }
   watch(language, async (val: string) => {
     await setElementPlusLocale(val)
-    localStorage.setItem('language', language.value)
+    localStorage.set('language', language.value)
   })
-  watch(size, (val: string) => localStorage.setItem('size', val))
-  watch(sidebarHeader, (val: boolean) => localStorage.setItem('sidebarHeader', String(val)))
-  watch(sidebarHeaderLogo, (val: boolean) => localStorage.setItem('sidebarHeaderLogo', String(val)))
-  watch(fixedHeader, (val: boolean) => localStorage.setItem('fixedHeader', String(val)))
-  watch(sidebar, (val: boolean) => localStorage.setItem('sidebar', String(val)))
+  watch(size, (val: string) => localStorage.set('size', val))
+  watch(sidebarHeader, (val: boolean) => localStorage.set('sidebarHeader', String(val)))
+  watch(sidebarHeaderLogo, (val: boolean) => localStorage.set('sidebarHeaderLogo', String(val)))
+  watch(fixedHeader, (val: boolean) => localStorage.set('fixedHeader', String(val)))
+  watch(sidebar, (val: boolean) => localStorage.set('sidebar', String(val)))
 
   const config = {
     isDark,
