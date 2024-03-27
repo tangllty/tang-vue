@@ -1,3 +1,5 @@
+import { isObjectString } from './object'
+
 const windowLocalStorage: Storage = window.localStorage
 const windowSessionStorage: Storage = window.sessionStorage
 
@@ -33,7 +35,10 @@ export const localStorage: LocalStorage = {
    */
   get: (key: string): any => {
     const value: any = windowLocalStorage.getItem(key)
-    return JSON.parse(value)
+    if (isObjectString(value)) {
+      return JSON.parse(value)
+    }
+    return value
   },
   /**
    * 设置 localStorage
@@ -42,7 +47,11 @@ export const localStorage: LocalStorage = {
    * @param value 值
    */
   set: (key: string, value: any): void => {
-    windowLocalStorage.setItem(key, JSON.stringify(value))
+    if (typeof value === 'object') {
+      windowLocalStorage.setItem(key, JSON.stringify(value))
+    } else {
+      windowLocalStorage.setItem(key, value)
+    }
   },
   /**
    * 移除 localStorage
@@ -72,7 +81,10 @@ export const sessionStorage: SessionStorage = {
    */
   get: (key: string): any => {
     const value: any = windowSessionStorage.getItem(key)
-    return JSON.parse(value)
+    if (isObjectString(value)) {
+      return JSON.parse(value)
+    }
+    return value
   },
   /**
    * 设置 sessionStorage
@@ -81,7 +93,11 @@ export const sessionStorage: SessionStorage = {
    * @param value 值
    */
   set: (key: string, value: any): void => {
-    windowSessionStorage.setItem(key, JSON.stringify(value))
+    if (typeof value === 'object') {
+      windowSessionStorage.setItem(key, JSON.stringify(value))
+    } else {
+      windowSessionStorage.setItem(key, value)
+    }
   },
   /**
    * 移除 sessionStorage
