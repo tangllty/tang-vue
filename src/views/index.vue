@@ -29,7 +29,11 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-image :src="wechat" :preview-src-list="groupList" />
+              <el-image
+                :src="wechat"
+                :preview-src-list="groupList"
+                :initial-index="0"
+              />
             </el-col>
             <el-col :span="8">
               <el-button
@@ -39,10 +43,18 @@
                 target="_blank"
                 class="mb-20"
               >点我加入 Telegram</el-button>
-              <el-image :src="telegram" :preview-src-list="groupList" />
+              <el-image
+                :src="telegram"
+                :preview-src-list="groupList"
+                :initial-index="1"
+              />
             </el-col>
             <el-col :span="8">
-              <el-image :src="qq" :preview-src-list="groupList" />
+              <el-image
+                :src="qq"
+                :preview-src-list="groupList"
+                :initial-index="2"
+              />
             </el-col>
           </el-row>
         </el-card>
