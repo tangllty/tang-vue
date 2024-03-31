@@ -155,7 +155,6 @@ import { User, Lock, Message } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { LoginType } from '@/enums'
-import { setToken } from '@/utils/auth'
 import { getCaptcha } from '@/api/auth'
 import type { LoginForm, CaptchaForm } from '@/api/auth/types'
 
@@ -227,11 +226,14 @@ const handleCaptcha = async () => {
 
 // GitHub 登录
 const handleGitHubLogin = () => {
-  proxy.$notImplemented()
-  const clientID = 'Iv1.49e0be67d53b2007'
-  const authorize_uri = 'https://github.com/login/oauth/authorize'
-  const redirect_uri = 'http://localhost:8080/third-party/oauth/github/redirect'
-  window.location.href = `${authorize_uri}?client_id=${clientID}&redirect_uri=${redirect_uri}`
+  const url = import.meta.env.VITE_GITHUB_AUTHORIZE_URL
+  const params: { [key: string]: string } = {
+    client_id: import.meta.env.VITE_GITHUB_CLIENT_ID,
+    // TODO replace a with redirect path
+    redirect_uri: import.meta.env.VITE_GITHUB_REDIRECT_URL + '?a=1'
+  }
+  const query = Object.keys(params).map((key: string) => `${key}=${params[key]}`).join('&')
+  window.location.href = `${url}?${query}`
 }
 
 // 提交表单
@@ -275,13 +277,6 @@ const resetForm = () => {
 
 onMounted(async () => {
   await handleCaptcha()
-  const token = proxy.$route.query.token as string
-  console.log(token)
-  if (token) {
-    userStore.token = token
-    setToken(token)
-    proxy.$router.push({ path: '/' })
-  }
 })
 </script>
 

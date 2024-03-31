@@ -12,6 +12,11 @@ export const routes: Array<RouteRecordRaw> = [
     meta: { hidden: true }
   },
   {
+    path: '/redirect',
+    component: () => import('@/views/redirect.vue'),
+    meta: { hidden: true }
+  },
+  {
     path: '/',
     component: () => import('@/layout/index.vue'),
     redirect: 'index',

@@ -21,7 +21,7 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
   /**
    * 白名单路由
    */
-  const whiteList: string[] = ['/login']
+  const whiteList: string[] = ['/login', '/redirect']
 
   if (!userStore.token) {
     if (whiteList.includes(to.path)) {
