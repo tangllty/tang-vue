@@ -155,6 +155,7 @@ import { User, Lock, Message } from '@element-plus/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { LoginType } from '@/enums'
+import { setToken } from '@/utils/auth'
 import { getCaptcha } from '@/api/auth'
 import type { LoginForm, CaptchaForm } from '@/api/auth/types'
 
@@ -272,8 +273,15 @@ const resetForm = () => {
   proxy.$resetForm(loginRuleFormRef.value)
 }
 
-onMounted(() => {
-  handleCaptcha()
+onMounted(async () => {
+  await handleCaptcha()
+  const token = proxy.$route.query.token as string
+  console.log(token)
+  if (token) {
+    userStore.token = token
+    setToken(token)
+    proxy.$router.push({ path: '/' })
+  }
 })
 </script>
 
