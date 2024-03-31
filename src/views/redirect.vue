@@ -26,6 +26,22 @@ const handleGitHubLogin = async () => {
   if (token) {
     userStore.token = token
     setToken(token)
+    const redirectUrl = proxy.$route.query.redirect as string
+    if (redirectUrl) {
+      const redirectUrlArr: string[] = redirectUrl.split('?')
+      if (redirectUrlArr.length > 1) {
+        const redirectUrlParams: string[] = redirectUrlArr[1].split('&')
+        const redirectUrlParamsObj: { [key: string]: string } = {}
+        redirectUrlParams.forEach((item: string) => {
+          const itemArr: string[] = item.split('=')
+          redirectUrlParamsObj[itemArr[0]] = itemArr[1]
+        })
+        proxy.$router.push({ path: redirectUrlArr[0], query: redirectUrlParamsObj })
+        return
+      }
+      proxy.$router.push({ path: redirectUrl })
+      return
+    }
     proxy.$router.push({ path: '/' })
   }
 }

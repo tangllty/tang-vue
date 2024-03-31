@@ -227,10 +227,10 @@ const handleCaptcha = async () => {
 // GitHub 登录
 const handleGitHubLogin = () => {
   const url = import.meta.env.VITE_GITHUB_AUTHORIZE_URL
+  const redirectUrl = proxy.$route.query.redirect as string
   const params: { [key: string]: string } = {
     client_id: import.meta.env.VITE_GITHUB_CLIENT_ID,
-    // TODO replace a with redirect path
-    redirect_uri: import.meta.env.VITE_GITHUB_REDIRECT_URL + '?a=1'
+    redirect_uri: import.meta.env.VITE_GITHUB_REDIRECT_URL + '?redirect=' + redirectUrl,
   }
   const query = Object.keys(params).map((key: string) => `${key}=${params[key]}`).join('&')
   window.location.href = `${url}?${query}`
