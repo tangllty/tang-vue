@@ -47,6 +47,7 @@
           <el-button
             type="primary"
             :icon="Download"
+            :disabled="genTableIds.length === 0"
             v-hasPermission="'tool:generator:export'"
             @click="handleDownloads"
           >下载</el-button>
