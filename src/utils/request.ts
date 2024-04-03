@@ -10,7 +10,7 @@ let reLoginFlag: boolean = true
  */
 const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
-  timeout: 20000,
+  timeout: 1000 * 20,
   headers: {
     'Content-Type': 'application/json'
   }
