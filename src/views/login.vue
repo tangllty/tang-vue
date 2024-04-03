@@ -218,15 +218,11 @@ const handleCaptcha = async () => {
     state.loginForm.captcha.id = res.data.id
     state.captchaUrl = `data:image/png;base64,${res.data.text}`
     state.captchaLoading = false
-    setTimeout(() => {
-      handleCaptcha()
-    }, 1000 * 60)
+    setTimeout(() => handleCaptcha(), 1000 * 60)
   } catch (error: any) {
     state.captchaLoading = false
     console.log('error get captcha!', error)
-    setTimeout(() => {
-      handleCaptcha()
-    }, 1000 * 3)
+    setTimeout(() => handleCaptcha(), 1000 * 3)
   }
 }
 
