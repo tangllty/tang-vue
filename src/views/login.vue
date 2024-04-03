@@ -218,9 +218,15 @@ const handleCaptcha = async () => {
     state.loginForm.captcha.id = res.data.id
     state.captchaUrl = `data:image/png;base64,${res.data.text}`
     state.captchaLoading = false
+    setTimeout(() => {
+      handleCaptcha()
+    }, 1000 * 60)
   } catch (error: any) {
     state.captchaLoading = false
     console.log('error get captcha!', error)
+    setTimeout(() => {
+      handleCaptcha()
+    }, 1000 * 3)
   }
 }
 
@@ -281,6 +287,17 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+.image-slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--el-fill-color-light);
+  color: var(--el-text-color-secondary);
+  font-size: 30px;
+}
+
 .login-container {
     display: flex;
     justify-content: center;
