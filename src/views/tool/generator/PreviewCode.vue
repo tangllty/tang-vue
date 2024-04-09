@@ -21,7 +21,11 @@
           class="fr"
           @click="handleCopy(value)"
         >复制</el-button>
-        <highlightjs :code="value" />
+        <Highlight
+          :code="value"
+          :autodetect="false"
+          :language="getLanguage(key)"
+        />
       </el-tab-pane>
     </el-tabs>
   </el-dialog>
@@ -71,6 +75,11 @@ const handleShow = async (tableId: number) => {
 // 获取 key
 const getKey = (key: string): string => {
   return key.substring(key.lastIndexOf('/') + 1, key.indexOf('.vm'))
+}
+
+// 获取语言
+const getLanguage = (key: string): string => {
+  return getKey(key).split('.')[1]
 }
 
 // 设置 activeName
