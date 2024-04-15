@@ -160,6 +160,14 @@
             <el-button
               type="primary"
               link
+              :icon="RefreshRight"
+              size="small"
+              v-hasPermission="'tool:generator:sync'"
+              @click="handleSync(scope.row)"
+            >同步</el-button>
+            <el-button
+              type="primary"
+              link
               :icon="Download"
               size="small"
               v-hasPermission="'tool:generator:execute'"
@@ -187,9 +195,9 @@
 
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus'
-import { Edit, Delete, Search, Refresh, Upload, View, Download } from '@element-plus/icons-vue'
+import { Edit, Delete, Search, Refresh, Upload, View, Download, RefreshRight } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes, execute, executes } from '@/api/tool/generator'
+import { listGenTable, deleteGenTable, deleteGenTables, downloadCode, downloadCodes, execute, sync } from '@/api/tool/generator'
 import type { GenTable, GenTableForm, GenTableQuery } from '@/api/tool/generator/types'
 import type { ImportTableInstance, PreviewCodeInstance, EditTableInstance } from './instance'
 import ImportTable from './ImportTable.vue'
@@ -310,6 +318,21 @@ const handleExecute = async (row: GenTable) => {
     })
     await execute(row.tableName)
     proxy.$message.success('执行SQL成功')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+/**
+ * 同步表信息
+ */
+const handleSync = async (row: GenTable) => {
+  try {
+    await proxy.$confirm(`确认要同步[${row.tableName}]表信息吗？`, '提示', {
+      type: 'warning'
+    })
+    await sync(row.tableName)
+    proxy.$message.success('同步表信息成功')
   } catch (error) {
     console.log(error)
   }

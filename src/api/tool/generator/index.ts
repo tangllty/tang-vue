@@ -105,3 +105,24 @@ export const executes = (tableNames: string[]) => {
     params: { tableNames }
   })
 }
+
+/**
+ * 同步表信息
+ */
+export const sync = (tableName: string) => {
+  return request({
+    url: '/tool/generator/sync/' + tableName,
+    method: 'put'
+  })
+}
+
+/**
+ * 同步表信息
+ */
+export const syncs = (tableNames: string[]) => {
+  return request({
+    url: '/tool/generator/syncs',
+    method: 'put',
+    params: { tableNames }
+  })
+}
