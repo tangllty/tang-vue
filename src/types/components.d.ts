@@ -77,6 +77,7 @@ declare module 'vue' {
     ImageUpload: typeof import('./../components/ImageUpload/index.vue')['default']
     LangSelect: typeof import('./../components/LangSelect/index.vue')['default']
     MenuItem: typeof import('./../components/ContextMenu/MenuItem.vue')['default']
+    MonacoEditor: typeof import('./../components/MonacoEditor/index.vue')['default']
     Pagination: typeof import('./../components/Pagination/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
