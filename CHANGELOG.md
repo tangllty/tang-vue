@@ -7,3 +7,4 @@
 ### Features
 
  * Add sync database table column
+ * Add monaco editor
