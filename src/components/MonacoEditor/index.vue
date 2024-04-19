@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import loader, { Monaco } from '@monaco-editor/loader'
 import { getProxy } from '@/utils/getCurrentInstance'
+import { github, githubDark, githubLight } from './themes'
 
 const proxy = getProxy()
 const monacoRef = ref<Monaco>()
@@ -27,7 +28,7 @@ const editorValue = computed<string>({
   set: val => proxy.$emit('update:modelValue', val)
 })
 
-const editorConfig: monacoEditor.editor.IStandaloneEditorConstructionOptions = {
+const editorConfig: monaco.editor.IStandaloneEditorConstructionOptions = {
   value: editorValue.value,
   language: props.language,
 }
@@ -43,6 +44,10 @@ const initMonaco = async () => {
   monacoEditor.onDidChangeModelContent(() => {
     editorValue.value = monacoEditor.getValue()
   })
+  monacoRef.value.editor.defineTheme('github', github)
+  monacoRef.value.editor.defineTheme('github-dark', githubDark)
+  monacoRef.value.editor.defineTheme('github-light', githubLight)
+  monacoRef.value.editor.setTheme('github-light')
 }
 
 onMounted(async () => {
