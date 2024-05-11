@@ -7,6 +7,7 @@ import contextMenu from '@/components/ContextMenu'
 import { resetForm } from '@/utils/form'
 import { notImplemented } from '@/utils/notImplemented'
 import { copy } from '@/utils/clipboard'
+import { sort } from '@/utils/sortChange'
 
 export const setupTangVue = (app: App) => {
   app.config.globalProperties.$dict = getDicts
@@ -17,4 +18,5 @@ export const setupTangVue = (app: App) => {
   app.config.globalProperties.$resetForm = resetForm
   app.config.globalProperties.$notImplemented = notImplemented
   app.config.globalProperties.$copy = copy
+  app.config.globalProperties.$sort = sort
 }

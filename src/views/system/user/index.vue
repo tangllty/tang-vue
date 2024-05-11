@@ -133,7 +133,7 @@
             v-loading="loading"
             :data="userList"
             @selection-change="handleSelectionChange"
-            @sort-change="handleSortChange($event)"
+            @sort-change="$sort($event, queryParams, handleList)"
           >
             <el-table-column type="selection" width="55" />
             <el-table-column
@@ -589,13 +589,6 @@ const handleSelectionChange = (selection: SysUser[]) => {
   if (selection.length === 1) {
     state.userId = userIds.value[0]
   }
-}
-
-/** 排序触发事件 */
-const handleSortChange = (data: SortData) => {
-  queryParams.value.orderByColumn = data.prop
-  queryParams.value.isAsc = data.order
-  handleList()
 }
 
 // 提交表单
