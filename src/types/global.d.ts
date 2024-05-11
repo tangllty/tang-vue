@@ -8,6 +8,8 @@ declare global {
   interface PageQuery {
     pageNum: number
     pageSize: number
+    orderByColumn?: string
+    isAsc?: string
     reasonable?: boolean
   }
 
@@ -37,6 +39,12 @@ declare global {
     label: string
     checked: boolean
     children: TreeSelect[]
+  }
+
+  type SortData = {
+    column: any
+    prop: string
+    order?: string
   }
 
 }

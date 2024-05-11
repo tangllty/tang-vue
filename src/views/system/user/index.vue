@@ -133,6 +133,7 @@
             v-loading="loading"
             :data="userList"
             @selection-change="handleSelectionChange"
+            @sort-change="handleSortChange($event)"
           >
             <el-table-column type="selection" width="55" />
             <el-table-column
@@ -151,6 +152,7 @@
               label="用户名"
               prop="username"
               align="center"
+              sortable
               width="120"
               show-overflow-tooltip
             />
@@ -587,6 +589,13 @@ const handleSelectionChange = (selection: SysUser[]) => {
   if (selection.length === 1) {
     state.userId = userIds.value[0]
   }
+}
+
+/** 排序触发事件 */
+const handleSortChange = (data: SortData) => {
+  queryParams.value.orderByColumn = data.prop
+  queryParams.value.isAsc = data.order
+  handleList()
 }
 
 // 提交表单
