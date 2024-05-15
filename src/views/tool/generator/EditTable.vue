@@ -108,8 +108,8 @@
                   placeholder="请选择 ORM 类型"
                 >
                   <el-option label="MyBatis" value="MyBatis" />
-                  <el-option label="MyBatis-Plus" value="MyBatis-Plus" />
                   <el-option label="MyBatis-Flex" value="MyBatis-Flex" />
+                  <el-option label="MyBatis-Plus" value="MyBatis-Plus" />
                 </el-select>
               </el-form-item>
             </el-col>
