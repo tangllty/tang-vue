@@ -9,3 +9,4 @@
  * Add sync database table column
  * Add monaco editor
  * Support global sort query
+ * Support MyBatis Flex

@@ -109,6 +109,7 @@
                 >
                   <el-option label="MyBatis" value="MyBatis" />
                   <el-option label="MyBatis-Plus" value="MyBatis-Plus" />
+                  <el-option label="MyBatis-Flex" value="MyBatis-Flex" />
                 </el-select>
               </el-form-item>
             </el-col>
