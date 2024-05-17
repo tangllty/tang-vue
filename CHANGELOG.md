@@ -8,5 +8,6 @@
 
  * Add sync database table column
  * Add monaco editor
+ * Add druid monitor
  * Support global sort query
  * Support MyBatis Flex
