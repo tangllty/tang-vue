@@ -9,5 +9,6 @@
  * Add sync database table column
  * Add monaco editor
  * Add druid monitor
+ * Add spring boot admin monitor
  * Support global sort query
  * Support MyBatis Flex
