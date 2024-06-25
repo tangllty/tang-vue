@@ -34,41 +34,41 @@ jobs:
     - name: Zip
       run: sh bin/zip.sh
 
-    - name: Move dist directory
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USERNAME }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        script: |
-          cd /root
-          if [ -d 'tang-vue' ]; then
-            mkdir tang-vue
-          fi
-          cd tang-vue/
-          if [ ! -d 'dists' ]; then
-            mkdir dists
-          fi
-          zip -r dists/dist-$(date +%Y%m%d%H%M%S).zip dist/
-          rm -rf dist/
+    # - name: Move dist directory
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{ secrets.SERVER_HOST }}
+    #     username: ${{ secrets.SERVER_USERNAME }}
+    #     password: ${{ secrets.SERVER_PASSWORD }}
+    #     script: |
+    #       cd /root
+    #       if [ -d 'tang-vue' ]; then
+    #         mkdir tang-vue
+    #       fi
+    #       cd tang-vue/
+    #       if [ ! -d 'dists' ]; then
+    #         mkdir dists
+    #       fi
+    #       zip -r dists/dist-$(date +%Y%m%d%H%M%S).zip dist/
+    #       rm -rf dist/
 
-    - name: Upload to server
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USERNAME }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        port: 22
-        source: 'dist.zip'
-        target: /root/tang-vue/
+    # - name: Upload to server
+    #   uses: appleboy/scp-action@master
+    #   with:
+    #     host: ${{ secrets.SERVER_HOST }}
+    #     username: ${{ secrets.SERVER_USERNAME }}
+    #     password: ${{ secrets.SERVER_PASSWORD }}
+    #     port: 22
+    #     source: 'dist.zip'
+    #     target: /root/tang-vue/
 
-    - name: Deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USERNAME }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        port: 22
-        script: |
-          cd /root/tang-vue/
-          unzip dist.zip
+    # - name: Deploy
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{ secrets.SERVER_HOST }}
+    #     username: ${{ secrets.SERVER_USERNAME }}
+    #     password: ${{ secrets.SERVER_PASSWORD }}
+    #     port: 22
+    #     script: |
+    #       cd /root/tang-vue/
+    #       unzip dist.zip
