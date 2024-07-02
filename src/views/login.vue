@@ -145,7 +145,7 @@
       >Wallhaven</el-link>
     </div>
 
-    <Snowflake />
+    <Rain />
   </div>
 </template>
 

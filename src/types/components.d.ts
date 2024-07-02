@@ -79,6 +79,7 @@ declare module 'vue' {
     MenuItem: typeof import('./../components/ContextMenu/MenuItem.vue')['default']
     MonacoEditor: typeof import('./../components/MonacoEditor/index.vue')['default']
     Pagination: typeof import('./../components/Pagination/index.vue')['default']
+    Rain: typeof import('./../components/Background/Rain/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SizeSelect: typeof import('./../components/SizeSelect/index.vue')['default']
