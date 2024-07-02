@@ -3,23 +3,6 @@
 </template>
 
 <script lang="ts" setup>
-// const canvasRef = ref<HTMLCanvasElement | null>(null)
-
-
-// onMounted(() => {
-//   initCanvas()
-// })
-
-// onUnmounted(() => {
-//   window.removeEventListener('resize', resizeCanvas)
-//   if (!canvasRef.value) return
-//   canvasRef.value.width = window.innerWidth
-//   canvasRef.value.height = window.innerHeight
-//   if (animationFrameId) {
-//     cancelAnimationFrame(animationFrameId)
-//   }
-// })
-
 const state = reactive({
   canvas: {} as HTMLCanvasElement,
   ctx: {} as CanvasRenderingContext2D
