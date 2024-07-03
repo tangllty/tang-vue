@@ -6,7 +6,7 @@
   <footer class="flex flex-justify-end pt-16">
     <el-button type="primary" @click="handleFormData">获取数据</el-button>
     <el-button type="primary" @click="handleFormReset">重置</el-button>
-    <el-button>关闭</el-button>
+    <el-button @click="handleClose">关闭</el-button>
   </footer>
 
   <el-dialog
@@ -94,6 +94,10 @@ const handleFormData = () => {
   state.formData = JSON.stringify(formData, null, 2)
   formDataDialog.value.visible = true
   console.log(proxy)
+}
+
+const handleClose = () => {
+  proxy.$emit('close')
 }
 
 defineExpose({

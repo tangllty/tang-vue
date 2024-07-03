@@ -1,3 +1,9 @@
+## 1.6.7
+
+### Bug Fixes
+
+ * Fix form designer cannot close preview dialog
+
 ## 1.6.6
 
 ### Bug Fixes

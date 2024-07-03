@@ -5,7 +5,7 @@
     width="65%"
     @close="closePreviewDialog"
   >
-    <RenderForm ref="renderFormRef" />
+    <RenderForm ref="renderFormRef" @close="closePreviewDialog" />
   </el-dialog>
 </template>
 
@@ -45,6 +45,8 @@ const handleShow = async (formComponentList: Component[]) => {
 }
 
 const closePreviewDialog = () => {
+  console.log(111)
+
   previewDialog.value.visible = false
   if (!renderFormRef.value) return
   renderFormRef.value.handleReset()
