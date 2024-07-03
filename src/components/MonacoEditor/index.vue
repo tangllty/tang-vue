@@ -31,6 +31,10 @@ const editorValue = computed<string>({
 const editorConfig: monaco.editor.IStandaloneEditorConstructionOptions = {
   value: editorValue.value,
   language: props.language,
+  automaticLayout: true,
+  cursorSmoothCaretAnimation: 'on',
+  cursorBlinking: 'expand',
+  autoIndent: 'full',
 }
 
 const initMonaco = async () => {
