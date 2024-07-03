@@ -109,7 +109,7 @@
             :icon="Delete"
             :underline="false"
             class="ml-6"
-            @click="element.options.splice(index, 1)"
+            @click="element.options!.splice(index, 1)"
           />
         </div>
 
@@ -119,7 +119,7 @@
           :icon="CirclePlus"
           :underline="false"
           class="mt-6"
-          @click="element.options.push({ label: '', value: '' })"
+          @click="element.options!.push({ label: '', value: '' })"
         >添加一级选项</el-link>
       </div>
       <div v-if="hasOwnProperty(element, 'cascaderOptions')">
@@ -174,6 +174,15 @@
           class="mt-8"
           @click="handleCascaderAddParent"
         >添加一级选项</el-link>
+      </div>
+      <div v-if="hasOwnProperty(element, 'code')">
+        <el-divider>代码</el-divider>
+        <el-input
+          type="textarea"
+          v-model="element.code"
+          rows="10"
+          placeholder="请输入代码"
+        />
       </div>
     </el-form>
   </el-scrollbar>

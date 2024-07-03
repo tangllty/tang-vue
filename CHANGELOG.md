@@ -4,6 +4,9 @@
 
  * Fix form designer cannot close preview dialog
 
+### Features
+ * Add html code element
+
 ## 1.6.6
 
 ### Bug Fixes

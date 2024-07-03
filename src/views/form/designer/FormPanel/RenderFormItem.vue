@@ -1,5 +1,6 @@
 <template>
   <el-form-item
+    v-if="component.label"
     :label="component.label"
     :labelWidth="component.labelWidth"
   >
@@ -55,6 +56,10 @@
       style="width: 100%"
     />
   </el-form-item>
+  <div
+    v-else
+    v-html="component.code"
+  />
 </template>
 
 <script lang="ts" setup>

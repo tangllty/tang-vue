@@ -45,6 +45,13 @@ export const componentGroupList = ([
         label: '级联选择',
         placeholder: '请选择选项',
         cascaderOptions: [],
+      },
+      {
+        element: 'div',
+        name: 'HTML',
+        icon: 'code',
+        placeholder: '请输入HTML',
+        code: '<h4>html here...</h4>'
       }
     ] as Component[]
   },
@@ -67,7 +74,9 @@ export const componentGroupList = ([
   componentGroup.list.forEach(component => {
     if (componentType.includes(componentGroup.name)) {
       component.type = 'component'
-      component.labelWidth = 100
+      if (component.label) {
+        component.labelWidth = 100
+      }
     } else if (containerType.includes(componentGroup.name)) {
       component.type = 'container'
     }
