@@ -6,6 +6,7 @@
 
 ### Features
  * Add html code element
+ * Add full screen component
 
 ## 1.6.6
 
