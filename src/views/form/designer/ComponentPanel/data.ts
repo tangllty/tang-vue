@@ -47,11 +47,19 @@ export const componentGroupList = ([
         cascaderOptions: [],
       },
       {
+        element: 'pre',
+        name: '文本',
+        icon: 'text',
+        placeholder: '请输入文本',
+        text: '文本内容...',
+        align: 'left',
+      },
+      {
         element: 'div',
         name: 'HTML',
         icon: 'code',
         placeholder: '请输入HTML',
-        code: '<h4>html here...</h4>'
+        code: '<p>tab <b>html</b> here...</p>'
       }
     ] as Component[]
   },

@@ -57,9 +57,16 @@
     />
   </el-form-item>
   <div
-    v-else
+    v-else-if="component.code"
     v-html="component.code"
   />
+  <pre
+    v-else-if="component.text"
+    :style="{
+      whiteSpace: 'pre-wrap',
+      textAlign: component.align
+    }"
+  >{{ component.text }}</pre>
 </template>
 
 <script lang="ts" setup>

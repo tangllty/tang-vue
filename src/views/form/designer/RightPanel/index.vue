@@ -175,6 +175,13 @@
           @click="handleCascaderAddParent"
         >添加一级选项</el-link>
       </div>
+      <el-form-item v-if="hasOwnProperty(element, 'align')" label="对齐方式">
+        <el-radio-group v-model="element.align" size="small">
+          <el-radio-button label="left">居左</el-radio-button>
+          <el-radio-button label="center">居中</el-radio-button>
+          <el-radio-button label="right">居右</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
       <div v-if="hasOwnProperty(element, 'code')">
         <el-divider>代码</el-divider>
         <FullScreen>
