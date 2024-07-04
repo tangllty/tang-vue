@@ -3,12 +3,14 @@
 ### Bug Fixes
 
  * Fix form designer cannot close preview dialog
+ * Fix nested container cannot choose
 
 ### Features
  * Add html code element
  * Add full screen element
  * Add text element
  * Add card container element
+ * Preview card container element
 
 ## 1.6.6
 

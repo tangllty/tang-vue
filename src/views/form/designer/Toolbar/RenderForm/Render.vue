@@ -11,6 +11,9 @@
           <Render v-model="childComponent.children" />
         </el-col>
       </el-row>
+      <el-card v-else-if="component.element === 'el-card'" :header="component.header">
+        <Render v-model="component.children" />
+      </el-card>
     </template>
   </template>
 </template>
