@@ -199,6 +199,9 @@
       <el-form-item v-if="hasOwnProperty(element, 'header')" label="卡片标题">
         <el-input v-model="element.header" placeholder="请输入卡片标题" />
       </el-form-item>
+      <el-form-item v-if="hasOwnProperty(element, 'watermark')" label="水印">
+        <el-input v-model="element.watermark" placeholder="请输入水印" />
+      </el-form-item>
     </el-form>
   </el-scrollbar>
 </template>

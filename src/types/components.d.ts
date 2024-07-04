@@ -71,6 +71,7 @@ declare module 'vue' {
     ElTree: typeof import('element-plus/es')['ElTree']
     ElTreeSelect: typeof import('element-plus/es')['ElTreeSelect']
     ElUpload: typeof import('element-plus/es')['ElUpload']
+    ElWatermark: typeof import('element-plus/es')['ElWatermark']
     EmojiPicker: typeof import('./../components/EmojiPicker/index.vue')['default']
     FullScreen: typeof import('./../components/FullScreen/index.vue')['default']
     Highlight: typeof import('./../components/Highlight/index.vue')['default']

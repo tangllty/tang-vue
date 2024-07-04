@@ -11,6 +11,7 @@
  * Add text element
  * Add card container element
  * Preview card container element
+ * Add watermark container element
 
 ## 1.6.6
 

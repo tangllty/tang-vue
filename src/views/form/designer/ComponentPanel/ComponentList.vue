@@ -111,6 +111,13 @@ const cloneComponent = (component: Component) => {
     }
   }
 
+  if (component.element === 'el-watermark') {
+    clonedComponent = {
+      ...clonedComponent,
+      children: []
+    }
+  }
+
   proxy.$emit('update:fieldId', props.fieldId + 1)
   return {
     ...clonedComponent,

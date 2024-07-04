@@ -79,6 +79,13 @@ export const componentGroupList = ([
         icon: 'card',
         header: '卡片标题',
         children: [] as Component[],
+      },
+      {
+        element: 'el-watermark',
+        name: '水印容器',
+        icon: 'watermark',
+        watermark: '水印内容...',
+        children: [] as Component[],
       }
     ] as Component[]
   },

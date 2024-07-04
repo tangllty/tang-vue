@@ -16,6 +16,16 @@
     <el-card v-else-if="component.element === 'el-card'" :header="component.header">
       <NestedForm v-model="component.children" v-model:activeItem="activeItem" />
     </el-card>
+    <el-watermark
+      v-else-if="component.element === 'el-watermark'"
+      :content="component.watermark"
+      :class="{
+        'el-watermark__empty': component.children.length === 0,
+      }"
+      class="el-watermark"
+    >
+      <NestedForm v-model="component.children" v-model:activeItem="activeItem" />
+    </el-watermark>
   </template>
 </template>
 
@@ -79,5 +89,13 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
 
 :deep(.el-card__body) {
   min-height: 20px;
+}
+
+.el-watermark {
+  border: 1px dashed #336699;
+
+  &__empty {
+    height: 50px;
+  }
 }
 </style>

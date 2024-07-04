@@ -14,6 +14,9 @@
       <el-card v-else-if="component.element === 'el-card'" :header="component.header">
         <Render v-model="component.children" />
       </el-card>
+      <el-watermark v-else-if="component.element === 'el-watermark'" :content="component.watermark">
+        <Render v-model="component.children" />
+      </el-watermark>
     </template>
   </template>
 </template>
