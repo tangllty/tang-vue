@@ -16,6 +16,9 @@
         <NestedForm v-model="item.children" v-model:activeItem="activeItem" />
       </el-col>
     </el-row>
+    <el-card v-else-if="component.element === 'el-card'" :header="component.header">
+      <NestedForm v-model="component.children" v-model:activeItem="activeItem" />
+    </el-card>
   </template>
 </template>
 
@@ -60,7 +63,6 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
 @import './index.scss';
 
 .el-row, .el-col {
-  min-height: 50px;
   border: 1px dashed #336699;
 }
 
@@ -75,5 +77,9 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
   .drag-handler {
     left: -2px;
   }
+}
+
+:deep(.el-card__body) {
+  min-height: 20px;
 }
 </style>

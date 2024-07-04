@@ -73,6 +73,13 @@ export const componentGroupList = ([
         icon: '行容器',
         children: [] as Component[],
       },
+      {
+        element: 'el-card',
+        name: '卡片容器',
+        icon: 'card',
+        header: '卡片标题',
+        children: [] as Component[],
+      }
     ] as Component[]
   },
 ] as ComponentGroup[]).map(componentGroup => {

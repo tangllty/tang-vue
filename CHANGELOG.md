@@ -6,8 +6,9 @@
 
 ### Features
  * Add html code element
- * Add full screen component
+ * Add full screen element
  * Add text element
+ * Add card container element
 
 ## 1.6.6
 
