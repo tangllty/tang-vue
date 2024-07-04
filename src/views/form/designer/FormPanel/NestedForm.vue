@@ -11,13 +11,7 @@
       <el-icon v-if="activeItem === component" class="drag-handler">
         <Rank />
       </el-icon>
-      <NestedForm
-        v-if="component.element === 'el-row' && component.children"
-        v-model="components[index].children"
-        v-model:activeItem="activeItem"
-        class="container"
-      />
-      <RenderForm v-else v-model="components[index]" />
+      <RenderForm v-model="components[index]" />
     </div>
   </div>
 </template>
