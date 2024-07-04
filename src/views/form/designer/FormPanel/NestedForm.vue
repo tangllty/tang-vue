@@ -11,7 +11,7 @@
       <el-icon v-if="activeItem === component" class="drag-handler">
         <Rank />
       </el-icon>
-      <RenderForm v-model="components[index]" />
+      <RenderForm v-model="components[index]" v-model:activeItem="activeItem" />
     </div>
   </div>
 </template>
