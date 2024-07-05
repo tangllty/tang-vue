@@ -60,9 +60,15 @@ const handleResetVModel = (formComponentList: Component[]): Component[] => {
     if (item.children) {
       item.children = handleResetVModel(item.children)
     }
+    if (item.vModel instanceof Array) {
+      return {
+        ...item,
+        vModel: []
+      }
+    }
     return {
       ...item,
-      vModel: undefined
+      vModel: null
     }
   })
 }
@@ -78,8 +84,6 @@ const handleFormReset = () => {
 const handleVModelData = (formComponentList: Component[]): { [key: string]: any } => {
   return formComponentList.reduce((formData, item) => {
     if (item.field) {
-      console.log(item.field, item.vModel);
-      
       (formData as { [key: string]: any })[item.field] = item.vModel
     }
 

@@ -42,6 +42,7 @@ export const componentGroupList = ([
         name: '多选框',
         icon: '多选框',
         label: '多选框',
+        vModel: [],
         options: [],
       },
       {
@@ -57,6 +58,7 @@ export const componentGroupList = ([
         name: '级联选择',
         icon: '级联选择',
         label: '级联选择',
+        vModel: [],
         placeholder: '请选择选项',
         cascaderOptions: [],
       },
@@ -112,6 +114,12 @@ export const componentGroupList = ([
       component.type = 'component'
       if (component.label) {
         component.labelWidth = 100
+      }
+      const arrayComponent = ['el-checkbox', 'el-cascader']
+      if (arrayComponent.includes(component.element)) {
+        component.vModel = []
+      } else {
+        component.vModel = null
       }
     } else if (containerType.includes(componentGroup.name)) {
       component.type = 'container'
