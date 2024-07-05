@@ -83,9 +83,12 @@
   />
   <pre
     v-else-if="component.text"
+    class="mt-0 mb-0"
     :style="{
       whiteSpace: 'pre-wrap',
-      textAlign: component.align
+      textAlign: component.align,
+      fontSize: component.fontSize + 'px',
+      lineHeight: component.fontSize * component.lineHeight + 'px'
     }"
   >{{ component.text }}</pre>
 </template>

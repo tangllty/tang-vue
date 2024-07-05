@@ -68,6 +68,8 @@ export const componentGroupList = ([
         icon: 'text',
         text: '文本内容...',
         align: 'left',
+        fontSize: 16,
+        lineHeight: 1,
       },
       {
         element: 'div',

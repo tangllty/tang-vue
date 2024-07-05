@@ -182,6 +182,22 @@
           <el-radio-button label="right">居右</el-radio-button>
         </el-radio-group>
       </el-form-item>
+      <el-form-item v-if="hasOwnProperty(element, 'fontSize')" label="字体大小">
+        <el-input-number
+          v-model="element.fontSize"
+          size="small"
+          class="mr-10"
+        />px
+      </el-form-item>
+      <el-form-item v-if="hasOwnProperty(element, 'lineHeight')" label="行高">
+        <el-input-number
+          v-model="element.lineHeight"
+          :precision="2"
+          :step="0.5"
+          size="small"
+          class="mr-10"
+        />倍
+      </el-form-item>
       <div v-if="hasOwnProperty(element, 'code')">
         <el-divider>代码</el-divider>
         <FullScreen>
