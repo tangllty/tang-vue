@@ -66,7 +66,6 @@ export const componentGroupList = ([
         element: 'pre',
         name: '文本',
         icon: 'text',
-        placeholder: '请输入文本',
         text: '文本内容...',
         align: 'left',
       },
@@ -74,7 +73,6 @@ export const componentGroupList = ([
         element: 'div',
         name: 'HTML',
         icon: 'code',
-        placeholder: '请输入HTML',
         code: '<p>tab <b>html</b> here...</p>'
       }
     ] as Component[]

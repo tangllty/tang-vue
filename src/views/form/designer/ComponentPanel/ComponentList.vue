@@ -111,6 +111,11 @@ const cloneComponent = (component: Component) => {
     }
   }
 
+  const noFieldComponents = ['pre', 'div']
+  if (noFieldComponents.includes(component.element)) {
+    return { ...clonedComponent }
+  }
+
   proxy.$emit('update:fieldId', props.fieldId + 1)
   return {
     ...clonedComponent,
