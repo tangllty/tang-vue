@@ -24,7 +24,8 @@ export default ({ mode }: ConfigEnv) => {
       'tab-pane', 'checkbox', 'avatar', 'loading', 'table-column', 'timeline-item',
       'timeline', 'carousel', 'text', 'table', 'button', 'carousel-item', 'select',
       'dialog', 'option', 'empty', 'header', 'badge', 'form', 'sub-menu', 'switch',
-      'col', 'image', 'backtop', 'slider', 'tree', 'cascader', 'tooltip'
+      'col', 'backtop', 'slider', 'tree', 'tooltip', 'watermark', 'checkbox-group',
+      'radio-button', 'cascader', 'image'
     ]
     return components.map(component => `element-plus/es/components/${component}/style/css`)
   }
@@ -85,7 +86,7 @@ export default ({ mode }: ConfigEnv) => {
     },
     optimizeDeps: {
       include: [
-        'vue', 'emoji-mart', 'element-plus/es'
+        'vue', 'emoji-mart', 'element-plus/es', '@monaco-editor/loader'
       ].concat(optimizeElementPlusComponentsInclude())
     },
     resolve: {
