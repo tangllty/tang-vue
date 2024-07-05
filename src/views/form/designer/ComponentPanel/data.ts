@@ -38,6 +38,13 @@ export const componentGroupList = ([
         options: [],
       },
       {
+        element: 'el-checkbox',
+        name: '多选框',
+        icon: '多选框',
+        label: '多选框',
+        options: [],
+      },
+      {
         element: 'el-select',
         name: '选择器',
         icon: '选择器',

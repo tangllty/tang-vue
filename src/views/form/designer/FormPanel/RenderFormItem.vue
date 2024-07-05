@@ -65,6 +65,17 @@
         :value="item.value"
       >{{ item.label }}</el-radio>
     </el-radio-group>
+    <el-checkbox-group
+      v-else-if="component.element === 'el-checkbox'"
+      v-model="component.vModel"
+    >
+      <el-checkbox
+        v-for="(item, index) in component.options"
+        :key="index"
+        :value="item.value"
+        :label="item.label"
+      />
+    </el-checkbox-group>
   </el-form-item>
   <div
     v-else-if="component.code"
