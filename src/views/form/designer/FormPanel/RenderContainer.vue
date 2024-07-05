@@ -1,8 +1,8 @@
 <template>
   <el-row v-if="component.element === 'el-row'">
     <el-col
-      v-for="(item, index) in component.children"
-      :key="index"
+      v-for="item in component.children"
+      :key="item.id"
       :span="item.span"
       :class="{ 'active-item': activeItem === item }"
       @click="handleActiveItem(item, $event)"

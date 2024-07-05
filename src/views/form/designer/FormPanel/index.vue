@@ -7,7 +7,7 @@
     >
       <div
         v-for="(item, index) in formComponentList"
-        :key="item.element"
+        :key="item.id"
         class="component-container"
         :class="{ 'active-item': activeItem === item }"
         @click="handleActiveItem(item, $event)"

@@ -2,7 +2,7 @@
   <div ref="nestedFromRef" class="nested-container">
     <div
       v-for="(component, index) in components"
-      :key="component.element"
+      :key="component.id"
       class="components-container"
       :class="{ 'active-item': activeItem === component }"
       @click="handleActiveItem(component, $event)"
