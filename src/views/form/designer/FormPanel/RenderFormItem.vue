@@ -55,6 +55,16 @@
       :placeholder="component.placeholder"
       style="width: 100%"
     />
+    <el-radio-group
+      v-else-if="component.element === 'el-radio'"
+      v-model="component.vModel"
+    >
+      <el-radio
+        v-for="(item, index) in component.options"
+        :key="index"
+        :value="item.value"
+      >{{ item.label }}</el-radio>
+    </el-radio-group>
   </el-form-item>
   <div
     v-else-if="component.code"

@@ -31,6 +31,13 @@ export const componentGroupList = ([
         placeholder: '请输入数字',
       },
       {
+        element: 'el-radio',
+        name: '单选框',
+        icon: '单选框',
+        label: '单选框',
+        options: [],
+      },
+      {
         element: 'el-select',
         name: '选择器',
         icon: '选择器',

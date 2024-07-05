@@ -12,6 +12,7 @@
  * Add card container element
  * Preview card container element
  * Add watermark container element
+ * Add radio element
 
 ## 1.6.6
 

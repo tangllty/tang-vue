@@ -76,7 +76,7 @@ const cloneComponent = (component: Component) => {
     }
   }
 
-  if (component.element === 'el-select') {
+  if (component.options) {
     const initOptions = getArray(3).map(i => ({
       value: i,
       label: `选项${i + 1}`
@@ -104,14 +104,7 @@ const cloneComponent = (component: Component) => {
     }
   }
 
-  if (component.element === 'el-card') {
-    clonedComponent = {
-      ...clonedComponent,
-      children: []
-    }
-  }
-
-  if (component.element === 'el-watermark') {
+  if (component.children) {
     clonedComponent = {
       ...clonedComponent,
       children: []
