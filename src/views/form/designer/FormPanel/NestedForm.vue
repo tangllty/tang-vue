@@ -47,9 +47,7 @@ const activeItem = computed<Component>({
 })
 
 const handleActiveItem = (component: Component, event: MouseEvent | null = null) => {
-  if (!event) return
-  event.preventDefault()
-  event.stopPropagation()
+  if (event) event.stopPropagation()
   activeItem.value = component
 }
 
