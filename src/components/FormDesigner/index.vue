@@ -30,6 +30,7 @@
       }">
         <FormPanel
           ref="formPanelRef"
+          v-model="formComponentList"
           v-model:activeItem="activeItem"
           :style="{
             minHeight: scrollerRef ? scrollerRef.$el.clientHeight - 40 + 'px' : '100%'
@@ -67,11 +68,20 @@ import Preview from './Toolbar/Preview.vue'
 
 const proxy = getProxy()
 
+const props = defineProps({
+  modelValue: {
+    type: Array as PropType<Component[]>,
+    default: () => []
+  }
+})
+
 const state = reactive({
+  formComponentList: props.modelValue,
   activeItem: {} as Component
 })
 
 const {
+  formComponentList,
   activeItem
 } = toRefs(state)
 

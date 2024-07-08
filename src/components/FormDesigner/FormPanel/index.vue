@@ -46,6 +46,10 @@ import RenderForm from './RenderForm.vue'
 const proxy = getProxy()
 
 const props = defineProps({
+  modelValue: {
+    type: Array as PropType<Component[]>,
+    default: () => []
+  },
   activeItem: {
     type: Object as PropType<Component>,
     default: null
@@ -53,7 +57,7 @@ const props = defineProps({
 })
 
 const state = reactive({
-  formComponentList: [] as Component[],
+  formComponentList: props.modelValue,
   emptyInfoStyle: {}
 })
 

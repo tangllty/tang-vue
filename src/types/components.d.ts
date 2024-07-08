@@ -75,6 +75,7 @@ declare module 'vue' {
     ElWatermark: typeof import('element-plus/es')['ElWatermark']
     EmojiPicker: typeof import('./../components/autoconfigure/EmojiPicker/index.vue')['default']
     FormDesigner: typeof import('./../components/autoconfigure/FormDesigner/index.vue')['default']
+    FormRender: typeof import('./../components/autoconfigure/FormDesigner/FormRender.vue')['default']
     FullScreen: typeof import('./../components/autoconfigure/FullScreen/index.vue')['default']
     Highlight: typeof import('./../components/autoconfigure/Highlight/index.vue')['default']
     IconSelect: typeof import('./../components/autoconfigure/IconSelect/index.vue')['default']

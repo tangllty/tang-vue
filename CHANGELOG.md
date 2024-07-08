@@ -14,6 +14,7 @@
  * Add watermark container element
  * Add radio element
  * Add checkbox element
+ * Add form render
 
 ## 1.6.6
 
