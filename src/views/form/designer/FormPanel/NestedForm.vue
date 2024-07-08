@@ -20,7 +20,7 @@
 import { useDraggable } from 'vue-draggable-plus'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
-import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import type { ContextMenuOptions, MenuItem } from '@/components/autoconfigure/ContextMenu/types'
 import RenderForm from './RenderForm.vue'
 
 const proxy = getProxy()

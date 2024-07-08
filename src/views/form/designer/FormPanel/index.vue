@@ -40,7 +40,7 @@ import { Rank } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
 import { SortableEvent } from 'sortablejs'
-import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import type { ContextMenuOptions, MenuItem } from '@/components/autoconfigure/ContextMenu/types'
 import RenderForm from './RenderForm.vue'
 
 const proxy = getProxy()

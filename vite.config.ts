@@ -49,7 +49,9 @@ export default ({ mode }: ConfigEnv) => {
       }),
       Components({
         resolvers: [ElementPlusResolver()],
-        dts: './src/types/components.d.ts'
+        dts: './src/types/components.d.ts',
+        // include、exclude、glob not work solution
+        dirs: 'src/components/autoconfigure'
       }),
       visualizer({
         open: false

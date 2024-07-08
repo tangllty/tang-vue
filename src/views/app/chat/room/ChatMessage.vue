@@ -91,7 +91,7 @@ import { useUserStore } from '@/store/modules/user'
 import { MessageType } from '@/enums'
 import type { ChatMessage, FileMessageContent } from '@/types'
 import { listAppChatMessage, deleteAppChatMessage } from '@/api/app/chat/message'
-import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import type { ContextMenuOptions, MenuItem } from '@/components/autoconfigure/ContextMenu/types'
 import type { AppChatMessage, AppChatMessageData, AppChatMessageQuery } from '@/api/app/chat/message/types'
 
 const proxy = getProxy()

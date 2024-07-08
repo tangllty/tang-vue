@@ -42,7 +42,7 @@
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listAppChatListAll, stickAppChatList, unstickAppChatList } from '@/api/app/chat/chat-list'
 import type { AppChatList } from '@/api/app/chat/chat-list/types'
-import type { ContextMenuOptions, MenuItem } from '@/components/ContextMenu/types'
+import type { ContextMenuOptions, MenuItem } from '@/components/autoconfigure/ContextMenu/types'
 import { isObjectString } from '@/utils/object'
 import type { FileMessageContent } from '@/types'
 
