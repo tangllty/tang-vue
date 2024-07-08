@@ -96,8 +96,12 @@
                   v-model="editTableForm.languageType"
                   placeholder="请选择语言类型"
                 >
-                  <el-option label="Java" value="Java" />
-                  <el-option label="Kotlin" value="Kotlin" />
+                  <el-option
+                    v-for="item in gen_table_language_type"
+                    :key="item.dataId"
+                    :label="item.dataLabel"
+                    :value="item.dataValue"
+                  />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -107,9 +111,12 @@
                   v-model="editTableForm.ormType"
                   placeholder="请选择 ORM 类型"
                 >
-                  <el-option label="MyBatis" value="MyBatis" />
-                  <el-option label="MyBatis-Flex" value="MyBatis-Flex" />
-                  <el-option label="MyBatis-Plus" value="MyBatis-Plus" />
+                  <el-option
+                    v-for="item in gen_table_orm_type"
+                    :key="item.dataId"
+                    :label="item.dataLabel"
+                    :value="item.dataValue"
+                  />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -356,6 +363,7 @@ import { listMenuTree } from '@/api/system/menu'
 import type { SysMenuQuery } from '@/api/system/menu/types'
 
 const proxy = getProxy()
+const { gen_table_language_type, gen_table_orm_type } = proxy.$dict('gen_table_language_type', 'gen_table_orm_type')
 
 const state = reactive({
   loading: false,
