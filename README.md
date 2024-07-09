@@ -19,6 +19,7 @@ You can read the [documentation](https://tangllty.eu.org/) for more information
 * Code generator, one click to generate the basic front-end and back-end code
 * Encapsulate WebSocket, support heartbeat detection, reconnection mechanism, custom message type push and subscription
 * Instant messaging, sending and receiving friends and group messages anytime, anywhere, and transferring files to each other
+* Form designer, visual form generation
 * Friendly code structure and comments, easy to read and secondary development
 
 ## Project Preview
