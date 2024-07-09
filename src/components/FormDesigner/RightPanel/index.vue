@@ -1,11 +1,18 @@
 <template>
   <el-scrollbar>
     <el-form
+      v-if="Object.keys(element).length"
       label-width="80px"
       class="pr-12 pl-12"
     >
       <el-collapse v-model="activeNames">
         <el-collapse-item title="系统属性" name="system">
+          <template #title>
+            <span>系统属性</span>
+            <el-tooltip content="系统属性不可编辑" placement="top">
+              <el-icon><QuestionFilled /></el-icon>
+            </el-tooltip>
+          </template>
           <el-form-item v-if="hasOwnProperty(element, 'id')" label="唯一标识">
             <el-input v-model="element.id" readonly />
           </el-form-item>
@@ -225,6 +232,9 @@
         </el-collapse-item>
       </el-collapse>
     </el-form>
+    <div v-else class="flex flex-items-center flex-justify-center h-full">
+      <el-empty description="请选中组件或点击左侧组件添加" />
+    </div>
   </el-scrollbar>
 </template>
 
