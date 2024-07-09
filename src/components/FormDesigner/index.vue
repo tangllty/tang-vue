@@ -4,7 +4,11 @@
       <el-header class="header">
         组件库
       </el-header>
-      <ComponentPanel ref="componentPanelRef" @componentClick="handleComponentClick" />
+      <ComponentPanel
+        ref="componentPanelRef"
+        @componentClick="handleComponentClick"
+        class="left-panel"
+      />
     </el-aside>
     <el-container class="main-container">
       <el-header class="header flex flex-justify-end">
@@ -151,6 +155,13 @@ onMounted(async () => {
 
     width: $leftWidth;
     overflow-x: hidden;
+
+    .left-panel {
+      --left-panel-padding: 18px;
+      height: calc(100% - 50px - 2 * var(--left-panel-padding));
+      margin-top: var(--left-panel-padding);
+      margin-bottom: var(--left-panel-padding);
+    }
   }
 
   .main-container {
