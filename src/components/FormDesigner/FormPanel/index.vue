@@ -105,7 +105,14 @@ const showContextMenu = (e: MouseEvent, component: Component) => {
       label: '删除',
       icon: '删除',
       onClick: () => {
-        formComponentList.value = formComponentList.value.filter((item) => item !== component)
+        const index = formComponentList.value.findIndex(item => item === component)
+        formComponentList.value.splice(index, 1)
+        if (formComponentList.value.length) {
+          const nextIndex = index === formComponentList.value.length ? index - 1 : index
+          handleActiveItem(formComponentList.value[nextIndex])
+        } else {
+          handleActiveItem({} as Component)
+        }
       }
     },
     {
