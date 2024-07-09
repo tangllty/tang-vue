@@ -1,6 +1,9 @@
 <template>
   <el-container class="form-container">
     <el-aside class="left-container">
+      <el-header class="header">
+        组件库
+      </el-header>
       <ComponentPanel ref="componentPanelRef" @componentClick="handleComponentClick" />
     </el-aside>
     <el-container class="main-container">
