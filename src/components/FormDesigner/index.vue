@@ -40,7 +40,7 @@
     </el-container>
     <el-aside class="right-container">
       <el-header class="header">
-        Right Header
+        组件设置
       </el-header>
       <RightPanel
         v-model:activeItem="activeItem"
