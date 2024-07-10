@@ -16,6 +16,7 @@
  * Add radio element
  * Add checkbox element
  * Add form render
+ * Add questionnaire system
 
 ## 1.6.6
 
