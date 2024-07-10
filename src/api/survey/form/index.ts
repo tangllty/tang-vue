@@ -53,6 +53,18 @@ export const editSurveyForm = (data: SurveyFormForm) => {
 }
 
 /**
+ * 发布调查问卷信息
+ *
+ * @param formId 调查问卷主键
+ */
+export const publishSurveyForm = (formId: number) => {
+  return request({
+    url: '/survey/form/publish/' + formId,
+    method: 'put'
+  })
+}
+
+/**
  * 删除调查问卷信息
  *
  * @param formId 调查问卷主键

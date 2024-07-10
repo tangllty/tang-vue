@@ -156,21 +156,26 @@
           prop="formCode"
           label="问卷编码"
           align="center"
+          width="90"
+          show-overflow-tooltip
         />
         <el-table-column
           prop="formName"
           label="问卷名称"
           align="center"
+          width="90"
         />
         <el-table-column
           prop="formData"
           label="问卷数据"
           align="center"
+          width="90"
         />
         <el-table-column
           prop="publishStatus"
           label="发布状态"
           align="center"
+          width="90"
         >
           <template #default="scope">
             <dict-tag :data="qs_survey_form_publish_status" :value="scope.row.publishStatus" />
@@ -180,11 +185,13 @@
           prop="publishTime"
           label="发布时间"
           align="center"
+          width="160"
         />
         <el-table-column
           prop="closeTime"
           label="关闭时间"
           align="center"
+          width="160"
         />
         <el-table-column
           prop="status"
@@ -204,6 +211,7 @@
           prop="createTime"
           label="创建时间"
           align="center"
+          width="160"
         />
         <el-table-column
           prop="updateBy"
@@ -214,6 +222,7 @@
           prop="updateTime"
           label="更新时间"
           align="center"
+          width="160"
         />
         <el-table-column
           prop="remark"
@@ -226,6 +235,14 @@
           align="center"
         >
           <template #default="scope">
+            <el-button
+              type="primary"
+              link
+              :icon="Position"
+              size="small"
+              v-hasPermission="'survey:form:publish'"
+              @click="handlePublish(scope.row)"
+            >发布</el-button>
             <el-button
               type="primary"
               link
@@ -269,24 +286,24 @@
         label-width="120px"
         status-icon
       >
-        <el-form-item label="问卷编码" prop="formCode">
+        <!-- <el-form-item label="问卷编码" prop="formCode">
           <el-input
             v-model="surveyFormForm.formCode"
             placeholder="请输入问卷编码"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="问卷名称" prop="formName">
           <el-input
             v-model="surveyFormForm.formName"
             placeholder="请输入问卷名称"
           />
         </el-form-item>
-        <el-form-item label="问卷数据" prop="formData">
+        <!-- <el-form-item label="问卷数据" prop="formData">
           <el-input
             v-model="surveyFormForm.formData"
             placeholder="请输入问卷数据"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="发布状态" prop="publishStatus">
           <el-radio-group v-model="surveyFormForm.publishStatus">
             <el-radio
@@ -296,14 +313,14 @@
             >{{ item.dataLabel }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="发布时间" prop="publishTime">
+        <!-- <el-form-item label="发布时间" prop="publishTime">
           <el-date-picker
             v-model="surveyFormForm.publishTime"
             type="datetime"
             placeholder="选择发布时间日期时间"
             value-format="YYYY-MM-DD HH:mm:ss"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="关闭时间" prop="closeTime">
           <el-date-picker
             v-model="surveyFormForm.closeTime"
@@ -339,9 +356,9 @@
 
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Search, Refresh } from '@element-plus/icons-vue'
+import { Plus, Edit, Delete, Search, Refresh, Position } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
-import { listSurveyForm, getSurveyForm, addSurveyForm, editSurveyForm, deleteSurveyForm, deleteSurveyForms } from '@/api/survey/form'
+import { listSurveyForm, getSurveyForm, addSurveyForm, editSurveyForm, publishSurveyForm, deleteSurveyForm, deleteSurveyForms } from '@/api/survey/form'
 import type { SurveyForm, SurveyFormForm, SurveyFormQuery } from '@/api/survey/form/types'
 
 const proxy = getProxy()
@@ -448,6 +465,24 @@ const handleEdit = async (row: SurveyForm | null) => {
     title: '修改调查问卷信息',
     type: 'edit',
     visible: true
+  }
+}
+
+/**
+ * 发布调查问卷信息
+ *
+ * @param row 调查问卷信息
+ */
+const handlePublish = async (row: SurveyForm) => {
+  try {
+    await proxy.$confirm('确认发布"' + row.formName + '"调查问卷信息吗？', '提示', {
+      type: 'warning'
+    })
+    await publishSurveyForm(row.formId)
+    proxy.$message.success('发布调查问卷信息成功')
+    await handleList()
+  } catch (error) {
+    console.log(error)
   }
 }
 
