@@ -72,6 +72,19 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
         props: true
       }
     ]
+  },
+  {
+    path: '/survey/form',
+    component: () => import('@/layout/index.vue'),
+    meta: { permission: 'survey:form:list', hidden: true },
+    children: [
+      {
+        path: 'design/:formId(\\d+)',
+        component: () => import('@/views/survey/form/design/index.vue'),
+        meta: { title: '表单设计', activeMenu: '/survey/form' },
+        props: true
+      }
+    ]
   }
 ]
 

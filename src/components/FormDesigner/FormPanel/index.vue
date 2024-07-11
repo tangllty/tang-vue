@@ -57,17 +57,20 @@ const props = defineProps({
 })
 
 const state = reactive({
-  formComponentList: props.modelValue,
   emptyInfoStyle: {}
 })
 
 const {
-  formComponentList,
   emptyInfoStyle
 } = toRefs(state)
 
 const formRef = ref<HTMLDivElement>()
 const emptyInfoRef = ref<HTMLDivElement>()
+
+const formComponentList = computed({
+  get: () => props.modelValue,
+  set: val => proxy.$emit('update:modelValue', val)
+})
 
 useDraggable(formRef, formComponentList, {
   animation: 350,

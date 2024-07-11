@@ -169,8 +169,34 @@
           prop="formData"
           label="问卷数据"
           align="center"
-          width="90"
-        />
+          width="140"
+        >
+          <template #default="scope">
+            <el-button
+              type="primary"
+              link
+              :icon="View"
+              size="small"
+              v-hasPermission="'survey:form:list'"
+              @click="handleViewData(scope.row)"
+            >查看</el-button>
+            <el-button
+              type="primary"
+              link
+              size="small"
+              v-hasPermission="'survey:form:edit'"
+              @click="handleDesign(scope.row)"
+            >
+              <router-link :to="'/survey/form/design/' + scope.row.formId">
+                <el-link
+                  type="primary"
+                  :icon="Edit"
+                  :underline="false"
+                >设计</el-link>
+              </router-link>
+            </el-button>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="publishStatus"
           label="发布状态"
@@ -240,7 +266,7 @@
               link
               :icon="Position"
               size="small"
-              v-hasPermission="'survey:form:publish'"
+              v-hasPermission="'survey:form:edit'"
               @click="handlePublish(scope.row)"
             >发布</el-button>
             <el-button
@@ -356,7 +382,7 @@
 
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
-import { Plus, Edit, Delete, Search, Refresh, Position } from '@element-plus/icons-vue'
+import { Plus, Edit, Delete, Search, Refresh, Position, View } from '@element-plus/icons-vue'
 import { getProxy } from '@/utils/getCurrentInstance'
 import { listSurveyForm, getSurveyForm, addSurveyForm, editSurveyForm, publishSurveyForm, deleteSurveyForm, deleteSurveyForms } from '@/api/survey/form'
 import type { SurveyForm, SurveyFormForm, SurveyFormQuery } from '@/api/survey/form/types'
@@ -438,6 +464,15 @@ const handleList = async () => {
 }
 
 /**
+ * 查看调查问卷数据
+ *
+ * @param row 调查问卷信息
+ */
+const handleViewData = async (row: SurveyForm) => {
+  // TODO view the survey form data
+}
+
+/**
  * 添加调查问卷信息
  */
 const handleAdd = () => {
@@ -484,6 +519,15 @@ const handlePublish = async (row: SurveyForm) => {
   } catch (error) {
     console.log(error)
   }
+}
+
+/**
+ * 设计调查问卷信息
+ *
+ * @param row 调查问卷信息
+ */
+const handleDesign = async (row: SurveyForm) => {
+
 }
 
 /**

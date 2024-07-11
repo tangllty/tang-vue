@@ -30,6 +30,18 @@
           text
           @click="handlePreview"
         >预览</el-button>
+        <el-button
+          type="success"
+          :icon="View"
+          text
+          @click="handleSave"
+        >保存</el-button>
+        <el-button
+          type="warning"
+          :icon="Delete"
+          text
+          @click="handleCancel"
+        >关闭</el-button>
       </el-header>
       <el-scrollbar ref="scrollerRef" :view-style="{
         minHeight: 'calc(100% - 40px)',
@@ -79,16 +91,22 @@ const props = defineProps({
   modelValue: {
     type: Array as PropType<Component[]>,
     default: () => []
+  },
+  save: {
+    type: Function as PropType<() => void>,
+    default: () => {}
+  },
+  cancel: {
+    type: Function as PropType<() => void>,
+    default: () => {}
   }
 })
 
 const state = reactive({
-  formComponentList: props.modelValue,
   activeItem: {} as Component
 })
 
 const {
-  formComponentList,
   activeItem
 } = toRefs(state)
 
@@ -97,6 +115,11 @@ const scrollerRef = ref<ScrollbarInstance>()
 const formPanelRef = ref<FormPanelInstance>()
 const previewJsonRef = ref<PreviewJsonInstance>()
 const previewRef = ref<PreviewInstance>()
+
+const formComponentList = computed({
+  get: () => props.modelValue,
+  set: val => proxy.$emit('update:modelValue', val)
+})
 
 const getId = (callback: (id: number) => void) => {
   if (!componentPanelRef.value) return
@@ -131,6 +154,16 @@ const handlePreviewJson = async () => {
 const handlePreview = async () => {
   if (!previewRef.value || !formPanelRef.value) return
   previewRef.value.handleShow(formPanelRef.value.formComponentList)
+}
+
+const handleSave = async () => {
+  if (!props.save) return
+  await props.save()
+}
+
+const handleCancel = async () => {
+  if (!props.cancel) return
+  await props.cancel()
 }
 
 onMounted(async () => {
