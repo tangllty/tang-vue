@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 const icons = [] as string[]
-const modules = import.meta.glob('../../assets/icons/*.svg')
+const modules = import.meta.glob('../../../assets/icons/*.svg')
 
 for (const path in modules) {
   const name = path.split('assets/icons/')[1].split('.svg')[0]
