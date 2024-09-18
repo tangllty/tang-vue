@@ -219,7 +219,7 @@
             <el-input
               type="textarea"
               v-model="element.code"
-              rows="5"
+              :rows="5"
               placeholder="请输入代码"
             />
           </div>
