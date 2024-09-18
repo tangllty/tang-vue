@@ -125,7 +125,7 @@
                 <el-input
                   v-model="editTableForm.remark"
                   placeholder="请输入备注"
-                  rows="3"
+                  :rows="3"
                   type="textarea"
                 />
               </el-form-item>
