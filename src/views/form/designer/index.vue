@@ -1,10 +1,12 @@
 <template>
-  <FormDesigner v-model="designerData" />
-  <el-card header="表单渲染器" class="mt-15 mb-15">
-    <FormRender v-model="renderData" :components="designerData" />
-  </el-card>
-  <el-button @click="handleDesignerData">获取表单设计器数据</el-button>
-  <el-button @click="handleRenderData">获取表单渲染器数据</el-button>
+  <div>
+    <FormDesigner v-model="designerData" />
+    <el-card header="表单渲染器" class="mt-15 mb-15">
+      <FormRender v-model="renderData" :components="designerData" />
+    </el-card>
+    <el-button @click="handleDesignerData">获取表单设计器数据</el-button>
+    <el-button @click="handleRenderData">获取表单渲染器数据</el-button>
+  </div>
 </template>
 
 <script lang="ts" setup>
