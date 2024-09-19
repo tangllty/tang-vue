@@ -30,6 +30,8 @@
  * Bump vite from 5.3.1 to 5.4.6
  * Bump vite-plugin-top-level-await from 1.4.1 to 1.4.4
  * Bump vue-tsc from 2.0.22 to 2.1.6
+ * Bump vue from 3.4.30 to 3.5.6
+ * Bump element-plus from 2.7.6 to 2.8.3
 
 ### Bug Fixes
 
