@@ -5,13 +5,11 @@
   >
     <el-icon size="24"><svg-icon name="语言" /></el-icon>
     <template #dropdown>
-      <el-dropdown-menu
-        v-for="lang in langs"
-        :key="lang.key"
-      >
+      <el-dropdown-menu>
         <el-dropdown-item
-          :command="lang.key"
+          v-for="lang in langs"
           :key="lang.key"
+          :command="lang.key"
           :disabled="disabled(lang.key)"
         >
           <el-link

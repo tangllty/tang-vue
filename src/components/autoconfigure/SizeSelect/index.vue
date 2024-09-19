@@ -5,13 +5,11 @@
   >
     <el-icon size="24"><svg-icon name="组件大小" /></el-icon>
     <template #dropdown>
-      <el-dropdown-menu
-        v-for="size in sizes"
-        :key="size.key"
-      >
+      <el-dropdown-menu>
         <el-dropdown-item
-          :command="size.key"
+          v-for="size in sizes"
           :key="size.key"
+          :command="size.key"
           :disabled="disabled(size.key)"
         >
           <el-link
