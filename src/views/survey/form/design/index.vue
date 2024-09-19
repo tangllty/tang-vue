@@ -10,6 +10,7 @@
 import { getProxy } from '@/utils/getCurrentInstance'
 import { getSurveyForm, editSurveyForm } from '@/api/survey/form'
 import type { SurveyFormForm } from '@/api/survey/form/types'
+import type { Component } from '@/components/FormDesigner/types'
 
 const proxy = getProxy()
 
