@@ -137,7 +137,9 @@ const showContextMenu = (e: MouseEvent, component: Component) => {
       label: '复制',
       icon: '复制',
       onClick: () => {
-        formComponentList.value.push({ ...component })
+        let id: number = 0
+        proxy.$emit('getId', (val: number) => id = val)
+        formComponentList.value.push({ ...component, id: `key${id}` })
       }
     }
   ]

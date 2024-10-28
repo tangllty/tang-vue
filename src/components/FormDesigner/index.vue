@@ -51,6 +51,7 @@
           ref="formPanelRef"
           v-model="formComponentList"
           v-model:activeItem="activeItem"
+          @getId="getId"
           :style="{
             minHeight: scrollerRef ? scrollerRef.$el.clientHeight - 40 + 'px' : '100%'
           }"
@@ -165,6 +166,30 @@ const handleCancel = async () => {
   if (!props.cancel) return
   await props.cancel()
 }
+
+const initId = async () => {
+  if (!componentPanelRef.value) return
+  if (componentPanelRef.value.id != 1) return
+
+  const getMaxId = (components: Component[], maxId: number = 0) => {
+    components.forEach((component) => {
+      const componentId = Number(component.id.slice(3))
+      if (componentId > maxId) {
+        maxId = componentId
+      }
+      if (component.children) {
+        maxId = getMaxId(component.children, maxId)
+      }
+    })
+    return maxId
+  }
+  const maxId = getMaxId(props.modelValue)
+  componentPanelRef.value.id = maxId
+}
+
+watch(() => props.modelValue, () => {
+  initId()
+})
 
 onMounted(async () => {
 })

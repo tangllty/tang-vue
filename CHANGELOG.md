@@ -39,6 +39,7 @@
  * Fix nested container cannot choose
  * Fix remove item activeItem incorrect error
  * Fix `ContextMenu` contextMenuRef may be null
+ * Fix `FormDesigner` copy item id incorrect error
 
 ### Features
  * Add html code element
