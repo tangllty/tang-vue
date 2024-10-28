@@ -38,6 +38,7 @@
  * Fix form designer cannot close preview dialog
  * Fix nested container cannot choose
  * Fix remove item activeItem incorrect error
+ * Fix `ContextMenu` contextMenuRef may be null
 
 ### Features
  * Add html code element

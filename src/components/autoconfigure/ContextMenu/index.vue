@@ -37,6 +37,7 @@ const handleBlur = () => {
 
 onMounted(async () => {
   await nextTick()
+  if (!contextMenuRef.value) return
   const contextMenu = contextMenuRef.value as HTMLDivElement
   contextMenu.focus()
 })
