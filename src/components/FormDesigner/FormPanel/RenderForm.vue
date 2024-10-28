@@ -5,6 +5,8 @@
     <RenderContainer
       v-model="component"
       v-model:activeItem="activeItem"
+      @showContextMenu="showContextMenu"
+      @click.right.native.once="showContextMenu($event, component)"
     />
   </template>
 </template>
@@ -37,6 +39,10 @@ const activeItem = computed<Component>({
   get: () => props.activeItem,
   set: val => proxy.$emit('update:activeItem', val)
 })
+
+const showContextMenu = (event: MouseEvent, component: Component) => {
+  proxy.$emit('showContextMenu', event, component)
+}
 </script>
 
 <style lang="scss" scoped>

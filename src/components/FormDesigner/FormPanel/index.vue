@@ -19,6 +19,7 @@
         <RenderForm
           v-model="formComponentList[index]"
           v-model:activeItem="activeItem"
+          @showContextMenu="showContextMenu"
           class="component"
         />
       </div>
@@ -108,11 +109,25 @@ const showContextMenu = (e: MouseEvent, component: Component) => {
       label: '删除',
       icon: '删除',
       onClick: () => {
-        const index = formComponentList.value.findIndex(item => item === component)
-        formComponentList.value.splice(index, 1)
+        const findAndRemoveComponent = (list: Component[] | undefined, component: Component) => {
+          if (!list) return false
+          for (let i = 0; i < list.length; i++) {
+            if (list[i].id === component.id) {
+              list.splice(i, 1)
+              return true
+            }
+            if (list[i].children) {
+              if (findAndRemoveComponent(list[i].children, component)) {
+                return true
+              }
+            }
+          }
+          return false
+        }
+
+        findAndRemoveComponent(formComponentList.value, component)
         if (formComponentList.value.length) {
-          const nextIndex = index === formComponentList.value.length ? index - 1 : index
-          handleActiveItem(formComponentList.value[nextIndex])
+          handleActiveItem(formComponentList.value[0])
         } else {
           handleActiveItem({} as Component)
         }
@@ -148,6 +163,7 @@ onMounted(async () => {
 defineExpose({
   formComponentList,
   handleActiveItem,
+  showContextMenu,
   handleReset
 })
 </script>

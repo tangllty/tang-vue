@@ -79,16 +79,52 @@
             </el-popover>
           </el-form-item>
           <el-form-item v-if="hasOwnProperty(element, 'span')" label="栅格">
-            <el-slider
-              v-model="element.span"
-              :min="1"
-              :max="24"
-              :marks="{ 6: '', 12: '', 18: '' }"
-            />
+            <div
+              class="flex flex-items-center"
+              style="width: 80%"
+            >
+              <el-slider
+                v-model="element.span"
+                :min="1"
+                :max="24"
+                :marks="{ 6: '', 12: '', 18: '' }"
+              />
+            </div>
           </el-form-item>
-          <el-button v-if="element.element === 'el-row'" @click="handleAddCol">
-            添加列
-          </el-button>
+          <div v-if="element.element === 'el-row'" label="栅格">
+            <el-divider>栅格配置</el-divider>
+            <div
+              v-for="(col, index) in element.children"
+              :key="col.id"
+              class="flex flex-items-center"
+              style="width: 80%"
+            >
+              <el-link
+                :icon="Operation"
+                :underline="false"
+                class="mr-6"
+                @click="proxy.$notImplemented"
+              />
+              <el-slider
+                v-model="col.span"
+                :min="1"
+                :max="24"
+                :marks="{ 6: '', 12: '', 18: '' }"
+              />
+              <el-link
+                v-if="col"
+                type="danger"
+                :icon="Delete"
+                :underline="false"
+                class="ml-12"
+                @click="element.children!.splice(index, 1)"
+              />
+            </div>
+            <span class="block">总计: {{ element.children?.reduce((acc, cur) => acc + cur.span, 0) }}</span>
+            <el-button @click="handleAddCol">
+              添加列
+            </el-button>
+          </div>
           <div v-if="hasOwnProperty(element, 'options')">
             <el-divider>选项</el-divider>
             <div
@@ -110,9 +146,9 @@
               </div>
               <div class="mb-4">
                 <el-input
-                v-model="option.value"
-                placeholder="请输入值"
-              />
+                  v-model="option.value"
+                  placeholder="请输入值"
+                />
               </div>
               <el-link
                 v-if="element.options"

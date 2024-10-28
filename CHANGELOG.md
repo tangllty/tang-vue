@@ -51,6 +51,7 @@
  * Add checkbox element
  * Add form render
  * Add questionnaire system
+ * Refactor context menu handling in `FormDesigner` components
 
 ## 1.6.6
 

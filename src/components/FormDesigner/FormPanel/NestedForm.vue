@@ -6,7 +6,7 @@
       class="components-container"
       :class="{ 'active-item': activeItem === component }"
       @click="handleActiveItem(component, $event)"
-      @click.right.native="showContextMenu($event, component)"
+      @click.right.native="proxy.$emit('showContextMenu', $event, component)"
     >
       <el-icon v-if="activeItem === component" class="drag-handler">
         <Rank />
@@ -20,7 +20,6 @@
 import { useDraggable } from 'vue-draggable-plus'
 import { getProxy } from '@/utils/getCurrentInstance'
 import type { Component } from '../types'
-import type { ContextMenuOptions, MenuItem } from '@/components/autoconfigure/ContextMenu/types'
 import RenderForm from './RenderForm.vue'
 
 const proxy = getProxy()
@@ -49,29 +48,6 @@ const activeItem = computed<Component>({
 const handleActiveItem = (component: Component, event: MouseEvent | null = null) => {
   if (event) event.stopPropagation()
   activeItem.value = component
-}
-
-const showContextMenu = (e: MouseEvent, component: Component) => {
-  const items: MenuItem[] = [
-    {
-      label: '删除',
-      icon: '删除',
-      onClick: () => {
-        components.value = components.value.filter(item => item !== component)
-      }
-    },
-    {
-      label: '复制',
-      icon: '复制',
-      onClick: () => {
-        components.value.push({ ...component })
-      }
-    }
-  ]
-  const options: ContextMenuOptions = {
-    items
-  }
-  proxy.$contextMenu(e, options)
 }
 
 const nestedFromRef = ref<HTMLDivElement>()

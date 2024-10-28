@@ -7,11 +7,19 @@
       :class="{ 'active-item': activeItem === item }"
       @click="handleActiveItem(item, $event)"
     >
-      <NestedForm v-model="item.children" v-model:activeItem="activeItem" />
+      <NestedForm
+        v-model="item.children"
+        v-model:activeItem="activeItem"
+        @showContextMenu="showContextMenu"
+      />
     </el-col>
   </el-row>
   <el-card v-else-if="component.element === 'el-card'" :header="component.header">
-    <NestedForm v-model="component.children" v-model:activeItem="activeItem" />
+    <NestedForm
+      v-model="component.children"
+      v-model:activeItem="activeItem"
+      @showContextMenu="showContextMenu"
+    />
   </el-card>
   <el-watermark
     v-else-if="component.element === 'el-watermark'"
@@ -21,7 +29,11 @@
     }"
     class="el-watermark"
   >
-    <NestedForm v-model="component.children" v-model:activeItem="activeItem" />
+    <NestedForm
+      v-model="component.children"
+      v-model:activeItem="activeItem"
+      @showContextMenu="showContextMenu"
+    />
   </el-watermark>
 </template>
 
@@ -57,6 +69,10 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
   if (event) event.stopPropagation()
   activeItem.value = item
 }
+
+const showContextMenu = (event: MouseEvent, component: Component) => {
+  proxy.$emit('showContextMenu', event, component)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -81,7 +97,7 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
 }
 
 :deep(.el-card__body) {
-  min-height: 20px;
+  min-height: 40px;
 }
 
 .el-watermark {
