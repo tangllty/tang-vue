@@ -46,7 +46,7 @@ const fixedHeader = computed(() => settingStore.fixedHeader)
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables.scss';
+@use '@/styles/variables.scss';
 
 .app-wrapper {
   height: 100%;
@@ -57,13 +57,13 @@ const fixedHeader = computed(() => settingStore.fixedHeader)
     overflow: hidden;
 
     .sidebar {
-      height: calc(100% - #{$headerHeight});
+      height: calc(100% - #{variables.$headerHeight});
     }
   }
 
   .app-container {
     .header-container {
-      height: $headerHeight;
+      height: variables.$headerHeight;
       box-shadow: 0 2px 6px 2px rgba(0, 0, 0, .08);
     }
 

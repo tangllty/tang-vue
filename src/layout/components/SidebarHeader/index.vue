@@ -32,10 +32,10 @@ const title = computed(() => settingStore.sidebar)
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/variables.scss';
+@use '@/styles/variables.scss';
 
 .logo {
-  height: $headerHeight;
+  height: variables.$headerHeight;
   padding: 0 1rem;
 
   .logo-link {

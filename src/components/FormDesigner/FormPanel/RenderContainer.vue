@@ -77,7 +77,7 @@ const showContextMenu = (event: MouseEvent, component: Component) => {
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss';
 
 .el-row, .el-col {
   min-height: 50px;
