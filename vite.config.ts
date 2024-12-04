@@ -93,10 +93,15 @@ export default ({ mode }: ConfigEnv) => {
     },
     resolve: {
       alias: {
-        '@': path.resolve('src'),
+        '@': path.resolve('src')
       }
     },
     css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler'
+        }
+      },
       postcss: {
         plugins: [
           autoprefixer()
