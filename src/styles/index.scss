@@ -5,6 +5,11 @@
 @use './element-plus.scss' as *;
 @use './transition.scss' as *;
 
+html {
+  font-family: 'Helvetica Neue', Helvetica, 'Microsoft YaHei', 'PingFang SC', 'WenQuanYi Micro Hei', Arial, sans-serif;
+  font-weight: normal;
+}
+
 html,
 body {
   margin: 0;
