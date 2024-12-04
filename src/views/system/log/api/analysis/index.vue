@@ -62,6 +62,7 @@
         v-loading="loading"
         :data="sysLogApiAnalysisList"
         row-key="apiId"
+        @sort-change="$sort($event, queryParams, handleList)"
       >
         <el-table-column
           prop="className"
@@ -88,12 +89,14 @@
           prop="count"
           label="请求次数"
           align="center"
-          width="100"
+          width="110"
+          sortable
         />
         <el-table-column
           prop="totalTime"
           label="总耗时"
           align="center"
+          sortable
         >
           <template #default="scope">
             {{ formatTime(scope.row.totalTime) }}
@@ -103,7 +106,8 @@
           prop="averageTime"
           label="平均耗时"
           align="center"
-          width="100"
+          width="110"
+          sortable
         >
           <template #default="scope">
             {{ formatTime(scope.row.averageTime) }}
@@ -113,7 +117,8 @@
           prop="minTime"
           label="最小耗时"
           align="center"
-          width="100"
+          width="110"
+          sortable
         >
           <template #default="scope">
             {{ formatTime(scope.row.minTime) }}
@@ -123,7 +128,8 @@
           prop="maxTime"
           label="最大耗时"
           align="center"
-          width="100"
+          width="110"
+          sortable
         >
           <template #default="scope">
             {{ formatTime(scope.row.maxTime) }}
