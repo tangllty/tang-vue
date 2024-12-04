@@ -71,6 +71,7 @@ const handleActiveItem = (item: Component, event: MouseEvent | null = null) => {
 }
 
 const showContextMenu = (event: MouseEvent, component: Component) => {
+  event.stopPropagation()
   proxy.$emit('showContextMenu', event, component)
 }
 </script>

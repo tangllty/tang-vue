@@ -6,7 +6,7 @@
       v-model="component"
       v-model:activeItem="activeItem"
       @showContextMenu="showContextMenu"
-      @click.right.native.once="showContextMenu($event, component)"
+      @click.right.native="showContextMenu($event, component)"
     />
   </template>
 </template>
@@ -41,6 +41,7 @@ const activeItem = computed<Component>({
 })
 
 const showContextMenu = (event: MouseEvent, component: Component) => {
+  event.stopPropagation()
   proxy.$emit('showContextMenu', event, component)
 }
 </script>

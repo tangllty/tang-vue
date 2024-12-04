@@ -6,7 +6,7 @@
       class="components-container"
       :class="{ 'active-item': activeItem === component }"
       @click="handleActiveItem(component, $event)"
-      @click.right.native="proxy.$emit('showContextMenu', $event, component)"
+      @click.right.native="showContextMenu($event, component)"
     >
       <el-icon v-if="activeItem === component" class="drag-handler">
         <Rank />
@@ -58,6 +58,11 @@ useDraggable(nestedFromRef, components, {
   group: 'components',
   handle: '.drag-handler'
 })
+
+const showContextMenu = (event: MouseEvent, component: Component) => {
+  event.stopPropagation()
+  proxy.$emit('showContextMenu', event, component)
+}
 </script>
 
 <style lang="scss" scoped>

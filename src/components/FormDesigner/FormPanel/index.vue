@@ -109,23 +109,20 @@ const showContextMenu = (e: MouseEvent, component: Component) => {
       label: '删除',
       icon: '删除',
       onClick: () => {
-        const findAndRemoveComponent = (list: Component[] | undefined, component: Component) => {
-          if (!list) return false
-          for (let i = 0; i < list.length; i++) {
-            if (list[i].id === component.id) {
-              list.splice(i, 1)
-              return true
+        const removeComponent = (components: Component[], component: Component) => {
+          for (let index = 0; index < components.length; index++) {
+            const element = components[index]
+            if (components[index].id === component.id) {
+              components.splice(index, 1)
+              return
             }
-            if (list[i].children) {
-              if (findAndRemoveComponent(list[i].children, component)) {
-                return true
-              }
+            if (element.children) {
+              removeComponent(element.children, component)
             }
           }
-          return false
         }
 
-        findAndRemoveComponent(formComponentList.value, component)
+        removeComponent(formComponentList.value, component)
         if (formComponentList.value.length) {
           handleActiveItem(formComponentList.value[0])
         } else {
