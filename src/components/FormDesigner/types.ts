@@ -7,6 +7,7 @@ export interface ComponentGroup {
 }
 
 export interface Component {
+  isDev?: boolean
   id: string
   element: string
   name: string

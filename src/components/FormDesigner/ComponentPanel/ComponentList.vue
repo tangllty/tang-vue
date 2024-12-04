@@ -6,7 +6,7 @@
       class="component"
       @click="handleComponentClick(item)"
     >
-      <span>
+      <span :style="{ color: item.isDev ? 'red' : '' }">
         <el-icon class="icon">
           <SvgIcon :name="item.icon" />
         </el-icon>

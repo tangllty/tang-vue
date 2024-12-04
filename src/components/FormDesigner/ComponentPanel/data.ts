@@ -84,12 +84,14 @@ export const componentGroupList = ([
     icon: '布局容器',
     list: [
       {
+        isDev: true,
         element: 'el-row',
         name: '行容器',
         icon: '行容器',
         children: [] as Component[],
       },
       {
+        isDev: true,
         element: 'el-card',
         name: '卡片容器',
         icon: 'card',
