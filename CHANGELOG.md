@@ -53,6 +53,7 @@
  * Add form render
  * Add questionnaire system
  * Refactor context menu handling in `FormDesigner` components
+ * Add alignment prop to `Pagination` component
 
 ## 1.6.6
 

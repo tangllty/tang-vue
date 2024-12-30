@@ -42,6 +42,11 @@ const props = defineProps({
   pageSize: {
     type: Number,
     default: 10
+  },
+  align: {
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'right',
+    validator: (value: string) => ['left', 'center', 'right'].includes(value)
   }
 })
 
@@ -63,10 +68,21 @@ const handleCurrentChange = (val: number): void => {
   currentPage.value = val
   proxy.$emit('pagination', { pageNum: val, pageSize: pageSize })
 }
+
+const alignMap = {
+  left: 'flex-start',
+  center: 'center',
+  right: 'flex-end'
+}
+
+const justifyContent = computed(() => alignMap[props.align])
 </script>
 
 <style lang="scss" scoped>
 .pagination-container {
   padding: 12px;
+  .el-pagination {
+    justify-content: v-bind(justifyContent);
+  }
 }
 </style>
