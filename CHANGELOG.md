@@ -54,6 +54,7 @@
  * Add questionnaire system
  * Refactor context menu handling in `FormDesigner` components
  * Add alignment prop to `Pagination` component
+ * Support multiple root elements in `<template>` tag
 
 ## 1.6.6
 
