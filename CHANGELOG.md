@@ -3,35 +3,36 @@
 ### Dependencies
 
  * Bump vueuse 10.11.0 to 10.11.1
- * Bump axios 1.7.2 to 1.7.7
+ * Bump axios 1.7.2 to 1.7.9
  * Bump echarts 5.5.0 to 5.5.1
  * Bump highlight.js 11.9.0 to 11.10.0
- * Bump pinia 2.1.7 to 2.2.2
- * Bump qs 6.12.1 to 6.13.0
- * Bump sortablejs 1.15.2 to 1.15.3
+ * Bump pinia 2.1.7 to 2.2.8
+ * Bump qs 6.12.1 to 6.13.1
+ * Bump sortablejs 1.15.2 to 1.15.6
  * Bump v3-infinite-loading 1.3.1 to 1.3.2
- * Bump vue-i18n 9.13.1 to 9.14.0
- * Bump vue-router 4.4.0 to 4.4.5
+ * Bump vue-i18n 9.13.1 to 9.14.2
+ * Bump vue-router 4.4.0 to 4.5.0
  * Bump @tangllty/vite-plugin-svg 1.0.0 to 1.0.5
- * Bump @types/node 18.19.39 to 18.19.50
- * Bump @types/qs 6.9.15 to 6.9.16
+ * Bump @types/node 18.19.39 to 18.19.67
+ * Bump @types/qs 6.9.15 to 6.9.17
  * Bump @typescript-eslint/eslint-plugin from 7.14.1 to 7.18.0
  * Bump @typescript-eslint/parser from 7.14.1 to 7.18.0
- * Bump @vitejs/plugin-vue from 5.0.5 to 5.1.4
+ * Bump @vitejs/plugin-vue from 5.0.5 to 5.2.1
  * Bump autoprefixer from 10.4.19 to 10.4.20
  * Bump electron from 29.4.2 to 29.4.6
  * Bump eslint from 8.57.0 to 8.57.1
- * Bump eslint-plugin-vue from 9.26.0 to 9.28.0
- * Bump postcss from 8.4.38 to 8.4.47
- * Bump sass from 1.77.6 to 1.79.1
- * Bump terser from 5.31.1 to 5.33.0
- * Bump typescript from 5.5.2 to 5.6.2
+ * Bump eslint-plugin-vue from 9.26.0 to 9.32.0
+ * Bump postcss from 8.4.38 to 8.4.49
+ * Bump sass from 1.77.6 to 1.82.0
+ * Bump terser from 5.31.1 to 5.36.0
+ * Bump typescript from 5.5.2 to 5.7.2
  * Bump unplugin-auto-import from 0.17.6 to 0.17.8
- * Bump vite from 5.3.1 to 5.4.6
+ * Bump vite from 5.3.1 to 5.4.11
  * Bump vite-plugin-top-level-await from 1.4.1 to 1.4.4
- * Bump vue-tsc from 2.0.22 to 2.1.6
- * Bump vue from 3.4.30 to 3.5.6
- * Bump element-plus from 2.7.6 to 2.8.3
+ * Bump vue-tsc from 2.0.22 to 2.1.10
+ * Bump vue from 3.4.30 to 3.5.13
+ * Bump element-plus from 2.7.6 to 2.9.0
+ * Bump monaco-editor from 0.47.2 to 0.52.2
 
 ### Bug Fixes
 
