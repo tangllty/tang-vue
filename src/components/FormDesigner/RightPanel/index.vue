@@ -248,7 +248,7 @@
           <div v-if="hasOwnProperty(element, 'code')">
             <el-divider>代码</el-divider>
             <FullScreen>
-              <div style="height: 85vh; border: 1px solid #ebeef5;">
+              <div style="height: 85vh;">
                 <MonacoEditor v-model="element.code" language="html" />
               </div>
             </FullScreen>
