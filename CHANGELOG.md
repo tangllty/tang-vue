@@ -56,6 +56,7 @@
  * Refactor context menu handling in `FormDesigner` components
  * Add alignment prop to `Pagination` component
  * Support multiple root elements in `<template>` tag
+ * Add scrollbar styling and update layout to include scrollbar class
 
 ## 1.6.6
 

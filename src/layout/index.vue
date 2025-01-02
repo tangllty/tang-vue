@@ -15,7 +15,7 @@
       <el-header class="header-container">
         <Navbar />
       </el-header>
-      <el-main class="main-container">
+      <el-main class="main-container scrollbar">
         <AppMain />
         <el-backtop
           target=".main-container"
