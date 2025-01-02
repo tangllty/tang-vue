@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import tsCode from '@/utils/path?raw'
+import tsCode from '@/utils/object?raw'
 
 const ts = ref<string>(tsCode)
 const js = ref<string>(['const example = () => {', '\tconsole.log("Hello world!");', '}', ''].join('\n'))

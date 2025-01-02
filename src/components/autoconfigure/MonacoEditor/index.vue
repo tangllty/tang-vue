@@ -1,5 +1,7 @@
 <template>
-  <div ref="editor" />
+  <div class="editor-container">
+    <div ref="editor" class="monaco-editor" />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -60,8 +62,14 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-div {
+.editor-container {
   height: 100%;
-  width: 100%;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e4e7ed;
+  margin: 13px;
+
+  .monaco-editor {
+    height: 100%;
+  }
 }
 </style>
