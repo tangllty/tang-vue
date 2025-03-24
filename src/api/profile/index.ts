@@ -1,6 +1,5 @@
 import request from '@/utils/request'
-import sha256 from 'crypto-js/sha256'
-import base64 from 'crypto-js/enc-base64'
+import { encrypt } from '@/utils/crypt'
 import type { UploadFile } from 'element-plus'
 import type { SysUserForm, SysUserPasswordForm } from '@/api/system/user/types'
 import type { SysLogLoginQuery } from '@/api/system/log/login/types'
@@ -15,12 +14,12 @@ export const editUserInfo = (data: SysUserForm) => {
 }
 
 // 修改用户密码
-export const editUserPassword = (passwordForm: SysUserPasswordForm) => {
+export const editUserPassword = async (passwordForm: SysUserPasswordForm) => {
   const data: SysUserPasswordForm = {
     ...passwordForm,
-    oldPassword: base64.stringify(sha256(passwordForm.oldPassword)),
-    newPassword: base64.stringify(sha256(passwordForm.newPassword)),
-    confirmPassword: base64.stringify(sha256(passwordForm.confirmPassword))
+    oldPassword: await encrypt(passwordForm.oldPassword),
+    newPassword: await encrypt(passwordForm.newPassword),
+    confirmPassword: await encrypt(passwordForm.confirmPassword)
   }
   return request({
     url: '/profile/edit-password',

@@ -1,9 +1,9 @@
 import type { App } from 'vue'
 import { createI18n } from 'vue-i18n'
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStoreHook } from '@/store/modules/setting'
 import { languages } from './types'
 
-const settingStore = useSettingStore()
+const settingStore = useSettingStoreHook()
 
 const modules = import.meta.glob('./lang/*.ts')
 
