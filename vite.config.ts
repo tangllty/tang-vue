@@ -88,7 +88,9 @@ export default ({ mode }: ConfigEnv) => {
     },
     optimizeDeps: {
       include: [
-        'vue', 'emoji-mart', 'element-plus/es', '@monaco-editor/loader'
+        'vue', 'emoji-mart', 'element-plus/es', '@monaco-editor/loader',
+        'vue-advanced-cropper', 'v3-infinite-loading', 'vscode-icons-ts',
+        'vue-draggable-plus'
       ].concat(optimizeElementPlusComponentsInclude())
     },
     resolve: {
