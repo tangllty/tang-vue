@@ -166,6 +166,17 @@
           width="90"
         />
         <el-table-column
+          label="ID"
+          align="center"
+          show-overflow-tooltip
+        >
+          <template #default="scope">
+            <router-link :to="'/survey/' + scope.row.formId" target="_blank">
+              <el-link :underline="false">{{ scope.row.formId }}</el-link>
+            </router-link>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="formData"
           label="问卷数据"
           align="center"
@@ -469,6 +480,7 @@ const handleList = async () => {
  * @param row 调查问卷信息
  */
 const handleViewData = async (row: SurveyForm) => {
+  proxy.$notImplemented()
   // TODO view the survey form data
 }
 

@@ -184,6 +184,7 @@
             <el-radio label="M">菜单</el-radio>
             <el-radio label="B" :disabled="menuForm.parentId === 0"
             >按钮</el-radio>
+            <el-radio label="P">页面</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单名称" prop="menuName">
@@ -201,7 +202,7 @@
         <el-form-item
           label="组件路径"
           prop="component"
-          v-if="menuForm.menuType === 'M'"
+          v-if="['M', 'P'].includes(menuForm.menuType)"
         >
           <el-input
             v-model="menuForm.component"
@@ -211,7 +212,7 @@
         <el-form-item
           label="菜单图标"
           prop="icon"
-          v-if="menuForm.menuType !== 'B'"
+          v-if="!['B', 'P'].includes(menuForm.menuType)"
         >
           <el-popover
             ref="popoverRef"

@@ -14,6 +14,18 @@ export const usePermissionStore = defineStore('permission', () => {
   const routes = ref<RouteRecordRaw[]>([])
 
   /**
+   * 将路由占位符替换为动态路由 ${id} -> :id(\\d+)
+   *
+   * @param path 路由路径
+   * @returns 替换后的路由路径
+   */
+  const replaceRoutePlaceholder = (path: string): string => {
+    return path.replace(/\$\{(\w+)\}/g, (_, key) => {
+      return `:${key}(\\d+)`
+    })
+  }
+
+  /**
    * 过滤异步路由
    *
    * @param routes 路由
@@ -33,6 +45,10 @@ export const usePermissionStore = defineStore('permission', () => {
         }
         tempRoute.component = Layout
       } else {
+        if (tempRoute.path.includes('${')) {
+          tempRoute.path = replaceRoutePlaceholder(tempRoute.path)
+          tempRoute.props = true
+        }
         tempRoute.component = modules[`../../views/${route.component}.vue`] as any
       }
       if (tempRoute.children) {
@@ -40,6 +56,38 @@ export const usePermissionStore = defineStore('permission', () => {
       }
       return tempRoute
     })
+  }
+
+  const filterFrontendRoutes = (routes: RouteRecordRaw[], frontendRoutes: RouteRecordRaw[]) => {
+    routes.forEach((route) => {
+      const tempRoute: any = { ...route }
+      if (tempRoute.type === 'PAGE') {
+        frontendRoutes.push(tempRoute)
+      }
+      if (tempRoute.children) {
+        filterFrontendRoutes(tempRoute.children, frontendRoutes)
+      }
+    })
+  }
+
+  // 递归移除 type 为 'PAGE' 的路由
+  const removeFrontendRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
+    return routes
+      .filter(route => (route as any).type !== 'PAGE')
+      .map(route => {
+        const tempRoute = { ...route }
+        if (tempRoute.children) {
+          tempRoute.children = removeFrontendRoutes(tempRoute.children)
+        }
+        return tempRoute
+      })
+  }
+
+  const getAsyncRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
+    const filteredAsyncRoutes: RouteRecordRaw[] = filterAsyncRoutes(routes)
+    const frontendRoutes: RouteRecordRaw[] = []
+    filterFrontendRoutes(filteredAsyncRoutes, frontendRoutes)
+    return [...removeFrontendRoutes(filteredAsyncRoutes), ...frontendRoutes]
   }
 
   /**
@@ -81,7 +129,7 @@ export const usePermissionStore = defineStore('permission', () => {
     try {
       const res: any = await getRoutesApi()
       const asyncRoutes = res.data
-      const accessedRoutes: RouteRecordRaw[] = filterAsyncRoutes(asyncRoutes)
+      const accessedRoutes: RouteRecordRaw[] = getAsyncRoutes(asyncRoutes)
       const dynamicRoutes: RouteRecordRaw[] = filterDynamicRoutes(allDynamicRoutes)
       routes.value = [...constantRoutes, ...accessedRoutes, ...dynamicRoutes]
       return [...accessedRoutes, ...dynamicRoutes]

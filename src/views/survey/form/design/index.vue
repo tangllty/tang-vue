@@ -48,7 +48,12 @@ const cancel = async () => {
 
 onMounted(async () => {
   const res = await getSurveyForm(props.formId)
-  designerData.value = JSON.parse(res.data.formData)
+  const formData = res.data.formData
+  if (!formData) {
+    designerData.value = []
+    return
+  }
+  designerData.value = JSON.parse(formData)
 })
 </script>
 
