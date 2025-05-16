@@ -27,6 +27,12 @@
           <el-form-item v-if="hasOwnProperty(element, 'label')" label="标题">
             <el-input v-model="element.label" placeholder="请输入标题" />
           </el-form-item>
+          <el-form-item v-if="hasOwnProperty(element, 'labelVisible')" label="标题显隐">
+            <el-radio-group v-model="element.labelVisible">
+              <el-radio :label="true">显示</el-radio>
+              <el-radio :label="false">隐藏</el-radio>
+            </el-radio-group>
+          </el-form-item>
           <el-form-item v-if="hasOwnProperty(element, 'labelWidth')" label="标题宽度">
             <el-input-number
               v-model="element.labelWidth"
@@ -222,6 +228,9 @@
               @click="handleCascaderAddParent"
             >添加一级选项</el-link>
           </div>
+          <el-form-item v-if="hasOwnProperty(element, 'text')" label="内容">
+            <el-input v-model="element.text" placeholder="请输入内容" />
+          </el-form-item>
           <el-form-item v-if="hasOwnProperty(element, 'align')" label="对齐方式">
             <el-radio-group v-model="element.align" size="small">
               <el-radio-button label="left">居左</el-radio-button>

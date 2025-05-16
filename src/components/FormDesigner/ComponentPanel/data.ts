@@ -115,6 +115,7 @@ export const componentGroupList = ([
     if (componentType.includes(componentGroup.name)) {
       component.type = 'component'
       if (component.label) {
+        component.labelVisible = true
         component.labelWidth = 100
       }
       const arrayComponent = ['el-checkbox', 'el-cascader']

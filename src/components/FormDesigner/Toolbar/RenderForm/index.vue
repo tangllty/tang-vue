@@ -1,5 +1,5 @@
 <template>
-  <el-form label-width="120px">
+  <el-form label-width="100px">
     <Render v-model="componentList" />
   </el-form>
 

@@ -179,10 +179,10 @@ defineExpose({
   .component-container {
     height: 100%;
     position: relative;
-    margin: 4px 0;
+    padding: 4px;
 
     .el-form-item {
-      margin: 8px 0;
+      margin-bottom: 0;
     }
 
     &:first-child > .component > .el-form-item {

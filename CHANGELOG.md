@@ -70,6 +70,7 @@
  * Support multiple root elements in `<template>` tag
  * Add scrollbar styling and update layout to include scrollbar class
  * Support page menu
+ * Add label visibility in form items
 
 ## 1.6.6
 

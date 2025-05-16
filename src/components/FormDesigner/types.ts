@@ -13,6 +13,7 @@ export interface Component {
   name: string
   icon: string
   type: 'component' | 'container'
+  labelVisible?: boolean
   label?: string
   labelWidth?: number
   vModel?: any
